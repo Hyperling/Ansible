@@ -3,10 +3,13 @@
 - hosts: localhost
   connection: local
   become: true
-
   tasks:
     - include: tasks/users.yml
     - include: tasks/cron.yml
     - include: tasks/packages.yml
+      when: ansible_distribution == "Ubuntu"
+
+- hosts: workstations
+  become: true
+  tasks:
     - include: tasks/flatpaks.yml
-        when: workstations
