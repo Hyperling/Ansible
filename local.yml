@@ -4,11 +4,6 @@
   connection: local
   become: true
 
-  pre_tasks:
-  - name: Update Repositories
-    package:
-      update_cache: yes
-
   tasks:
   - name: Install Software
     package: 
@@ -16,3 +11,4 @@
       - htop
       - neofetch
       - sshfs
+      update_cache: yes
