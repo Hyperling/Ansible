@@ -1,0 +1,18 @@
+---
+# Harmonize my systems rather than doing everything manually. :)
+- hosts: localhost
+  connection: local
+  become: true
+
+  pre_tasks:
+  - name: Update Repositories
+    package:
+      update_cache: yes
+
+  tasks:
+  - name: Install Software
+    package: 
+      name:
+      - htop
+      - neofetch
+      - sshfs
