@@ -7,7 +7,7 @@
     update_cache: yes
 
 - name: Install Flatpak Software
-  community.general.flatpak:
+  flatpak:
     name: 
       - com.discordapp.Discord
       - org.shotcut.Shotcut
