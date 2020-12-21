@@ -6,8 +6,8 @@
     - sshfs
     update_cache: yes
 
-- name: Install Flatpak
-  packge:
+- name: Install Flatpak TODO! Make only for workstations
+  package:
     name: flatpak
 
 - name: Install Discord
