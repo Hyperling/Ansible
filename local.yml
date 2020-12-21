@@ -5,10 +5,6 @@
   become: true
 
   tasks:
-  - name: Install Software
-    package: 
-      name:
-      - htop
-      - neofetch
-      - sshfs
-      update_cache: yes
+    - include: tasks/users.yml
+    - include: tasks/cron.yml
+    - include: tasks/packages.yml
