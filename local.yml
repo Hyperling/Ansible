@@ -9,3 +9,4 @@
     - include: tasks/cron.yml
     - include: tasks/packages.yml
     - include: tasks/flatpaks.yml
+        when: workstations
