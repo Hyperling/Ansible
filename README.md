@@ -1,2 +1,2 @@
-# ansible-pull
-Getting real with my system management.
+# ansible
+Getting real with my system management using ansible-pull.
