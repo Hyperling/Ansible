@@ -7,7 +7,7 @@
     update_cache: yes
 
 - name: Install Flatpaks
-  comunity.general.flatpak
+  comunity.general.flatpak:
     state: present
     name: 
       - com.discordapp.Discord
