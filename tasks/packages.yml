@@ -1,0 +1,13 @@
+- name: Install Repo Software
+  package: 
+    name:
+    - htop
+    - neofetch
+    - sshfs
+    update_cache: yes
+
+- name: Install Flatpaks
+  comunity.general.flatpak
+    state: present
+    name: 
+      - com.discordapp.Discord

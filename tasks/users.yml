@@ -1,0 +1,12 @@
+- name: Create Ansible User
+  user:
+    name: hyper
+    system: yes
+
+- name: Add Ansible Sudoers File
+  copy:
+    src: sudoers_hyper
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440

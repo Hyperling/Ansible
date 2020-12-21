@@ -1,0 +1,6 @@
+- name: install cron job (ansible-pull)
+  cron:
+    user: hyper
+    name: "Ansible Sync"
+    minute: "*/5"
+    job: "/usr/bin/ansible-pull -o -U https://github.com/Hyperling/ansible.git > /dev/null"
