@@ -6,9 +6,14 @@
     - sshfs
     update_cache: yes
 
-- name: Install Flatpak Software
+- name: Install Flatpak
+  packge:
+    name: flatpak
+
+- name: Install Discord
   flatpak:
-    name: 
-      - com.discordapp.Discord
-      - org.shotcut.Shotcut
-    state: present
+    name: com.discordapp.Discord
+
+- name: Install Shotcut
+  flatpak:
+    name: org.shotcut.Shotcut
