@@ -4,10 +4,6 @@
   connection: local
   become: true
 
-  pre_tasks:
-  - name: Install Requirements
-    shell: ansible-galaxy install -r requirements.yml 
-
   tasks:
     - include: tasks/users.yml
     - include: tasks/cron.yml
