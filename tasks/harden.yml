@@ -1,0 +1,9 @@
+- name: Remove CUPS Daemon
+  service:
+    name: cupsd
+    state: stopped, disabled
+
+- name: Remove CUPS-Browse Daemon
+  service:
+    name: cupsd
+    state: stopped, disabled

@@ -1,16 +1,13 @@
 ---
 # Harmonize my systems rather than doing everything manually. :)
-- hosts: localhost
+- hosts: all
   connection: local
   become: true
   tasks:
     - include: tasks/users.yml
     - include: tasks/cron.yml
     - include: tasks/packages.yml
-      when: ansible_distribution == "Ubuntu"
-
-    - include: tasks/flatpaks.yml
-      when: ansible_distribution == "Pop!_OS"
+    - include: tasks/harden.yml
 
 - hosts: workstation
   become: true
