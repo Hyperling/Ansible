@@ -32,6 +32,6 @@
 - name: Remove packages that may come with an OS but were just installed as Flatpak
   package: 
     name:
-    - firefox
-    - thunderbird
+    - "{{ firefox }}"
+    - "{{ thunderbird }}"
     state: absent
