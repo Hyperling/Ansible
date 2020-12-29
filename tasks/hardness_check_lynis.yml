@@ -1,0 +1,11 @@
+- name: Install Lynis
+  ansible.builtin.git: 
+    repo: https://github.com/CISOfy/lynis
+    dest: /usr/local/
+    clone: yes
+    force: yes
+
+- name: Run Lynis
+  ansible.builtin.shell:
+    chdir: /usr/local/lynis/
+    cmd: lynis audit system

@@ -3,7 +3,6 @@
 
 # Everything
 - hosts: all
-  connection: local
   become: true  
 
   pre_tasks:
@@ -23,3 +22,11 @@
 
   tasks:
     - include: tasks/flatpaks.yml
+
+
+# Display hardness checks
+- hosts: all
+  become: true
+
+  tasks:
+    - include: tasks/hardness_check_lynis.yml
