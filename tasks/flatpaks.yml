@@ -13,8 +13,8 @@
 - name: Remove packages that may come with an OS but are being installed as Flatpak
   package: 
     name:
-    - discord[ansible_distribution]
-    - thunderbird[ansible_distribution]
+    - {{ discord[ansible_distribution] }} 
+    - {{ thunderbird[ansible_distribution] }} 
     state: absent
 
 - name: Install Discord
