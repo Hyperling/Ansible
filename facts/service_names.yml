@@ -1,0 +1,28 @@
+---
+# Define what the program name is on each OS so we can use package builtin. like this:
+
+- name: Set Pop!_OS Service Names
+  ansible.builtin.set_fact:
+    cups: cups
+    cups_pattern: cupsd
+    cups_browse: cups-browsed
+    cups_browse_pattern: cups-browsed
+  when: ansible_distribution == "Pop!_OS"
+
+
+- name: Set Ubuntu Service Names
+  ansible.builtin.set_fact:
+    cups: cups
+    cups_pattern: cupsd
+    cups_browse: cups-browsed
+    cups_browse_pattern: cups-browsed
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: Set FreeBSD Service Names
+  ansible.builtin.set_fact:
+    cups: cups
+    cups_pattern: cupsd
+    cups_browse: cups-browsed
+    cups_browse_pattern: cups-browsed
+  when: ansible_distribution == "FreeBSD"
