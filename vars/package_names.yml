@@ -1,0 +1,14 @@
+---
+# Define what the program name is on each OS so we can use package builtin. like this:
+
+# POP!_OS
+firefox["Pop!_OS"]: firefox
+thunderbird["Pop!_OS"]: thunderbird
+
+# Ubuntu
+firefox["Ubuntu"]: firefox
+thunderbird["Ubuntu"]: thunderbird
+
+# FreeBSD
+firefox["FreeBSD"]: firefox
+thunderbird["FreeBSD"]: thunderbird

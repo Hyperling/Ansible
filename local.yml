@@ -1,8 +1,13 @@
 ---
 # Harmonize my systems rather than doing everything manually. :)
+
+
+
 - hosts: all
   connection: local
   become: true
+  include_vars:
+    dir: vars
   tasks:
     - include: tasks/users.yml
     - include: tasks/cron.yml

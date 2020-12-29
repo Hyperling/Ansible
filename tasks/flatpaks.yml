@@ -10,6 +10,13 @@
     method: system
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
+- name: Remove packages that may come with an OS but are being installed as Flatpak
+  package: 
+    name:
+    - discord[ansible_distribution]
+    - thunderbird[ansible_distribution]
+    state: absent
+
 - name: Install Discord
   flatpak:
     name: com.discordapp.Discord
@@ -17,3 +24,12 @@
 - name: Install Shotcut
   flatpak:
     name: org.shotcut.Shotcut
+
+- name: Install Firefox
+  flatpak:
+    name: org.mozilla.firefox
+
+- name: Install Thunderbird
+  flatpak:
+    name: org.mozilla.Thunderbird
+
