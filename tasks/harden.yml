@@ -7,7 +7,7 @@
 
 - name: Remove CUPS-Browse Daemon
   service:
-    name: cups-browse
+    name: cups-browsed
     pattern: cups-browsed
     state: stopped
     enabled: no
