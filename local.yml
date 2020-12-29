@@ -1,16 +1,24 @@
 ---
 # Harmonize my systems rather than doing everything manually. :)
 
+# Everything
 - hosts: all
   connection: local
-  become: true
+  become: true  
+
+  pre_tasks:
+    - include: facts/package_name.yml
+
   tasks:
     - include: tasks/users.yml
     - include: tasks/cron.yml
     - include: tasks/packages.yml
     - include: tasks/harden.yml
 
+
+# Desktops and laptops
 - hosts: workstation
   become: true
+
   tasks:
     - include: tasks/flatpaks.yml

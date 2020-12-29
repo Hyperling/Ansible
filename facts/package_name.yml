@@ -1,0 +1,22 @@
+---
+# Define what the program name is on each OS so we can use package builtin. like this:
+
+- name: Set Pop!_OS Package Names
+  ansible.builtin.set_fact:
+    package_name.firefox: firefox
+    package_name.thunderbird: thunderbird
+  when: ansible_distribution == "Pop!OS"
+
+
+- name: Set Ubuntu Package Names
+  ansible.builtin.set_fact:
+    package_name.firefox: firefox
+    package_name.thunderbird: thunderbird
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: Set FreeBSD Package Names
+  ansible.builtin.set_fact:
+    package_name.firefox: firefox
+    package_name.thunderbird: thunderbird
+  when: ansible_distribution == "FreeBSD"
