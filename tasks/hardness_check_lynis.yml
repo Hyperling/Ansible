@@ -7,3 +7,8 @@
 
 - name: Run Lynis
   command: /usr/local/lynis/lynis audit system
+  register: lynis_report
+
+- name: Lynis Report
+  debug:
+    var: lynis_report
