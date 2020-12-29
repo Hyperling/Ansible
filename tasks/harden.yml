@@ -1,13 +1,13 @@
 - name: Remove CUPS Daemon
   service:
-    name: cupsd
+    name: cups
     pattern: cupsd
     state: stopped
     enabled: no
 
 - name: Remove CUPS-Browse Daemon
   service:
-    name: cups-browsed
+    name: cups-browse
     pattern: cups-browsed
     state: stopped
     enabled: no
