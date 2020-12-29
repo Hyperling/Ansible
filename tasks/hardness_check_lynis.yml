@@ -6,6 +6,4 @@
     force: yes
 
 - name: Run Lynis
-  ansible.builtin.command: lynis audit system
-  args:
-    chdir: /usr/local/lynis/
+  ansible.builtin.command: /usr/local/lynis/lynis audit system
