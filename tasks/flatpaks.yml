@@ -1,4 +1,5 @@
-- name: Install Flatpak TODO! Make only for workstations
+# Pre-reqs
+- name: Install Flatpak
   package:
     name: flatpak
     update_cache: yes
@@ -31,6 +32,6 @@
 - name: Remove packages that may come with an OS but were just installed as Flatpak
   package: 
     name:
-    - "{{ firefox }}"
-    - "{{ thunderbird }}"
+    - firefox
+    - thunderbird
     state: absent
