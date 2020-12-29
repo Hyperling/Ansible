@@ -1,8 +1,6 @@
 ---
 # Harmonize my systems rather than doing everything manually. :)
 
-
-
 - hosts: all
   connection: local
   become: true
