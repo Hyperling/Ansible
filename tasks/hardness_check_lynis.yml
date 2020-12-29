@@ -1,14 +1,12 @@
 - name: Install Lynis
   ansible.builtin.git: 
     repo: https://github.com/CISOfy/lynis
-    dest: /usr/local/lynis
+    dest: "{{ lynis_install_dir }}"
     clone: yes
     force: yes
 
-- name: Run Lynis
-  command: /usr/local/lynis/lynis audit system
-  register: lynis_report
+- name: Run Lynis Audit System
+  command: /usr/local/lynis/lynis audit system > "{{ lynis_report }}"
 
-- name: Lynis Report
-  debug:
-    var: lynis_report
+- name: Make Lynis Report Readable
+  command: chmod 444 "{{ lynis_report }}"

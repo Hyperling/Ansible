@@ -1,24 +1,24 @@
 ---
-# Define what the program name is on each OS so we can use package builtin.
+# Define what the file and folder names should be on each OS.
 
 - name: Set Pop!_OS Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
-    thunderbird: thunderbird
+    lynis_install_dir: /usr/local/lynis
+    lynis_report: /home/ling/lynis.log
   when: ansible_distribution == "Pop!_OS"
 
 
 # TODO Needs tested
 - name: Set Ubuntu Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
-    thunderbird: thunderbird
+    lynis_install_dir: /usr/local/lynis
+    lynis_report: /root/lynis.log
   when: ansible_distribution == "Ubuntu"
 
 
 # TODO Needs tested
 - name: Set FreeBSD Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
-    thunderbird: thunderbird
+    lynis_install_dir: /usr/local/lynis
+    lynis_report: /root/lynis.log
   when: ansible_distribution == "FreeBSD"

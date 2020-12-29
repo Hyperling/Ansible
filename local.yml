@@ -6,6 +6,7 @@
   become: true  
 
   pre_tasks:
+    - include: facts/filesystem_names.yml
     - include: facts/package_names.yml
     - include: facts/service_names.yml
 
