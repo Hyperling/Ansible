@@ -1,7 +1,7 @@
 - name: Install Lynis
   ansible.builtin.git: 
     repo: https://github.com/CISOfy/lynis
-    dest: /usr/local/
+    dest: /usr/local/lynis
     clone: yes
     force: yes
 
