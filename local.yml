@@ -2,7 +2,7 @@
 # Harmonize my systems rather than doing everything manually. :)
 
 # Everything
-- hosts: all
+- hosts: localhost
   become: true  
 
   pre_tasks:
@@ -25,7 +25,7 @@
     - include: tasks/flatpaks.yml
 
 
-# Display hardness checks
+# Run hardness checks
 - hosts: all
   become: true
 
