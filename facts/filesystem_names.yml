@@ -1,7 +1,7 @@
 ---
 # Define what the file and folder names should be on each OS.
 
-- name: Set Pop!_OS Package Names
+- name: Set Pop!_OS FS Names
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
@@ -9,7 +9,7 @@
 
 
 # TODO Needs tested
-- name: Set Ubuntu Package Names
+- name: Set Ubuntu FS Names
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
@@ -17,7 +17,7 @@
 
 
 # TODO Needs tested
-- name: Set FreeBSD Package Names
+- name: Set FreeBSD FS Names
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
