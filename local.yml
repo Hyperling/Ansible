@@ -2,7 +2,8 @@
 # Harmonize my systems rather than doing everything manually. :)
 
 # Everything
-- hosts: localhost
+- name: Initial Setup
+  hosts: all, localhost
   connection: local
   become: true  
 
@@ -19,7 +20,9 @@
 
 
 # Desktops and laptops
-- hosts: workstation
+- name: UI Setup
+  hosts: workstation
+  connection: local
   become: true
 
   tasks:
@@ -27,7 +30,9 @@
 
 
 # Run hardness checks
-- hosts: all
+- name: Hardening Check
+  hosts: all, localhost
+  connection: local
   become: true
 
   tasks:
