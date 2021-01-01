@@ -3,6 +3,7 @@
 
 # Everything
 - name: Initial Setup
+  hosts: all, localhost
   connection: local
   become: true  
 

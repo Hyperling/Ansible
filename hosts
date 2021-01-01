@@ -4,3 +4,6 @@ dell
 
 [dad]
 not_installed_yet
+
+[on_a_home_network]
+192.168.[0:255].[0:255]
