@@ -1,8 +1,8 @@
 - name: install cron job (ansible-pull)
   cron:
-    user: hyper
+    user: ansible
     name: "Ansible Sync"
     minute: "*/5"
     job: "/usr/bin/ansible-pull -o -U https://github.com/Hyperling/ansible.git > /dev/null"
     state: present
-    disabled: yes # until everything is actually correct. :)
+    disabled: no # until everything is actually correct. :)
