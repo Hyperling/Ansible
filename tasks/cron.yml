@@ -5,4 +5,4 @@
     minute: "*/5"
     job: "/usr/bin/ansible-pull -o -U https://github.com/Hyperling/ansible.git > /dev/null"
     state: present
-    disabled: no # until everything is actually correct. :)
+    disabled: no
