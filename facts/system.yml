@@ -11,7 +11,7 @@
 
 
 - name: Set Debian and Ubuntu Facts
-  ansible.builtin.set_fact:
+  set_fact:
     flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
@@ -21,7 +21,7 @@
 
 
 - name: Set FreeBSD Facts
-  ansible.builtin.set_fact:
+  set_fact:
     flatpak_distro: no
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
