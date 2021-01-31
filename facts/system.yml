@@ -1,7 +1,7 @@
 ---
-# Define what the file and folder names should be on each OS.
+# Define file, folder, and other facts per OS.
 
-- name: Set Pop!_OS Desktop Facts
+- name: Set Pop OS Facts
   ansible.builtin.set_fact:
     flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis
@@ -11,8 +11,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 
-# TODO Needs tested
-- name: Set Debian+Ubuntu Server Facts
+- name: Set Debian and Ubuntu Facts
   ansible.builtin.set_fact:
     flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis

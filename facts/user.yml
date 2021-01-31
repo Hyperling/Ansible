@@ -1,10 +1,11 @@
 ---
-# Define users and groups for each OS
+# Define users and groups per OS type.
 
 - name: Set Linux User Variables
   ansible.builtin.set_fact:
     root_group: root
   when: ansible_system == "Linux"
+
 
 - name: Set FreeBSD User Variables
   ansible.builtin.set_fact:
