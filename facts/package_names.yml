@@ -20,7 +20,6 @@
   when: ansible_distribution == "Ubuntu"
 
 
-# TODO Needs tested
 - name: Set FreeBSD Package Names
   ansible.builtin.set_fact:
     firefox: firefox-esr

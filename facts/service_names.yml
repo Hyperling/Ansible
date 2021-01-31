@@ -20,7 +20,6 @@
   when: ansible_distribution == "Ubuntu"
 
 
-# TODO Needs tested
 - name: Set FreeBSD Service Names
   ansible.builtin.set_fact:
     cups: cups

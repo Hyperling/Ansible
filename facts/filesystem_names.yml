@@ -20,7 +20,6 @@
   when: ansible_distribution == "Ubuntu"
 
 
-# TODO Needs tested
 - name: Set FreeBSD FS Names
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
