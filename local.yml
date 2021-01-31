@@ -26,20 +26,20 @@
   hosts: workstation
   connection: local
   become: true
-  when: ansible_distribution != "FreeBSD"
 
   tasks:
     - include: tasks/flatpaks.yml
+      when: ansible_distribution != "FreeBSD"
 
 # FreeBSD Desktops and laptops
 - name: FreeBSD UI Setup
   hosts: workstation
   connection: local
   become: true
-  when: ansible_distribution == "FreeBSD"
 
   tasks:
     - include: tasks/freebsd_gui.yml
+      when: ansible_distribution == "FreeBSD"
 
 
 # Run hardness checks
