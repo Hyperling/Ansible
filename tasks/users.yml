@@ -1,14 +1,23 @@
 ---
+# Create users for both desktop and server machines.
 
-- name: Create Ansible User
+# Scheduler
+- name: Create User Ansible
   user:
     name: ansible
+    comment: Ansible
     system: yes
+    
 
-- name: Add Ansible Sudoers File
-  copy:
-    src: sudoers_ansible
-    dest: "{{ sudoers_install_dir }}"
-    owner: root
-    group: "{{ root_group }}"
-    mode: 0440
+# Superuser
+- name: Create User Hyperling
+  user:
+    name: ling
+    comment: Hyperling
+    groups: 
+      - sudo
+    append: yes
+    shell: /bin/bash
+    create_home: yes
+    skeleton: yes
+    generate_ssh_key: yes

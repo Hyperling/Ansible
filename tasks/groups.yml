@@ -1,0 +1,6 @@
+---
+# Groups that do not come to all distros by default.
+
+- name: Ensure sudo group exists (Looking at you BSD!)
+  group:
+    name: sudo

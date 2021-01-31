@@ -15,8 +15,10 @@
 
   tasks:
     - include: tasks/packages.yml
+    - include: tasks/groups.yml
     - include: tasks/users.yml
     - include: tasks/cron.yml
+    - include: tasks/sudo.yml
     - include: tasks/harden.yml
       ignore_errors: yes
 
