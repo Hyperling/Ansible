@@ -9,4 +9,6 @@
   shell: "{{ lynis_install_dir }}/lynis --no-colors audit system > {{ lynis_report }} 2>&1"
 
 - name: Make Lynis Report Readable
-  shell: chmod 444 "{{ lynis_report }}"
+  ansible.builtin.file:
+    path: "{{ lynis_report }}"
+    mode: '0444'
