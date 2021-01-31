@@ -11,11 +11,12 @@
     - include: facts/filesystem_names.yml
     - include: facts/package_names.yml
     - include: facts/service_names.yml
+    - include: facts/user_names.yml
 
   tasks:
+    - include: tasks/packages.yml
     - include: tasks/users.yml
     - include: tasks/cron.yml
-    - include: tasks/packages.yml
     - include: tasks/harden.yml
 
 

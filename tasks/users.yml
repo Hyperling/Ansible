@@ -8,13 +8,13 @@
 
 - name: Create Ansible User
   user:
-    name: ansible
+    name: "{{ ansible }}"
     system: yes
 
 - name: Add Ansible Sudoers File
   copy:
     src: sudoers_ansible
     dest: "{{ sudoers_install_dir }}"
-    owner: root
-    group: root
+    owner: "{{ root }}"
+    group: "{{ root_group }}"
     mode: 0440
