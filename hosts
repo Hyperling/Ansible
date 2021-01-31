@@ -1,6 +1,7 @@
 [workstation]
 x570
 dell
+dell-laptop
 
 [server]
 freeboy
