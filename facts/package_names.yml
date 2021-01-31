@@ -5,6 +5,7 @@
   ansible.builtin.set_fact:
     firefox: firefox
     thunderbird: thunderbird
+    evolution: evolution
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -13,6 +14,7 @@
   ansible.builtin.set_fact:
     firefox: firefox
     thunderbird: thunderbird
+    evolution: evolution
   when: ansible_distribution == "Ubuntu"
 
 
@@ -21,4 +23,5 @@
   ansible.builtin.set_fact:
     firefox: firefox
     thunderbird: thunderbird
+    evolution: evolution
   when: ansible_distribution == "FreeBSD"

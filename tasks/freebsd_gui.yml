@@ -1,0 +1,15 @@
+- name: Install FreeBSD UI Software
+  package: 
+    name:
+    - xorg
+    - gnome3
+    - "{{ firefox }}"
+    - "{{ thunderbird }}"
+    update_cache: yes
+
+- name: Uninstall Bloat
+  package: 
+    name:
+    - "{{ evolution }}"
+    update_cache: yes
+    present: no

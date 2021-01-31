@@ -27,6 +27,11 @@
 
   tasks:
     - include: tasks/flatpaks.yml
+  when: ansible_distribution != "FreeBSD"
+
+  tasks:
+    - include: tasks/freebsd_gui.yml
+  when: ansible_distribution == "FreeBSD"
 
 
 # Run hardness checks
