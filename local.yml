@@ -8,7 +8,7 @@
   become: true  
 
   pre_tasks:
-    - include: facts/system.yml
+    - include_tasks: facts/system.yml
     - include: facts/package.yml
     - include: facts/service.yml
     - include: facts/user.yml
