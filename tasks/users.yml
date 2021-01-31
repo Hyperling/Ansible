@@ -14,7 +14,7 @@
 - name: Add Ansible Sudoers File
   copy:
     src: sudoers_ansible
-    dest: /etc/sudoers.d/ansible
+    dest: ""{{ sudoers_install_dir }}"/sudoers.d/ansible
     owner: root
     group: root
     mode: 0440

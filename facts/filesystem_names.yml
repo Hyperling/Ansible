@@ -5,6 +5,7 @@
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
+    sudoers_install_dir: /etc
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -13,6 +14,7 @@
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
+    sudoers_install_dir: /etc
   when: ansible_distribution == "Ubuntu"
 
 
@@ -21,4 +23,5 @@
   ansible.builtin.set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
+    sudoers_install_dir: /usr/local/etc
   when: ansible_distribution == "FreeBSD"

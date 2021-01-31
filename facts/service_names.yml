@@ -5,7 +5,6 @@
   ansible.builtin.set_fact:
     cups: cups
     cups_pattern: cupsd
-
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
   when: ansible_distribution == "Pop!_OS"
@@ -16,7 +15,6 @@
   ansible.builtin.set_fact:
     cups: cups
     cups_pattern: cupsd
-
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
   when: ansible_distribution == "Ubuntu"
@@ -27,7 +25,6 @@
   ansible.builtin.set_fact:
     cups: cups
     cups_pattern: cupsd
-    
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
   when: ansible_distribution == "FreeBSD"
