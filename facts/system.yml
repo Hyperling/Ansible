@@ -3,6 +3,7 @@
 
 - name: Set Pop!_OS FS Names
   ansible.builtin.set_fact:
+    flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
@@ -12,6 +13,7 @@
 # TODO Needs tested
 - name: Set Ubuntu FS Names
   ansible.builtin.set_fact:
+    flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
@@ -20,6 +22,7 @@
 
 - name: Set FreeBSD FS Names
   ansible.builtin.set_fact:
+    flatpak_distro: no
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible

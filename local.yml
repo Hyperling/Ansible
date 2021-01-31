@@ -8,10 +8,10 @@
   become: true  
 
   pre_tasks:
-    - include: facts/filesystem_names.yml
-    - include: facts/package_names.yml
-    - include: facts/service_names.yml
-    - include: facts/user_names.yml
+    - include: facts/system.yml
+    - include: facts/package.yml
+    - include: facts/service.yml
+    - include: facts/user.yml
 
   tasks:
     - include: tasks/packages.yml
@@ -30,6 +30,7 @@
   tasks:
     - include: tasks/flatpaks.yml
       when: ansible_distribution != "FreeBSD"
+        and "{{ flatpak_distro }} == yes"
 
 
 # FreeBSD Workstations
