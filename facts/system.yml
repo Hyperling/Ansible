@@ -1,7 +1,7 @@
 # Define file, folder, and other facts per OS.
 
 - name: Set Pop OS Facts
-  ansible.builtin.set_fact:
+  set_fact:
     flatpak_distro: yes
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
