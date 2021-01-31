@@ -6,7 +6,7 @@
     force: yes
 
 - name: Run Lynis Audit System
-  shell: "{{ lynis_install_dir }}"/lynis --no-colors audit system > "{{ lynis_report }}" 2>&1
+  shell: "{{ lynis_exec }}" --no-colors audit system > "{{ lynis_report }}" 2>&1
 
 - name: Make Lynis Report Readable
   shell: chmod 444 "{{ lynis_report }}"
