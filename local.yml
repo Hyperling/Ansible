@@ -21,7 +21,7 @@
       ignore_errors: yes
 
 
-# Linux Desktops and laptops
+# Linux Workstations
 - name: UI Setup
   hosts: workstation
   connection: local
@@ -31,7 +31,8 @@
     - include: tasks/flatpaks.yml
       when: ansible_distribution != "FreeBSD"
 
-# FreeBSD Desktops and laptops
+
+# FreeBSD Workstations
 - name: FreeBSD UI Setup
   hosts: workstation
   connection: local
@@ -42,7 +43,7 @@
       when: ansible_distribution == "FreeBSD"
 
 
-# Run hardness checks
+# Run Hardness Checks
 - name: Hardening Check
   hosts: all, localhost
   connection: local
