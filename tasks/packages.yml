@@ -1,6 +1,7 @@
 - name: Install Repo Software
   package: 
     name:
+    - sudo
     - htop
     - neofetch
     - "{{ sshfs }}"
