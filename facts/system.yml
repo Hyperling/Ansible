@@ -1,31 +1,32 @@
 ---
 # Define file, folder, and other facts per OS.
 
-- name: Set Pop OS Facts
-  ansible.builtin.set_fact:
-    flatpak_distro: yes
-    lynis_install_dir: /usr/local/lynis
-    lynis_report: /home/ling/lynis.log
-    sudoers_install_dir: /etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/bin/ansible-pull
-  when: ansible_distribution == "Pop!_OS"
+- tasks:
+  - name: Set Pop OS Facts
+    ansible.builtin.set_fact:
+      flatpak_distro: yes
+      lynis_install_dir: /usr/local/lynis
+      lynis_report: /home/ling/lynis.log
+      sudoers_install_dir: /etc/sudoers.d/ansible
+      ansible_pull_exec: /usr/bin/ansible-pull
+    when: ansible_distribution == "Pop!_OS"
 
 
-- name: Set Debian and Ubuntu Facts
-  ansible.builtin.set_fact:
-    flatpak_distro: yes
-    lynis_install_dir: /usr/local/lynis
-    lynis_report: /root/lynis.log
-    sudoers_install_dir: /etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/bin/ansible-pull
-  when: ansible_distribution in ("Debian","Ubuntu")
+  - name: Set Debian and Ubuntu Facts
+    ansible.builtin.set_fact:
+      flatpak_distro: yes
+      lynis_install_dir: /usr/local/lynis
+      lynis_report: /root/lynis.log
+      sudoers_install_dir: /etc/sudoers.d/ansible
+      ansible_pull_exec: /usr/bin/ansible-pull
+    when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Set FreeBSD Facts
-  ansible.builtin.set_fact:
-    flatpak_distro: no
-    lynis_install_dir: /usr/local/lynis
-    lynis_report: /root/lynis.log
-    sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/local/bin/ansible-pull
-  when: ansible_distribution == "FreeBSD"
+  - name: Set FreeBSD Facts
+    ansible.builtin.set_fact:
+      flatpak_distro: no
+      lynis_install_dir: /usr/local/lynis
+      lynis_report: /root/lynis.log
+      sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
+      ansible_pull_exec: /usr/local/bin/ansible-pull
+    when: ansible_distribution == "FreeBSD"
