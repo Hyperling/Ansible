@@ -21,9 +21,8 @@
       hald_enable="YES"
       gnome_enable="YES"
       gdm_enable="YES"
-      
+
       fusefs_enable="YES"
-    marker: "# {mark} Ansible for GNOME+SSHFS "
   backup: yes
 
 - name: Add GNOME to fstab
@@ -31,5 +30,4 @@
     path: /etc/fstab
     block: |
       proc            /proc           procfs  rw      0       0
-    marker: "# {mark} Ansible for GNOME "
   backup: yes
