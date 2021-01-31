@@ -18,6 +18,7 @@
     - include: tasks/users.yml
     - include: tasks/cron.yml
     - include: tasks/harden.yml
+      ignore_errors: yes
 
 
 # Desktops and laptops

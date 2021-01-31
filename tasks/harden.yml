@@ -4,7 +4,6 @@
     pattern: "{{ cups_pattern }}"
     state: stopped
     enabled: no
-    ignore_errors: yes
 
 - name: Remove CUPS-Browse Daemon
   service:
@@ -12,4 +11,3 @@
     pattern: "{{ cups_browse_pattern }}"
     state: stopped
     enabled: no
-    ignore_errors: yes
