@@ -1,5 +1,5 @@
 - name: Install Lynis
-  ansible.builtin.git: 
+  git: 
     repo: https://github.com/CISOfy/lynis
     dest: "{{ lynis_install_dir }}"
     clone: yes
@@ -9,6 +9,6 @@
   shell: "{{ lynis_install_dir }}/lynis --no-colors audit system > {{ lynis_report }} 2>&1"
 
 - name: Make Lynis Report Readable
-  ansible.builtin.file:
+  file:
     path: "{{ lynis_report }}"
     mode: '0444'
