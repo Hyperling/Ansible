@@ -8,16 +8,16 @@
   become: true  
 
   pre_tasks:
-    - include_tasks: facts/system.yml
-    - include_tasks: facts/package.yml
-    - include_tasks: facts/service.yml
-    - include_tasks: facts/user.yml
+    - include: facts/system.yml
+    - include: facts/package.yml
+    - include: facts/service.yml
+    - include: facts/user.yml
 
   tasks:
-    - include_tasks: tasks/packages.yml
-    - include_tasks: tasks/users.yml
-    - include_tasks: tasks/cron.yml
-    - include_tasks: tasks/harden.yml
+    - include: tasks/packages.yml
+    - include: tasks/users.yml
+    - include: tasks/cron.yml
+    - include: tasks/harden.yml
       ignore_errors: yes
 
 
@@ -28,13 +28,13 @@
   become: true
 
   tasks:
-    - include_tasks: tasks/flatpaks.yml
+    - include: tasks/flatpaks.yml
       when: ansible_system == "Linux" and
             flatpak_distro == yes
     - shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and
             flatpak_distro == no
-    - include_tasks: tasks/freebsd_gui.yml
+    - include: tasks/freebsd_gui.yml
       when: ansible_system == "FreeBSD"
 
 
@@ -45,4 +45,4 @@
   become: true
 
   tasks:
-    - include_tasks: tasks/hardness_check_lynis.yml
+    - include: tasks/hardness_check_lynis.yml
