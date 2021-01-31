@@ -2,7 +2,7 @@
   cron:
     user: ansible
     name: "Ansible Sync"
-    minute: "*/5"
-    job: "{{ ansible_pull_exec }} -o -U https://github.com/Hyperling/ansible.git > /dev/null"
+    minute: "*/15"
+    job: "{{ ansible_pull_exec }} -o -U https://github.com/Hyperling/ansible.git"
     state: present
     disabled: no
