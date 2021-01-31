@@ -3,5 +3,5 @@
     name:
     - htop
     - neofetch
-    - sshfs
+    - "{{ sshfs }}"
     update_cache: yes

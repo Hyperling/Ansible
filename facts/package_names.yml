@@ -3,25 +3,28 @@
 
 - name: Set Pop!_OS Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
+    firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
+    sshfs: sshfs
   when: ansible_distribution == "Pop!_OS"
 
 
 # TODO Needs tested
 - name: Set Ubuntu Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
+    firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
+    sshfs: sshfs
   when: ansible_distribution == "Ubuntu"
 
 
 # TODO Needs tested
 - name: Set FreeBSD Package Names
   ansible.builtin.set_fact:
-    firefox: firefox
+    firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
+    sshfs: fusefs-sshfs
   when: ansible_distribution == "FreeBSD"
