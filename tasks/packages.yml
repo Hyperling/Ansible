@@ -4,4 +4,3 @@
     - htop
     - neofetch
     - "{{ sshfs }}"
-    update_cache: yes
