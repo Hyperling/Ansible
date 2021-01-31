@@ -1,10 +1,4 @@
-# TODO This does not work in FreeBSD yet.
-#TASK [Create Ansible User] *****************************************************
-#fatal: [freeboy]: FAILED! => {"changed": false, "msg": "pw: the password db file is busy\n", "name": "hyper", "rc": 1}
-#changed: [localhost]
-#
-#TASK [Add Ansible Sudoers File] ************************************************
-#fatal: [localhost]: FAILED! => {"changed": false, "checksum": "154cc146010b36e25502dfe9a7f6b09fec8bbf43", "msg": "Destination directory /etc/sudoers.d does not exist"}
+---
 
 - name: Create Ansible User
   user:

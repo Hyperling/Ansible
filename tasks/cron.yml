@@ -1,3 +1,5 @@
+---
+
 - name: install cron job (ansible-pull)
   cron:
     user: ansible

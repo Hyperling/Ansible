@@ -1,3 +1,5 @@
+---
+
 - name: Install Lynis
   git: 
     repo: https://github.com/CISOfy/lynis

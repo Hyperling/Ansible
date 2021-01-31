@@ -1,3 +1,5 @@
+---
+
 - name: Remove CUPS Daemon
   service:
     name: "{{ cups }}"

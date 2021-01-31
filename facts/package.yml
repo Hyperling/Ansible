@@ -10,8 +10,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 
-# TODO Needs tested
-- name: Set Debian and  Ubuntu Package Names
+- name: Set Debian and Ubuntu Package Names
   set_fact:
     firefox: firefox-esr
     thunderbird: thunderbird
