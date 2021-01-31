@@ -23,11 +23,11 @@
       gdm_enable="YES"
 
       fusefs_enable="YES"
-  backup: yes
+    backup: yes
 
 - name: Add GNOME to fstab
   blockinfile:
     path: /etc/fstab
     block: |
       proc            /proc           procfs  rw      0       0
-  backup: yes
+    backup: yes
