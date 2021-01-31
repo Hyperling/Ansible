@@ -5,9 +5,10 @@
     - gnome3
     - "{{ firefox }}"
     - "{{ thunderbird }}"
+    state: present
 
 - name: Uninstall Bloat
   package: 
     name:
     - "{{ evolution }}"
-    present: no
+    state: absent

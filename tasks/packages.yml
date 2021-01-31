@@ -4,3 +4,4 @@
     - htop
     - neofetch
     - "{{ sshfs }}"
+    state: present
