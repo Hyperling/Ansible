@@ -2,7 +2,7 @@
 # Define program names per OS for package builtin.
 
 - name: Set Pop OS Package Names
-  ansible.builtin.set_fact:
+  set_fact:
     firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
@@ -12,7 +12,7 @@
 
 # TODO Needs tested
 - name: Set Debian and  Ubuntu Package Names
-  ansible.builtin.set_fact:
+  set_fact:
     firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
@@ -21,7 +21,7 @@
 
 
 - name: Set FreeBSD Package Names
-  ansible.builtin.set_fact:
+  set_fact:
     firefox: firefox-esr
     thunderbird: thunderbird
     evolution: evolution

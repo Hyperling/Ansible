@@ -2,7 +2,7 @@
 # Define program names per OS for service builtin.
 
 - name: Set Pop OS Service Names
-  ansible.builtin.set_fact:
+  set_fact:
     cups: cups
     cups_pattern: cupsd
     cups_browse: cups-browsed
@@ -12,7 +12,7 @@
 
 # TODO Needs tested
 - name: Set Debian and Ubuntu Service Names
-  ansible.builtin.set_fact:
+  set_fact:
     cups: cups
     cups_pattern: cupsd
     cups_browse: cups-browsed
@@ -21,7 +21,7 @@
 
 
 - name: Set FreeBSD Service Names
-  ansible.builtin.set_fact:
+  set_fact:
     cups: cups
     cups_pattern: cupsd
     cups_browse: cups-browsed
