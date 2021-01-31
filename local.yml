@@ -30,10 +30,10 @@
   tasks:
     - include: tasks/flatpaks.yml
       when: ansible_system == "Linux" and
-            "{{ flatpak_distro }} == yes"
+            flatpak_distro == yes
     - shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and
-            "{{ flatpak_distro }} == no"
+            flatpak_distro == no
     - include: tasks/freebsd_gui.yml
       when: ansible_system == "FreeBSD"
 
