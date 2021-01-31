@@ -3,6 +3,6 @@
     user: ansible
     name: "Ansible Sync"
     minute: "*/5"
-    job: "/usr/bin/ansible-pull -o -U https://github.com/Hyperling/ansible.git > /dev/null"
+    job: "{{ ansible_pull_exec }} -o -U https://github.com/Hyperling/ansible.git > /dev/null"
     state: present
     disabled: no
