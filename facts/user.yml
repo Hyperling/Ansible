@@ -3,15 +3,10 @@
 
 - name: Set Linux User Variables
   ansible.builtin.set_fact:
-    root: root
     root_group: root
-    ansible: ansible
-  when: ansible_distribution == "Pop!_OS" or
-        ansible_distribution == "Ubuntu"
+  when: ansible_system == "Linux"
 
 - name: Set FreeBSD User Variables
   ansible.builtin.set_fact:
-    root: root
     root_group: wheel
-    ansible: ansible
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_system == "FreeBSD"

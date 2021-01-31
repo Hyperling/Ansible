@@ -21,7 +21,7 @@
       ignore_errors: yes
 
 
-# Linux Workstations
+# Workstations
 - name: UI Setup
   hosts: workstation
   connection: local
@@ -29,19 +29,13 @@
 
   tasks:
     - include: tasks/flatpaks.yml
-      when: ansible_distribution != "FreeBSD"
-        and "{{ flatpak_distro }} == yes"
-
-
-# FreeBSD Workstations
-- name: FreeBSD UI Setup
-  hosts: workstation
-  connection: local
-  become: true
-
-  tasks:
+      when: ansible_system == "Linux" and
+            "{{ flatpak_distro }} == yes"
+    - shell: echo "Not implemented yet. :("
+      when: ansible_system == "Linux" and
+            "{{ flatpak_distro }} == no"
     - include: tasks/freebsd_gui.yml
-      when: ansible_distribution == "FreeBSD"
+      when: ansible_system == "FreeBSD"
 
 
 # Run Hardness Checks
