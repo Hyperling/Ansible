@@ -6,7 +6,7 @@
     update_cache: yes
   when: ansible_pkg_mgr in ["apt", "pacman"]
 
-- name: Install Repo Software
+- name: Repo Install Software
   package: 
     name:
     - htop
@@ -15,7 +15,7 @@
     - locate
     state: present
 
-- name: Update Repo Software
+- name: Repo Update Software
   package: 
     name:
     - ansible
@@ -23,14 +23,14 @@
     - sudo
     state: latest
 
-- name: Remove Repo Software
+- name: Repo Remove Software
   package: 
     name:
     - cowsay # Sorry ;)
     state: absent
 
 # TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.
-- name: Remove Repo Software
+- name: Repo Remove Software (Besides Ubuntu)
   package: 
     name:
     - snapd
