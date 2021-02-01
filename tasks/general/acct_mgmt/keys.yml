@@ -6,24 +6,13 @@
 #  openssh_keypair:
 #    path: /root/.ssh/id_rsa
 
-- name: Create Root's SSH Key
+- name: SSH Key | Root | Create
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
   args:
     executable: /bin/bash
   ignore_errors: yes
 
-- name: Create Root's SSH Key
-  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
-  args:
-    stdin: "n"
-  ignore_errors: yes
-
-- name: Create Root's SSH Key
-  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+- name: SSH Key | Root | Copy to 1337
+  shell: ssh-copy-id -f -i /root/.ssh/id_rsa ling@leet
   args:
     executable: /bin/bash
-    stdin: "n"
-  ignore_errors: yes
-
-- name: Join System to 1337 Share
-  shell: ssh-copy-id -f -i /root/.ssh/id_rsa ling@leet
