@@ -12,12 +12,6 @@
     executable: /bin/bash
   ignore_errors: yes
 
-- vars_prompt:
-  - name: leet_passwd
-    prompt: 'Enter password for 1337 share: '
-    unsafe: yes
-    private: yes
-
 - name: SSH Key | Root | Copy to 1337
   shell: ssh-copy-id -f -i /root/.ssh/id_rsa ling@leet
   args:
