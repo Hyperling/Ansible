@@ -6,10 +6,10 @@
     path: /root/.ssh/id_rsa
 
 - name: TEST DELETEME 1
-  shell: whoami
+  shell: echo `whoami`
 
 - name: TEST DELETEME 2
-  shell: pwd
+  shell: echo `pwd`
 
 - name: Join System to 1337 Share
-  shell: ssh-copy-id -f ling@leet
+  shell: echo "ssh-copy-id -f ling@leet"
