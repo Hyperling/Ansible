@@ -27,7 +27,7 @@
     - git
     - sudo
     state: latest
-  when: "1" == "0"
+  when: "1 == 0"
 
 - name: Repo Remove Software
   package: 
