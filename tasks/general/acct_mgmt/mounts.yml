@@ -2,7 +2,10 @@
 # Mount shares that all systems should have.
 
 - name: Mounts | Create 1337 Folder
-  shell: mkdir -p /mnt/leet
+  file: 
+    path: /mnt/leet
+    state: directory
+    mode: '0755'
 
 - name: Mounts | Create fstab Entries
   blockinfile:
