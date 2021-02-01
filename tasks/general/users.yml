@@ -7,7 +7,7 @@
     name: ansible
     comment: Ansible
     system: yes
-    
+
 
 # Superuser
 - name: Create User Hyperling
@@ -19,5 +19,4 @@
     append: yes
     shell: /bin/bash
     create_home: yes
-    skeleton: yes
     generate_ssh_key: yes

@@ -14,12 +14,12 @@
     - include: facts/user.yml
 
   tasks:
-    - include: tasks/packages.yml
-    - include: tasks/groups.yml
-    - include: tasks/users.yml
-    - include: tasks/cron.yml
-    - include: tasks/sudo.yml
-    - include: tasks/harden.yml
+    - include: tasks/general/packages.yml
+    - include: tasks/general/groups.yml
+    - include: tasks/general/users.yml
+    - include: tasks/general/cron.yml
+    - include: tasks/general/sudo.yml
+    - include: tasks/general/harden.yml
       ignore_errors: yes
 
 
@@ -30,13 +30,13 @@
   become: true
 
   tasks:
-    - include: tasks/flatpaks.yml
+    - include: tasks/linux/flatpaks.yml
       when: ansible_system == "Linux" and
             flatpak_distro == yes
     - shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and
             flatpak_distro == no
-    - include: tasks/freebsd_gui.yml
+    - include: tasks/freebsd/gui.yml
       when: ansible_system == "FreeBSD"
 
 
@@ -47,4 +47,4 @@
   become: true
 
   tasks:
-    - include: tasks/hardness_check_lynis.yml
+    - include: tasks/general/hardness_check_lynis.yml

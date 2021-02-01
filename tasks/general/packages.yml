@@ -7,4 +7,11 @@
     - htop
     - neofetch
     - "{{ sshfs }}"
+    - locate
+    state: present
+
+- name: Remove Repo Software
+  package: 
+    name:
+    - cowsay # Sorry ;)
     state: present
