@@ -22,7 +22,7 @@
 
 - name: Testing Apt Cache Refresh 2
   apt: update_cache=yes
-  when: ansible_pkg_mgr = "apt"
+  when: ansible_pkg_mgr == "apt"
 
 - name: Remove Repo Software
   package: 
