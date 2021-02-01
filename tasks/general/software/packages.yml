@@ -11,6 +11,12 @@
     - locate
     state: present
 
+- name: Testing Cache Refresh Conditions for LearnLinuxTV/personal_ansible_desktop_configs Bug1
+  package:
+    update_cache: yes
+  when: ansible_distribution in ["Debian", "Ubuntu"] or
+        ansible_os_family in ["Debian", "Ubuntu"]
+
 - name: Remove Repo Software
   package: 
     name:

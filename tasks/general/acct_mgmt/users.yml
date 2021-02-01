@@ -20,3 +20,4 @@
     shell: /bin/bash
     create_home: yes
     generate_ssh_key: yes
+    password: "{{ ling_passwd }}"
