@@ -3,7 +3,7 @@
 
 # Everything
 - name: Initial Setup
-  hosts: all
+  hosts: localhost
   connection: local
   become: true  
 
@@ -47,7 +47,7 @@
 
 # Run Hardness Checks
 - name: Hardening Check
-  hosts: all
+  hosts: localhost
   connection: local
   become: true
 
