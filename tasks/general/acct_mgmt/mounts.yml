@@ -1,0 +1,9 @@
+---
+# Mount shares that all systems should have.
+
+- name: Add 1337 to fstab
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
+    backup: yes
