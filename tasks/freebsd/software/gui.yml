@@ -1,7 +1,7 @@
 ---
 # Provide FreeBSD with a DE.
 
-- name: Install FreeBSD UI Software
+- name: FreeBSD | Software | Install UI Components
   package: 
     name:
     - xorg
@@ -10,13 +10,13 @@
     - "{{ thunderbird }}"
     state: present
 
-- name: Uninstall Bloat
+- name: FreeBSD | Software | Uninstall Bloat
   package: 
     name:
     - "{{ evolution }}"
     state: absent
 
-- name: Add GNOME + SSHFS to rc.conf
+- name: FreeBSD | Software | Create rc.conf Entries
   blockinfile:
     path: /etc/rc.conf
     block: |
@@ -28,7 +28,7 @@
       fusefs_enable="YES"
     backup: yes
 
-- name: Add GNOME to fstab
+- name: FreeBSD | Software | Create fstab Entries
   blockinfile:
     path: /etc/fstab
     block: |

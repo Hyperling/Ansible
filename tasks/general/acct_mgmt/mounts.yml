@@ -4,7 +4,7 @@
 - name: Mounts | Create 1337 Folder
   shell: mkdir -p /mnt/leet
 
-- name: Mounts | Create 1337 fstab Entry
+- name: Mounts | Create fstab Entries
   blockinfile:
     path: /etc/fstab
     block: |
