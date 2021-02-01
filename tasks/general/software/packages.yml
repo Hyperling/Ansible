@@ -9,12 +9,19 @@
 - name: Install Repo Software
   package: 
     name:
-    - sudo
     - htop
     - neofetch
     - "{{ sshfs }}"
     - locate
     state: present
+
+- name: Update Repo Software
+  package: 
+    name:
+    - ansible
+    - git
+    - sudo
+    state: latest
 
 - name: Remove Repo Software
   package: 
@@ -22,7 +29,7 @@
     - cowsay # Sorry ;)
     state: absent
 
-# TODO: Confirm if Ubuntu still uses snap for critical UI components like GNOME.
+# TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.
 - name: Remove Repo Software
   package: 
     name:
