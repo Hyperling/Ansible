@@ -1,4 +1,5 @@
 ---
+# Cross-platform package management.
 
 - name: Install Repo Software
   package: 
@@ -14,5 +15,12 @@
   package: 
     name:
     - cowsay # Sorry ;)
+    state: absent
+
+# TODO: Confirm if Ubuntu still uses snap for critical UI components like GNOME.
+- name: Remove Repo Software
+  package: 
+    name:
     - snapd
     state: absent
+  when: ansible_distribution != "Ubuntu"

@@ -1,5 +1,5 @@
 ---
-# Extra SSH keys
+# SSH keys for day-to-day system usage.
 
 - name: Create Root's SSH Key
   openssh_keypair:
@@ -7,9 +7,15 @@
 
 - name: TEST DELETEME 1
   shell: echo `whoami`
+  register: test1
+
+- debug: test1
 
 - name: TEST DELETEME 2
   shell: echo `pwd`
+  register: test2
+
+- debug: test2
 
 - name: Join System to 1337 Share
   shell: echo "ssh-copy-id -f ling@leet"

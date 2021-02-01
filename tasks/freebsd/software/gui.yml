@@ -1,4 +1,5 @@
 ---
+# Provide FreeBSD with a DE.
 
 - name: Install FreeBSD UI Software
   package: 
