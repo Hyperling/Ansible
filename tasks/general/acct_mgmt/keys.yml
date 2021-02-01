@@ -5,19 +5,5 @@
   openssh_keypair:
     path: /root/.ssh/id_rsa
 
-- name: TEST DELETEME 1
-  shell: echo `whoami`
-  register: test1
-
-- debug: 
-    var: test1
-
-- name: TEST DELETEME 2
-  shell: echo `pwd`
-  register: test2
-
-- debug: 
-    var: test2
-
 - name: Join System to 1337 Share
-  shell: echo "ssh-copy-id -f ling@leet"
+  shell: ssh-copy-id ling@leet
