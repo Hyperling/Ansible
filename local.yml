@@ -8,10 +8,10 @@
   become: true  
 
   pre_tasks:
-    - include: facts/system.yml
-    - include: facts/package.yml
-    - include: facts/service.yml
-    - include: facts/user.yml
+    - include: facts/general/system.yml
+    - include: facts/general/package.yml
+    - include: facts/general/service.yml
+    - include: facts/general/user.yml
 
   tasks:
     - include: tasks/general/software/packages.yml
@@ -32,6 +32,12 @@
   hosts: workstation
   connection: local
   become: true
+
+  pre_tasks:
+    - include: facts/workstation/system.yml
+    - include: facts/workstation/package.yml
+    - include: facts/workstation/service.yml
+    - include: facts/workstation/user.yml
 
   tasks:
     - include: tasks/linux/software/flatpaks.yml
