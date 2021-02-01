@@ -8,16 +8,19 @@
 
 - name: Create Root's SSH Key
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
+  args:
     executable: /bin/bash
   ignore_errors: yes
 
 - name: Create Root's SSH Key
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+  args:
     stdin: "n"
   ignore_errors: yes
 
 - name: Create Root's SSH Key
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+  args:
     executable: /bin/bash
     stdin: "n"
   ignore_errors: yes
