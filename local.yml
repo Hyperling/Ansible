@@ -20,8 +20,8 @@
     - include: tasks/general/acct_mgmt/groups.yml
     - include: tasks/general/acct_mgmt/users.yml
     - include: tasks/general/acct_mgmt/sudo.yml
-    #- include: tasks/general/acct_mgmt/keys.yml
-    #  when: ansible_distribution != "Debian"
+    - include: tasks/general/acct_mgmt/keys.yml
+      when: ansible_distribution != "Debian"
     - include: tasks/general/acct_mgmt/mounts.yml
 
     - include: tasks/general/cron/ansible.yml

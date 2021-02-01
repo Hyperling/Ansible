@@ -1,9 +1,13 @@
 ---
 # SSH keys for day-to-day system usage.
 
+# Debian's ansible is too old to use this.
+#- name: Create Root's SSH Key
+#  openssh_keypair:
+#    path: /root/.ssh/id_rsa
+
 - name: Create Root's SSH Key
-  openssh_keypair:
-    path: /root/.ssh/id_rsa
+  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
 
 - name: Join System to 1337 Share
   shell: ssh-copy-id -f -i /root/.ssh/id_rsa ling@leet

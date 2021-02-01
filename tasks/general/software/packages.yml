@@ -1,10 +1,14 @@
 ---
 # Cross-platform package management.
 
-- name: Repo Cache Refresh
+- name: Repo Cache Refresh (Apt and Pacman)
   package:
     update_cache: yes
   when: ansible_pkg_mgr in ["apt", "pacman"]
+
+- name: Repo Cache Refresh (FreeBSD)
+  shell: pkg update
+  when: ansible_system == "FreeBSD"
 
 - name: Repo Install Software
   package: 
