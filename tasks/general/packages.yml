@@ -14,4 +14,4 @@
   package: 
     name:
     - cowsay # Sorry ;)
-    state: present
+    state: absent
