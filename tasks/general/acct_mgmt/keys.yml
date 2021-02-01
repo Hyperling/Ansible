@@ -6,5 +6,4 @@
     path: /root/.ssh/id_rsa
 
 - name: Join System to 1337 Share
-  shell:
-    path: ssh-copy-id -f ling@leet
+  shell: "ssh-copy-id -f ling@leet"
