@@ -14,7 +14,7 @@
 - name: Testing Package Cache Refresh
   package:
     update_cache: yes
-  when: ansible_os_family in ["Debian", "Ubuntu"]
+  when: ansible_os_family == "Debian"
 
 - name: Testing Apt Cache Refresh
   apt: update_cache=yes
