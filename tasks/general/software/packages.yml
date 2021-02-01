@@ -1,6 +1,11 @@
 ---
 # Cross-platform package management.
 
+- name: Repo Cache Refresh
+  package:
+    update_cache: yes
+  when: ansible_pkg_mgr in ["apt", "pacman"]
+
 - name: Install Repo Software
   package: 
     name:
@@ -10,19 +15,6 @@
     - "{{ sshfs }}"
     - locate
     state: present
-
-- name: Testing Package Cache Refresh
-  package:
-    update_cache: yes
-  when: ansible_os_family == "Debian"
-
-- name: Testing Apt Cache Refresh
-  apt: update_cache=yes
-  when: ansible_distribution in ["Debian", "Ubuntu"]
-
-- name: Testing Apt Cache Refresh 2
-  apt: update_cache=yes
-  when: ansible_pkg_mgr == "apt"
 
 - name: Remove Repo Software
   package: 
