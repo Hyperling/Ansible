@@ -5,5 +5,11 @@
   openssh_keypair:
     path: /root/.ssh/id_rsa
 
+- name: TEST DELETEME 1
+  shell: whoami
+
+- name: TEST DELETEME 2
+  shell: pwd
+
 - name: Join System to 1337 Share
-  shell: "ssh-copy-id -f ling@leet"
+  shell: ssh-copy-id -f ling@leet
