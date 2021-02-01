@@ -12,7 +12,6 @@
       prompt: 'Enter password for 1337 share: '
       unsafe: yes
       private: yes
-  when: ansible_distribution == "Pop!_OS"
 
   pre_tasks:
     - include: facts/system.yml
