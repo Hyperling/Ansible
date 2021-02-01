@@ -7,7 +7,8 @@
 #    path: /root/.ssh/id_rsa
 
 - name: Create Root's SSH Key
-  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
+  shell: "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n"
+  #ignore_errors: yes
 
 - name: Join System to 1337 Share
   shell: ssh-copy-id -f -i /root/.ssh/id_rsa ling@leet
