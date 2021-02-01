@@ -13,19 +13,21 @@
 - name: Repo Install Software
   package: 
     name:
+    - bash
     - htop
     - neofetch
     - "{{ sshfs }}"
     - locate
     state: present
 
-- name: Repo Update Software
+- name: Repo Update Software (Disabled)
   package: 
     name:
     - ansible
     - git
     - sudo
     state: latest
+  when: "1" == "0"
 
 - name: Repo Remove Software
   package: 

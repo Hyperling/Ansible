@@ -7,7 +7,19 @@
 #    path: /root/.ssh/id_rsa
 
 - name: Create Root's SSH Key
-  shell: "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n"
+  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
+    executable: /bin/bash
+  #ignore_errors: yes
+
+- name: Create Root's SSH Key
+  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+    stdin: "n"
+  #ignore_errors: yes
+
+- name: Create Root's SSH Key
+  shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+    executable: /bin/bash
+    stdin: "n"
   #ignore_errors: yes
 
 - name: Join System to 1337 Share
