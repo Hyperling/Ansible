@@ -1,7 +1,10 @@
 ---
 # Mount shares that all systems should have.
 
-- name: Add 1337 to fstab
+- name: Mounts | Create 1337 Folder
+  shell: mkdir -p /mnt/leet
+
+- name: Mounts | Create 1337 fstab Entry
   blockinfile:
     path: /etc/fstab
     block: |
