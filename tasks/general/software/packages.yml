@@ -11,13 +11,13 @@
     - locate
     state: present
 
-- name: Testing Cache Refresh Conditions for LearnLinuxTV/personal_ansible_desktop_configs Bug1
+- name: Testing Package Cache Refresh
   package:
     update_cache: yes
   when: ansible_distribution in ["Debian", "Ubuntu"] or
         ansible_os_family in ["Debian", "Ubuntu"]
 
-- name: Testing Apt Refresh Conditions for LearnLinuxTV/personal_ansible_desktop_configs Bug1
+- name: Testing Apt Cache Refresh
   apt: update_cache=yes
   when: ansible_distribution in ["Debian", "Ubuntu"] or
         ansible_os_family in ["Debian", "Ubuntu"]
