@@ -27,5 +27,5 @@
     thunderbird: thunderbird
     evolution: evolution
     sshfs: fusefs-sshfs
-    locate: 
+    locate: htop # This is just a placeholder to prevent errors
   when: ansible_distribution == "FreeBSD"
