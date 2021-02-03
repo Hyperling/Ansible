@@ -1,7 +1,7 @@
 ---
 # Harmonize my systems rather than doing everything manually. :)
 
-# Everything
+# Setup of any device connected to this repo.
 - name: Main | Default Setup
   hosts: localhost
   connection: local
@@ -30,7 +30,7 @@
       ignore_errors: yes
 
 
-# Workstations
+# Additional setup for systems with GUI.
 - name: Main | Workstation UI Setup
   hosts: workstation
   connection: local
@@ -52,11 +52,11 @@
       when: ansible_system == "FreeBSD"
 
 
-# Run Hardness Checks
-- name: Main | Hardness Checks
+# Create reports to analyze security.
+- name: Main | Hardness Tests
   hosts: localhost
   connection: local
   become: true
 
   tasks:
-    - include: tasks/general/hardness_checks/lynis.yml
+    - include: tasks/general/tests/lynis.yml
