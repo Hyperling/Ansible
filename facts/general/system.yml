@@ -25,4 +25,4 @@
     lynis_report: /root/lynis.log
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
     ansible_pull_exec: /usr/local/bin/ansible-pull
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_system == "FreeBSD"

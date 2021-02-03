@@ -6,13 +6,14 @@
     name:
     - xorg
     - gnome3
-    - "{{ firefox }}"
+    - "{{ firefox-esr }}"
     - "{{ thunderbird }}"
     state: present
 
 - name: FreeBSD | Software | Uninstall Bloat
   package: 
     name:
+    - "{{ firefox }}"
     - "{{ evolution }}"
     state: absent
 

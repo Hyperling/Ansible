@@ -16,4 +16,4 @@
 - name: Set FreeBSD Facts
   set_fact:
     flatpak_distro: false
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_system == "FreeBSD"

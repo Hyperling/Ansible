@@ -1,11 +1,9 @@
 ---
 # Define program names per OS for package builtin.
+# This file is for ALL systems and should not include UI components.
 
 - name: Set Pop OS Package Names
   set_fact:
-    firefox: firefox-esr
-    thunderbird: thunderbird
-    evolution: evolution
     sshfs: sshfs
     locate: locate
   when: ansible_distribution == "Pop!_OS"
@@ -13,9 +11,6 @@
 
 - name: Set Debian and Ubuntu Package Names
   set_fact:
-    firefox: firefox-esr
-    thunderbird: thunderbird
-    evolution: evolution
     sshfs: sshfs
     locate: locate
   when: ansible_distribution in ("Debian","Ubuntu")
@@ -23,9 +18,6 @@
 
 - name: Set FreeBSD Package Names
   set_fact:
-    firefox: firefox-esr
-    thunderbird: thunderbird
-    evolution: evolution
     sshfs: fusefs-sshfs
     locate: htop # This is just a placeholder to prevent errors
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_system == "FreeBSD"
