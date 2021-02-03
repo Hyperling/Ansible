@@ -3,7 +3,6 @@
 
 - name: Set Pop OS Facts
   set_fact:
-    flatpak_distro: true
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
@@ -13,7 +12,6 @@
 
 - name: Set Debian and Ubuntu Facts
   set_fact:
-    flatpak_distro: true
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
@@ -23,7 +21,6 @@
 
 - name: Set FreeBSD Facts
   set_fact:
-    flatpak_distro: false
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible

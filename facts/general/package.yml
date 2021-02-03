@@ -7,6 +7,7 @@
     thunderbird: thunderbird
     evolution: evolution
     sshfs: sshfs
+    locate: locate
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -16,6 +17,7 @@
     thunderbird: thunderbird
     evolution: evolution
     sshfs: sshfs
+    locate: locate
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
@@ -25,4 +27,5 @@
     thunderbird: thunderbird
     evolution: evolution
     sshfs: fusefs-sshfs
+    locate: ""
   when: ansible_distribution == "FreeBSD"

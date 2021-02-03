@@ -36,8 +36,6 @@
   pre_tasks:
     - include: facts/workstation/system.yml
     - include: facts/workstation/package.yml
-    - include: facts/workstation/service.yml
-    - include: facts/workstation/user.yml
 
   tasks:
     - include: tasks/linux/software/flatpaks.yml
