@@ -21,7 +21,7 @@
     groups: 
       - sudo
     append: yes
-    shell: "{{ bash_exec }}"
+    shell: "{{ bash_exec.stdout }}"
     create_home: yes
     generate_ssh_key: yes
     #password: "{{ ling_passwd }}"
