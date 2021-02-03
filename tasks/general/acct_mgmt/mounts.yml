@@ -16,4 +16,5 @@
 
 - name: Mounts | Mount All
   shell: mount -a
+  args:
     warn: false
