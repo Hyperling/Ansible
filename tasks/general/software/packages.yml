@@ -14,6 +14,7 @@
   package: 
     name:
     - bash
+    - sudo
     - htop
     - neofetch
     - "{{ sshfs }}"
@@ -25,7 +26,6 @@
     name:
     - ansible
     - git
-    - sudo
     state: latest
   when: "1 == 0"
 
