@@ -16,3 +16,4 @@
 
 - name: Mounts | Mount All
   shell: mount -a
+  warn: false
