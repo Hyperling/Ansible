@@ -16,6 +16,7 @@
     - bash
     - sudo
     - htop
+    - nmap
     - neofetch
     - "{{ sshfs }}"
     - "{{ locate }}"
