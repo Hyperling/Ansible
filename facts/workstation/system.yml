@@ -17,8 +17,3 @@
   set_fact:
     flatpak_distro: false
   when: ansible_system == "FreeBSD"
-
-
-- name: Facts | Workstation | System | DEBUG flatpak_distro
-  debug:
-    var: flatpak_distro
