@@ -1,7 +1,7 @@
 ---
 # Provide FreeBSD with a DE.
 
-- name: FreeBSD | Software | Install UI Components
+- name: Workstation | FreeBSD | GUI | Install UI Components
   package: 
     name:
     - xorg
@@ -10,14 +10,14 @@
     - "{{ thunderbird }}"
     state: present
 
-- name: FreeBSD | Software | Uninstall Bloat
+- name: Workstation | FreeBSD | GUI | Uninstall Bloat
   package: 
     name:
     - "{{ firefox }}"
     - "{{ evolution }}"
     state: absent
 
-- name: FreeBSD | Software | Create rc.conf Entries
+- name: Workstation | FreeBSD | GUI | Create rc.conf Entries
   blockinfile:
     path: /etc/rc.conf
     block: |
@@ -29,7 +29,7 @@
       fusefs_enable="YES"
     backup: yes
 
-- name: FreeBSD | Software | Create fstab Entries
+- name: Workstation | FreeBSD | GUI | Create fstab Entries
   blockinfile:
     path: /etc/fstab
     block: |

@@ -1,16 +1,16 @@
 ---
 # Cross-platform package management.
 
-- name: Repo Cache Refresh (Apt and Pacman)
+- name: General | Software | Packages | Cache Refresh (Apt and Pacman)
   package:
     update_cache: yes
   when: ansible_pkg_mgr in ["apt", "pacman"]
 
-- name: Repo Cache Refresh (FreeBSD)
+- name: General | Software | Packages | Cache Refresh (FreeBSD)
   shell: pkg update
   when: ansible_system == "FreeBSD"
 
-- name: Repo Install Software
+- name: General | Software | Packages | Install Software
   package: 
     name:
     - bash
@@ -20,7 +20,7 @@
     - "{{ locate }}"
     state: present
 
-- name: Repo Update Software (Disabled)
+- name: General | Software | Packages | Update Software (Disabled)
   package: 
     name:
     - ansible
@@ -29,14 +29,14 @@
     state: latest
   when: "1 == 0"
 
-- name: Repo Remove Software
+- name: General | Software | Packages | Remove Software
   package: 
     name:
     - cowsay # Sorry ;)
     state: absent
 
 # TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.
-- name: Repo Remove Software (Besides Ubuntu)
+- name: General | Software | Packages | Remove Software (Besides Ubuntu)
   package: 
     name:
     - snapd

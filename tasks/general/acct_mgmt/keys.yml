@@ -6,11 +6,11 @@
 #  openssh_keypair:
 #    path: /root/.ssh/id_rsa
 
-- name: SSH Key | Root | Create
+- name: General | Account Management | SSH Key | Root | Create
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
   args:
     executable: "{{ bash_exec.stdout }}"
   ignore_errors: yes
 
-- name: SSH Key | Root | Copy to 1337
+- name: General | Account Management | SSH Key | Root | Copy to 1337
   shell: ssh-copy-id -i /root/.ssh/id_rsa ling@leet

@@ -1,7 +1,7 @@
 ---
 # Ensure the proper users have sudo access.
 
-- name: Add Ansible Sudoers File
+- name: General | Account Management | Sudo | Copy Ansible
   copy:
     src: sudoers_ansible
     dest: "{{ sudoers_install_dir }}"
@@ -9,7 +9,7 @@
     group: "{{ root_group }}"
     mode: 0440
 
-- name: Add Sudo Group Sudoers File
+- name: General | Account Management | Sudo | Copy Sudo Group
   copy:
     src: sudoers_sudo
     dest: "{{ sudoers_install_dir }}"

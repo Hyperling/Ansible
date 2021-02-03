@@ -2,21 +2,21 @@
 # Define program names per OS for package builtin.
 # This file is for ALL systems and should not include UI components.
 
-- name: Set Pop OS Package Names
+- name: Facts | Workstation | Package | Pop OS
   set_fact:
     sshfs: sshfs
     locate: locate
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Set Debian and Ubuntu Package Names
+- name: Facts | Workstation | Package | Debian and Ubuntu
   set_fact:
     sshfs: sshfs
     locate: locate
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Set FreeBSD Package Names
+- name: Facts | Workstation | Package | FreeBSD
   set_fact:
     sshfs: fusefs-sshfs
     locate: htop # This is just a placeholder to prevent errors

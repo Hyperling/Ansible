@@ -1,12 +1,12 @@
 ---
 
 # Pre-reqs
-- name: Install Flatpak
+- name: Workstation | Linux | Flatpak | Install Flatpak
   package:
     name: flatpak
     update_cache: yes
 
-- name: Add Flathub for System
+- name: Workstation | Linux | Flatpak | Add Flathub for System
   flatpak_remote:
     name: flathub
     state: present
@@ -14,24 +14,24 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # Hop into installs
-- name: Install Discord
+- name: Workstation | Linux | Flatpak | Install Discord
   flatpak:
     name: com.discordapp.Discord
 
-- name: Install Shotcut
+- name: Workstation | Linux | Flatpak | Install Shotcut
   flatpak:
     name: org.shotcut.Shotcut
 
-- name: Install Firefox
+- name: Workstation | Linux | Flatpak | Install Firefox
   flatpak:
     name: org.mozilla.firefox
 
-- name: Install Thunderbird
+- name: Workstation | Linux | Flatpak | Install Thunderbird
   flatpak:
     name: org.mozilla.Thunderbird
 
 # Remove any applicable repo software
-- name: Remove packages that may come with an OS but were just installed as Flatpak
+- name: Workstation | Linux | Flatpak | Remove Packages
   package: 
     name:
     - "{{ firefox }}"

@@ -1,20 +1,20 @@
 ---
 # Mount shares that all systems should have.
 
-- name: Mounts | Create 1337 Folder
+- name: General | Account Management | Mounts | Create 1337 Folder
   file: 
     path: /mnt/leet
     state: directory
     mode: '0755'
 
-- name: Mounts | Create fstab Entries
+- name: General | Account Management | Mounts | Create fstab Entries
   blockinfile:
     path: /etc/fstab
     block: |
       ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
     backup: yes
 
-- name: Mounts | Mount All
+- name: General | Account Management | Mounts | Mount All
   shell: mount -a
   args:
     warn: false

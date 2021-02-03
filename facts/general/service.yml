@@ -1,7 +1,7 @@
 ---
 # Define program names per OS for service builtin.
 
-- name: Set Pop OS Service Names
+- name: Facts | Workstation | Service | Pop OS
   set_fact:
     cups: cups
     cups_pattern: cupsd
@@ -10,7 +10,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Set Debian and Ubuntu Service Names
+- name: Facts | Workstation | Service | Debian and Ubuntu
   set_fact:
     cups: cups
     cups_pattern: cupsd
@@ -19,7 +19,7 @@
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Set FreeBSD Service Names
+- name: Facts | Workstation | Service | FreeBSD
   set_fact:
     cups: cups
     cups_pattern: cupsd

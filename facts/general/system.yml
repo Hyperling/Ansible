@@ -1,7 +1,7 @@
 ---
 # Define file, folder, and other facts per OS.
 
-- name: Set Pop OS Facts
+- name: Facts | Workstation | System | Pop OS
   set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
@@ -10,7 +10,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Set Debian and Ubuntu Facts
+- name: Facts | Workstation | System | Debian and Ubuntu
   set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
@@ -19,7 +19,7 @@
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Set FreeBSD Facts
+- name: Facts | Workstation | System | FreeBSD
   set_fact:
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log

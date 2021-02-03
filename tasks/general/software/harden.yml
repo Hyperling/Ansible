@@ -1,13 +1,13 @@
 ---
 
-- name: Remove CUPS Daemon
+- name: General | Software | Harden | Remove CUPS Daemon
   service:
     name: "{{ cups }}"
     pattern: "{{ cups_pattern }}"
     state: stopped
     enabled: no
 
-- name: Remove CUPS-Browse Daemon
+- name: General | Software | Harden | Remove CUPS-Browse Daemon
   service:
     name: "{{ cups_browse }}"
     pattern: "{{ cups_browse_pattern }}"

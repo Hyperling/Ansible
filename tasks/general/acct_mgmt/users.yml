@@ -2,7 +2,7 @@
 # Create users for both desktop and server machines.
 
 # Scheduler
-- name: Create User Ansible
+- name: General | Account Management | User | Ansible
   user:
     name: ansible
     comment: Ansible
@@ -10,7 +10,7 @@
 
 
 # Superuser
-- name: Create User Hyperling
+- name: General | Account Management | User | Hyperling
   user:
     name: ling
     comment: Hyperling

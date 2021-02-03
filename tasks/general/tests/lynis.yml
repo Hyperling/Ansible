@@ -1,16 +1,16 @@
 ---
 
-- name: Install Lynis
+- name: General | Tests | Lynis | Install
   git: 
     repo: https://github.com/CISOfy/lynis
     dest: "{{ lynis_install_dir }}"
     clone: yes
     force: yes
 
-- name: Run Lynis Audit System
+- name: General | Tests | Lynis | Run System Audit
   shell: "{{ lynis_install_dir }}/lynis --no-colors audit system > {{ lynis_report }} 2>&1"
 
-- name: Make Lynis Report Readable
+- name: General | Tests | Lynis | Make Report Readable
   file:
     path: "{{ lynis_report }}"
     mode: '0444'

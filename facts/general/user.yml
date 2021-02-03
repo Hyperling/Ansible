@@ -1,13 +1,13 @@
 ---
 # Define users and groups per OS type.
 
-- name: Set Linux User Variables
+- name: Facts | Workstation | User | Linux
   set_fact:
     root_group: root
   when: ansible_system == "Linux"
 
 
-- name: Set FreeBSD User Variables
+- name: Facts | Workstation | User | FreeBSD
   set_fact:
     root_group: wheel
   when: ansible_system == "FreeBSD"
