@@ -35,7 +35,7 @@
   package: 
     name:
     - "{{ firefox }}"
-    - "{{ firefox-esr }}"
+    - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
     - "{{ evolution }}"
     state: absent

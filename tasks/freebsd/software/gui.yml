@@ -6,7 +6,7 @@
     name:
     - xorg
     - gnome3
-    - "{{ firefox-esr }}"
+    - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
     state: present
 

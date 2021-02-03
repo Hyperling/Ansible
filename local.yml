@@ -2,7 +2,7 @@
 # Harmonize my systems rather than doing everything manually. :)
 
 # Everything
-- name: Initial Setup
+- name: Main | Default Setup
   hosts: localhost
   connection: local
   become: true  
@@ -31,7 +31,7 @@
 
 
 # Workstations
-- name: UI Setup
+- name: Main | Workstation UI Setup
   hosts: workstation
   connection: local
   become: true
@@ -53,7 +53,7 @@
 
 
 # Run Hardness Checks
-- name: Hardening Check
+- name: Main | Hardness Checks
   hosts: localhost
   connection: local
   become: true

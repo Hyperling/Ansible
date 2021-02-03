@@ -5,7 +5,7 @@
 - name: Facts | Workstation | Package | Pop OS
   set_fact:
     firefox: firefox
-    firefox-esr: firefox-esr
+    firefox_esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
   when: ansible_distribution == "Pop!_OS"
@@ -14,7 +14,7 @@
 - name: Facts | Workstation | Package | Debian and Ubuntu
   set_fact:
     firefox: firefox
-    firefox-esr: firefox-esr
+    firefox_esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
   when: ansible_distribution in ("Debian","Ubuntu")
@@ -23,7 +23,7 @@
 - name: Facts | Workstation | Package | FreeBSD
   set_fact:
     firefox: firefox
-    firefox-esr: firefox-esr
+    firefox_esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
   when: ansible_system == "FreeBSD"
