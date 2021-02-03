@@ -15,7 +15,7 @@
     line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
     state: present
     backup: yes
-  when: ansible_system = "Linux"
+  when: ansible_system == "Linux"
 
 - name: General | Account Management | Mounts | Create 1337 fstab Comment
   lineinfile:
@@ -24,12 +24,12 @@
     line: '# MANAGED BY ANSIBLE | Leet Share'
     state: present
     insertbefore: '^ling@leet'
-  when: ansible_system = "Linux"
+  when: ansible_system == "Linux"
 
 - name: General | Account Management | Mounts | Mount All
   shell: mount -a
   args:
     warn: false
-  when: ansible_system = "Linux"
+  when: ansible_system == "Linux"
 
 # Add @reboot cron job for FreeBSD, fstab does not like fuse or sshfs as mount type
