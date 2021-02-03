@@ -43,11 +43,11 @@
   tasks:
     - include: tasks/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and
-            flatpak_distro == "true"
+            flatpak_distro == true
     - name: Worktation | Linux | Packages | Not Implemented
       shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and
-            flatpak_distro != "true"
+            flatpak_distro != true
 
     - include: tasks/freebsd/software/gui.yml
       when: ansible_system == "FreeBSD"
