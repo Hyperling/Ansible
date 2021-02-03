@@ -17,7 +17,7 @@
     - htop
     - neofetch
     - "{{ sshfs }}"
-    - locate
+    - "{{ locate }}"
     state: present
 
 - name: Repo Update Software (Disabled)
