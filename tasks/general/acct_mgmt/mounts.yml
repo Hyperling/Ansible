@@ -13,3 +13,6 @@
     block: |
       ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
     backup: yes
+
+- name: Mounts | Mount All
+  shell: mount -a
