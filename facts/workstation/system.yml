@@ -3,13 +3,13 @@
 
 - name: Facts | Workstation | System | Pop OS
   set_fact:
-    flatpak_distro: true
+    flatpak_distro: yes sir
   when: ansible_distribution == "Pop!_OS"
 
 
 - name: Facts | Workstation | System | Debian and Ubuntu
   set_fact:
-    flatpak_distro: true
+    flatpak_distro: yes sir
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
