@@ -8,6 +8,10 @@
     comment: Ansible
     system: yes
 
+# Get facts
+- name: Locate bash
+  shell: which bash
+  register: bash_exec
 
 # Superuser
 - name: Create User Hyperling
@@ -17,7 +21,7 @@
     groups: 
       - sudo
     append: yes
-    shell: /bin/bash
+    shell: "{{ bash_exec }}"
     create_home: yes
     generate_ssh_key: yes
     #password: "{{ ling_passwd }}"
