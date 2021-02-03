@@ -2,21 +2,13 @@
 # Enable and disable services.
 
 - name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
-  lineinfile:
+  blockinfile:
     path: /etc/rc.conf
-    regexp: '^fusefs_enable='
-    line: fusefs_enable="YES"
+    block: |
+      fusefs_enable="YES"
+    marker: "# {mark} MANAGED BY ANSIBLE | SSHFS"
     state: present
     backup: yes
-  when: ansible_system == "FreeBSD"
-
-- name: General | Software | Services | Create SSHFS rc.conf Comment (FreeBSD)
-  lineinfile:
-    path: /etc/fstab
-    regexp: '^# MANAGED BY ANSIBLE | SSHFS'
-    line: '# MANAGED BY ANSIBLE | SSHFS'
-    state: present
-    insertbefore: '^fusefs_enable='
   when: ansible_system == "FreeBSD"
 
 - name: General | Software | Services | Load SSHFS (FreeBSD)
