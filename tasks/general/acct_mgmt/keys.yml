@@ -9,7 +9,7 @@
 - name: SSH Key | Root | Create
   shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa <<< n
   args:
-    executable: /bin/bash
+    executable: "{{ bash_exec.stdout }}"
   ignore_errors: yes
 
 - name: SSH Key | Root | Copy to 1337

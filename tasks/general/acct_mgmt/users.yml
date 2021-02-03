@@ -8,10 +8,6 @@
     comment: Ansible
     system: yes
 
-# Get facts
-- name: Locate bash
-  shell: which bash
-  register: bash_exec
 
 # Superuser
 - name: Create User Hyperling

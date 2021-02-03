@@ -1,0 +1,6 @@
+---
+# Facts that must be gathered by tasks.
+
+- name: Gather | Locate BASH
+  shell: which bash
+  register: bash_exec
