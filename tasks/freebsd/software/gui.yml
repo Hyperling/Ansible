@@ -20,18 +20,31 @@
 - name: Workstation | FreeBSD | GUI | Create rc.conf Entries
   blockinfile:
     path: /etc/rc.conf
+    marker: "# {mark} MANAGED BY ANSIBLE | GUI Components"
     block: |
       dbus_enable="YES"
       hald_enable="YES"
       gnome_enable="YES"
       gdm_enable="YES"
-
-      fusefs_enable="YES"
     backup: yes
 
-- name: Workstation | FreeBSD | GUI | Create fstab Entries
-  blockinfile:
+- name: Workstation | FreeBSD | GUI | Create proc fstab Entry
+  lineinfile:
     path: /etc/fstab
-    block: |
-      proc            /proc           procfs  rw      0       0
+    regexp: '^proc'
+    line: proc            /proc           procfs  rw      0       0
+    state: present
     backup: yes
+
+- name: Workstation | FreeBSD | GUI | Create proc fstab Comment
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^# MANAGED BY ANSIBLE | Leet Share'
+    line: '# MANAGED BY ANSIBLE | Leet Share'
+    state: present
+    insertbefore: '^proc'
+
+- name: Workstation | FreeBSD | GUI | Mount All
+  shell: mount -a
+  args:
+    warn: false

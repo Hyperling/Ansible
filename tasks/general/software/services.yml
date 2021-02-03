@@ -1,0 +1,40 @@
+---
+# Enable and disable services.
+
+- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^fusefs_enable='
+    line: fusefs_enable="YES"
+    state: present
+    backup: yes
+  when: ansible_system == "FreeBSD"
+
+- name: General | Software | Services | Create SSHFS rc.conf Comment (FreeBSD)
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^# MANAGED BY ANSIBLE | SSHFS'
+    line: '# MANAGED BY ANSIBLE | SSHFS'
+    state: present
+    insertbefore: '^fusefs_enable='
+  when: ansible_system == "FreeBSD"
+
+- name: General | Software | Services | Load SSHFS (FreeBSD)
+  shell: kldload fusefs
+  args:
+    warn: false
+  when: ansible_system == "FreeBSD"
+
+- name: General | Software | Services | Disable CUPS Daemon
+  service:
+    name: "{{ cups }}"
+    pattern: "{{ cups_pattern }}"
+    state: stopped
+    enabled: no
+
+- name: General | Software | Services | Disable CUPS-Browse Daemon
+  service:
+    name: "{{ cups_browse }}"
+    pattern: "{{ cups_browse_pattern }}"
+    state: stopped
+    enabled: no

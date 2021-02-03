@@ -4,6 +4,7 @@
 
 - name: Facts | Workstation | Package | Pop OS
   set_fact:
+    flatpak_distro: yes sir
     firefox: firefox
     firefox_esr: firefox-esr
     thunderbird: thunderbird
@@ -13,6 +14,7 @@
 
 - name: Facts | Workstation | Package | Debian and Ubuntu
   set_fact:
+    flatpak_distro: yes sir
     firefox: firefox
     firefox_esr: firefox-esr
     thunderbird: thunderbird
@@ -22,6 +24,7 @@
 
 - name: Facts | Workstation | Package | FreeBSD
   set_fact:
+    flatpak_distro: false
     firefox: firefox
     firefox_esr: firefox-esr
     thunderbird: thunderbird

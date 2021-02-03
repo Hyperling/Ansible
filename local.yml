@@ -15,6 +15,8 @@
 
   tasks:
     - include: tasks/general/software/packages.yml
+    - include: tasks/general/software/services.yml
+      ignore_errors: yes
 
     - include: facts/general/gather.yml
 
@@ -26,9 +28,6 @@
 
     - include: tasks/general/cron/ansible.yml
 
-    - include: tasks/general/software/harden.yml
-      ignore_errors: yes
-
 
 # Additional setup for systems with GUI.
 - name: Main | Workstation UI Setup
@@ -37,10 +36,14 @@
   become: true
 
   pre_tasks:
-    - include: facts/workstation/system.yml
     - include: facts/workstation/package.yml
 
   tasks:
+    # Set up any systems that do not come with Desktop Environments
+    - include: tasks/freebsd/software/gui.yml
+      when: ansible_system == "FreeBSD"
+
+    # Additional tasks to configure Desktop Environments
     - include: tasks/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and
             flatpak_distro == "yes sir"
@@ -48,9 +51,6 @@
       shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and
             flatpak_distro != "yes sir"
-
-    - include: tasks/freebsd/software/gui.yml
-      when: ansible_system == "FreeBSD"
 
 
 # Create reports to analyze security.

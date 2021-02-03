@@ -7,12 +7,21 @@
     state: directory
     mode: '0755'
 
-- name: General | Account Management | Mounts | Create fstab Entries
-  blockinfile:
+- name: General | Account Management | Mounts | Create 1337 fstab Entry
+  lineinfile:
     path: /etc/fstab
-    block: |
-      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
+    regexp: '^ling@leet'
+    line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
+    state: present
     backup: yes
+
+- name: General | Account Management | Mounts | Create 1337 fstab Comment
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^# MANAGED BY ANSIBLE | Leet Share'
+    line: '# MANAGED BY ANSIBLE | Leet Share'
+    state: present
+    insertbefore: '^ling@leet'
 
 - name: General | Account Management | Mounts | Mount All
   shell: mount -a
