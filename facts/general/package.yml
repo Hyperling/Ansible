@@ -27,5 +27,5 @@
     thunderbird: thunderbird
     evolution: evolution
     sshfs: fusefs-sshfs
-    locate: ""
+    locate: 
   when: ansible_distribution == "FreeBSD"
