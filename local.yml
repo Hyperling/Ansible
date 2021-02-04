@@ -46,12 +46,11 @@
 
     # Additional tasks to configure Desktop Environments
     - include: tasks/linux/software/flatpaks.yml
-      when: ansible_system == "Linux" and
-            flatpak_distro == "yes sir"
+      when: ansible_system == "Linux" and flatpak_distro
+      
     - name: Worktation | Linux | Packages | Not Implemented
       shell: echo "Not implemented yet. :("
-      when: ansible_system == "Linux" and
-            flatpak_distro != "yes sir"
+      when: ansible_system == "Linux" and not flatpak_distro
 
 
 # Create reports to analyze security.
