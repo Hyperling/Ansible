@@ -32,4 +32,13 @@
     warn: false
   when: ansible_system == "Linux"
 
-# Add @reboot cron job for FreeBSD, fstab does not like fuse or sshfs as mount type
+# FreeBSD also has root cron job for this @reboot
+- name: General | Cron | Root | Create SSHFS Job
+  cron:
+    user: root
+    name: "1337 SSHFS"
+    special_time: reboot
+    job: "{{ sshfs_leet_cmd }}"
+    state: present
+    disabled: no
+  when: ansible_system == "FreeBSD"

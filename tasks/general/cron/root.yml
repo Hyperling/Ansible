@@ -1,0 +1,12 @@
+---
+# Jobs relating to the root user.
+
+- name: General | Cron | Root | Create SSHFS Job
+  cron:
+    user: root
+    name: "1337 SSHFS"
+    special_time: reboot
+    job: "{{ sshfs_leet_cmd }}"
+    state: present
+    disabled: no
+  when: ansible_system == "FreeBSD"

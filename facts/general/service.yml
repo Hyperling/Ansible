@@ -1,22 +1,13 @@
 ---
-# Define program names per OS for service builtin.
+# Define program names for service builtin.
 
-- name: Facts | Workstation | Service | Pop OS
+- name: Facts | Workstation | Service | Linux
   set_fact:
     cups: cups
     cups_pattern: cupsd
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
-  when: ansible_distribution == "Pop!_OS"
-
-
-- name: Facts | Workstation | Service | Debian and Ubuntu
-  set_fact:
-    cups: cups
-    cups_pattern: cupsd
-    cups_browse: cups-browsed
-    cups_browse_pattern: cups-browsed
-  when: ansible_distribution in ("Debian","Ubuntu")
+  when: ansible_system == "Linux"
 
 
 - name: Facts | Workstation | Service | FreeBSD
@@ -25,4 +16,5 @@
     cups_pattern: cupsd
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
+    sshfs_leet_cmd: "sshfs ling@leet: /mnt/leet -o defaults.allow_othher,_netdev"
   when: ansible_system == "FreeBSD"

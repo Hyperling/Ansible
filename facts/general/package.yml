@@ -1,23 +1,16 @@
 ---
-# Define program names per OS for package builtin.
+# Define program names for package builtin.
 # This file is for ALL systems and should not include UI components.
 
-- name: Facts | Workstation | Package | Pop OS
+- name: Facts | Workstation | Package | apt
   set_fact:
     sshfs: sshfs
     locate: locate
-  when: ansible_distribution == "Pop!_OS"
-
-
-- name: Facts | Workstation | Package | Debian and Ubuntu
-  set_fact:
-    sshfs: sshfs
-    locate: locate
-  when: ansible_distribution in ("Debian","Ubuntu")
-
+  when: ansible_pkg_mgr == "apt"
+  
 
 - name: Facts | Workstation | Package | FreeBSD
   set_fact:
     sshfs: fusefs-sshfs
-    locate: htop # This is just a placeholder to prevent errors
+    locate: htop # Placeholder to prevent errors. locate builtin FreeBSD.
   when: ansible_system == "FreeBSD"

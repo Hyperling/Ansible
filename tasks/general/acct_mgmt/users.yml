@@ -21,3 +21,11 @@
     create_home: yes
     generate_ssh_key: yes
     #password: "{{ ling_passwd }}"
+  register: user_ling
+
+- name: General | Account Management | User | Hyperling TRASH Folder
+  file: 
+    path: "{{ user_ling.home }}/TRASH"
+    state: directory
+    mode: '0755'
+  when: user_ling.home != ""

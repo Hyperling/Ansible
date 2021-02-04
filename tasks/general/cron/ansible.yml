@@ -1,10 +1,11 @@
 ---
+# Jobs relating to the ansible user.
 
-- name: General | Cron | Ansible | Create Main Job
+- name: General | Cron | Ansible | Create Subscriber Job
   cron:
     user: ansible
     name: "Ansible Sync"
     minute: "*/15"
-    job: "{{ ansible_pull_exec }} -o -U https://github.com/Hyperling/ansible.git"
+    job: "sudo {{ ansible_pull_exec }} -o -U https://github.com/Hyperling/ansible.git"
     state: present
     disabled: no

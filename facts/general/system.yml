@@ -6,7 +6,6 @@
     lynis_install_dir: /usr/local/lynis
     lynis_report: /home/ling/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/bin/ansible-pull
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -15,7 +14,6 @@
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/bin/ansible-pull
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
@@ -24,5 +22,4 @@
     lynis_install_dir: /usr/local/lynis
     lynis_report: /root/lynis.log
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
-    ansible_pull_exec: /usr/local/bin/ansible-pull
   when: ansible_system == "FreeBSD"
