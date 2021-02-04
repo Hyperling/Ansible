@@ -1,10 +1,13 @@
 ---
 # Nmap port test
 
-- name: General | Tests | nmap | Run 
-  shell: "nmap localhost > /root/nmap.txt"
+- name: General | Tests | nmap | Run Count
+  shell: "nmap --open localhost | grep -c open > /root/nmap.txt"
 
-- name: General | Tests | nmap | Make Report Readable
+- name: General | Tests | nmap | Run Open
+  shell: "nmap --open localhost | grep open >> /root/nmap.txt"
+
+- name: General | Tests | nmap | Make Viewable
   file:
     path: "/root/nmap.txt"
     mode: '0444'
