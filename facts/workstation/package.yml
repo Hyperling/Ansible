@@ -2,7 +2,7 @@
 # Define program names per OS for package builtin.
 # This is only for Workstation devices with UIs.
 
-- name: Facts | Workstation | Package | Consistent
+- name: Workstation | Facts | Package | Consistent
   set_fact:
     firefox: firefox
     thunderbird: thunderbird
@@ -11,7 +11,7 @@
     dconf_editor: dconf-editor
 
 
-- name: Facts | Workstation | Package | Pop_OS!
+- name: Workstation | Facts | Package | Pop_OS!
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
@@ -19,7 +19,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Facts | Workstation | Package | Ubuntu
+- name: Workstation | Facts | Package | Ubuntu
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
@@ -27,7 +27,7 @@
   when: ansible_distribution == "Ubuntu"
 
 
-- name: Facts | Workstation | Package | Debian
+- name: Workstation | Facts | Package | Debian
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox-esr
@@ -35,7 +35,7 @@
   when: ansible_distribution == "Debian"
 
 
-- name: Facts | Workstation | Package | FreeBSD
+- name: Workstation | Facts | Package | FreeBSD
   set_fact:
     flatpak_distro: false
     firefox_esr: firefox-esr
