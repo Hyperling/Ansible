@@ -29,7 +29,9 @@
     - include: tasks/general/acct_mgmt/mounts.yml
 
     - include: tasks/general/cron/ansible.yml
-    - include: tasks/general/cron/root.yml
+    
+    - include: tasks/freebsd/cron/ansible.yml
+      when: ansible_system == "FreeBSD"
 
 
 # Additional setup for systems with GUI.

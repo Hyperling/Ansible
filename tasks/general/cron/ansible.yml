@@ -19,16 +19,6 @@
     state: present
     disabled: no
 
-- name: General | Cron | Ansible | Enable SSHFS Job (FreeBSD)
-  cron:
-    user: ansible
-    name: "1337 SSHFS"
-    special_time: reboot
-    job: "sudo {{ sshfs_leet_cmd }}"
-    state: present
-    disabled: no
-  when: ansible_system == "FreeBSD"
-
 - name: General | Cron | Ansible | Enable Secure Copy Reports
   cron: 
     user: ansible

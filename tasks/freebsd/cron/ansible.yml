@@ -1,0 +1,20 @@
+---
+# Cron jobs specific to FreeBSD
+
+- name: FreeBSD | Cron | Ansible | Enable SSHFS Job
+  cron:
+    user: ansible
+    name: "1337 SSHFS"
+    special_time: reboot
+    job: "sudo {{ sshfs_leet_cmd }}"
+    state: present
+    disabled: no
+
+- name: FreeBSD | Cron | Ansible | Enable Security Update
+  cron:
+    user: ansible
+    name: "Security Update"
+    special_time: daily
+    job: "sudo freebsd-update cron"
+    state: present
+    disabled: no
