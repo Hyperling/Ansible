@@ -22,7 +22,7 @@
   flatpak:
     name: org.shotcut.Shotcut
 
-- name: Workstation | Linux | Flatpak | Do Not Use Firefox Flatpak
+- name: Workstation | Linux | Flatpak | Do Not Use Firefox Flatpak (It's Broke Boys!)
   flatpak:
     name: org.mozilla.firefox
     state: absent
@@ -32,11 +32,18 @@
     name: org.mozilla.Thunderbird
 
 # Repo Software
-- name: Workstation | Linux | Flatpak | Install Firefox From Package Manager
+- name: Workstation | Linux | Flatpak | Install Firefox ESR From Package Manager
   package: 
     name:
     - "{{ firefox_esr }}"
-    state: present
+    state: latest
+
+- name: Workstation | Linux | Flatpak | Remove Normal Firefox for ESR
+  package: 
+    name:
+    - "{{ firefox }}"
+    state: absent
+  when: "{{ firefox }} != {{ firefix_esr }}"
 
 - name: Workstation | Linux | Flatpak | Remove Software From Package Manager
   package: 
