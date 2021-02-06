@@ -24,5 +24,6 @@
 - name: Facts | General | System | 1337
   set_fact:
     leet_drive: /mnt/leet
+    heartbeat_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}.txt"
     lynis_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_lynis.txt"
     nmap_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_nmap.txt"

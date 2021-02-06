@@ -10,4 +10,4 @@
 - name: General | Tests | nmap | Make Viewable
   file:
     path: "{{ nmap_report }}"
-    mode: '0444'
+    mode: '0777'
