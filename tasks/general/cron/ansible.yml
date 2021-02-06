@@ -15,6 +15,6 @@
     user: ansible
     name: "Heartbeat Report"
     minute: "*/15"
-    job: "date > {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
+    job: "sudo date > {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
     state: present
     disabled: no

@@ -65,4 +65,5 @@
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
 
+  post_tasks:
     - include: tasks/general/finish.yml

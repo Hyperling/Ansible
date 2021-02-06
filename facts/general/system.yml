@@ -4,21 +4,21 @@
 - name: Facts | General | System | Pop OS
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    sudoers_install_dir: /etc/sudoers.d/ansible
+    sudoers_install_dir: /etc/sudoers.d/
   when: ansible_distribution == "Pop!_OS"
 
 
 - name: Facts | General | System | Debian and Ubuntu
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    sudoers_install_dir: /etc/sudoers.d/ansible
+    sudoers_install_dir: /etc/sudoers.d/
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
 - name: Facts | General | System | FreeBSD
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
+    sudoers_install_dir: /usr/local/etc/sudoers.d/
   when: ansible_system == "FreeBSD"
 
 
