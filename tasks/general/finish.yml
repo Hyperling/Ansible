@@ -1,0 +1,9 @@
+---
+# Tasks related to finishing ansible-pull
+# EG: End timer, start conflicting jobs, etc
+
+- name: General | Finish | Overwrite File
+  shell: "echo 'FINISH' >> {{ ansible_pull_report }}"
+  
+- name: General | Finish | Add Date Entry
+  shell: "date >> {{ ansible_pull_report }}"

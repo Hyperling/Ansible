@@ -21,9 +21,11 @@
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
   when: ansible_system == "FreeBSD"
 
+
 - name: Facts | General | System | 1337
   set_fact:
     leet_drive: /mnt/leet
     heartbeat_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}.txt"
     lynis_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_lynis.txt"
     nmap_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_nmap.txt"
+    ansible_pull_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_last_pull_times.txt"

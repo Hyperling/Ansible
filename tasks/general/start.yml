@@ -1,0 +1,9 @@
+---
+# Tasks related to starting ansible-pull
+# EG: Start timer, kill conflicting jobs, etc
+
+- name: General | Start | Overwrite File
+  shell: "echo 'START' > {{ ansible_pull_report }}"
+
+- name: General | Start | Add Date Entry
+  shell: "date >> {{ ansible_pull_report }}"

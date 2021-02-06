@@ -13,6 +13,8 @@
     - include: facts/general/service.yml
     - include: facts/general/user.yml
 
+    - include: tasks/general/start.yml
+
   tasks:
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
@@ -62,3 +64,5 @@
   tasks:
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
+
+    - include: tasks/general/finish.yml
