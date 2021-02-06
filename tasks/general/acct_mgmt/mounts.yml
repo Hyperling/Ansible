@@ -7,33 +7,47 @@
     state: directory
     mode: '0755'
 
-# Combine these to be blockinfile again
+
+# Linux uses fstab
 - name: General | Account Management | Mounts | Create 1337 fstab Entry
-  lineinfile:
+  blockinfile:
     path: /etc/fstab
-    regexp: '^ling@leet'
-    line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
+    block: |
+      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
+    marker: '# {mark} MANAGED BY ANSIBLE | Leet Share'
     state: present
     backup: yes
   when: ansible_system == "Linux"
 
+#TODO Remove this
 - name: General | Account Management | Mounts | Create 1337 fstab Comment
   lineinfile:
     path: /etc/fstab
     regexp: '^# MANAGED BY ANSIBLE | Leet Share'
     line: '# MANAGED BY ANSIBLE | Leet Share'
-    state: present
+    state: absent
     insertbefore: '^ling@leet'
   when: ansible_system == "Linux"
 
-- name: General | Account Management | Mounts | Mount All
+#TODO Remove this
+- name: General | Account Management | Mounts | Create 1337 fstab Entry
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^ling@leet'
+    line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
+    state: absent
+    backup: yes
+  when: ansible_system == "Linux"
+
+- name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
   when: ansible_system == "Linux"
 
+
 # FreeBSD has to do this via root cron job, fstab is unhappy
-- name: General | Cron | Root | Create SSHFS Job
+- name: General | Cron | Root | Create SSHFS Job (FreeBSD)
   cron:
     user: root
     name: "1337 SSHFS"
@@ -41,4 +55,15 @@
     job: "{{ sshfs_leet_cmd }}"
     state: present
     disabled: no
+  when: ansible_system == "FreeBSD"
+
+- name: General | Cron | Root | Unmount SSHFS (FreeBSD)
+  shell: umount -f /mnt/leet
+  args:
+    warn: false
+  when: ansible_system == "FreeBSD"
+  ignore_errors: yes
+
+- name: General | Cron | Root | Mount SSHFS (FreeBSD)
+  shell: "{{ sshfs_leet_cmd }}"
   when: ansible_system == "FreeBSD"
