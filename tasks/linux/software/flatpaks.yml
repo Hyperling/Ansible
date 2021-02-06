@@ -1,4 +1,5 @@
 ---
+# Use flatpaks because they're consistent! :)
 
 # Flatpak Pre-reqs
 - name: Workstation | Linux | Flatpak | Install Flatpak
@@ -13,32 +14,53 @@
     method: system
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
+
 # Flatpak Installs
 - name: Workstation | Linux | Flatpak | Install Discord
   flatpak:
     name: com.discordapp.Discord
+    remote: flathub
+    state: present
 
 - name: Workstation | Linux | Flatpak | Install Shotcut
   flatpak:
     name: org.shotcut.Shotcut
+    remote: flathub
+    state: present
 
-- name: Workstation | Linux | Flatpak | Do Not Use Firefox Flatpak (It's Broke Boys!)
+- name: Workstation | Linux | Flatpak | Remove Firefox (It's Broke Boys!)
   flatpak:
     name: org.mozilla.firefox
+    remote: flathub
     state: absent
 
 - name: Workstation | Linux | Flatpak | Install Thunderbird
   flatpak:
     name: org.mozilla.Thunderbird
+    remote: flathub
+    state: present
+
+- name: Workstation | Linux | Flatpak | Install LBRY
+  flatpak:
+    name: io.lbry.lbry-app
+    remote: flathub
+    state: present
+
+- name: Workstation | Linux | Flatpak | Install Steam
+  flatpak:
+    name: com.valvesoftware.Steam
+    remote: flathub
+    state: present
+
 
 # Repo Software
-- name: Workstation | Linux | Flatpak | Install Firefox ESR From Package Manager
+- name: Workstation | Linux | Flatpak | Install Firefox ESR from Package Manager
   package: 
     name:
     - "{{ firefox_esr }}"
-    state: latest
+    state: present
 
-- name: Workstation | Linux | Flatpak | Remove Normal Firefox for ESR
+- name: Workstation | Linux | Flatpak | Remove Firefox Normal for ESR
   package: 
     name:
     - "{{ firefox }}"
@@ -48,7 +70,7 @@
 - name: Workstation | Linux | Flatpak | Remove Software From Package Manager
   package: 
     name:
-    - "{{ firefox }}"
     - "{{ thunderbird }}"
     - "{{ evolution }}"
+    - steam
     state: absent

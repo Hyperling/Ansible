@@ -34,6 +34,8 @@
   package: 
     name:
     - cowsay # Sorry ;)
+    - chromium
+    - chromium-browser
     state: absent
 
 # TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.

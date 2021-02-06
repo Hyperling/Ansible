@@ -8,6 +8,7 @@
     - gnome3
     - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
+    - vscode
     state: present
 
 - name: Workstation | FreeBSD | GUI | Uninstall Bloat

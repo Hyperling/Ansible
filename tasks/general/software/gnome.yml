@@ -1,0 +1,84 @@
+---
+# GNOME settings, extensions, and setup.
+
+# Make sure Gnome-Tweaks is installed
+- name: General | Account Management | GNOME | Install Settings Editors
+  package:
+    name: 
+    - "{{ gnome_tweaks }}"
+    - "{{ dconf_editor }}"
+    state: present
+
+
+# Dash to Dock Extension
+# Validate DtD by checking /org/gnome/shell/enabled-extensions for dash-to-dock@micxgx.gmail.com
+
+
+# Setup Favorites Bar (Terminal, Files, Firefox, Thunderbird, LBRY, Discord, VS Code, Android Studio, Lutris, Steam)
+- name: General | Account Management | GNOME | Favorites (Linux)
+  shell: sudo -u ling dconf write /org/gnome/shell/favorite-apps ['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'io.lbry.lbry-app.desktop', 'com.discordapp.Discord.desktop', 'code.desktop', 'com.google.AndroidStudio.desktop', 'net.lutris.Lutris.desktop', 'steam.desktop']
+  when: ansible_system == "Linux"
+
+- name: General | Account Management | GNOME | Favorites (FreeBSD)
+  shell: sudo -u ling dconf write /org/gnome/shell/favorite-apps ['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'code.desktop']
+  when: ansible_system == "FreeBSD"
+
+
+# Top Bar Settings (Battery Percentage, Clock Weekday+Seconds, Calendar Week Numbers)
+- name: General | Account Management | GNOME | Interface - Show Date
+  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-date true
+
+- name: General | Account Management | GNOME | Interface - 24h Format
+  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-format '24h'
+
+- name: General | Account Management | GNOME | Interface - Show Seconds
+  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-seconds true
+
+- name: General | Account Management | GNOME | Interface - Show Weekday
+  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-weekday true
+
+- name: General | Account Management | GNOME | Interface - 24h Format
+  shell: sudo -u ling dconf write /org/gnome/desktop/interface/show-battery-percentage true
+
+- name: General | Account Management | GNOME | Interface - Show Week Date
+  shell: sudo -u ling dconf write /org/gnome/desktop/calendar/show-weekdate true
+
+
+# Never Prompt for Removal Media
+
+
+
+# Dark theme?
+#Pop-dark on Pop
+#Adwaita-dark on everything else
+
+
+
+# Window Titlebars (Titlebar Buttons Minimize)
+- name: General | Account Management | GNOME | Windows Buttons
+  shell: sudo -u ling dconf write /org/gnome/desktop/wm/preferences/button-layout 'appmenu:minimize,close'
+
+
+# Security
+- name: General | Account Management | GNOME | Privacy - Camera
+  shell: sudo -u ling dconf write /org/gnome/desktop/privacy/disable-camera true
+
+- name: General | Account Management | GNOME | Privacy - Microphone
+  shell: sudo -u ling dconf write /org/gnome/desktop/privacy/disable-microphone true
+
+
+
+# Schemas to try after looking at gsettings list-schemas | sort
+# org.gnome.ControlCenter -- not very interesting
+# org.gnome.desktop.default-applications -- nothing?? Where do we set Firefox and Evolution?
+# org.gnome.desktop.interface -- Good stuff in here.
+# org.gnome.desktop.peripherals -- Nothing :(
+# org.gnome.desktop.privacy -- Good stuff here too!! Cool!
+# org.gnome.desktop.session
+# org.gnome.desktop.wm.keybindings
+# org.gnome.desktop.wm.preferences
+# org.gnome.power-manager
+# org.gnome.SessionManager
+# org.gnome.shell
+# org.gnome.shell.extensions.pop-shell
+# org.gnome.shell.keybindings

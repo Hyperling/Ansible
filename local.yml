@@ -55,6 +55,9 @@
     - name: Worktation | Linux | Packages | Not Implemented
       shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and not flatpak_distro
+  
+  post_tasks:
+    - include: tasks/general/software/gnome.yml
 
 
 # Create reports to analyze security.
