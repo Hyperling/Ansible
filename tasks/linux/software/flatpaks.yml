@@ -65,7 +65,7 @@
     name:
     - "{{ firefox }}"
     state: absent
-  when: firefox != firefix_esr
+  when: firefox != firefox_esr
 
 - name: Workstation | Linux | Flatpak | Remove Software From Package Manager
   package: 
