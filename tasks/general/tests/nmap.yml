@@ -9,5 +9,5 @@
 
 - name: General | Tests | nmap | Make Viewable
   file:
-    path: "/root/nmap.txt"
+    path: "{{ nmap_report }}"
     mode: '0444'

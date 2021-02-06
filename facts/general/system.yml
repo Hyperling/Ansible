@@ -1,25 +1,28 @@
 ---
 # Define file, folder, and other facts per OS.
 
-- name: Facts | Workstation | System | Pop OS
+- name: Facts | General | System | Pop OS
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    lynis_report: /home/ling/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Facts | Workstation | System | Debian and Ubuntu
+- name: Facts | General | System | Debian and Ubuntu
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    lynis_report: /root/lynis.log
     sudoers_install_dir: /etc/sudoers.d/ansible
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Facts | Workstation | System | FreeBSD
+- name: Facts | General | System | FreeBSD
   set_fact:
     lynis_install_dir: /usr/local/lynis
-    lynis_report: /root/lynis.log
     sudoers_install_dir: /usr/local/etc/sudoers.d/ansible
   when: ansible_system == "FreeBSD"
+
+- name: Facts | General | System | 1337
+  set_fact:
+    leet_drive: /mnt/leet
+    lynis_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_lynis.txt"
+    nmap_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_nmap.txt"

@@ -3,7 +3,7 @@
 
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
-    path: /mnt/leet
+    path: "{{ leet_drive }}"
     state: directory
     mode: '0755'
 

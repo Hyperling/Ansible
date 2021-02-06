@@ -9,3 +9,12 @@
     job: "sudo {{ ansible_pull_exec.stdout }} -o -U https://github.com/Hyperling/ansible.git"
     state: present
     disabled: no
+
+- name: General | Cron | Ansible | Create Heartbeat Job
+  cron:
+    user: ansible
+    name: "Ansible Sync"
+    minute: "*/15"
+    job: "echo 'ALIVE' > /mnt/leet/Temp/ansible/{{ ansible_hostname }}.txt"
+    state: present
+    disabled: no
