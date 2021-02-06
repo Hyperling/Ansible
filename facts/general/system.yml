@@ -25,7 +25,31 @@
 - name: Facts | General | System | 1337
   set_fact:
     leet_drive: /mnt/leet
-    heartbeat_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}.txt"
-    lynis_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_lynis.txt"
-    nmap_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_nmap.txt"
-    ansible_pull_report: "/mnt/leet/Temp/ansible/{{ ansible_hostname }}_last_pull_times.txt"
+
+- name: Facts | General | System | 1337 Mounted?
+  stat:
+    path: "{{ leet_drive }}"/ansible
+  register: leet_drive_details
+
+- name: Facts | General | System | 1337 Mounted? DEBUG
+  debug:
+    variable: leet_drive_details
+
+
+- name: Facts | General | System | Report Location = 1337
+  set_fact:
+    report_location: "{{ leet_drive }}/Temp/ansible"
+  when: leet_drive_details.stat.exists
+
+- name: Facts | General | System | Report Location = /root
+  set_fact:
+    report_location: "/root"
+    report_scp_location: "Temp/ansible/"
+  when: not leet_drive_details.stat.exists
+
+- name: Facts | General | System | Reports
+  set_fact:
+    heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
+    lynis_report: "{{ report_location }}/{{ ansible_hostname }}_lynis.txt"
+    nmap_report: "{{ report_location }}/{{ ansible_hostname }}_nmap.txt"
+    ansible_pull_report: "{{ report_location }}/{{ ansible_hostname }}_last_pull_times.txt"
