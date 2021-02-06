@@ -28,7 +28,7 @@
 
 - name: Facts | General | System | 1337 Mounted?
   stat:
-    path: "{{ leet_drive }}"/ansible
+    path: "{{ leet_drive }}/ansible"
   register: leet_drive_details
 
 - name: Facts | General | System | 1337 Mounted? DEBUG
