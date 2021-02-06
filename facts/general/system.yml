@@ -33,7 +33,7 @@
 
 - name: Facts | General | System | 1337 Mounted? DEBUG
   debug:
-    variable: leet_drive_details
+    var: leet_drive_details
 
 
 - name: Facts | General | System | Report Location = 1337
