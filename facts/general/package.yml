@@ -6,8 +6,6 @@
   set_fact:
     sshfs: sshfs
     locate: locate
-    gnome_tweaks: gnome-tweaks
-    dconf_editor: dconf-editor
   when: ansible_pkg_mgr == "apt"
   
 
@@ -15,6 +13,4 @@
   set_fact:
     sshfs: fusefs-sshfs
     locate: htop # Placeholder to prevent errors. locate builtin FreeBSD.
-    gnome_tweaks: gnome-tweaks
-    dconf_editor: dconf-editor
   when: ansible_system == "FreeBSD"

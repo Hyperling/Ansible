@@ -2,31 +2,30 @@
 # Define program names per OS for package builtin.
 # This is only for Workstation devices with UIs.
 
+- name: Facts | Workstation | Package | Consistent
+  set_fact:
+    firefox: firefox
+    thunderbird: thunderbird
+    evolution: evolution
+    gnome_tweaks: gnome-tweaks
+    dconf_editor: dconf-editor
+
 - name: Facts | Workstation | Package | Pop_OS! and Ubuntu
   set_fact:
     flatpak_distro: true
-    firefox: firefox
     firefox_esr: firefox
-    thunderbird: thunderbird
-    evolution: evolution
   when: ansible_distribution in ("Pop!_OS", "Ubuntu")
 
 
 - name: Facts | Workstation | Package | Debian
   set_fact:
     flatpak_distro: true
-    firefox: firefox
     firefox_esr: firefox-esr
-    thunderbird: thunderbird
-    evolution: evolution
   when: ansible_distribution in ("Debian")
 
 
 - name: Facts | Workstation | Package | FreeBSD
   set_fact:
     flatpak_distro: false
-    firefox: firefox
     firefox_esr: firefox-esr
-    thunderbird: thunderbird
-    evolution: evolution
   when: ansible_system == "FreeBSD"
