@@ -1,13 +1,13 @@
 ---
 # Jobs relating to the root user.
 
-- name: General | Cron | Root | Create SSHFS Job (FreeBSD)
+- name: General | Cron | Root | Enable SSHFS Job (FreeBSD)
   cron:
     user: root
     name: "1337 SSHFS"
     special_time: reboot
     job: "{{ sshfs_leet_cmd }}"
-    state: present
+    state: absent
     disabled: no
   when: ansible_system == "FreeBSD"
 
@@ -17,7 +17,7 @@
     name: "Copy Reports"
     minute: "05,20,35,50"
     job: "scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} ling@leet:{{ report_scp_location }}"
-    state: present
+    state: absent
     disabled: no
   when: not leet_drive_details.stat.exists
 
@@ -26,6 +26,6 @@
     user: root
     name: "Copy Reports"
     job: "As a wise man once said, I'm disabled."
-    state: present
+    state: absent
     disabled: yes
   when: leet_drive_details.stat.exists

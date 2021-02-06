@@ -15,6 +15,35 @@
     user: ansible
     name: "Heartbeat Report"
     minute: "*/15"
-    job: "sudo date > {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
+    job: "sudo touch {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
     state: present
     disabled: no
+
+- name: General | Cron | Ansible | Enable SSHFS Job (FreeBSD)
+  cron:
+    user: ansible
+    name: "1337 SSHFS"
+    special_time: reboot
+    job: "sudo {{ sshfs_leet_cmd }}"
+    state: present
+    disabled: no
+  when: ansible_system == "FreeBSD"
+
+- name: General | Cron | Ansible | Enable Secure Copy Reports
+  cron: 
+    user: ansible
+    name: "Copy Reports"
+    minute: "05,20,35,50"
+    job: "sudo scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} ling@leet:{{ report_scp_location }}"
+    state: present
+    disabled: no
+  when: not leet_drive_details.stat.exists
+
+- name: General | Cron | Ansible | Disable Secure Copy Reports
+  cron: 
+    user: ansible
+    name: "Copy Reports"
+    job: "As a wise man once said, I'm disabled."
+    state: present
+    disabled: yes
+  when: leet_drive_details.stat.exists
