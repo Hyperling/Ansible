@@ -63,7 +63,7 @@
     key: /org/gnome/desktop/wm/preferences/button-layout 
     value: "'appmenu:minimize,close'"
     state: present
-  become: ling
+  become_user: ling
 
 
 # Security
