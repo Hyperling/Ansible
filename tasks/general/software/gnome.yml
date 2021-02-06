@@ -16,32 +16,64 @@
 
 # Setup Favorites Bar (Terminal, Files, Firefox, Thunderbird, LBRY, Discord, VS Code, Android Studio, Lutris, Steam)
 - name: General | Account Management | GNOME | Favorites (Linux)
-  shell: sudo -u ling dconf write /org/gnome/shell/favorite-apps "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'io.lbry.lbry-app.desktop', 'com.discordapp.Discord.desktop', 'code.desktop', 'com.google.AndroidStudio.desktop', 'net.lutris.Lutris.desktop', 'steam.desktop']"
+  dconf: 
+    key: /org/gnome/shell/favorite-apps
+    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'io.lbry.lbry-app.desktop', 'com.discordapp.Discord.desktop', 'code.desktop', 'com.google.AndroidStudio.desktop', 'net.lutris.Lutris.desktop', 'steam.desktop']"
+    state: present
+  become_user: ling
   when: ansible_system == "Linux"
-
+  
 - name: General | Account Management | GNOME | Favorites (FreeBSD)
-  shell: sudo -u ling dconf write /org/gnome/shell/favorite-apps "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'code.desktop']"
+  dconf: 
+    key: /org/gnome/shell/favorite-apps
+    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'code.desktop']"
+    state: present
+  become_user: ling
   when: ansible_system == "FreeBSD"
 
 
 # Top Bar Settings (Battery Percentage, Clock Weekday+Seconds, Calendar Week Numbers)
 - name: General | Account Management | GNOME | Interface - Show Date
-  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-date true
+  dconf: 
+    key: /org/gnome/desktop/interface/clock-show-date
+    value: true
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Interface - 24h Format
-  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-format "'24h'"
+  dconf: 
+    key: /org/gnome/desktop/interface/clock-format
+    value: "'24h'"
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Interface - Show Seconds
-  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-seconds true
+  dconf: 
+    key: /org/gnome/desktop/interface/clock-show-seconds
+    value: true
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Interface - Show Weekday
-  shell: sudo -u ling dconf write /org/gnome/desktop/interface/clock-show-weekday true
+  dconf: 
+    key: /org/gnome/desktop/interface/clock-show-weekday
+    value: true
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Interface - 24h Format
-  shell: sudo -u ling dconf write /org/gnome/desktop/interface/show-battery-percentage true
+  dconf: 
+    key: /org/gnome/desktop/interface/show-battery-percentage
+    value: true
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Interface - Show Week Date
-  shell: sudo -u ling dconf write /org/gnome/desktop/calendar/show-weekdate true
+  dconf: 
+    key: /org/gnome/desktop/calendar/show-weekdate
+    value: true
+    state: present
+  become_user: ling
 
 
 # Never Prompt for Removal Media
@@ -63,12 +95,20 @@
   become_user: ling
 
 
-# Security
+# Security- name: General | Account Management | GNOME | Window Buttons
 - name: General | Account Management | GNOME | Privacy - Camera
-  shell: sudo -u ling dconf write /org/gnome/desktop/privacy/disable-camera true
+  dconf: 
+    key: /org/gnome/desktop/privacy/disable-camera
+    value: true
+    state: present
+  become_user: ling
 
 - name: General | Account Management | GNOME | Privacy - Microphone
-  shell: sudo -u ling dconf write /org/gnome/desktop/privacy/disable-microphone true
+  dconf: 
+    key: /org/gnome/desktop/privacy/disable-microphone
+    value: true
+    state: present
+  become_user: ling
 
 
 
