@@ -59,7 +59,7 @@
 #  shell: sudo -u ling dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'"
 
 - name: General | Account Management | GNOME | Window Buttons
-  community.general.dconf: 
+  dconf: 
     key: /org/gnome/desktop/wm/preferences/button-layout 
     value: "'appmenu:minimize,close'"
     state: present
