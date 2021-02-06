@@ -9,7 +9,9 @@
     force: yes
 
 - name: General | Tests | Lynis | Run System Audit
-  shell: "{{ lynis_install_dir }}/lynis --no-colors audit system > {{ lynis_report }} 2>&1"
+  shell: "{{ lynis_install_dir }}/lynis audit system --no-colors > {{ lynis_report }} 2>&1"
+  args:
+    executable: "{{ bash_exec.stdout }}"
 
 - name: General | Tests | Lynis | Make Report Readable
   file:
