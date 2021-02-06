@@ -31,10 +31,6 @@
     path: "{{ leet_drive }}/Temp/ansible"
   register: leet_drive_details
 
-- name: Facts | General | System | 1337 Mounted? DEBUG
-  debug:
-    var: leet_drive_details
-
 
 - name: Facts | General | System | Report Location = 1337
   set_fact:
