@@ -36,7 +36,7 @@
 - name: General | Account Management | GNOME | Interface - Show Date
   dconf: 
     key: /org/gnome/desktop/interface/clock-show-date
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
@@ -50,28 +50,28 @@
 - name: General | Account Management | GNOME | Interface - Show Seconds
   dconf: 
     key: /org/gnome/desktop/interface/clock-show-seconds
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
 - name: General | Account Management | GNOME | Interface - Show Weekday
   dconf: 
     key: /org/gnome/desktop/interface/clock-show-weekday
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
 - name: General | Account Management | GNOME | Interface - 24h Format
   dconf: 
     key: /org/gnome/desktop/interface/show-battery-percentage
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
 - name: General | Account Management | GNOME | Interface - Show Week Date
   dconf: 
     key: /org/gnome/desktop/calendar/show-weekdate
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
@@ -99,14 +99,14 @@
 - name: General | Account Management | GNOME | Privacy - Camera
   dconf: 
     key: /org/gnome/desktop/privacy/disable-camera
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
 - name: General | Account Management | GNOME | Privacy - Microphone
   dconf: 
     key: /org/gnome/desktop/privacy/disable-microphone
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
