@@ -2,14 +2,14 @@
 # Define program names for package builtin.
 # This file is for ALL systems and should not include UI components.
 
-- name: Facts | General | Package | apt
+- name: General | Facts | Package | apt
   set_fact:
     sshfs: sshfs
     locate: locate
   when: ansible_pkg_mgr == "apt"
   
 
-- name: Facts | General | Package | FreeBSD
+- name: General | Facts | Package | FreeBSD
   set_fact:
     sshfs: fusefs-sshfs
     locate: htop # Placeholder to prevent errors. locate builtin FreeBSD.

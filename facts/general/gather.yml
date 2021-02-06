@@ -1,10 +1,10 @@
 ---
 # Facts that must be gathered after running tasks.
 
-- name: Facts | General | Gather | Locate bash
+- name: General | Facts | Gather | Locate bash
   shell: which bash
   register: bash_exec
 
-- name: Facts | General | Gather | Locate ansible-pull
+- name: General | Facts | Gather | Locate ansible-pull
   shell: which ansible-pull
   register: ansible_pull_exec

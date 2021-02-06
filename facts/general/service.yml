@@ -1,7 +1,7 @@
 ---
 # Define program names for service builtin.
 
-- name: Facts | General | Service | Linux
+- name: General | Facts | Service | Linux
   set_fact:
     cups: cups
     cups_pattern: cupsd
@@ -10,7 +10,7 @@
   when: ansible_system == "Linux"
 
 
-- name: Facts | General | Service | FreeBSD
+- name: General | Facts | Service | FreeBSD
   set_fact:
     cups: cups
     cups_pattern: cupsd

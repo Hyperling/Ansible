@@ -10,22 +10,34 @@
     gnome_tweaks: gnome-tweaks
     dconf_editor: dconf-editor
 
-- name: Facts | Workstation | Package | Pop_OS! and Ubuntu
+
+- name: Facts | Workstation | Package | Pop_OS!
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-  when: ansible_distribution in ("Pop!_OS", "Ubuntu")
+    psutil: python3-psutil
+  when: ansible_distribution == "Pop!_OS"
+
+
+- name: Facts | Workstation | Package | Ubuntu
+  set_fact:
+    flatpak_distro: true
+    firefox_esr: firefox
+    psutil: python3-psutil
+  when: ansible_distribution == "Ubuntu"
 
 
 - name: Facts | Workstation | Package | Debian
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox-esr
-  when: ansible_distribution in ("Debian")
+    psutil: python3-psutil
+  when: ansible_distribution == "Debian"
 
 
 - name: Facts | Workstation | Package | FreeBSD
   set_fact:
     flatpak_distro: false
     firefox_esr: firefox-esr
+    psutil: py37-psutil
   when: ansible_system == "FreeBSD"

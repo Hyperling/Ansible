@@ -1,7 +1,7 @@
 ---
 # Cron jobs specific to FreeBSD
 
-- name: FreeBSD | Cron | Ansible | Enable SSHFS Job
+- name: General | Cron | Ansible | FreeBSD | Enable SSHFS Job
   cron:
     user: ansible
     name: "1337 SSHFS"
@@ -10,7 +10,7 @@
     state: present
     disabled: no
 
-- name: FreeBSD | Cron | Ansible | Enable Security Update
+- name: General | Cron | Ansible | FreeBSD | Enable Security Update
   cron:
     user: ansible
     name: "Security Update"

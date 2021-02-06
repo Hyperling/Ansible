@@ -1,49 +1,49 @@
 ---
 # Define file, folder, and other facts per OS.
 
-- name: Facts | General | System | Pop OS
+- name: General | Facts | System | Pop OS
   set_fact:
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
   when: ansible_distribution == "Pop!_OS"
 
 
-- name: Facts | General | System | Debian and Ubuntu
+- name: General | Facts | System | Debian and Ubuntu
   set_fact:
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
   when: ansible_distribution in ("Debian","Ubuntu")
 
 
-- name: Facts | General | System | FreeBSD
+- name: General | Facts | System | FreeBSD
   set_fact:
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /usr/local/etc/sudoers.d/
   when: ansible_system == "FreeBSD"
 
 
-- name: Facts | General | System | 1337
+- name: General | Facts | System | 1337
   set_fact:
     leet_drive: /mnt/leet
 
-- name: Facts | General | System | 1337 Mounted?
+- name: General | Facts | System | 1337 Mounted?
   stat:
     path: "{{ leet_drive }}/Temp/ansible"
   register: leet_drive_details
 
 
-- name: Facts | General | System | Report Location = 1337
+- name: General | Facts | System | Report Location = 1337
   set_fact:
     report_location: "{{ leet_drive }}/Temp/ansible"
   when: leet_drive_details.stat.exists
 
-- name: Facts | General | System | Report Location = /root
+- name: General | Facts | System | Report Location = /root
   set_fact:
     report_location: "/root"
     report_scp_location: "Temp/ansible/"
   when: not leet_drive_details.stat.exists
 
-- name: Facts | General | System | Reports
+- name: General | Facts | System | Reports
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
     lynis_report: "{{ report_location }}/{{ ansible_hostname }}_lynis.txt"
