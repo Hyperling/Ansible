@@ -1,7 +1,7 @@
 ---
 # Jobs relating to the root user.
 
-- name: General | Cron | Root | Create SSHFS Job
+- name: General | Cron | Root | Create SSHFS Job (FreeBSD)
   cron:
     user: root
     name: "1337 SSHFS"

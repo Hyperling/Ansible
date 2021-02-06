@@ -13,8 +13,8 @@
 - name: General | Cron | Ansible | Create Heartbeat Job
   cron:
     user: ansible
-    name: "Ansible Sync"
+    name: "Heartbeat Report"
     minute: "*/15"
-    job: "echo {{ ansible_date_time.iso8601_basic_short }} > {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
+    job: "date > {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
     state: present
     disabled: no

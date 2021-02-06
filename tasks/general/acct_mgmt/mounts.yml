@@ -47,23 +47,13 @@
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
-- name: General | Cron | Root | Create SSHFS Job (FreeBSD)
-  cron:
-    user: root
-    name: "1337 SSHFS"
-    special_time: reboot
-    job: "{{ sshfs_leet_cmd }}"
-    state: present
-    disabled: no
-  when: ansible_system == "FreeBSD"
-
-- name: General | Cron | Root | Unmount SSHFS (FreeBSD)
+- name: General | Account Management | Mounts | Unmount 1337 (FreeBSD)
   shell: umount -f /mnt/leet
   args:
     warn: false
   when: ansible_system == "FreeBSD"
   ignore_errors: yes
 
-- name: General | Cron | Root | Mount SSHFS (FreeBSD)
+- name: General | Account Management | Mounts | Remount 1337 (FreeBSD)
   shell: "{{ sshfs_leet_cmd }}"
   when: ansible_system == "FreeBSD"
