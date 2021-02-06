@@ -56,7 +56,7 @@
 
 # Window Titlebars (Titlebar Buttons Minimize)
 - name: General | Account Management | GNOME | Windows Buttons
-  shell: sudo -u ling dconf write /org/gnome/desktop/wm/preferences/button-layout 'appmenu:minimize,close'
+  shell: sudo -u ling dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'"
 
 
 # Security
