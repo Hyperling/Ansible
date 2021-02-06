@@ -32,7 +32,7 @@
     warn: false
   when: ansible_system == "Linux"
 
-# FreeBSD also has root cron job for this @reboot
+# FreeBSD has to do this via root cron job, fstab is unhappy
 - name: General | Cron | Root | Create SSHFS Job
   cron:
     user: root

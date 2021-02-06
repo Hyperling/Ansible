@@ -1,6 +1,6 @@
 ---
 
-# Pre-reqs
+# Flatpak Pre-reqs
 - name: Workstation | Linux | Flatpak | Install Flatpak
   package:
     name: flatpak
@@ -13,7 +13,7 @@
     method: system
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Hop into installs
+# Flatpak Installs
 - name: Workstation | Linux | Flatpak | Install Discord
   flatpak:
     name: com.discordapp.Discord
@@ -22,20 +22,26 @@
   flatpak:
     name: org.shotcut.Shotcut
 
-- name: Workstation | Linux | Flatpak | Install Firefox
+- name: Workstation | Linux | Flatpak | Do Not Use Firefox Flatpak
   flatpak:
     name: org.mozilla.firefox
+    state: absent
 
 - name: Workstation | Linux | Flatpak | Install Thunderbird
   flatpak:
     name: org.mozilla.Thunderbird
 
-# Remove any applicable repo software
-- name: Workstation | Linux | Flatpak | Remove Packages
+# Repo Software
+- name: Workstation | Linux | Flatpak | Install Firefox From Package Manager
+  package: 
+    name:
+    - "{{ firefox_esr }}"
+    state: present
+
+- name: Workstation | Linux | Flatpak | Remove Software From Package Manager
   package: 
     name:
     - "{{ firefox }}"
-    - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
     - "{{ evolution }}"
     state: absent
