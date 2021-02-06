@@ -28,7 +28,7 @@
     - ansible
     - git
     state: latest
-  when: "1 == 0"
+  when: 1 == 0
 
 - name: General | Software | Packages | Remove Software
   package: 
