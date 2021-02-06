@@ -2,7 +2,7 @@
 # Tasks related to starting ansible-pull
 # EG: Start timer, kill conflicting jobs, etc
 
-- name: General | Start | Ansible Pull Report | Overwrite File
+- name: General | Start | Ansible Pull Report | Start File
   shell: "echo 'START' > {{ ansible_pull_report }}"
 
 - name: General | Start | Ansible Pull Report | Make Viewable

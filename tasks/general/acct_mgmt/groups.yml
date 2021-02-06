@@ -4,3 +4,4 @@
 - name: General | Account Management | Groups | Sudo (Looking at you BSD!)
   group:
     name: sudo
+    state: present
