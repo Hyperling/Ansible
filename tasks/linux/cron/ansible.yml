@@ -1,0 +1,22 @@
+---
+# Cron jobs specific to FreeBSD
+
+- name: General | Cron | Ansible | Linux | Update System Flatpaks
+  cron:
+    user: ansible
+    name: "Update System FLatpaks"
+    special_time: hourly
+    job: "sudo flatpak update"
+    state: present
+    disabled: no
+  when: flatpak_distro
+
+- name: General | Cron | Ansible | Linux | Update User Flatpaks
+  cron:
+    user: ansible
+    name: "Update User Flatpaks"
+    special_time: hourly
+    job: "sudo -u flatpak update"
+    state: present
+    disabled: no
+  when: flatpak_distro
