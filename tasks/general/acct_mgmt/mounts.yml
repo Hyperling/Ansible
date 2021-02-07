@@ -8,17 +8,6 @@
     mode: '0755'
 
 
-# Linux uses fstab
-- name: General | Account Management | Mounts | Create 1337 fstab Entry
-  blockinfile:
-    path: /etc/fstab
-    block: |
-      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
-    marker: '# {mark} MANAGED BY ANSIBLE | Leet Share'
-    state: present
-    backup: yes
-  when: ansible_system == "Linux"
-
 #TODO Remove this
 - name: General | Account Management | Mounts | Create 1337 fstab Comment
   lineinfile:
@@ -36,6 +25,17 @@
     regexp: '^ling@leet'
     line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
     state: absent
+    backup: yes
+  when: ansible_system == "Linux"
+  
+# Linux uses fstab
+- name: General | Account Management | Mounts | Create 1337 fstab Entry
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
+    marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
+    state: present
     backup: yes
   when: ansible_system == "Linux"
 
