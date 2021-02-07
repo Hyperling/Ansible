@@ -13,12 +13,13 @@
 - name: General | Cron | Ansible | Create Heartbeat Job
   cron:
     user: ansible
-    name: "Heartbeat Report"
+    name: "Create Heartbeat Report"
     minute: "*/15"
     job: "sudo rm {{ heartbeat_report }}; sudo touch {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
     state: present
     disabled: no
 
+#TODO Deleteme
 - name: General | Cron | Ansible | Enable Secure Copy Reports
   cron: 
     user: ansible
