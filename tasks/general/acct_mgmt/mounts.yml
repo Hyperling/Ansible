@@ -1,8 +1,14 @@
 ---
 # Mount shares that all systems should have.
 
+- name: General | Account Management | Mounts | Create Test Folder
+  file: 
+    path: "/mnt/test"
+    state: directory
+    mode: '0755'
+
 - name: General | Account Management | Mounts | Test SSHFS
-  shell: "sshfs ling@leet: /mnt/leet -o allow_other,nonempty"
+  shell: "sshfs {{ leet_ssh }}: /mnt/test -o allow_other,nonempty"
   register: sshfs_test
   ignore_errors: yes 
   
