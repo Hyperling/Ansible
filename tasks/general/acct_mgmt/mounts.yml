@@ -15,15 +15,15 @@
     regexp: '^# MANAGED BY ANSIBLE | Leet Share'
     line: '# MANAGED BY ANSIBLE | Leet Share'
     state: absent
-    insertbefore: '^ling@leet'
+    insertbefore: '^{{ leet_ssh }}'
   when: ansible_system == "Linux"
 
 #TODO Remove this
 - name: General | Account Management | Mounts | Create 1337 fstab Entry
   lineinfile:
     path: /etc/fstab
-    regexp: '^ling@leet'
-    line: "ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
+    regexp: '^{{ leet_ssh }}'
+    line: "{{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
     state: absent
     backup: yes
   when: ansible_system == "Linux"
@@ -33,7 +33,7 @@
   blockinfile:
     path: /etc/fstab
     block: |
-      ling@leet: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
+      {{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes

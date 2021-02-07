@@ -13,4 +13,4 @@
   ignore_errors: yes
 
 - name: General | Account Management | Keys | Root | Copy SSH to 1337
-  shell: ssh-copy-id -i /root/.ssh/id_rsa ling@leet
+  shell: ssh-copy-id -i /root/.ssh/id_rsa {{ leet_ssh }}

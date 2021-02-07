@@ -22,11 +22,12 @@
   when: ansible_system == "FreeBSD"
 
 
-- name: General | Facts | System | 1337
+- name: General | Facts | System | 1337 Drive
   set_fact:
+    leet_ssh: 'ling@leet'
     leet_drive: /mnt/leet
 
-- name: General | Facts | System | 1337 Mounted?
+- name: General | Facts | System | 1337 Drive Mounted?
   stat:
     path: "{{ leet_drive }}/Temp/ansible"
   register: leet_drive_details
@@ -46,6 +47,10 @@
 - name: General | Facts | System | Reports
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
+    heartbeat_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/{{ ansible_hostname }}.txt"
     lynis_report: "{{ report_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
+    lynis_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
     nmap_report: "{{ report_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
+    nmap_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
     ansible_pull_report: "{{ report_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"
+    ansible_pull_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"

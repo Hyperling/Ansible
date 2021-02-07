@@ -16,7 +16,7 @@
     user: root
     name: "Copy Reports"
     minute: "05,20,35,50"
-    job: "scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} ling@leet:{{ report_scp_location }}"
+    job: "scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} {{ leet_ssh }}:{{ report_scp_location }}"
     state: absent
     disabled: no
   when: not leet_drive_details.stat.exists

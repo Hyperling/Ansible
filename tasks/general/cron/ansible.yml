@@ -24,9 +24,24 @@
     user: ansible
     name: "Copy Reports"
     minute: "05,20,35,50"
-    job: "sudo scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} ling@leet:{{ report_scp_location }}"
+    job: "sudo scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} {{ leet_ssh }}:{{ report_scp_location }}"
+    state: absent
+    disabled: no
+  when: not leet_drive_details.stat.exists
+
+- name: General | Cron | Ansible | Enable Secure Copy Reports
+  cron: 
+    user: ansible
+    name: "{{ item.name }}""
+    minute: "05,20,35,50"
+    job: "sudo scp {{ item.src }} {{ item.dest }}"
     state: present
     disabled: no
+  loop:
+    - { name: 'Ansible Pull Report', src: '{{ ansible_pull_report_scp }}', dest: '{{ ansible_pull_report }}' }
+    - { name: 'Heartbeat Report', src: '{{ heartbeat_report_scp }}', dest: '{{ heartbeat_report }}' }
+    - { name: 'Lynis Report', src: '{{ lynis_report_scp }}', dest: '{{ lynis_report }}' }
+    - { name: 'NMap Report', src: '{{ nmap_report_scp }}', dest: '{{ nmap_report }}' }
   when: not leet_drive_details.stat.exists
 
 - name: General | Cron | Ansible | Disable Secure Copy Reports
