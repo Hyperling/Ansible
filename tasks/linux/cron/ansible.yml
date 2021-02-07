@@ -1,5 +1,5 @@
 ---
-# Cron jobs specific to FreeBSD
+# Cron jobs specific to Linux
 
 - name: General | Cron | Ansible | Linux | Update System Flatpaks
   cron:
