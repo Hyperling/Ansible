@@ -4,7 +4,7 @@
 - name: General | Cron | Ansible | Linux | Update System Flatpaks
   cron:
     user: ansible
-    name: "Update System FLatpaks"
+    name: "Update System Flatpaks"
     special_time: hourly
     job: "sudo flatpak update"
     state: present
@@ -16,7 +16,7 @@
     user: ansible
     name: "Update User Flatpaks"
     special_time: hourly
-    job: "sudo -u flatpak update"
+    job: "sudo -u ling flatpak update"
     state: present
     disabled: no
   when: flatpak_distro
