@@ -41,7 +41,7 @@
 - name: General | Facts | System | Report Location = /root
   set_fact:
     report_location: "/root"
-    report_scp_location: "Temp/ansible/"
+    report_scp_location: "Temp/ansible"
   when: not leet_drive_details.stat.exists
 
 - name: General | Facts | System | Report File Names
