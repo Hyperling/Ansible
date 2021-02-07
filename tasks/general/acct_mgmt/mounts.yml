@@ -1,11 +1,16 @@
 ---
 # Mount shares that all systems should have.
 
+- name: General | Account Management | Mounts | Test SSHFS
+  shell: "sshfs ling@leet: /mnt/leet -o allow_other,nonempty"
+  register: sshfs_works
+
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
     path: "{{ leet_drive }}"
     state: directory
     mode: '0755'
+  when: sshfs_works
 
 
 #TODO Remove this
@@ -28,7 +33,7 @@
     backup: yes
   when: ansible_system == "Linux"
   
-# Linux uses fstab
+#TODO Remove this
 - name: General | Account Management | Mounts | Create 1337 fstab Entry
   blockinfile:
     path: /etc/fstab
@@ -39,11 +44,23 @@
     backup: yes
   when: ansible_system == "Linux"
 
+  
+# Linux uses fstab
+- name: General | Account Management | Mounts | Create 1337 fstab Entry
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      {{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other 0 0
+    marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
+    state: present
+    backup: yes
+  when: ansible_system == "Linux" and sshfs_works
+
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux"
+  when: ansible_system == "Linux" and sshfs_works
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
@@ -51,9 +68,9 @@
   shell: umount -f /mnt/leet
   args:
     warn: false
-  when: ansible_system == "FreeBSD"
+  when: ansible_system == "FreeBSD" and sshfs_works
   ignore_errors: yes
 
 - name: General | Account Management | Mounts | Remount 1337 (FreeBSD)
   shell: "{{ sshfs_leet_cmd }}"
-  when: ansible_system == "FreeBSD"
+  when: ansible_system == "FreeBSD" and sshfs_works
