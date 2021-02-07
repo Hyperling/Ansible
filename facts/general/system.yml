@@ -62,7 +62,7 @@
 - name: General | Facts | System | Report Locations (Local)
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ heartbeat_report }}"
-    ansible_pull_report: "{{ report_location }}//{{ ansible_pull_report }}"
+    ansible_pull_report: "{{ report_location }}/{{ ansible_pull_report }}"
     lynis_report: "{{ report_location }}/{{ lynis_report }}"
     nmap_report: "{{ report_location }}/{{ nmap_report }}"
   when: not leet_drive_details.stat.exists
