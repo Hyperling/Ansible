@@ -44,7 +44,7 @@
     report_scp_location: "Temp/ansible/"
   when: not leet_drive_details.stat.exists
 
-- name: General | Facts | System | Reports Destinations
+- name: General | Facts | System | Report Destinations
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
     ansible_pull_report: "{{ report_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"
