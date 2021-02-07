@@ -44,13 +44,17 @@
     report_scp_location: "Temp/ansible/"
   when: not leet_drive_details.stat.exists
 
-- name: General | Facts | System | Reports
+- name: General | Facts | System | Reports Destinations
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
-    heartbeat_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/{{ ansible_hostname }}.txt"
-    lynis_report: "{{ report_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
-    lynis_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
-    nmap_report: "{{ report_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
-    nmap_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
     ansible_pull_report: "{{ report_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"
+    lynis_report: "{{ report_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
+    nmap_report: "{{ report_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
+
+- name: General | Facts | System | Report Destinations (SCP)
+  set_fact:
+    heartbeat_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/{{ ansible_hostname }}.txt"
     ansible_pull_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"
+    lynis_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
+    nmap_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
+  when: not leet_drive_details.stat.exists
