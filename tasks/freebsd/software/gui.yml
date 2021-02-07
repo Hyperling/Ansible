@@ -34,7 +34,7 @@
     path: /etc/fstab
     regexp: '^proc'
     line: proc            /proc           procfs  rw      0       0
-    state: present
+    state: absent
     backup: yes
 
 - name: Workstation | FreeBSD | GUI | Create proc fstab Comment
@@ -42,8 +42,17 @@
     path: /etc/fstab
     regexp: '^# MANAGED BY ANSIBLE | Leet Share'
     line: '# MANAGED BY ANSIBLE | Leet Share'
-    state: present
+    state: absent
     insertbefore: '^proc'
+
+- name: Workstation | FreeBSD | GUI | Create fstab Entries
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      proc            /proc           procfs  rw      0       0
+    marker: '# {mark} MANAGED BY ANSIBLE | GUI Components'
+    state: present
+    backup: yes
 
 - name: Workstation | FreeBSD | GUI | Mount All
   shell: mount -a

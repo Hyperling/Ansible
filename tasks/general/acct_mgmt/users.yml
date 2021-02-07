@@ -23,9 +23,21 @@
     #password: "{{ ling_passwd }}"
   register: user_ling
 
-- name: General | Account Management | User | Hyperling TRASH Folder
+- name: General | Account Management | User | Hyperling | TRASH Folder
   file: 
     path: "{{ user_ling.home }}/TRASH"
     state: directory
     mode: '0755'
+  when: user_ling.home != ""
+
+- name: General | Account Management | User | Hyperling | .bashrc Entries
+  blockinfile:
+    path: "{{ user_ling.home }}/.bashrc"
+    block: |
+      alias cp='cp -v'
+      alias mv='mv -v'
+      alias rm='echo "Use mv ~/TRASH/ instead!'
+    marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
+    state: present
+    backup: yes
   when: user_ling.home != ""
