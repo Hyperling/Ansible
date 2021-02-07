@@ -3,18 +3,18 @@
 
 - name: General | Account Management | Mounts | Test SSHFS
   shell: "sshfs ling@leet: /mnt/leet -o allow_other,nonempty"
-  register: sshfs_works
+  register: sshfs_test
   ignore_errors: yes 
 
 - debug:
-    var: sshfs_works
+    var: sshfs_test
 
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
     path: "{{ leet_drive }}"
     state: directory
     mode: '0755'
-  when: sshfs_works
+  when: not sshfs_test.failed
 
 
 #TODO Remove this
@@ -58,13 +58,13 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and sshfs_works
+  when: ansible_system == "Linux" and not sshfs_test.failed
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux" and sshfs_works
+  when: ansible_system == "Linux" and not sshfs_test.failed
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
@@ -72,9 +72,9 @@
   shell: umount -f /mnt/leet
   args:
     warn: false
-  when: ansible_system == "FreeBSD" and sshfs_works
+  when: ansible_system == "FreeBSD" and not sshfs_test.failed
   ignore_errors: yes
 
 - name: General | Account Management | Mounts | Remount 1337 (FreeBSD)
   shell: "{{ sshfs_leet_cmd }}"
-  when: ansible_system == "FreeBSD" and sshfs_works
+  when: ansible_system == "FreeBSD" and not sshfs_test.failed
