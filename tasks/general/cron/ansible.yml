@@ -52,8 +52,8 @@
     state: present
     disabled: yes
   loop:
-    - { name: 'Ansible Pull Report', src: '{{ ansible_pull_report_scp }}', dest: '{{ ansible_pull_report }}' }
-    - { name: 'Heartbeat Report', src: '{{ heartbeat_report_scp }}', dest: '{{ heartbeat_report }}' }
-    - { name: 'Lynis Report', src: '{{ lynis_report_scp }}', dest: '{{ lynis_report }}' }
-    - { name: 'NMap Report', src: '{{ nmap_report_scp }}', dest: '{{ nmap_report }}' }
+    - { name: 'Ansible Pull Report' }
+    - { name: 'Heartbeat Report' }
+    - { name: 'Lynis Report' }
+    - { name: 'NMap Report' }
   when: leet_drive_details.stat.exists
