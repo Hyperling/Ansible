@@ -6,6 +6,9 @@
   register: sshfs_works
   ignore_errors: yes 
 
+- debug:
+    var: sshfs_works
+
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
     path: "{{ leet_drive }}"
