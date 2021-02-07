@@ -5,7 +5,7 @@
   shell: "nmap --open localhost | grep -c open > {{ nmap_report }}; echo success"
 
 - name: General | Tests | nmap | Run Open
-  shell: "nmap --open localhost | grep open >> {{ nmap_report }}; echo success"
+  shell: "nmap --open localhost >> {{ nmap_report }}; echo success"
 
 - name: General | Tests | nmap | Make Viewable
   file:
