@@ -52,12 +52,22 @@
     remote: flathub
     state: present
 
+- name: Workstation | Linux | Flatpak | Install Android Studio
+  flatpak:
+    name: com.google.AndroidStudio
+    remote: flathub
+    state: present
+
 
 # Repo Software
+- name: Workstation | Linux | Flatpak | Install Lutris from Package Manager
+  package: 
+    name: lutris
+    state: present
+
 - name: Workstation | Linux | Flatpak | Install Firefox ESR from Package Manager
   package: 
-    name:
-    - "{{ firefox_esr }}"
+    name: "{{ firefox_esr }}"
     state: present
 
 - name: Workstation | Linux | Flatpak | Remove Firefox Normal for ESR
