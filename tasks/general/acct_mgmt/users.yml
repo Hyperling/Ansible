@@ -36,7 +36,7 @@
     block: |
       alias cp='cp -v'
       alias mv='mv -v'
-      alias rm='echo "Use mv ~/TRASH/ instead!'
+      alias rm='echo "Use mv ~/TRASH/ instead!"'
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     backup: yes
