@@ -59,7 +59,7 @@
     state: present
 
 
-# Repo Software
+# Software not yet available in Flatpak form.
 - name: Workstation | Linux | Flatpak | Install Lutris from Package Manager
   package: 
     name: lutris
