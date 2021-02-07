@@ -6,7 +6,7 @@
     user: ansible
     name: "Update System Flatpaks"
     special_time: hourly
-    job: "sudo flatpak update"
+    job: "sudo flatpak update --noninteractive"
     state: present
     disabled: no
   when: flatpak_distro
@@ -16,7 +16,7 @@
     user: ansible
     name: "Update User Flatpaks"
     special_time: hourly
-    job: "sudo -u ling flatpak update"
+    job: "sudo -u ling flatpak update --noninteractive"
     state: present
     disabled: no
   when: flatpak_distro
