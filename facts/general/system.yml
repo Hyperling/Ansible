@@ -46,6 +46,6 @@
 - name: General | Facts | System | Reports
   set_fact:
     heartbeat_report: "{{ report_location }}/{{ ansible_hostname }}.txt"
-    lynis_report: "{{ report_location }}/{{ ansible_hostname }}_lynis.txt"
-    nmap_report: "{{ report_location }}/{{ ansible_hostname }}_nmap.txt"
-    ansible_pull_report: "{{ report_location }}/{{ ansible_hostname }}_last_pull_times.txt"
+    lynis_report: "{{ report_location }}/lynis/{{ ansible_hostname }}_lynis.txt"
+    nmap_report: "{{ report_location }}/nmap/{{ ansible_hostname }}_nmap.txt"
+    ansible_pull_report: "{{ report_location }}/pull/{{ ansible_hostname }}_last_pull_times.txt"
