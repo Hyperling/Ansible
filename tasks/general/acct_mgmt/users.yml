@@ -41,3 +41,4 @@
     state: present
     backup: yes
   when: user_ling.home != ""
+  ignore_errors: yes
