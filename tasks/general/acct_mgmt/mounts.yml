@@ -4,6 +4,7 @@
 - name: General | Account Management | Mounts | Test SSHFS
   shell: "sshfs ling@leet: /mnt/leet -o allow_other,nonempty"
   register: sshfs_works
+  ignore_errors: yes 
 
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
