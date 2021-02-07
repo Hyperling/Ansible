@@ -44,7 +44,7 @@
     block: |
       {{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
-    state: present
+    state: absent
     backup: yes
   when: ansible_system == "Linux"
 
