@@ -32,7 +32,7 @@
 - name: General | Cron | Ansible | Enable Secure Copy Reports
   cron: 
     user: ansible
-    name: "{{ item.name }}""
+    name: "{{ item.name }}"
     minute: "05,20,35,50"
     job: "sudo scp {{ item.src }} {{ item.dest }}"
     state: present
