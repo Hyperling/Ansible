@@ -48,13 +48,16 @@
     - include: tasks/freebsd/software/gui.yml
       when: ansible_system == "FreeBSD"
 
-    # Additional tasks to configure Desktop Environments
+    # Additional tasks to configure systems with Desktop Environments
     - include: tasks/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and flatpak_distro
 
     - name: Workstation | Linux | Packages | Not Implemented
       shell: echo "Not implemented yet. :("
       when: ansible_system == "Linux" and not flatpak_distro
+
+    - include: tasks/linux/cron/ansible.yml
+      when: ansible_system == "Linux"
   
   post_tasks:
     - include: tasks/general/software/gnome.yml
