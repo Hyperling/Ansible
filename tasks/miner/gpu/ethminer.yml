@@ -1,48 +1,48 @@
 ---
 # Mine Ethereum with GPU!
 
-- name: Install Dependencies
+- name: Ethminer | Install Dependencies
   package: 
     name: build-essential dkms cmake perl libdbus-1-dev mesa-common-dev
     state: present
   become: true
 
-- name: Add PPA
+- name: Ethminer | Add PPA
   shell: 'add-apt-repository ppa:ethereum/ethereum; apt update'
   become: true
 
-- name: Install Ethereum
+- name: Ethminer | Install Ethereum
   package: 
     name: ethereum
     state: present
   become: true
 
-- name: Clone Git Repo
+- name: Ethminer | Clone Git Repo
   shell: 'git clone https://github.com/ethereum-mining/ethminer.git'
 
-- name: Update Repo's Repos
+- name: Ethminer | Update Repo's Repos
   shell: 'cd ethminer; git submodule update --init --recursive'
 
-- name: Create Build Folder
+- name: Ethminer | Create Build Folder
   shell: 'cd ethminer; mkdir -p build'
 
-- name: cmake Flags
+- name: Ethminer | cmake Flags
   shell: 'cd ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=ON -DUSE_SYS_OPENCL=ON -ETHASHCPU=ON -DEVBUILD=ON'
 
-- name: cmake Build
+- name: Ethminer | cmake Build
   shell: 'cd ethminer/build; cmake --build .'
 
-- name: cmake Build
+- name: Ethminer | make install
   shell: 'cd /home/mfn/ethminer/build; make install'
   become: true
 
-- name: Download Script
+- name: Ethminer | Download Script
   shell: 'scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/; chmod 755 /home/mfn/ethminer.sh'
   become: true
 
-- name: Kill Current Jobs
+- name: Ethminer | Kill Current Jobs
   shell: 'killall ethminer.sh'
   become: true
 
-- name: Start Mining
+- name: Ethminer | Start Mining
   shell: 'time ethminer.sh'

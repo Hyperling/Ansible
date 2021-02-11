@@ -64,12 +64,16 @@
 
 
 # Additional setup for miners!
-- name: Main | Workstation UI Setup
+- name: Main | Miner Setup
   hosts: miner
   connection: local
   become: true
 
   pre_tasks:
+    - name: What are we mining?
+      debug:
+        var: mine
+
     - include: tasks/miner/acct_mgmt/mfn.yml
 
   tasks:
@@ -82,7 +86,7 @@
     - include: tasks/miner/drivers/amdgpu.yml
       when: ansible_distribution == "Ubuntu" and mine.eth is defined
 
-    - include: tasks/miner/gpu/eth/ethminer.yml
+    - include: tasks/miner/gpu/ethminer.yml
       become_user: mfn
       when: ansible_distribution == "Ubuntu" and mine.eth is defined
 
