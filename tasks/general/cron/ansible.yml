@@ -10,6 +10,15 @@
     state: present
     disabled: no
 
+- name: General | Cron | Ansible | Create Forced Weekly Subscriber Job
+  cron:
+    user: ansible
+    name: "Ansible Weekly Forced Sync"
+    special: weekly
+    job: "sudo {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git"
+    state: present
+    disabled: no
+
 - name: General | Cron | Ansible | Create Heartbeat Job
   cron:
     user: ansible
