@@ -96,6 +96,11 @@
     state: absent
   when: firefox != firefox_esr
 
+- name: Workstation | Linux | Flatpak | Install VLC from Package Manager
+  package: 
+    name: vlc
+    state: present
+
 - name: Workstation | Linux | Flatpak | Remove Software From Package Manager
   package: 
     name:
