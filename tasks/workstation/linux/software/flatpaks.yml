@@ -77,7 +77,7 @@
     repo: ppa:lutris-team/lutris
     update_cache: yes
     state: present
-  when: ansible_distribution = "Ubuntu"
+  when: ansible_distribution == "Ubuntu"
 
 - name: Workstation | Linux | Flatpak | Install Lutris from Package Manager
   package: 
