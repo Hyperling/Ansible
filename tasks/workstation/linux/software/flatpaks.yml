@@ -72,6 +72,13 @@
 
 
 # Software not yet available in Flatpak form.
+- name: Workstation | Linux | Flatpak | Add Lutris PPA to Ubuntu
+  apt_repository: 
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: present
+  when: ansible_distribution = "Ubuntu"
+
 - name: Workstation | Linux | Flatpak | Install Lutris from Package Manager
   package: 
     name: lutris
