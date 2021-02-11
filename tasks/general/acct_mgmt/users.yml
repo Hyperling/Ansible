@@ -28,7 +28,12 @@
     path: "{{ user_ling.home }}/TRASH"
     state: directory
     mode: '0755'
+  become_user: ling
   when: user_ling.home != ""
+
+- name: General | Account Management | User | Hyperling | Log In
+  shell: "echo SUCCESS"
+  become_user: ling
 
 - name: General | Account Management | User | Hyperling | .bashrc Entries
   blockinfile:
@@ -40,5 +45,5 @@
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     backup: yes
-  when: user_ling.home != ""
   ignore_errors: yes
+  when: user_ling.home != ""
