@@ -7,4 +7,4 @@ dell-laptop
 usb
 
 [miner]
-usb mine.eth=true
+usb mine["eth"]=true
