@@ -63,6 +63,33 @@
     - include: tasks/workstation/settings/gnome.yml
 
 
+# Additional setup for miners!
+- name: Main | Workstation UI Setup
+  hosts: miner
+  connection: local
+  become: true
+
+  pre_tasks:
+    - include: tasks/miner/acct_mgmt/mfn.yml
+
+  tasks:
+    # Monero
+    - include: tasks/miner/cpu/xmr.yml
+      become_user: mfn
+      when: mine.xmr is defined
+
+    # Ethereum
+    - include: tasks/miner/driver/amdgpu.yml
+      when: ansible_distribution == "Ubuntu" and mine.eth is defined
+
+    - include: tasks/miner/gpu/eth/ethminer.yml
+      become_user: mfn
+      when: ansible_distribution == "Ubuntu" and mine.eth is defined
+
+  post_tasks:
+    - include: tasks/miner/cron/ansible.yml
+
+
 # Create reports to analyze security.
 - name: Main | Hardness Tests
   hosts: localhost

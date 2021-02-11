@@ -1,0 +1,8 @@
+---
+# Account to do mining tasks.
+
+- name: Miner | Account Management | User | Miner Forty Niner
+  user:
+    name: mfn
+    comment: Miner Forty Niner
+    system: yes

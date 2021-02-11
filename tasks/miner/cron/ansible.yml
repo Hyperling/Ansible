@@ -1,0 +1,11 @@
+---
+# Jobs for miners.
+
+- name: Cron | XMR
+  shell: ""
+  when: mine.xmr is defined
+
+#- name: Cron | ETH
+#  cron: 
+#    name: Mine Ethereum
+#  when: mine.eth is defined
