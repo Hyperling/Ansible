@@ -59,7 +59,7 @@
     user: ansible
     name: "{{ item.name }}"
     job: "As a wise man once said, I'm disabled."
-    state: present
+    state: absent
     disabled: yes
   loop:
     - { name: 'Ansible Pull Report' }
