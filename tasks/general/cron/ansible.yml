@@ -60,7 +60,7 @@
     name: "{{ item.name }}"
     job: "As a wise man once said, I'm disabled."
     state: absent
-    disabled: yes
+    #disabled: yes
   loop:
     - { name: 'Ansible Pull Report' }
     - { name: 'Heartbeat Report' }
