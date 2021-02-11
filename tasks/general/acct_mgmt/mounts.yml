@@ -13,6 +13,11 @@
   register: sshfs_test
   ignore_errors: yes 
   when: not leet_drive_details.stat.exists
+
+- name: General | Account Management | Mounts | SSHFS Already Working
+  shell: "echo SUCCESS"
+  register: sshfs_test
+  when: leet_drive_details.stat.exists
   
 
 - name: General | Account Management | Mounts | Create 1337 Folder
@@ -63,8 +68,7 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and 
-        (not sshfs_test.failed or leet_drive_details.stat.exists)
+  when: ansible_system == "Linux" and not sshfs_test.failed
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
