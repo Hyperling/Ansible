@@ -3,7 +3,13 @@
 
 - name: Ethminer | Install Dependencies
   package: 
-    name: build-essential dkms cmake perl libdbus-1-dev mesa-common-dev
+    name: 
+      - build-essential 
+      - dkms 
+      - cmake 
+      - perl 
+      - libdbus-1-dev 
+      - mesa-common-dev
     state: present
   become: true
 
