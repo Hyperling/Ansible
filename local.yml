@@ -79,7 +79,7 @@
       when: mine.xmr is defined
 
     # Ethereum
-    - include: tasks/miner/driver/amdgpu.yml
+    - include: tasks/miner/drivers/amdgpu.yml
       when: ansible_distribution == "Ubuntu" and mine.eth is defined
 
     - include: tasks/miner/gpu/eth/ethminer.yml
