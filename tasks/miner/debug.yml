@@ -1,0 +1,22 @@
+---
+# Print out all inventory flags associated to mining.
+
+- name: DEBUG | Coin Type | xmr
+  debug:
+    var: xmr
+
+- name: DEBUG | Coin Type | eth
+  debug:
+    var: eth
+
+- name: DEBUG | System Type | cpu
+  debug:
+    var: cpu
+
+- name: DEBUG | System Type | amdgpu
+  debug:
+    var: amdgpu
+
+- name: DEBUG | System Type | nvidia
+  debug:
+    var: nvidia

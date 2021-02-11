@@ -70,25 +70,22 @@
   become: true
 
   pre_tasks:
-    - name: What are we mining?
-      debug:
-        var: mine
-
+    - include: tasks/miner/debug.yml
     - include: tasks/miner/acct_mgmt/mfn.yml
 
   tasks:
     # Monero
     - include: tasks/miner/cpu/xmr.yml
       become_user: mfn
-      when: mine.xmr is defined
+      when: xmr is defined
 
     # Ethereum
     - include: tasks/miner/drivers/amdgpu.yml
-      when: ansible_distribution == "Ubuntu" and mine.eth is defined
+      when: ansible_distribution == "Ubuntu" and amdgpu is defined
 
     - include: tasks/miner/gpu/ethminer.yml
       become_user: mfn
-      when: ansible_distribution == "Ubuntu" and mine.eth is defined
+      when: eth is defined
 
   post_tasks:
     - include: tasks/miner/cron/ansible.yml
