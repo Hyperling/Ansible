@@ -14,7 +14,7 @@
   cron:
     user: ansible
     name: "Ansible Weekly Forced Sync"
-    special: weekly
+    special_time: weekly
     job: "sudo {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git"
     state: present
     disabled: no
