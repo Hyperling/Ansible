@@ -6,11 +6,13 @@
     path: "/mnt/test"
     state: directory
     mode: '0755'
+  when: not leet_drive_details.stat.exists
 
 - name: General | Account Management | Mounts | Test SSHFS
   shell: "sshfs {{ leet_ssh }}: /mnt/test -o allow_other"
   register: sshfs_test
   ignore_errors: yes 
+  when: not leet_drive_details.stat.exists
   
 
 - name: General | Account Management | Mounts | Create 1337 Folder
@@ -18,7 +20,6 @@
     path: "{{ leet_drive }}"
     state: directory
     mode: '0755'
-  when: not sshfs_test.failed
 
 
 #TODO Remove this
@@ -62,7 +63,8 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and not sshfs_test.failed
+  when: ansible_system == "Linux" and 
+        (not sshfs_test.failed or leet_drive_details.stat.exists)
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
