@@ -5,3 +5,6 @@ localhost
 x570
 dell-laptop
 usb
+
+[miner]
+usb mine.eth=true
