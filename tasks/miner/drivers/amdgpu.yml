@@ -12,24 +12,24 @@
 
 - name: AMDGPU | Folder
   shell: 'mkdir -p Downloads'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
 
 - name: AMDGPU | Download
   shell: 'scp ling@leet:InstallFiles/Drivers/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz Downloads/'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
 
 - name: AMDGPU | Extract
   shell: 'cd Downloads; tar -xvf amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
 
 - name: AMDGPU | Install 1 - All
   shell: 'cd Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; amdgpu-install -y'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
 
 - name: AMDGPU | Install 2 - Pro
   shell: 'cd Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; amdgpu-pro-install -y --opencl=pal,legacy'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
 
 - name: AMDGPU | Delete
   shell: 'rm -rf Downloads/*'
-  when: not amdgpu_installed.failed
+  when: amdgpu_installed.failed
