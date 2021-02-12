@@ -5,11 +5,12 @@
   blockinfile:
     path: /root/scm.sh
     block: |
-      #!{{ bash_exec.stdout }}
       # 20210211 - Make life easier!
       ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
       curl https://scm.hyperling.com | bash
-    marker: ''
+    marker: '{mark}'
+    marker_start: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
     state: present
     create: yes
     backup: yes
