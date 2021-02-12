@@ -1,7 +1,7 @@
 ---
 # Create users for both desktop and server machines.
 
-# Scheduler
+## Scheduler ##
 - name: General | Account Management | User | Ansible
   user:
     name: ansible
@@ -9,7 +9,7 @@
     system: yes
 
 
-# Superuser
+## Superuser ##
 - name: General | Account Management | User | Hyperling
   user:
     name: ling
@@ -20,7 +20,6 @@
     shell: "{{ bash_exec.stdout }}"
     create_home: yes
     generate_ssh_key: yes
-    #password: "{{ ling_passwd }}"
   register: user_ling
 
 - name: General | Account Management | User | Hyperling | TRASH Folder
@@ -42,8 +41,41 @@
       alias cp='cp -v'
       alias mv='mv -v'
       alias rm='echo "Use mv ~/TRASH/ instead!"'
+      export PATH=".:~/bin:$PATH"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     backup: yes
   ignore_errors: yes
   when: user_ling.home != ""
+
+
+## Root ##
+- name: General | Account Management | User | Root
+  user:
+    name: root
+    shell: "{{ bash_exec.stdout }}"
+    create_home: yes
+    generate_ssh_key: yes
+  register: root
+
+- name: General | Account Management | User | Root | TRASH Folder
+  file: 
+    path: "{{ root.home }}/TRASH"
+    state: directory
+    mode: '0755'
+  when: root.home != ""
+
+- name: General | Account Management | User | Root | .bashrc Entries
+  blockinfile:
+    path: "{{ root.home }}/.bashrc"
+    block: |
+      alias cp='cp -v'
+      alias mv='mv -v'
+      alias rm='echo "Use mv ~/TRASH/ instead!"'
+      export PATH=".:~/bin:$PATH"
+    marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
+    state: present
+    create: yes
+    backup: yes
+  ignore_errors: yes
+  when: root.home != ""
