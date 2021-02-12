@@ -7,7 +7,7 @@
     block: |
       # 20210211 - Make life easier!
       ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
-      curl https://scm.hyperling.com | bash
+      time curl https://scm.hyperling.com | bash
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
