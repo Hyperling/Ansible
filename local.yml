@@ -16,13 +16,13 @@
     - include: tasks/general/start.yml
 
   tasks:
-    - include: tasks/general/scripts/root.yml
-
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
       ignore_errors: yes
 
     - include: facts/general/gather.yml
+
+    - include: tasks/general/scripts/root.yml
 
     - include: tasks/general/acct_mgmt/groups.yml
     - include: tasks/general/acct_mgmt/users.yml
