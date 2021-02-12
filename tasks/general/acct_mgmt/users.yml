@@ -22,6 +22,14 @@
     generate_ssh_key: yes
   register: user_ling
 
+- name: General | Account Management | User | Hyperling | bin Folder
+  file: 
+    path: "{{ user_ling.home }}/bin"
+    state: directory
+    mode: '0755'
+  become_user: ling
+  when: user_ling.home != ""
+
 - name: General | Account Management | User | Hyperling | TRASH Folder
   file: 
     path: "{{ user_ling.home }}/TRASH"
@@ -56,26 +64,33 @@
     shell: "{{ bash_exec.stdout }}"
     create_home: yes
     generate_ssh_key: yes
-  register: root
+  register: user_root
+
+- name: General | Account Management | User | Root | bin Folder
+  file: 
+    path: "{{ user_root.home }}/bin"
+    state: directory
+    mode: '0755'
+  when: user_root.home != ""
 
 - name: General | Account Management | User | Root | TRASH Folder
   file: 
-    path: "{{ root.home }}/TRASH"
+    path: "{{ user_root.home }}/TRASH"
     state: directory
     mode: '0755'
-  when: root.home != ""
+  when: user_root.home != ""
 
 - name: General | Account Management | User | Root | .bashrc Entries
   blockinfile:
-    path: "{{ root.home }}/.bashrc"
+    path: "{{ user_root.home }}/.bashrc"
     block: |
       alias cp='cp -v'
       alias mv='mv -v'
       alias rm='echo "Use mv ~/TRASH/ instead!"'
-      export PATH=".:~/bin:$PATH"
+      export PATH="~/bin:$PATH"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
     backup: yes
   ignore_errors: yes
-  when: root.home != ""
+  when: user_root.home != ""
