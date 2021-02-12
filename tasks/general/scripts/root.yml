@@ -3,7 +3,7 @@
 
 - name: General | Scripts | Root | scm.sh
   blockinfile:
-    path: "{{ user_root.home }}/scm.sh"
+    path: "{{ user_root.home }}/bin/scm.sh"
     block: |
       # 20210211 - Make life easier!
       ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
@@ -17,5 +17,5 @@
 
 - name: General | Scripts | Root | scm.sh Permissions
   file: 
-    path: "{{ user_root.home }}/scm.sh"
+    path: "{{ user_root.home }}/bin/scm.sh"
     mode: '0755'
