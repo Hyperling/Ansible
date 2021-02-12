@@ -74,18 +74,21 @@
     - include: tasks/miner/acct_mgmt/mfn.yml
 
   tasks:
+    ### CPU SECTION ###
     # Monero
     - include: tasks/miner/cpu/xmr.yml
       become_user: mfn
-      when: xmr is defined
+      when: cpu is defined and xmr is defined
 
-    # Ethereum
+    ### GPU Section ###
+    ## Drivers ##
     - include: tasks/miner/drivers/amdgpu.yml
       when: ansible_distribution == "Ubuntu" and amdgpu is defined
 
+    # Ethereum
     - include: tasks/miner/gpu/ethminer.yml
       become_user: mfn
-      when: eth is defined
+      when: (amdgpu is defined or nvidia is defined) and eth is defined
 
   post_tasks:
     - include: tasks/miner/cron/ansible.yml
