@@ -14,8 +14,10 @@
   become: true
 
 - name: Ethminer | Add PPA
-  shell: 'add-apt-repository ppa:ethereum/ethereum; apt update'
-  become: true
+  apt_repository: 
+    repo: ppa:ethereum/ethereum
+    update_cache: yes
+    state: present
 
 - name: Ethminer | Install Ethereum
   package: 
@@ -38,6 +40,10 @@
 - name: Ethminer | cmake Build
   shell: 'cd ethminer/build; cmake --build .'
 
+- name: Ethminer | Kill Current Jobs
+  shell: 'killall ethminer.sh'
+  become: true
+
 - name: Ethminer | make install
   shell: 'cd /home/mfn/ethminer/build; make install'
   become: true
@@ -45,10 +51,3 @@
 - name: Ethminer | Download Script
   shell: 'scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/; chmod 755 /home/mfn/ethminer.sh'
   become: true
-
-- name: Ethminer | Kill Current Jobs
-  shell: 'killall ethminer.sh'
-  become: true
-
-- name: Ethminer | Start Mining
-  shell: 'time ethminer.sh'
