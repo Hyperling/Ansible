@@ -16,6 +16,8 @@
     - include: tasks/general/start.yml
 
   tasks:
+    - include: tasks/general/scripts/root.yml
+
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
       ignore_errors: yes
@@ -75,7 +77,7 @@
 
   tasks:
     ### CPU SECTION ###
-    # Monero
+    # Monero #
     - include: tasks/miner/cpu/xmr.yml
       become_user: mfn
       when: cpu is defined and xmr is defined
@@ -85,7 +87,7 @@
     - include: tasks/miner/drivers/amdgpu.yml
       when: ansible_distribution == "Ubuntu" and amdgpu is defined
 
-    # Ethereum
+    # Ethereum #
     - include: tasks/miner/gpu/ethminer.yml
       become_user: mfn
       when: (amdgpu is defined or nvidia is defined) and eth is defined

@@ -1,0 +1,15 @@
+---
+# Create file to easily push git changes and call SCM.
+
+- name: General | Scripts | Root | Call SCM
+  blockinfile:
+    path: /root/scm.sh
+    block: |
+      #!/bin/bash
+      # 20210211 - Make life easier!
+      'ssh ling@leet "cd Code/Ansible/ansible-pull; git push"'
+      'curl https://scm.hyperling.com | bash'
+    marker: '# {mark} MANAGED BY ANSIBLE | SCM Shortcut Script'
+    state: present
+    create: yes
+    backup: yes
