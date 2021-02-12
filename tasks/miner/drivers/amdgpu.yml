@@ -58,3 +58,4 @@
 - name: AMDGPU | Test Results
   debug:
     var: clinfo
+  ignore_errors: yes
