@@ -49,7 +49,3 @@
 - name: AMDGPU | Install Pro Driver
   shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
   when: amdgpu_install.failed
-
-- name: AMDGPU | Delete Downloads
-  shell: 'rm -rf /root/Downloads/*'
-  when: amdgpu_install.failed

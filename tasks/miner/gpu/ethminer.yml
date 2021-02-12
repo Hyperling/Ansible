@@ -12,20 +12,17 @@
       - libdbus-1-dev 
       - mesa-common-dev
     state: present
-  become: true
 
 - name: Ethminer | Add PPA
   apt_repository: 
     repo: ppa:ethereum/ethereum
     update_cache: yes
     state: present
-  become: true
 
 - name: Ethminer | Install Ethereum
   package: 
     name: ethereum
     state: present
-  become: true
 
 
 ## Test ##
@@ -35,34 +32,34 @@
   ignore_errors: yes
 
 
-## Install #
+## Download ##
 - name: Ethminer | Clone Git Repo
-  shell: 'cd /home/mfn; git clone https://github.com/ethereum-mining/ethminer.git'
+  shell: 'cd /root/Downloads; git clone https://github.com/ethereum-mining/ethminer.git'
   when: ethminer_install.failed
 
 - name: Ethminer | Update Repo's Repos
-  shell: 'cd /home/mfn/ethminer; git submodule update --init --recursive'
+  shell: 'cd /root/Downloads/ethminer; git submodule update --init --recursive'
   when: ethminer_install.failed
 
 - name: Ethminer | Create Build Folder
-  shell: 'cd /home/mfn/ethminer; mkdir -p build'
+  shell: 'cd /root/Downloads/ethminer; mkdir -p build'
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Flags
-  shell: 'cd /home/mfn/ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=ON -DUSE_SYS_OPENCL=ON -ETHASHCPU=ON -DEVBUILD=ON'
+  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=ON -DUSE_SYS_OPENCL=ON -ETHASHCPU=ON -DEVBUILD=ON'
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
-  shell: 'cd /home/mfn/ethminer/build; cmake --build .'
+  shell: 'cd /root/Downloads/ethminer/build; cmake --build .'
   when: ethminer_install.failed
 
+
+## Install #
 - name: Ethminer | make install
-  shell: 'cd /home/mfn/ethminer/build; make install'
-  become: true
+  shell: 'cd /root/Downloads/ethminer/build; make install'
   when: ethminer_install.failed
 
 
 ## Personal Setup ##
 - name: Ethminer | Download Script
   shell: 'scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/; chmod 755 /home/mfn/ethminer.sh'
-  become: true
