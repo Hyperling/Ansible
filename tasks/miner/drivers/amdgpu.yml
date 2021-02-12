@@ -1,43 +1,55 @@
 ---
 # Install OpenCL drivers.
 
+## Step 0/3: Package Dependencies ##
 - name: AMDGPU | Install Dependencies
   package: 
     name: 
       - dkms 
       - mesa-common-dev
     state: present
-  become: true
 
+
+## Step 1/3: Get Correct Kernel ##
+
+
+
+
+
+
+## Step 2/3: Remove Incorrect Kernels ##
+
+
+
+
+
+
+## Step 3/3: Install AMD PRO Driver ##
 - name: AMDGPU | Check If Installed
   shell: 'which amdgpu-pro-uninstall'
-  register: amdgpu_installed
+  register: amdgpu_install
   ignore_errors: yes
 
-- name: AMDGPU | Debug
+- name: AMDGPU | Debug Installation
   debug:
-    var: amdgpu_installed
+    var: amdgpu_install
 
-- name: AMDGPU | Folder
+- name: AMDGPU | Create Downloads Folder
   shell: 'mkdir -p /root/Downloads'
-  when: amdgpu_installed.failed
+  when: amdgpu_install.failed
 
-- name: AMDGPU | Download
+- name: AMDGPU | Download Driver
   shell: 'scp ling@leet:InstallFiles/Drivers/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz /root/Downloads/'
-  when: amdgpu_installed.failed
+  when: amdgpu_install.failed
 
-- name: AMDGPU | Extract
+- name: AMDGPU | Extract Tarball
   shell: 'cd /root/Downloads; tar -xvf amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz'
-  when: amdgpu_installed.failed
+  when: amdgpu_install.failed
 
-- name: AMDGPU | Install 1 - All
-  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
-  when: amdgpu_installed.failed
-
-- name: AMDGPU | Install 2 - Pro
+- name: AMDGPU | Install Pro Driver
   shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
-  when: amdgpu_installed.failed
+  when: amdgpu_install.failed
 
-- name: AMDGPU | Delete
+- name: AMDGPU | Delete Downloads
   shell: 'rm -rf /root/Downloads/*'
-  when: amdgpu_installed.failed
+  when: amdgpu_install.failed
