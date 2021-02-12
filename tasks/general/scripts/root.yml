@@ -6,8 +6,8 @@
     path: /root/scm.sh
     block: |
       # 20210211 - Make life easier!
-      'ssh ling@leet "cd Code/Ansible/ansible-pull; git push"'
-      'curl https://scm.hyperling.com | bash'
+      ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
+      curl https://scm.hyperling.com | bash
     marker: '#{mark} MANAGED BY ANSIBLE | SCM Shortcut Script'
     marker_begin: "!{{ bash_exec.stdout }}"
     state: present
