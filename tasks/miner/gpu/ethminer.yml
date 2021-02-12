@@ -19,6 +19,7 @@
     repo: ppa:ethereum/ethereum
     update_cache: yes
     state: present
+  become: true
 
 - name: Ethminer | Install Ethereum
   package: 
