@@ -33,6 +33,11 @@
 
 
 ## Download ##
+- name: Ethminer | Remove Git Repo
+  shell: 'cd /root/Downloads; rm -rf ethminer'
+  ignore_errors: yes
+  when: ethminer_install.failed
+
 - name: Ethminer | Clone Git Repo
   shell: 'cd /root/Downloads; git clone https://github.com/ethereum-mining/ethminer.git'
   when: ethminer_install.failed
