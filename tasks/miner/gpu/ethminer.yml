@@ -1,6 +1,7 @@
 ---
 # Mine Ethereum with GPU!
 
+## Dependencies ##
 - name: Ethminer | Install Dependencies
   package: 
     name: 
@@ -25,29 +26,47 @@
     state: present
   become: true
 
+
+## Test ##
+- name: Ethminer | Test If Installed
+  shell: "which ethminer"
+  register: ethminer_install
+  ignore_errors: yes
+
+
+## Install #
 - name: Ethminer | Clone Git Repo
   shell: 'git clone https://github.com/ethereum-mining/ethminer.git'
+  when: ethminer_install.failed
 
 - name: Ethminer | Update Repo's Repos
   shell: 'cd ethminer; git submodule update --init --recursive'
+  when: ethminer_install.failed
 
 - name: Ethminer | Create Build Folder
   shell: 'cd ethminer; mkdir -p build'
+  when: ethminer_install.failed
 
 - name: Ethminer | cmake Flags
   shell: 'cd ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=ON -DUSE_SYS_OPENCL=ON -ETHASHCPU=ON -DEVBUILD=ON'
+  when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
   shell: 'cd ethminer/build; cmake --build .'
+  when: ethminer_install.failed
 
 - name: Ethminer | Kill Current Jobs
   shell: 'killall ethminer.sh'
   become: true
+  when: ethminer_install.failed
 
 - name: Ethminer | make install
   shell: 'cd /home/mfn/ethminer/build; make install'
   become: true
+  when: ethminer_install.failed
 
+
+## Personal Setup ##
 - name: Ethminer | Download Script
   shell: 'scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/; chmod 755 /home/mfn/ethminer.sh'
   become: true
