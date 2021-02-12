@@ -1,6 +1,14 @@
 ---
 # Install OpenCL drivers.
 
+- name: AMDGPU | Install Dependencies
+  package: 
+    name: 
+      - dkms 
+      - mesa-common-dev
+    state: present
+  become: true
+
 - name: AMDGPU | Check If Installed
   shell: 'which amdgpu-pro-uninstall'
   register: amdgpu_installed
