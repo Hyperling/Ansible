@@ -71,13 +71,6 @@
     dbus_flag: "ON"
   when: ansible_distribution == "Pop!_OS"
 
-- name: Ethminer | Print Flags
-  debug:
-    var:
-      - opencl_flag
-      - cuda_flag
-      - dbus_flag
-
 - name: Ethminer | cmake Flags
   shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL=OFF -DEVBUILD=ON'
   when: ethminer_install.failed
