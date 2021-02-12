@@ -47,9 +47,14 @@
   shell: 'cd /root/Downloads; tar -xvf amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz'
   when: amdgpu_install.failed
 
-- name: AMDGPU | Install Pro Driver
-  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
+## Only one driver set can exist at a time! ##
+- name: AMDGPU | Install AMDGPU Driver
+  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
   when: amdgpu_install.failed
+
+#- name: AMDGPU | Install AMDGPU-Pro Driver
+#  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
+#  when: amdgpu_install.failed
 
 - name: AMDGPU | Test Pro Driver
   shell: clinfo
