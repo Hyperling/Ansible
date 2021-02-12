@@ -68,13 +68,13 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and not sshfs_test.failed
+  when: ansible_system == "Linux" and sshfs_test.failed is defined and not sshfs_test.failed
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux" and not sshfs_test.failed
+  when: ansible_system == "Linux" and sshfs_test.failed is defined and not sshfs_test.failed
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
