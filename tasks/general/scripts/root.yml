@@ -1,7 +1,7 @@
 ---
 # Create file to easily push git changes and call SCM.
 
-- name: General | Scripts | Root | Call SCM
+- name: General | Scripts | Root | scm.sh
   blockinfile:
     path: /root/scm.sh
     block: |
@@ -13,3 +13,8 @@
     state: present
     create: yes
     backup: yes
+
+- name: General | Scripts | Root | scm.sh Permissions
+  file: 
+    path: /root/scm.sh
+    mode: '0755'
