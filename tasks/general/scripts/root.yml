@@ -9,7 +9,7 @@
       ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
       curl https://scm.hyperling.com | bash
     marker: '{mark}'
-    marker_start: "#!{{ bash_exec.stdout }}"
+    marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
     state: present
     create: yes
