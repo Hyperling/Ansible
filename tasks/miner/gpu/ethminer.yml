@@ -51,7 +51,7 @@
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Flags
-  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=ON -DUSE_SYS_OPENCL=OFF -DEVBUILD=ON'
+  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL=ON -DETHASHCUDA=OFF -DAPICORE=ON -DBINKERN=ON -DETHDBUS=OFF -DUSE_SYS_OPENCL=OFF -DEVBUILD=ON'
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
