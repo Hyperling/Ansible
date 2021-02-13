@@ -13,7 +13,6 @@
     marker_end: "exit 0"
     state: present
     create: yes
-    backup: yes
 
 - name: General | Scripts | Root | scm.sh Permissions
   file: 
