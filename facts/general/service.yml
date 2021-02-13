@@ -16,5 +16,5 @@
     cups_pattern: cupsd
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
-    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o defaults,allow_other,_netdev"
+    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o allow_other,_netdev"
   when: ansible_system == "FreeBSD"
