@@ -39,7 +39,7 @@
     state: absent
 
 # TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.
-- name: General | Software | Packages | Remove Software (Besides Ubuntu)
+- name: General | Software | Packages | Remove Snap (Besides Ubuntu)
   package: 
     name:
     - snapd
