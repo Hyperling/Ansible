@@ -103,6 +103,7 @@
 ## Install #
 - name: Ethminer | make install
   shell: make install
+  args:
     chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
 
