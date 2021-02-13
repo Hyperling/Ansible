@@ -88,7 +88,13 @@
   when: ansible_distribution == "Pop!_OS"
 
 - name: Ethminer | cmake Flags
-  shell: "cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL={{ sys_opencl_flag }} -DEVBUILD=ON"
+  shell: "cmake .. -DETHASHCL={{ opencl_flag }} \
+                   -DETHASHCUDA={{ cuda_flag }} \
+                   -DAPICORE=ON \
+                   -DBINKERN=ON \
+                   -DETHDBUS={{ dbus_flag }} \
+                   -DUSE_SYS_OPENCL={{ sys_opencl_flag }} \
+                   -DEVBUILD=ON"
   args:
     chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
