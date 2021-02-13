@@ -5,6 +5,7 @@
 - name: AMDGPU | Variables
   set_fact:
     amdgpu_cron_job: AMDGPU - Need To Finish Installation
+    amdgpu_cron_cmd: /root/bin/scm.sh
 
 - name: AMDGPU | Install Dependencies
   package: 
@@ -84,7 +85,7 @@
     user: root
     name: "{{ amdgpu_cron_job }}"
     special_time: reboot
-    job: "scm.sh"
+    job: "{{ amdgpu_cron_cmd }}"
     state: present
     disabled: no
   when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
@@ -133,7 +134,7 @@
     user: root
     name: "{{ amdgpu_cron_job }}"
     special_time: reboot
-    job: "scm.sh"
+    job: "{{ amdgpu_cron_cmd }}"
     state: present
     disabled: no
   when: amdgpu_install.failed and hwe_kernel.stdout != "0"
@@ -175,7 +176,7 @@
     user: root
     name: "{{ amdgpu_cron_job }}"
     special_time: reboot
-    job: "scm.sh"
+    job: "{{ amdgpu_cron_cmd }}"
     state: present
     disabled: no
   when: amdgpu_install.failed
