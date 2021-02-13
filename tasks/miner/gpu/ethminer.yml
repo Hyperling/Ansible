@@ -105,8 +105,6 @@
     chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
 
-
-## Install #
 - name: Ethminer | make install
   shell: make install
   args:
@@ -114,7 +112,7 @@
   when: ethminer_install.failed
 
 
-## Personal Setup ##
+## Personal Script Setup ##
 - name: Ethminer | Download Script
   shell: scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/
 
