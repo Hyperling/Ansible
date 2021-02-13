@@ -33,6 +33,12 @@
 
 
 ## Download ##
+- name: Ethminer | Create Downloads Folder
+  shell: mkdir -p Downloads
+  args:
+    chdir: /root
+  when: ethminer_install.failed
+
 - name: Ethminer | Remove Git Repo
   shell: rm -rf ethminer
   args:
