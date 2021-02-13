@@ -22,6 +22,7 @@
 
 
 # Make super sure that the failed key exists.
+# https://www.middlewareinventory.com/blog/ansible-dict/
 - name: General | Account Management | Mounts | Check/Set sshfs_test.failed Key
   set_fact:         
     sshfs_test: "{{ sshfs_test | combine({item.key : item.value}) }}"
@@ -56,7 +57,7 @@
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux" and not sshfs_test.failed)
+  when: ansible_system == "Linux" and not sshfs_test.failed
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
