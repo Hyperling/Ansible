@@ -13,6 +13,10 @@
   debug:
     var: cpu
 
+- name: DEBUG | System Type | gpu
+  debug:
+    var: gpu
+
 - name: DEBUG | System Type | amdgpu
   debug:
     var: amdgpu
