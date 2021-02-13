@@ -55,10 +55,12 @@
     opencl_flag: "OFF"
     cuda_flag: "OFF"
     dbus_flag: "OFF"
+    sys_opencl_flag: "ON"
 
 - name: Ethminer | Determine OPENCL Flag
   set_fact:
     opencl_flag: "ON"
+    sys_opencl_flag: "OFF"
   when: amdgpu is defined
 
 - name: Ethminer | Determine CUDA Flag
@@ -72,7 +74,7 @@
   when: ansible_distribution == "Pop!_OS"
 
 - name: Ethminer | cmake Flags
-  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL=OFF -DEVBUILD=ON'
+  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL={{ sys_opencl_flag }} -DEVBUILD=ON'
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
