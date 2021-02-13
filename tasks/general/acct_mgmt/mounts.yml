@@ -7,13 +7,11 @@
     path: "/mnt/test"
     state: directory
     mode: '0755'
-  when: not leet_drive_details.stat.exists
 
 - name: General | Account Management | Mounts | Test SSHFS
   shell: "sshfs {{ leet_ssh }}: /mnt/test -o allow_other"
   register: sshfs_test
   ignore_errors: yes 
-  when: not leet_drive_details.stat.exists
   
 
 # Begin setting up 1337
