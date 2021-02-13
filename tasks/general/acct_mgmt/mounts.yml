@@ -26,38 +26,6 @@
     state: directory
     mode: '0755'
 
-
-#TODO Remove this
-- name: General | Account Management | Mounts | Create 1337 fstab Comment
-  lineinfile:
-    path: /etc/fstab
-    regexp: '^# MANAGED BY ANSIBLE | Leet Share'
-    line: '# MANAGED BY ANSIBLE | Leet Share'
-    state: absent
-    insertbefore: '^{{ leet_ssh }}'
-  when: ansible_system == "Linux"
-
-#TODO Remove this
-- name: General | Account Management | Mounts | Create 1337 fstab Entry
-  lineinfile:
-    path: /etc/fstab
-    regexp: '^{{ leet_ssh }}'
-    line: "{{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0"
-    state: absent
-    backup: yes
-  when: ansible_system == "Linux"
-  
-#TODO Remove this
-- name: General | Account Management | Mounts | Create 1337 fstab Entry
-  blockinfile:
-    path: /etc/fstab
-    block: |
-      {{ leet_ssh }}: /mnt/leet fuse.sshfs defaults,_netdev,allow_other,delay_connect 0 0
-    marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
-    state: absent
-    backup: yes
-  when: ansible_system == "Linux"
-
   
 # Linux uses fstab
 - name: General | Account Management | Mounts | Create 1337 fstab Entry
