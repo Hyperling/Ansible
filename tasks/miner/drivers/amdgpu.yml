@@ -73,7 +73,7 @@
     line: 'GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0-65-generic"'
     state: present
     backup: yes
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0 and ga_kernel.failed
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
 
 - name: AMDGPU | Prepare Cron Job To SCM
   cron:
@@ -83,15 +83,15 @@
     job: "scm.sh"
     state: present
     disabled: no
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0 and ga_kernel.failed
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
 
 - name: AMDGPU | Reboot To GA Kernel
   shell: reboot
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0 and ga_kernel.failed
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
 
 - pause:
     prompt: "Rebooting to GA kernel! Please hold."
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0 and ga_kernel.failed
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
 
 
 
@@ -104,11 +104,11 @@
                              linux-modules-5.1* \
                              linux-modules-5.8.0-* \
                              linux-modules-5.6.0-*"
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 - name: AMDGPU | Update + Clean System
   shell: "apt update; apt dist-upgrade -y; apt autoremove -y"
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 # This is to ensure we can test adding `apt install --install-recommends linux-generic` later 
 - name: AMDGPU | Boot Default Kernel
@@ -118,7 +118,7 @@
     line: 'GRUB_DEFAULT=0'
     state: present
     backup: yes
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 - name: AMDGPU | Prepare Cron Job To SCM
   cron:
@@ -128,15 +128,15 @@
     job: "scm.sh"
     state: present
     disabled: no
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 - name: AMDGPU | Reboot To Ensure GA Is 0
   shell: reboot
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 - pause:
     prompt: "Rebooting to clear kernels! Please hold."
-  when: amdgpu_install.failed and hwe_kernel.stdout > 0
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 
 
