@@ -1,7 +1,11 @@
 ---
 # Install OpenCL drivers.
 
-## Step 0/3: Package Dependencies ##
+## Step 0/3: Dependencies ##
+- name: AMDGPU | Variables
+  set_fact:
+    amdgpu_cron_job: AMDGPU - Need To Finish Installation
+
 - name: AMDGPU | Install Dependencies
   package: 
     name: 
@@ -10,31 +14,133 @@
       - clinfo
     state: present
 
+- name: AMDGPU | Set GRUB Timer
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_TIMEOUT='
+    line: 'GRUB_TIMEOUT=3'
+    state: present
+    backup: yes
 
-## Step 1/3: Get Correct Kernel ##
+- name: AMDGPU | Remove Previous Run's Cron Job
+  cron:
+    user: root
+    name: "{{ amdgpu_cron_job }}"
+    state: absent
 
+# Tests
+- name: AMDGPU | Check If GA Kernel Installed
+  shell: 'uname --kernel-release | grep 5.4.0-65-generic'
+  register: ga_kernel
+  ignore_errors: yes
 
+- name: AMDGPU | Check If HWE Kernel Installed
+  shell: 'apt search linux-image-5.8.0-* | grep -c installed'
+  register: hwe_kernel
+  ignore_errors: yes
 
+#- name: AMDGPU | Check If All Driver Installed
+#  shell: 'which amdgpu-uninstall'
+#  register: amdgpu_install
+#  ignore_errors: yes
 
-
-
-## Step 2/3: Remove Incorrect Kernels ##
-
-
-
-
-
-
-## Step 3/3: Install AMD PRO Driver ##
-- name: AMDGPU | Check If Installed
+- name: AMDGPU | Check If Pro Driver Installed
   shell: 'which amdgpu-pro-uninstall'
   register: amdgpu_install
   ignore_errors: yes
 
-- name: AMDGPU | Debug Installation
+- name: AMDGPU | DEBUG
   debug:
-    var: amdgpu_install
+    var: "{{ item }}"
+  loop:
+    - ga_kernel
+    - hwe_kernel
+    - amdgpu_install
 
+
+
+## Step 1/3: Get Correct Kernel ##
+- name: AMDGPU | Install GA Kernel
+  package:
+    name: linux-image-5.4.0-65-generic
+    state: present
+  when: amdgpu_install.failed and hwe_kernel.failed and ga_kernel.failed
+
+- name: AMDGPU | Prepare To Boot GA Kernel
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_DEFAULT='
+    line: 'GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0-65-generic"'
+    state: present
+    backup: yes
+  when: amdgpu_install.failed and hwe_kernel.failed and ga_kernel.failed
+
+- name: AMDGPU | Prepare Cron Job To SCM
+  cron:
+    user: root
+    name: "{{ amdgpu_cron_job }}"
+    special_time: reboot
+    job: "scm.sh"
+    state: present
+    disabled: no
+  when: amdgpu_install.failed and hwe_kernel.failed and ga_kernel.failed
+
+- name: AMDGPU | Reboot To GA Kernel
+  shell: reboot
+  when: amdgpu_install.failed and hwe_kernel.failed and ga_kernel.failed
+
+- pause:
+    prompt: "Rebooting to GA kernel! Please hold."
+  when: amdgpu_install.failed and hwe_kernel.failed and ga_kernel.failed
+
+
+
+## Step 2/3: Remove Incorrect Kernels ##
+- name: AMDGPU | Remove Bad Kernels
+  shell: "apt remove --purge linux-generic-hwe-20.04 \
+                             linux-oem-20.04 \
+                             linux-hwe-* \
+                             linux-oem-* \
+                             linux-modules-5.1* \
+                             linux-modules-5.8.0-* \
+                             linux-modules-5.6.0-*"
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+- name: AMDGPU | Update + Clean System
+  shell: "apt update; apt dist-upgrade -y; apt autoremove -y"
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+# This is to ensure we can test adding `apt install --install-recommends linux-generic` later 
+- name: AMDGPU | Boot Default Kernel
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_DEFAULT='
+    line: 'GRUB_DEFAULT=0'
+    state: present
+    backup: yes
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+- name: AMDGPU | Prepare Cron Job To SCM
+  cron:
+    user: root
+    name: "{{ amdgpu_cron_job }}"
+    special_time: reboot
+    job: "scm.sh"
+    state: present
+    disabled: no
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+- name: AMDGPU | Reboot To Ensure GA Is 0
+  shell: reboot
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+- pause:
+    prompt: "Rebooting to clear kernels! Please hold."
+  when: amdgpu_install.failed and hwe_kernel.failed
+
+
+
+## Step 3/3: Install AMD PRO Driver ##
 - name: AMDGPU | Create Downloads Folder
   shell: 'mkdir -p /root/Downloads'
   when: amdgpu_install.failed
@@ -48,15 +154,36 @@
   when: amdgpu_install.failed
 
 ## Only one driver set can exist at a time! ##
-- name: AMDGPU | Install AMDGPU Driver
-  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
-  when: amdgpu_install.failed
-
-#- name: AMDGPU | Install AMDGPU-Pro Driver
-#  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
+#- name: AMDGPU | Install AMDGPU All Driver
+#  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
 #  when: amdgpu_install.failed
 
-- name: AMDGPU | Test Pro Driver
+- name: AMDGPU | Install AMDGPU-Pro Driver
+  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
+  when: amdgpu_install.failed
+
+- name: AMDGPU | Prepare Cron Job To SCM
+  cron:
+    user: root
+    name: "{{ amdgpu_cron_job }}"
+    special_time: reboot
+    job: "scm.sh"
+    state: present
+    disabled: no
+  when: amdgpu_install.failed
+
+- name: AMDGPU | Reboot To GA Kernel
+  shell: reboot
+  when: amdgpu_install.failed
+
+- pause:
+    prompt: "Rebooting to use driver! Please hold."
+  when: amdgpu_install.failed
+
+
+
+## We're done! ##
+- name: AMDGPU | Test Driver
   shell: clinfo
   register: clinfo
 
