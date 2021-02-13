@@ -7,4 +7,5 @@ dell-laptop
 usb
 
 [miner]
-usb eth=true amdgpu=true
+usb eth=true gpu=true amdgpu=true
+x570 eth=true gpu=true 
