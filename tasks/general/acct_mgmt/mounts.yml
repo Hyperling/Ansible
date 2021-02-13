@@ -1,6 +1,7 @@
 ---
 # Mount shares that all systems should have.
 
+# Test if this machine can use SSHFS
 - name: General | Account Management | Mounts | Create Test Folder
   file: 
     path: "/mnt/test"
@@ -20,6 +21,7 @@
   when: leet_drive_details.stat.exists
   
 
+# Begin setting up 1337
 - name: General | Account Management | Mounts | Create 1337 Folder
   file: 
     path: "{{ leet_drive }}"
@@ -36,13 +38,15 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and sshfs_test.failed is defined and not sshfs_test.failed
+  when: ansible_system == "Linux" and 
+        (sshfs_test.failed is not defined or not sshfs_test.failed)
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux" and sshfs_test.failed is defined and not sshfs_test.failed
+  when: ansible_system == "Linux" and 
+        (sshfs_test.failed is not defined or not sshfs_test.failed)
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
@@ -55,10 +59,11 @@
 
 - name: General | Account Management | Mounts | Remount 1337 (FreeBSD)
   shell: "{{ sshfs_leet_cmd }}"
-  when: ansible_system == "FreeBSD" and not sshfs_test.failed
+  when: ansible_system == "FreeBSD" and 
+        (sshfs_test.failed is not defined or not sshfs_test.failed)
 
 
-# Ensure correct cron jobs and other dependencies are done properly.
+# Ensure correct cron jobs and other downstream dependencies are done properly.
 - name: General | Account Management | Mounts | Refresh Variable leet_drive_details
   stat:
     path: "{{ leet_drive }}/Temp/ansible"
