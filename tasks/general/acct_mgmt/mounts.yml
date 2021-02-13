@@ -24,7 +24,7 @@
 # Make super sure that the failed key exists.
 - name: General | Account Management | Mounts | Check/Set sshfs_test.failed Key
   set_fact:         
-    sshfs_test: "{{ sshfs_test | combine ({item.name : item.phone}) }}"
+    sshfs_test: "{{ sshfs_test | combine({item.name : item.value}) }}"
   with_items: "{{ key: 'failed', value: false }}"
   when: sshfs_test.failed is not defined
 
