@@ -91,7 +91,7 @@
 
     # Ethereum #
     - include: tasks/miner/gpu/ethminer.yml
-      when: eth is defined
+      when: gpu is defined and eth is defined
 
   # Scheduling
   post_tasks:
