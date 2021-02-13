@@ -14,24 +14,6 @@
   register: sshfs_test
   ignore_errors: yes 
   when: not leet_drive_details.stat.exists
-
-- name: General | Account Management | Mounts | SSHFS Already Working
-  shell: "echo SUCCESS"
-  register: sshfs_test
-  when: leet_drive_details.stat.exists
-
-
-# Make super sure that the failed key exists.
-# https://www.middlewareinventory.com/blog/ansible-dict/
-- name: General | Account Management | Mounts | Check/Set sshfs_test.failed Key
-  set_fact:         
-    sshfs_test: "{{ sshfs_test | combine({item.key : item.value}) }}"
-  with_items: 
-    - { 'key': 'failed', 'value': false }
-  when: sshfs_test.failed is not defined
-
-- debug:
-    var: sshfs_test
   
 
 # Begin setting up 1337
@@ -51,13 +33,15 @@
     marker: '# {mark} MANAGED BY ANSIBLE | 1337 Share'
     state: present
     backup: yes
-  when: ansible_system == "Linux" and not sshfs_test.failed
+  when: ansible_system == "Linux" and 
+        (not sshfs_test.failed or leet_drive_details.stat.exists)
 
 - name: General | Account Management | Mounts | Mount All (Linux)
   shell: mount -a
   args:
     warn: false
-  when: ansible_system == "Linux" and not sshfs_test.failed
+  when: ansible_system == "Linux" and 
+        (not sshfs_test.failed or leet_drive_details.stat.exists)
 
 
 # FreeBSD has to do this via root cron job, fstab is unhappy
@@ -65,12 +49,14 @@
   shell: umount -f /mnt/leet
   args:
     warn: false
-  when: ansible_system == "FreeBSD" and not sshfs_test.failed
+  when: ansible_system == "FreeBSD" and 
+        (not sshfs_test.failed or leet_drive_details.stat.exists)
   ignore_errors: yes
 
 - name: General | Account Management | Mounts | Remount 1337 (FreeBSD)
   shell: "{{ sshfs_leet_cmd }}"
-  when: ansible_system == "FreeBSD" and not sshfs_test.failed
+  when: ansible_system == "FreeBSD" and 
+        (not sshfs_test.failed or leet_drive_details.stat.exists)
 
 
 # Ensure correct cron jobs and other downstream dependencies are done properly.
