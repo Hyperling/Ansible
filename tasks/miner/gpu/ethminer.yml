@@ -34,20 +34,28 @@
 
 ## Download ##
 - name: Ethminer | Remove Git Repo
-  shell: 'cd /root/Downloads; rm -rf ethminer'
+  shell: rm -rf ethminer
+  args:
+    chdir: /root/Downloads
   ignore_errors: yes
   when: ethminer_install.failed
 
 - name: Ethminer | Clone Git Repo
-  shell: 'cd /root/Downloads; git clone https://github.com/ethereum-mining/ethminer.git'
+  shell: git clone https://github.com/ethereum-mining/ethminer.git
+  args:
+    chdir: /root/Downloads
   when: ethminer_install.failed
 
 - name: Ethminer | Update Repo's Repos
-  shell: 'cd /root/Downloads/ethminer; git submodule update --init --recursive'
+  shell: git submodule update --init --recursive
+  args:
+    chdir: /root/Downloads/ethminer
   when: ethminer_install.failed
 
 - name: Ethminer | Create Build Folder
-  shell: 'cd /root/Downloads/ethminer; mkdir -p build'
+  shell: mkdir -p build
+  args:
+    chdir: /root/Downloads/ethminer
   when: ethminer_install.failed
 
 - name: Ethminer | Default Flags
@@ -74,17 +82,22 @@
   when: ansible_distribution == "Pop!_OS"
 
 - name: Ethminer | cmake Flags
-  shell: 'cd /root/Downloads/ethminer/build; cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL={{ sys_opencl_flag }} -DEVBUILD=ON'
+  shell: "cmake .. -DETHASHCL={{ opencl_flag }} -DETHASHCUDA={{ cuda_flag }} -DAPICORE=ON -DBINKERN=ON -DETHDBUS={{ dbus_flag }} -DUSE_SYS_OPENCL={{ sys_opencl_flag }} -DEVBUILD=ON"
+  args:
+    chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
-  shell: 'cd /root/Downloads/ethminer/build; cmake --build .'
+  shell: cmake --build .
+  args:
+    chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
 
 
 ## Install #
 - name: Ethminer | make install
-  shell: 'cd /root/Downloads/ethminer/build; make install'
+  shell: make install
+    chdir: /root/Downloads/ethminer/build
   when: ethminer_install.failed
 
 
