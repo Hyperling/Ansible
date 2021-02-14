@@ -16,66 +16,29 @@
 
 
 # Flatpak Installs
-- name: Workstation | Linux | Flatpak | Install Discord
+- name: Workstation | Linux | Flatpak | Installs
   flatpak:
-    name: com.discordapp.Discord
+    name: "{{ item }}"
     remote: flathub
     state: present
+  loop:
+    - org.mozilla.firefox
+    - org.mozilla.Thunderbird
+    - io.lbry.lbry-app
+    - com.discordapp.Discord
+    - org.shotcut.Shotcut
+    - com.visualstudio.code-oss
+    - com.google.AndroidStudio
+    - com.valvesoftware.Steam
 
-- name: Workstation | Linux | Flatpak | Install Shotcut
+- name: Workstation | Linux | Flatpak | Uninstalls
   flatpak:
-    name: org.shotcut.Shotcut
+    name: "{{ item }}"
     remote: flathub
     state: present
-
-- name: Workstation | Linux | Flatpak | Remove Firefox (It's Broke Boys!)
-  flatpak:
-    name: org.mozilla.firefox
-    remote: flathub
-    state: absent
-
-- name: Workstation | Linux | Flatpak | Install Thunderbird
-  flatpak:
-    name: org.mozilla.Thunderbird
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Install LBRY
-  flatpak:
-    name: io.lbry.lbry-app
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Install Steam
-  flatpak:
-    name: com.valvesoftware.Steam
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Install Android Studio
-  flatpak:
-    name: com.google.AndroidStudio
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Install Code OSS
-  flatpak:
-    name: com.visualstudio.code-oss
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Remove VS Code
-  flatpak:
-    name: com.visualstudio.code
-    remote: flathub
-    state: present
-
-- name: Workstation | Linux | Flatpak | Remove Code From Package Manager
-  package:
-    name: 
-    - vscode
-    - code
-    state: absent
+  loop:
+    - org.mozilla.firefox
+    - com.visualstudio.code
 
 
 # Software not yet available in Flatpak form.
@@ -114,4 +77,6 @@
     - "{{ thunderbird }}"
     - "{{ evolution }}"
     - steam
+    - vscode
+    - code
     state: absent
