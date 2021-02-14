@@ -39,7 +39,7 @@
     state: absent
 
 # Ubuntu still uses snap for critical components like GNOME, must keep.
-- name: General | Software | Services | Disable CUPS Daemon
+- name: General | Software | Services | Disable Snap Daemon
   service:
     name: snapd
     pattern: snapd
