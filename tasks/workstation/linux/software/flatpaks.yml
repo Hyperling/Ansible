@@ -70,6 +70,13 @@
     remote: flathub
     state: present
 
+- name: Workstation | Linux | Flatpak | Remove Code From Package Manager
+  package:
+    name: 
+    - vscode
+    - code
+    state: absent
+
 
 # Software not yet available in Flatpak form.
 - name: Workstation | Linux | Flatpak | Add Lutris PPA to Ubuntu
