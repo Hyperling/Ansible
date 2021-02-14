@@ -38,7 +38,15 @@
     - chromium-browser
     state: absent
 
-# TODO: Confirm if Ubuntu still uses snap for critical components like GNOME.
+# Ubuntu still uses snap for critical components like GNOME, must keep.
+- name: General | Software | Services | Disable CUPS Daemon
+  service:
+    name: snapd
+    pattern: snapd
+    state: stopped
+    enabled: no
+  when: ansible_distribution != "Ubuntu"
+
 - name: General | Software | Packages | Remove Snap (Besides Ubuntu)
   package: 
     name:
