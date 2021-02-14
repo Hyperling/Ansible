@@ -7,6 +7,13 @@
     sshfs: sshfs
     locate: locate
   when: ansible_pkg_mgr == "apt"
+
+
+- name: General | Facts | Package | pacman
+  set_fact:
+    sshfs: sshfs
+    locate: mlocate
+  when: ansible_pkg_mgr == "pacman"
   
 
 - name: General | Facts | Package | FreeBSD
