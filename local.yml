@@ -81,8 +81,8 @@
   tasks:
     ### CPU SECTION ###
     # Monero #
-    - include: tasks/miner/cpu/xmr.yml
-      when: cpu is defined and xmr is defined
+    - include: tasks/miner/software/xmr-stak-cpu.yml
+      when: xmr_stak_cpu is defined
 
     ### GPU Section ###
     ## Drivers ##
@@ -90,8 +90,11 @@
       when: ansible_distribution == "Ubuntu" and amdgpu is defined
 
     # Ethereum #
-    - include: tasks/miner/gpu/ethminer.yml
-      when: gpu is defined and eth is defined
+    - include: tasks/miner/software/ethminer.yml
+      when: ethminer is defined
+
+    - include: tasks/miner/software/ethminer.yml
+      when: nanominer is defined
 
   # Scheduling
   post_tasks:
