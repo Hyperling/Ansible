@@ -38,10 +38,11 @@
     state: absent
   loop:
     - org.mozilla.firefox
-    - com.visualstudio.code
+    - com.visualstudio.code # Why does this throw an error? It's the correct ID.
+  ignore_errors: yes
 
 
-# Software not yet available in Flatpak form.
+# Software not yet available or working properly in Flatpak form.
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
   apt_repository: 
     repo: ppa:lutris-team/lutris
