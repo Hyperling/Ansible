@@ -24,11 +24,12 @@
   loop:
     - org.mozilla.firefox
     - org.mozilla.Thunderbird
-    - io.lbry.lbry-app
     - com.discordapp.Discord
-    - org.shotcut.Shotcut
+    - io.lbry.lbry-app
     - com.visualstudio.code-oss
     - com.google.AndroidStudio
+    - org.shotcut.Shotcut
+    - com.obsproject.Studio
     - com.valvesoftware.Steam
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Application Uninstalls
