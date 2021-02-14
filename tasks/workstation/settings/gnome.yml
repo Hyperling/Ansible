@@ -19,7 +19,9 @@
 - name: Workstation | Account Management | GNOME | Favorites (Linux)
   dconf: 
     key: /org/gnome/shell/favorite-apps
-    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'com.discordapp.Discord.desktop', 'io.lbry.lbry-app.desktop', 'com.visualstudio.code-oss.desktop', 'com.google.AndroidStudio.desktop', 'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop', 'gnome-system-monitor.desktop']"
+    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'com.discordapp.Discord.desktop', 
+             'io.lbry.lbry-app.desktop', 'com.visualstudio.code-oss.desktop', 'com.google.AndroidStudio.desktop', 'org.shotcut.Shotcut.desktop', 
+             'com.obsproject.Studio.desktop', 'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop', 'gnome-system-monitor.desktop']"
     state: present
   become_user: ling
   when: ansible_system == "Linux"
