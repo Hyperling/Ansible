@@ -10,6 +10,15 @@
 
 
 ## Superuser ##
+- name: General | Account Management | User | use BASH (Default)
+  set_fact:
+    ling_shell: "{{ bash_exec.stdout }}"
+
+- name: General | Account Management | User | Use ZSH (Arch+Manjaro)
+  set_fact:
+    ling_shell: "{{ zsh_exec.stdout }}"
+  when: ansible_distribution == "Archlinux"
+
 - name: General | Account Management | User | Hyperling
   user:
     name: ling
@@ -17,7 +26,7 @@
     groups: 
       - sudo
     append: yes
-    shell: "{{ bash_exec.stdout }}"
+    shell: "{{ ling_shell }}"
     create_home: yes
     generate_ssh_key: yes
   register: user_ling

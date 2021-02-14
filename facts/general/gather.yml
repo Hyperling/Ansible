@@ -8,3 +8,7 @@
 - name: General | Facts | Gather | Locate ansible-pull
   shell: which ansible-pull
   register: ansible_pull_exec
+
+- name: General | Facts | Gather | Locate zsh
+  shell: which zsh
+  register: zsh_exec
