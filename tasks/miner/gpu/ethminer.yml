@@ -114,7 +114,7 @@
 
 ## Personal Script Setup ##
 - name: Ethminer | Download Script
-  shell: scp ling@leet:InstallFiles/Miners/ETH/ethminer.sh /home/mfn/
+  shell: scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh /home/mfn/
 
 - name: Ethminer | CHMod Script
   shell: chmod 755 /home/mfn/ethminer.sh
