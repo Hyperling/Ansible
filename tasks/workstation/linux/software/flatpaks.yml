@@ -22,7 +22,6 @@
     remote: flathub
     state: present
   loop:
-    - org.mozilla.firefox
     - org.mozilla.Thunderbird
     - com.discordapp.Discord
     - io.lbry.lbry-app
@@ -36,7 +35,7 @@
   flatpak:
     name: "{{ item }}"
     remote: flathub
-    state: present
+    state: absent
   loop:
     - org.mozilla.firefox
     - com.visualstudio.code
