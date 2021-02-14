@@ -61,7 +61,11 @@
 
 
 ## Step 1/3: Get Correct Kernel ##
-- name: AMDGPU | Install GA Kernel
+- name: AMDGPU | Install Recommended GA Kernel
+  shell: apt install --install-recommends linux-generic 
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and ga_kernel.failed
+
+- name: AMDGPU | Install Specific GA Kernel For Booting
   package:
     name: 
       - linux-headers-5.4.0-65 
@@ -144,13 +148,14 @@
     disabled: no
   when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
-- name: AMDGPU | Reboot To Ensure GA Is 0
-  shell: reboot
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
-
-- pause:
-    prompt: "Rebooting to clear kernels! Please hold."
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+# This reboot may not be necessary.
+#- name: AMDGPU | Reboot To Ensure GA Is 0
+#  shell: reboot
+#  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+#
+#- pause:
+#    prompt: "Rebooting to clear kernels! Please hold."
+#  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
 
 
 
