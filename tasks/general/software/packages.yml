@@ -46,6 +46,7 @@
     state: stopped
     enabled: no
   when: ansible_distribution != "Ubuntu"
+  ignore_errors: yes
 
 - name: General | Software | Packages | Remove Snap (Besides Ubuntu)
   package: 
@@ -53,3 +54,4 @@
     - snapd
     state: absent
   when: ansible_distribution != "Ubuntu"
+  ignore_errors: yes
