@@ -1,5 +1,7 @@
 ---
 # Nanominer from nanopool.org
+# Good documentation that might help with how to do variables.
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html
 
 ## Install ##
 
@@ -9,12 +11,12 @@
 - name: Miner | Software | nanominer | Mine with CPU (Optional)
   debug:
     var: nanominer_config.cpu
-  when: nanominer_config.cpu is defined
+  when: nanominer_cpu is defined
 
 - name: Miner | Software | nanominer | Mine with GPU (Optional)
   debug:
     var: nanominer_config.gpu
-  when: nanominer_config.gpu is defined
+  when: nanominer_gpu is defined
 
 #- name: Miner | Software | nanominer | Mine with GPU (Optional)
 #  blockinfile:
@@ -25,11 +27,10 @@
 #    state: present
 #    create: yes
 #    backup: yes
-#  loop: "{{ nanominer_config.gpu }}"
-#  when: nanominer_config.gpu is defined
+#  when: nanominer_gpu is defined
 
 - name: Miner | Software | nanominer | Choose GPUS (Optional)
   debug:
     var: "{{ item }}"
   loop: "{{ nanominer_config.gpus }}"
-  when: nanominer_config.gpus is defined
+  when: nanominer_gpus is defined

@@ -5,6 +5,8 @@
   debug:
     var: "{{ item }}"
   loop:
-    - driver
-    - miner
-    - nanominer_config
+    - amdgpu
+    - nanominer
+    - nanominer_cpu
+    - nanominer_gpu
+    - nanominer_gpus
