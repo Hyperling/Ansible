@@ -38,12 +38,12 @@
     state: started
     enabled: yes
 
-- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
-  lineinfile:
-    path: /etc/rc.conf
-    regexp: '^sshd_enable='
-    line: 'sshd_enable="YES" # MANAGED BY ANSIBLE'
-    state: present
-    create: yes
-    backup: yes
-  when: ansible_system == "FreeBSD"
+#- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
+#  lineinfile:
+#    path: /etc/rc.conf
+#    regexp: '^sshd_enable='
+#    line: 'sshd_enable="YES" # MANAGED BY ANSIBLE'
+#    state: present
+#    create: yes
+#    backup: yes
+#  when: ansible_system == "FreeBSD"
