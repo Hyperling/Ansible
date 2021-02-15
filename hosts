@@ -7,5 +7,5 @@ dell-laptop
 usb
 
 [miner]
-usb amdgpu=true
-x570 eth=nanominer gpu=true amdgpu=true ethminer=true nanominer=true
+usb  driver=[amdgpu] miner=[]
+x570 driver=[amdgpu] miner=[nanominer,test] nanominer_config={"cpu":"xmr","gpu":"eth","gpus":[1,2,3]}
