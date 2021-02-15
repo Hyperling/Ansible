@@ -9,10 +9,13 @@
   shell: "mkdir -p {{ nanominer_home }}"
 
 - name: Miner | Software | nanominer | Installation | Download Tarball
-  shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}"
+  shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}; chmod 777 {{ nanominer_tar_local }}"
 
 - name: Miner | Software | nanominer | Installation | Extract Tarball
-  shell: "tar -xvfC {{ nanominer_home }} {{ nanominer_tar_local }}"
+  shell: "tar -xvf {{ nanominer_tar_local }}"
+  args:
+    chdir: "{{ nanominer_home }}"
+  become_user: mfn
 
 
 
@@ -41,6 +44,7 @@
     create: yes
   loop:
     - { "algorithm": "RandomX", "wallet": '{{ wallet_xmr }}', "state": "{{ (nanominer_cpu == 'xmr') | ternary('present', 'absent') }}"}
+  become_user: mfn
   when: nanominer_cpu is defined
 
 - name: Miner | Software | nanominer | Configuration | CPU Pools
@@ -49,6 +53,7 @@
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
   loop: "{{ cpu_pool }}"
+  become_user: mfn
   when: nanominer_cpu is defined
 
 # GPU #
@@ -70,6 +75,7 @@
     create: yes
   loop:
     - { "algorithm": "Ethash", "wallet": '{{ wallet_eth }}', "state": "{{ (nanominer_gpu == 'eth') | ternary('present', 'absent') }}"}
+  become_user: mfn
   when: nanominer_gpu is defined
 
 - name: Miner | Software | nanominer | Configuration | Add Pools
@@ -78,6 +84,7 @@
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
   loop: "{{ gpu_pool }}"
+  become_user: mfn
   when: nanominer_gpu is defined
 
 
@@ -95,9 +102,10 @@
       pwd
 
       time {{ nanominer_exec }}
-      
+
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
     state: present
     create: yes
+  become_user: mfn

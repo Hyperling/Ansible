@@ -36,7 +36,7 @@
 - name: Miner | Facts | Pools | Set GPU to Nanopool Eth
   set_fact:
     cpu_pool: "{{ nanopool_xmr }}"
-  when: nanominer_cpu == "xmr" and nanominer_gpu_pool == "nanopool"
+  when: nanominer_cpu == "xmr" and nanominer_cpu_pool == "nanopool"
 
 # GPU #
 
@@ -61,6 +61,7 @@
 
 - name: Miner | Facts | Pools | DEBUG
   debug:
-    var:
-      - cpu_pool
-      - gpu_pool
+    var: "{{ item }}"
+  loop:
+    - cpu_pool
+    - gpu_pool
