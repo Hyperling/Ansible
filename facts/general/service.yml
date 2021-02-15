@@ -1,20 +1,22 @@
 ---
 # Define program names for service builtin.
 
-- name: General | Facts | Service | Linux
+- name: General | Facts | Service | All
   set_fact:
     cups: cups
     cups_pattern: cupsd
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
+    sshd: sshd
+    sshd_pattern: sshd
+    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o allow_other,_netdev"
+
+
+- name: General | Facts | Service | Linux
+  set_fact:
   when: ansible_system == "Linux"
 
 
 - name: General | Facts | Service | FreeBSD
   set_fact:
-    cups: cups
-    cups_pattern: cupsd
-    cups_browse: cups-browsed
-    cups_browse_pattern: cups-browsed
-    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o allow_other,_netdev"
   when: ansible_system == "FreeBSD"

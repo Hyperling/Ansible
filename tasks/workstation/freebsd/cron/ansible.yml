@@ -1,15 +1,6 @@
 ---
 # Cron jobs specific to FreeBSD
 
-- name: General | Cron | Ansible | FreeBSD | Enable SSHFS Job
-  cron:
-    user: ansible
-    name: "1337 SSHFS"
-    special_time: reboot
-    job: "sudo {{ sshfs_leet_cmd }}"
-    state: present
-    disabled: no
-
 - name: General | Cron | Ansible | FreeBSD | Enable Security Update
   cron:
     user: ansible

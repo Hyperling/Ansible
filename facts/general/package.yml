@@ -6,7 +6,7 @@
   set_fact:
     sshfs: sshfs
     locate: locate
-    sshd: openssh-server
+    opensshd: openssh-server
   when: ansible_pkg_mgr == "apt"
 
 
@@ -14,7 +14,7 @@
   set_fact:
     sshfs: sshfs
     locate: mlocate
-    sshd: openssh
+    opensshd: openssh
   when: ansible_pkg_mgr == "pacman"
   
 

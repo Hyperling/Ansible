@@ -30,3 +30,20 @@
     pattern: "{{ cups_browse_pattern }}"
     state: stopped
     enabled: no
+
+- name: General | Software | Services | Enable SSHD (Linux?)
+  service:
+    name: "{{ sshd }}"
+    pattern: "{{ sshd_pattern }}"
+    state: started
+    enabled: yes
+
+- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^sshd_enable='
+    line: 'sshd_enable="YES" # MANAGED BY ANSIBLE'
+    state: present
+    create: yes
+    backup: yes
+  when: ansible_system == "FreeBSD"
