@@ -6,6 +6,7 @@
   set_fact:
     sshfs: sshfs
     locate: locate
+    sshd: openssh-server
   when: ansible_pkg_mgr == "apt"
 
 
@@ -13,11 +14,13 @@
   set_fact:
     sshfs: sshfs
     locate: mlocate
+    sshd: openssh
   when: ansible_pkg_mgr == "pacman"
   
 
 - name: General | Facts | Package | FreeBSD
   set_fact:
     sshfs: fusefs-sshfs
-    locate: htop # Placeholder to prevent errors. locate builtin FreeBSD.
+    locate: htop # Placeholder to prevent errors, locate built into FreeBSD.
+    sshd: htop # sshd comes installed on FreeBSD
   when: ansible_system == "FreeBSD"

@@ -21,6 +21,7 @@
     - "{{ sshfs }}"
     - "{{ locate }}"
     - zsh
+    - "{{ sshd }}"
     state: present
 
 - name: General | Software | Packages | Update Software (Disabled)
