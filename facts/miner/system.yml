@@ -6,3 +6,4 @@
     wallet_server: 'ling@leet'
     wallet_file_remote: "InstallFiles/Miners/wallet.ini"
     wallet_file_local: "{{ user_mfn.home }}/wallet.ini"
+    wallet_section: wallet
