@@ -16,7 +16,7 @@
     minute: "7"
     job: "killall {{ item.name }}.sh"
     state: present
-    disabled: {{ item.enabled }}
+    disabled: "{{ item.enabled }}"
   loop: "{{ miners }}"
 
 
