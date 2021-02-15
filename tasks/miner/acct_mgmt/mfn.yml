@@ -6,3 +6,7 @@
     name: mfn
     comment: Miner Forty Niner
     system: yes
+    groups: 
+      - video
+      - render
+    append: yes

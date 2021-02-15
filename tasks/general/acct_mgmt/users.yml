@@ -25,6 +25,8 @@
     comment: Hyperling
     groups: 
       - sudo
+      - video
+      - render
     append: yes
     shell: "{{ ling_shell }}"
     create_home: yes
