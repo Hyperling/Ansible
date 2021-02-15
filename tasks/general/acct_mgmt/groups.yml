@@ -1,7 +1,11 @@
 ---
 # Groups that do not come to all distros by default.
 
-- name: General | Account Management | Groups | Sudo (Looking at you BSD!)
+- name: General | Account Management | Groups 
   group:
-    name: sudo
+    name: "{{ item }}"
     state: present
+  loop:
+    - sudo
+    - video
+    - render
