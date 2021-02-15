@@ -15,7 +15,7 @@
     user: ansible
     name: "Ansible Weekly Forced Sync"
     special_time: weekly
-    job: "sudo {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git"
+    job: "{{ user_root.home }}/bin/scm.sh"
     state: present
     disabled: no
 

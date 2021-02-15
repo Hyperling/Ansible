@@ -5,7 +5,7 @@
 - name: AMDGPU | Variables
   set_fact:
     amdgpu_cron_job: AMDGPU - Need To Finish Installation
-    amdgpu_cron_cmd: /root/bin/scm.sh
+    amdgpu_cron_cmd: "{{ user_root.home }}/bin/scm.sh"
 
 - name: AMDGPU | Install Dependencies
   package: 
