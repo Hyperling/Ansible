@@ -1,23 +1,20 @@
 ---
-# Load receiver addresses
+# Variablize keys in config file.
 
-## Load Config ##
+## Load Config File ##
 
 - name: Miner | Facts | Config File | Download
   shell: "scp {{ config_server }}:{{ config_file_remote }} {{ config_file_local }}; chmod 700 {{ config_file_local }}"
 
-- name: Miner | Facts | Config File | Load XMR
+- name: Miner | Facts | Config File | Load Wallets
   set_fact:
     wallet_xmr: "{{ lookup('ini', 'xmr section={{config_section_wallet}} file={{config_file_local}}') }}"
-
-- name: Miner | Facts | Config File | Load ETH
-  set_fact:
     wallet_eth: "{{ lookup('ini', 'eth section={{config_section_wallet}} file={{config_file_local}}') }}"
 
 
 ## Verify ##
 
-- name: Miner | Facts | Config File | Load ETH
+- name: Miner | Facts | Config File | DEBUG
   debug:
     var: "{{ item }}"
   loop: 

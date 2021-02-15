@@ -1,7 +1,7 @@
 ---
 # Define file, folder, and other facts per OS.
 
-- name: Miner | Facts | System | Wallet Location
+- name: Miner | Facts | System | Config File
   set_fact:
     config_server: 'ling@leet'
     config_file_remote: "InstallFiles/Miners/miner.ini"
