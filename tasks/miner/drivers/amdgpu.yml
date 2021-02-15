@@ -2,10 +2,14 @@
 # Install OpenCL drivers.
 
 ## Step 0/3: Dependencies ##
+- name: AMDGPU | Find Root Directory
+  shell: pwd
+  register: root_home
+
 - name: AMDGPU | Variables
   set_fact:
     amdgpu_cron_job: AMDGPU - Need To Finish Installation
-    amdgpu_cron_cmd: "{{ user_root.home }}/bin/scm.sh"
+    amdgpu_cron_cmd: "{{ root_home.stdout }}/scm.sh"
 
 - name: AMDGPU | Install Dependencies
   package: 
