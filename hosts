@@ -7,5 +7,5 @@ dell-laptop
 usb
 
 [miner]
-usb  amdgpu
-x570 amdgpu nanominer nanominer_cpu=xmr nanominer_gpu=eth nanominer_gpus=1
+usb  amdgpu=true
+x570 amdgpu=true nanominer=true nanominer_cpu=xmr nanominer_gpu=eth nanominer_gpus=1
