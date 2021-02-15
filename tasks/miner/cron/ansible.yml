@@ -27,5 +27,5 @@
     minute: "0-6,8-59"
     job: "ps -ef | grep '{{ item.name }}.sh' | grep -v 'grep' && {{ user_mfn.home }}/{{ item.name }}.sh"
     state: present
-    disabled: not({{ item.enabled }})
+    disabled: "{{ not(item.enabled) }}"
   loop: "{{ miners }}"
