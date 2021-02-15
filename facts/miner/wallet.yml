@@ -8,13 +8,45 @@
 
 - name: Miner | Facts | Config File | Load XMR
   set_fact:
+    wallet_xmr: "{{ lookup('ini', 'xmr, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
+- name: Miner | Facts | Config File | Load XMR
+  set_fact:
     wallet_xmr: "{{ lookup('ini', 'xmr, section=null, file={{wallet_file_local}}') }}"
   when: wallet_file_local is file
+  ignore_errors: yes
+- name: Miner | Facts | Config File | Load XMR
+  set_fact:
+    wallet_xmr: "{{ lookup('ini', 'xmr, section=wallet, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
+- name: Miner | Facts | Config File | Load XMR
+  set_fact:
+    wallet_xmr: "{{ lookup('ini', 'xmr, section=global, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
 
+- name: Miner | Facts | Config File | Load ETH
+  set_fact:
+    wallet_eth: "{{ lookup('ini', 'eth, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
 - name: Miner | Facts | Config File | Load ETH
   set_fact:
     wallet_eth: "{{ lookup('ini', 'eth, section=null, file={{wallet_file_local}}') }}"
   when: wallet_file_local is file
+  ignore_errors: yes
+- name: Miner | Facts | Config File | Load ETH
+  set_fact:
+    wallet_eth: "{{ lookup('ini', 'eth, section=wallet, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
+- name: Miner | Facts | Config File | Load ETH
+  set_fact:
+    wallet_eth: "{{ lookup('ini', 'eth, section=global, file={{wallet_file_local}}') }}"
+  when: wallet_file_local is file
+  ignore_errors: yes
 
 
 ## Verify ##
