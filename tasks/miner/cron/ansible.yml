@@ -4,10 +4,10 @@
 - name: Miner | Account Management | Cron | Miner Names
   set_fact:
     miners:
-    - { "name": "xmr_stak_cpu", "disabled": yes }
-    - { "name": "ethminer",     "disabled": yes }
-    #- { "name": "nanominer",    "disabled": yes }
-
+    - { "name": "xmr_stak_cpu", "enabled": no }
+    - { "name": "ethminer",     "enabled": no }
+    #- { "name": "nanominer",    "enabled": yes }
+  
 
 - name: Miner | Account Management | Cron | Stop Jobs
   cron:
@@ -16,7 +16,7 @@
     minute: "7"
     job: "killall {{ item.name }}.sh"
     state: present
-    disabled: { not item.disabled }
+    disabled: {{ item.enabled }}
   loop: "{{ miners }}"
 
 
@@ -27,5 +27,5 @@
     minute: "0-6,8-59"
     job: "ps -ef | grep '{{ item.name }}.sh' | grep -v 'grep' && {{ user_mfn.home }}/{{ item.name }}.sh"
     state: present
-    disabled: "{{ item.disabled }}"
+    disabled: not({{ item.enabled }})
   loop: "{{ miners }}"
