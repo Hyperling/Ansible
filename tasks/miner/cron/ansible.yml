@@ -4,8 +4,8 @@
 - name: Miner | Account Management | Cron | Miner Names
   set_fact:
     miners:
-    - { "name": "xmr_stak_cpu", "enabled": {{(xmr_stak_cpu is defined)}} }
-    - { "name": "ethminer",     "enabled": {{(ethminer is defined)}} }
+    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}' }
+    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}' }
     #- { "name": "nanominer",    "enabled": (nanominer is defined) }
   
 
