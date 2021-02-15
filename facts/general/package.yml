@@ -22,5 +22,5 @@
   set_fact:
     sshfs: fusefs-sshfs
     locate: htop # Placeholder to prevent errors, locate built into FreeBSD.
-    sshd: htop # sshd comes installed on FreeBSD
+    opensshd: htop # sshd comes installed on FreeBSD
   when: ansible_system == "FreeBSD"
