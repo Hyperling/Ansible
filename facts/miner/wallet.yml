@@ -4,49 +4,15 @@
 ## Load Config ##
 
 - name: Miner | Facts | Config File | Download
-  shell: "scp {{ wallet_server }}:{{ wallet_file_remote }} {{ wallet_file_local }}; chmod 700 {{ wallet_file_local }}"
+  shell: "scp {{ config_server }}:{{ config_file_remote }} {{ wallet_file_local }}; chmod 700 {{ config_file_local }}"
 
 - name: Miner | Facts | Config File | Load XMR
   set_fact:
-    wallet_xmr: "{{ lookup('ini', 'xmr, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load XMR
-  set_fact:
-    wallet_xmr: "{{ lookup('ini', 'xmr, section=null, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load XMR
-  set_fact:
-    wallet_xmr: "{{ lookup('ini', 'xmr, section=wallet, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load XMR
-  set_fact:
-    wallet_xmr: "{{ lookup('ini', 'xmr, section=global, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
+    wallet_xmr: "{{ lookup('ini', 'xmr section={{config_section_wallet}} file={{config_file_local}}') }}"
 
 - name: Miner | Facts | Config File | Load ETH
   set_fact:
-    wallet_eth: "{{ lookup('ini', 'eth, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load ETH
-  set_fact:
-    wallet_eth: "{{ lookup('ini', 'eth, section=null, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load ETH
-  set_fact:
-    wallet_eth: "{{ lookup('ini', 'eth, section=wallet, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
-- name: Miner | Facts | Config File | Load ETH
-  set_fact:
-    wallet_eth: "{{ lookup('ini', 'eth, section=global, file={{wallet_file_local}}') }}"
-  when: wallet_file_local is file
-  ignore_errors: yes
+    wallet_eth: "{{ lookup('ini', 'eth section={{config_section_wallet}} file={{config_file_local}}') }}"
 
 
 ## Verify ##
