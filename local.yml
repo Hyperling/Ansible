@@ -79,7 +79,7 @@
     - include: tasks/miner/acct_mgmt/users.yml
 
     - include: facts/miner/system.yml
-    - include: facts/miner/wallet.yml
+    - include: facts/miner/config.yml
     - include: facts/miner/pool.yml
 
   # Installations
