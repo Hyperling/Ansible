@@ -1,0 +1,29 @@
+---
+# Create arrays of pools per coin.
+
+- name: Miner | Facts | Pools
+  set_fact:
+    nanopool_xmr:
+      - { "priority": 1, "name": "xmr-us-east1.nanopool.org:14433" }
+      - { "priority": 2, "name": "xmr-us-west1.nanopool.org:14433" }
+      - { "priority": 3, "name": "xmr-eu1.nanopool.org:14433" }
+      - { "priority": 4, "name": "xmr-eu2.nanopool.org:14433" }
+      - { "priority": 5, "name": "xmr-asia1.nanopool.org:14433" }
+      - { "priority": 6, "name": "xmr-jp1.nanopool.org:14433" }
+      - { "priority": 7, "name": "xmr-au1.nanopool.org:14433" }
+    nanoool_eth:
+      - { "priority": 1, "name": "eth-us-east1.nanopool.org:9999" }
+      - { "priority": 2, "name": "eth-us-west1.nanopool.org:9999" }
+      - { "priority": 3, "name": "eth-eu1.nanopool.org:9999" }
+      - { "priority": 4, "name": "eth-eu2.nanopool.org:9999" }
+      - { "priority": 5, "name": "eth-asia1.nanopool.org:9999" }
+      - { "priority": 6, "name": "eth-jp1.nanopool.org:9999" }
+      - { "priority": 7, "name": "eth-au1.nanopool.org:9999" }
+    ethermine_eth:
+      - { "priority": 1, "name": "us2.ethermine.org:5555" }
+      - { "priority": 2, "name": "us1.ethermine.org:5555" }
+      - { "priority": 3, "name": "eu1.ethermine.org:5555" }
+      - { "priority": 4, "name": "asia1.ethermine.org:5555" }
+    f2pool_eth:
+      - { "priority": 1, "name": "eth-na.f2pool.com:6688" }
+      - { "priority": 2, "name": "eth-backup.f2pool.com:6688" }

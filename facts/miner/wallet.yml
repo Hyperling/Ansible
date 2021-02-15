@@ -1,0 +1,33 @@
+---
+# Load receiver addresses
+
+## Variables ## 
+
+- name: Miner | Facts | Config File Name
+  set_fact: 
+    wallet_file_remote: "InstallFiles/Miners/wallet.ini"
+    wallet_file_local: "{{ user_mfn.home }}/wallet.ini"
+
+
+## Load Config ##
+
+- name: Miner | Facts | Config File | Download
+  shell: "scp {{ leet_ssh }}:{{ wallet_file_remote }} {{ wallet_file_local }}; chmod 600 {{ wallet_file_local }}"
+
+- name: Miner | Facts | Config File | Load XMR
+  set_fact:
+    wallet_xmr: "{{ lookup('ini', 'section=xmr, file='wallet_file_local) }}"
+
+- name: Miner | Facts | Config File | Load ETH
+  set_fact:
+    wallet_eth: "{{ lookup('ini', 'section=eth, file='wallet_file_local) }}"
+
+
+## Verify ##
+
+- name: Miner | Facts | Config File | Load ETH
+  debug:
+    var: "{{ item }}"
+  loop: 
+    - wallet_xmr
+    - wallet_eth
