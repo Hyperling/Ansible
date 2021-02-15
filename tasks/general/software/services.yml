@@ -31,7 +31,7 @@
 
 ## SSHD ##
 
-- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
+- name: General | Software | Services | Configure SSHD
   lineinfile:
     path: "{{ sshd_config }}"
     regexp: '{{ item.key }}'
@@ -52,7 +52,7 @@
     - { "key": '^[\#]?X11Forwarding',        "value": 'X11Forwarding no'}
     - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
 
-- name: General | Software | Services | Enable SSHD (Linux?)
+- name: General | Software | Services | Enable SSHD
   service:
     name: "{{ sshd }}"
     pattern: "{{ sshd_pattern }}"
