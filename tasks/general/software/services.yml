@@ -1,22 +1,14 @@
 ---
 # Enable and disable services.
 
-## Fake SSHFS ##
+## SSHFS ##
 
-- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
-  blockinfile:
-    path: /etc/rc.conf
-    block: |
-      fusefs_enable="YES"
-    marker: "# {mark} MANAGED BY ANSIBLE | SSHFS"
-    state: present
-    backup: yes
-  when: ansible_system == "FreeBSD"
-
-- name: General | Software | Services | Load SSHFS (FreeBSD)
-  shell: kldload fusefs
-  args:
-    warn: false
+- name: General | Software | Services | Enable SSHD (Linux?)
+  service:
+    name: fusefs
+    pattern: fusefs
+    state: started
+    enabled: yes
   when: ansible_system == "FreeBSD"
 
 
@@ -38,16 +30,6 @@
 
 
 ## SSHD ##
-
-#- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
-#  lineinfile:
-#    path: /etc/rc.conf
-#    regexp: '^sshd_enable='
-#    line: 'sshd_enable="YES" # MANAGED BY ANSIBLE'
-#    state: present
-#    create: yes
-#    backup: yes
-#  when: ansible_system == "FreeBSD"
 
 - name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
   lineinfile:
@@ -74,5 +56,5 @@
   service:
     name: "{{ sshd }}"
     pattern: "{{ sshd_pattern }}"
-    state: started
+    state: reloaded
     enabled: yes
