@@ -10,12 +10,12 @@
 
 - name: Miner | Software | nanominer | Mine with CPU (Optional)
   debug:
-    var: nanominer_config.cpu
+    var: nanominer_cpu
   when: nanominer_cpu is defined
 
 - name: Miner | Software | nanominer | Mine with GPU (Optional)
   debug:
-    var: nanominer_config.gpu
+    var: nanominer_gpu
   when: nanominer_gpu is defined
 
 #- name: Miner | Software | nanominer | Mine with GPU (Optional)
@@ -31,6 +31,5 @@
 
 - name: Miner | Software | nanominer | Choose GPUS (Optional)
   debug:
-    var: "{{ item }}"
-  loop: "{{ nanominer_config.gpus }}"
+    var: nanominer_gpus
   when: nanominer_gpus is defined
