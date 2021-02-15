@@ -1,11 +1,31 @@
 ---
 # Jobs for miners.
 
-- name: Cron | XMR
-  shell: ""
-  when: mine.xmr is defined
+- name: Miner | Account Management | Cron | Miner Names
+  set_fact:
+    miners:
+    - { "name": "xmr_stak_cpu", "disabled": yes }
+    - { "name": "ethminer",     "disabled": yes }
+    #- { "name": "nanominer",    "disabled": yes }
 
-#- name: Cron | ETH
-#  cron: 
-#    name: Mine Ethereum
-#  when: mine.eth is defined
+
+- name: Miner | Account Management | Cron | Stop Jobs
+  cron:
+    user: mfn
+    name: "Mine with {{ item.name }}"
+    minute: "13"
+    job: "killall {{ item.name }}.sh"
+    state: present
+    disabled: "{{ !item.disabled }}"
+  loop: "{{ miners }}"
+
+
+- name: Miner | Account Management | Cron | Start Jobs
+  cron:
+    user: mfn
+    name: "Mine with {{ item.name }}"
+    minute: "0-12,14-59"
+    job: "ps -ef | grep '{{ item.name }}.sh' | grep -v 'grep' && {{ user_mfn.home }}/{{ item.name }}.sh"
+    state: present
+    disabled: "{{ item.disabled }}"
+  loop: "{{ miners }}"
