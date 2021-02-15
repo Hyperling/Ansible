@@ -36,26 +36,26 @@
 - name: Ethminer | Remove Git Repo
   shell: rm -rf ethminer
   args:
-    chdir: /root/Downloads
+    chdir: "{{ root_home.stdout }}/Downloads"
   ignore_errors: yes
   when: ethminer_install.failed
 
 - name: Ethminer | Clone Git Repo
   shell: git clone https://github.com/ethereum-mining/ethminer.git
   args:
-    chdir: /root/Downloads
+    chdir: "{{ root_home.stdout }}/Downloads"
   when: ethminer_install.failed
 
 - name: Ethminer | Update Repo's Repos
   shell: git submodule update --init --recursive
   args:
-    chdir: /root/Downloads/ethminer
+    chdir: "{{ root_home.stdout }}/Downloads/ethminer"
   when: ethminer_install.failed
 
 - name: Ethminer | Create Build Folder
   shell: mkdir -p build
   args:
-    chdir: /root/Downloads/ethminer
+    chdir: "{{ root_home.stdout }}/Downloads/ethminer"
   when: ethminer_install.failed
 
 - name: Ethminer | Default Flags
@@ -90,25 +90,25 @@
                    -DUSE_SYS_OPENCL={{ sys_opencl_flag }} \
                    -DEVBUILD=ON"
   args:
-    chdir: /root/Downloads/ethminer/build
+    chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
   when: ethminer_install.failed
 
 - name: Ethminer | cmake Build
   shell: cmake --build .
   args:
-    chdir: /root/Downloads/ethminer/build
+    chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
   when: ethminer_install.failed
 
 - name: Ethminer | make install
   shell: make install
   args:
-    chdir: /root/Downloads/ethminer/build
+    chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
   when: ethminer_install.failed
 
 
 ## Personal Script Setup ##
 - name: Ethminer | Download Script
-  shell: scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh /home/mfn/
+  shell: "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/""
 
 - name: Ethminer | CHMod Script
-  shell: chmod 755 /home/mfn/ethminer.sh
+  shell: "chmod 755 {{ user_mfn.home }}/ethminer.sh"

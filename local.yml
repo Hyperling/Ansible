@@ -75,7 +75,7 @@
 
   pre_tasks:
     - include: tasks/miner/debug.yml
-    - include: tasks/miner/acct_mgmt/mfn.yml
+    - include: tasks/miner/acct_mgmt/users.yml
 
   # Installations
   tasks:

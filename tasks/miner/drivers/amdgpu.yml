@@ -2,10 +2,6 @@
 # Install OpenCL drivers.
 
 ## Step 0/3: Dependencies ##
-- name: AMDGPU | Find Root Directory
-  shell: pwd
-  register: root_home
-
 - name: AMDGPU | Variables
   set_fact:
     amdgpu_cron_job: AMDGPU - Need To Finish Installation
@@ -165,20 +161,20 @@
 
 ## Step 3/3: Install AMD PRO Driver ##
 - name: AMDGPU | Download Driver
-  shell: 'scp ling@leet:InstallFiles/Drivers/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz /root/Downloads/'
+  shell: 'scp ling@leet:InstallFiles/Drivers/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz {{ root_home.stdout }}/Downloads/'
   when: amdgpu_install.failed
 
 - name: AMDGPU | Extract Tarball
-  shell: 'cd /root/Downloads; tar -xvf amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz'
+  shell: 'cd {{ root_home.stdout }}/Downloads; tar -xvf amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz'
   when: amdgpu_install.failed
 
 ## Only one driver set can exist at a time! ##
 #- name: AMDGPU | Install AMDGPU All Driver
-#  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
+#  shell: 'cd {{ root_home.stdout }}/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-install -y'
 #  when: amdgpu_install.failed
 
 - name: AMDGPU | Install AMDGPU-Pro Driver
-  shell: 'cd /root/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
+  shell: 'cd {{ root_home.stdout }}/Downloads/amdgpu-pro-20.45-1188099-ubuntu-20.04; ./amdgpu-pro-install -y --opencl=pal,legacy'
   when: amdgpu_install.failed
 
 - name: AMDGPU | Prepare Cron Job To SCM

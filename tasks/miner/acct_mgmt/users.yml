@@ -1,0 +1,22 @@
+---
+# Account to do mining tasks.
+
+## Gather ##
+
+- name: Miner | Account Management | Gather | Find Root Directory
+  shell: pwd
+  register: root_home
+
+
+## Runner ##
+
+- name: Miner | Account Management | Users | MFN
+  user:
+    name: mfn
+    comment: Miner Forty Niner
+    system: yes
+    groups: 
+      - video
+      - render
+    append: yes
+  register: user_mfn
