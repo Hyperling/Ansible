@@ -1,8 +1,32 @@
 ---
-# Create users for both desktop and server machines.
+# Create users for all machines.
+
+## Variables ##
+
+- name: General | Account Management | Users | use BASH (Default)
+  set_fact:
+    ling_shell: "{{ bash_exec.stdout }}"
+
+- name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
+  set_fact:
+    ling_shell: "{{ zsh_exec.stdout }}"
+  when: ansible_distribution == "Archlinux"
+
+
+## Root ##
+
+- name: General | Account Management | Users | Root
+  user:
+    name: root
+    shell: "{{ bash_exec.stdout }}"
+    create_home: yes
+    generate_ssh_key: yes
+  register: user_root
+
 
 ## Scheduler ##
-- name: General | Account Management | User | Ansible
+
+- name: General | Account Management | Users | Ansible
   user:
     name: ansible
     comment: Ansible
@@ -10,16 +34,8 @@
 
 
 ## Superuser ##
-- name: General | Account Management | User | use BASH (Default)
-  set_fact:
-    ling_shell: "{{ bash_exec.stdout }}"
 
-- name: General | Account Management | User | Use ZSH (Arch+Manjaro)
-  set_fact:
-    ling_shell: "{{ zsh_exec.stdout }}"
-  when: ansible_distribution == "Archlinux"
-
-- name: General | Account Management | User | Hyperling
+- name: General | Account Management | Users | Hyperling
   user:
     name: ling
     comment: Hyperling
@@ -33,67 +49,47 @@
     generate_ssh_key: yes
   register: user_ling
 
-- name: General | Account Management | User | Hyperling | bin Folder
-  file: 
-    path: "{{ user_ling.home }}/bin"
-    state: directory
-    mode: '0755'
-  become_user: ling
-  when: user_ling.home != ""
-
-- name: General | Account Management | User | Hyperling | TRASH Folder
-  file: 
-    path: "{{ user_ling.home }}/TRASH"
-    state: directory
-    mode: '0755'
-  become_user: ling
-  when: user_ling.home != ""
-
-- name: General | Account Management | User | Hyperling | Log In
+- name: General | Account Management | Users | Hyperling | Test Logging In
   shell: "echo SUCCESS"
+  args:
+    executable: "{{ ling_shell }}"
   become_user: ling
 
-- name: General | Account Management | User | Hyperling | .bashrc Entries
-  blockinfile:
-    path: "{{ user_ling.home }}/.bashrc"
-    block: |
-      alias cp='cp -v'
-      alias mv='mv -v'
-      alias rm='echo "Use mv ~/TRASH/ instead!"'
-      export PATH=".:~/bin:$PATH"
-    marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
-    state: present
-    backup: yes
-  ignore_errors: yes
+
+## Folders ##
+
+- name: General | Account Management | Users | Folders | Root | Create bin, Downloads, TRASH
+  file: 
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ user_root.home }}/bin"
+    - "{{ user_root.home }}/Downloads"
+    - "{{ user_root.home }}/TRASH"
+  when: user_root.home != ""
+
+- name: General | Account Management | Users | Folders | Hyperling | Create bin, LBRY, TRASH
+  file: 
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ user_ling.home }}/bin"
+    - "{{ user_ling.home }}/LBRY"
+    - "{{ user_ling.home }}/TRASH"
+  become_user: ling
   when: user_ling.home != ""
 
+- name: General | Account Management | Users | Folders | Home Directories 700
+  shell: "chmod 700 {{ user_ling.home }}/../*"
 
-## Root ##
-- name: General | Account Management | User | Root
-  user:
-    name: root
-    shell: "{{ bash_exec.stdout }}"
-    create_home: yes
-    generate_ssh_key: yes
-  register: user_root
 
-- name: General | Account Management | User | Root | bin Folder
-  file: 
-    path: "{{ user_root.home }}/bin"
-    state: directory
-    mode: '0755'
-  when: user_root.home != ""
+## Files ##
 
-- name: General | Account Management | User | Root | TRASH Folder
-  file: 
-    path: "{{ user_root.home }}/TRASH"
-    state: directory
-    mode: '0755'
-  when: user_root.home != ""
-
-- name: General | Account Management | User | Root | .bashrc Entries
+- name: General | Account Management | Users | Files | .bashrc
   blockinfile:
-    path: "{{ user_root.home }}/.bashrc"
+    path: "{{ item }}/.bashrc"
     block: |
       alias cp='cp -v'
       alias mv='mv -v'
@@ -103,5 +99,8 @@
     state: present
     create: yes
     backup: yes
+  loop:
+    - "{{ user_root.home }}"
+    - "{{ user_ling.home }}"
   ignore_errors: yes
-  when: user_root.home != ""
+  when: user_root.home != "" and user_ling.home != ""

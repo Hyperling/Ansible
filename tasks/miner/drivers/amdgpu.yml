@@ -160,10 +160,6 @@
 
 
 ## Step 3/3: Install AMD PRO Driver ##
-- name: AMDGPU | Create Downloads Folder
-  shell: 'mkdir -p /root/Downloads'
-  when: amdgpu_install.failed
-
 - name: AMDGPU | Download Driver
   shell: 'scp ling@leet:InstallFiles/Drivers/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz /root/Downloads/'
   when: amdgpu_install.failed
