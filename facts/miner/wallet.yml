@@ -8,11 +8,11 @@
 
 - name: Miner | Facts | Config File | Load XMR
   set_fact:
-    wallet_xmr: "{{ lookup('ini', 'section=xmr, file='wallet_file_local) }}"
+    wallet_xmr: "{{ lookup('ini', 'section=xmr, file=wallet_file_local') }}"
 
 - name: Miner | Facts | Config File | Load ETH
   set_fact:
-    wallet_eth: "{{ lookup('ini', 'section=eth, file='wallet_file_local) }}"
+    wallet_eth: "{{ lookup('ini', 'section=eth, file=wallet_file_local') }}"
 
 
 ## Verify ##
