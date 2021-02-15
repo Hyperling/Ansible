@@ -11,7 +11,7 @@
       - { "priority": 5, "name": "xmr-asia1.nanopool.org:14433" }
       - { "priority": 6, "name": "xmr-jp1.nanopool.org:14433" }
       - { "priority": 7, "name": "xmr-au1.nanopool.org:14433" }
-    nanoool_eth:
+    nanopool_eth:
       - { "priority": 1, "name": "eth-us-east1.nanopool.org:9999" }
       - { "priority": 2, "name": "eth-us-west1.nanopool.org:9999" }
       - { "priority": 3, "name": "eth-eu1.nanopool.org:9999" }
@@ -27,3 +27,40 @@
     f2pool_eth:
       - { "priority": 1, "name": "eth-na.f2pool.com:6688" }
       - { "priority": 2, "name": "eth-backup.f2pool.com:6688" }
+
+
+## Determine What Miners Should Use ##
+
+# CPU #
+
+- name: Miner | Facts | Pools | Set GPU to Nanopool Eth
+  set_fact:
+    cpu_pool: "{{ nanopool_xmr }}"
+  when: nanominer_cpu == "xmr" and nanominer_gpu_pool == "nanopool"
+
+# GPU #
+
+- name: Miner | Facts | Pools | Set GPU to Nanopool Eth
+  set_fact:
+    gpu_pool: "{{ nanopool_eth }}"
+  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "nanopool"
+
+- name: Miner | Facts | Pools | Set GPU to Etherpool Eth
+  set_fact:
+    gpu_pool: "{{ ethermine_eth }}"
+  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "etherpool"
+
+- name: Miner | Facts | Pools | Set GPU to F2Pool Eth
+  set_fact:
+    gpu_pool: "{{ f2pool_eth }}"
+  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "f2pool"
+  
+
+
+## Validate ##
+
+- name: Miner | Facts | Pools | DEBUG
+  debug:
+    var:
+      - cpu_pool
+      - gpu_pool

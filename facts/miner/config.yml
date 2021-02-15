@@ -4,7 +4,7 @@
 ## Load Config File ##
 
 - name: Miner | Facts | Config File | Download
-  shell: "scp {{ config_server }}:{{ config_file_remote }} {{ config_file_local }}; chmod 700 {{ config_file_local }}"
+  shell: "scp {{ file_server }}:{{ config_file_remote }} {{ config_file_local }}; chmod 700 {{ config_file_local }}"
 
 - name: Miner | Facts | Config File | Load Wallets
   set_fact:

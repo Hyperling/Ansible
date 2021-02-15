@@ -3,33 +3,101 @@
 # Good documentation that might help with how to do variables.
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html
 
-## Install ##
+## Installation ##
+
+- name: Miner | Software | nanominer | Installation | Create Home
+  shell: "mkdir -p {{ nanominer_home }}"
+
+- name: Miner | Software | nanominer | Installation | Download Tarball
+  shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}"
+
+- name: Miner | Software | nanominer | Installation | Extract Tarball
+  shell: "tar -xvfC {{ nanominer_home }} {{ nanominer_tar_local }}"
 
 
-## Settings ##
 
-- name: Miner | Software | nanominer | Mine with CPU (Optional)
-  debug:
-    var: nanominer_cpu
+## Configuration ##
+
+# Delete Old Config #
+
+- name: Miner | Software | nanominer | Configuration | Reset
+  shell: "mv {{ nanominer_config }} ~/TRASH/"
+
+# CPU #
+
+- name: Miner | Software | nanominer | Configuration | CPU Header Info
+  blockinfile:
+    path: "{{ nanominer_config }}"
+    block: |
+      [{{ item.algorithm }}]
+      wallet = {{ item.wallet }}
+      watchdog = true
+      rigName = {{ ansible_hostname }}
+      logpath = {{ nanominer_logs }}
+      webPassword = {{ ansible_hostname }}
+      useSSL = true
+    marker: '; {mark} MANAGED BY ANSIBLE - CPU Headers'
+    state: "{{ item.state }}"
+    create: yes
+  loop:
+    - { "algorithm": "RandomX", "wallet": '{{ wallet_xmr }}', "state": "{{ (nanominer_cpu == 'xmr') | ternary('present', 'absent') }}"}
   when: nanominer_cpu is defined
 
-- name: Miner | Software | nanominer | Mine with GPU (Optional)
-  debug:
-    var: nanominer_gpu
+- name: Miner | Software | nanominer | Configuration | CPU Pools
+  lineinfile:
+    path: "{{ nanominer_config }}"
+    line: "pool{{item.priority}} = {{ item.name }}"
+    state: present
+  loop: "{{ cpu_pool }}"
+  when: nanominer_cpu is defined
+
+# GPU #
+
+- name: Miner | Software | nanominer | Configuration | GPU Header Info
+  blockinfile:
+    path: "{{ nanominer_config }}"
+    block: |
+      [{{ item.algorithm }}]
+      wallet = {{ item.wallet }}
+      watchdog = true
+      rigName = {{ ansible_hostname }}
+      logpath = {{ nanominer_logs }}
+      webPassword = {{ ansible_hostname }}
+      devices = {{ nanominer_gpus }}
+      useSSL = true
+    marker: '; {mark} MANAGED BY ANSIBLE - GPU Headers'
+    state: "{{ item.state }}"
+    create: yes
+  loop:
+    - { "algorithm": "Ethash", "wallet": '{{ wallet_eth }}', "state": "{{ (nanominer_gpu == 'eth') | ternary('present', 'absent') }}"}
   when: nanominer_gpu is defined
 
-#- name: Miner | Software | nanominer | Mine with GPU (Optional)
-#  blockinfile:
-#    path: "{{ item }}/.bashrc"
-#    block: |
-#      watchdog = true
-#    marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
-#    state: present
-#    create: yes
-#    backup: yes
-#  when: nanominer_gpu is defined
+- name: Miner | Software | nanominer | Configuration | Add Pools
+  lineinfile:
+    path: "{{ nanominer_config }}"
+    line: "pool{{item.priority}} = {{ item.name }}"
+    state: present
+  loop: "{{ gpu_pool }}"
+  when: nanominer_gpu is defined
 
-- name: Miner | Software | nanominer | Choose GPUS (Optional)
-  debug:
-    var: nanominer_gpus
-  when: nanominer_gpus is defined
+
+
+## Executable ##
+
+- name: Miner | Software | nanominer | Executable | Create
+  blockinfile:
+    path: "{{ nanominer_script }}"
+    block: |
+      # 2021-02-15 - Automate nanominer script creation.
+      
+      date
+      whoami
+      pwd
+
+      time {{ nanominer_exec }}
+      
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes

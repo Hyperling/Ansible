@@ -8,4 +8,4 @@ usb
 
 [miner]
 usb  amdgpu=true
-x570 amdgpu=true nanominer=true nanominer_cpu=xmr nanominer_gpu=eth nanominer_gpus=1
+x570 amdgpu=true nanominer=true nanominer_cpu=xmr nanominer_cpu_pool=nanopool nanominer_gpu=eth nanominer_gpus=1 nanominer_gpu_pool=nanopool
