@@ -82,7 +82,7 @@
     ### CPU SECTION ###
     # Monero #
     - include: tasks/miner/software/xmr-stak-cpu.yml
-      when: "xmr_stak_cpu" in miner
+      when: '"xmr_stak_cpu" in miner'
 
     ### GPU Section ###
     ## Drivers ##
@@ -91,10 +91,10 @@
 
     # Ethereum #
     - include: tasks/miner/software/ethminer.yml
-      when: "ethminer" in miner
+      when: '"ethminer" in miner'
 
     - include: tasks/miner/software/ethminer.yml
-      when: "nanominer" in miner
+      when: '"nanominer" in miner'
 
   # Scheduling
   post_tasks:
