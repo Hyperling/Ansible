@@ -1,6 +1,8 @@
 ---
 # Enable and disable services.
 
+## Fake SSHFS ##
+
 - name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
   blockinfile:
     path: /etc/rc.conf
@@ -17,6 +19,9 @@
     warn: false
   when: ansible_system == "FreeBSD"
 
+
+## CUPS ##
+
 - name: General | Software | Services | Disable CUPS Daemon
   service:
     name: "{{ cups }}"
@@ -31,12 +36,8 @@
     state: stopped
     enabled: no
 
-- name: General | Software | Services | Enable SSHD (Linux?)
-  service:
-    name: "{{ sshd }}"
-    pattern: "{{ sshd_pattern }}"
-    state: started
-    enabled: yes
+
+## SSHD ##
 
 #- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
 #  lineinfile:
@@ -47,3 +48,31 @@
 #    create: yes
 #    backup: yes
 #  when: ansible_system == "FreeBSD"
+
+- name: General | Software | Services | Create SSHFS rc.conf Entry (FreeBSD)
+  lineinfile:
+    path: "{{ sshd_config }}"
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }} # MANAGED BY ANSIBLE'
+    state: present
+    create: no
+    backup: yes
+  loop:
+    - { "key": '^[\#]?PermitRootLogin',      "value": 'PermitRootLogin no'}
+    - { "key": '^[\#]?AllowTcpForwarding',   "value": 'AllowTcpForwarding no'}
+    - { "key": '^[\#]?ClientAliveCountMax',  "value": 'ClientAliveCountMax 2'}
+    - { "key": '^[\#]?Compression',          "value": 'Compression no'}
+    - { "key": '^[\#]?LogLevel',             "value": 'LogLevel verbose'}
+    - { "key": '^[\#]?MaxAuthTries',         "value": 'MaxAuthTries 3'}
+    - { "key": '^[\#]?MaxSessions',          "value": 'MaxSessions 2'}
+    #- { "key": '^[\#]?Port',                 "value": 'Port '}
+    - { "key": '^[\#]?TCPKeepAlive',         "value": 'TCPKeepAlive no'}
+    - { "key": '^[\#]?X11Forwarding',        "value": 'X11Forwarding no'}
+    - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
+
+- name: General | Software | Services | Enable SSHD (Linux?)
+  service:
+    name: "{{ sshd }}"
+    pattern: "{{ sshd_pattern }}"
+    state: started
+    enabled: yes

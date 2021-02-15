@@ -1,5 +1,5 @@
 ---
-# Define program names for service builtin.
+# Definitions for service management.
 
 - name: General | Facts | Service | All
   set_fact:
@@ -7,9 +7,10 @@
     cups_pattern: cupsd
     cups_browse: cups-browsed
     cups_browse_pattern: cups-browsed
+    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o allow_other,_netdev"
     sshd: sshd
     sshd_pattern: sshd
-    sshfs_leet_cmd: "sshfs {{ leet_ssh }}: /mnt/leet -o allow_other,_netdev"
+    sshd_config: /etc/ssh/sshd_config
 
 
 - name: General | Facts | Service | Linux
