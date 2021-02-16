@@ -26,6 +26,7 @@
 
 - name: Miner | Software | nanominer | Configuration | Reset
   shell: "mv {{ nanominer_config }} ~/TRASH/"
+  ignore_errors: yes
 
 # CPU #
 
