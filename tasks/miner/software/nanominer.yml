@@ -132,6 +132,10 @@
 
 ## Executable ##
 
+- name: Miner | Software | Nanominer | Executable | Reset
+  shell: "mv {{ nanominer_script }} ~/TRASH/"
+  ignore_errors: yes
+
 - name: Miner | Software | Nanominer | Executable | Create
   blockinfile:
     path: "{{ nanominer_script }}"
@@ -166,5 +170,5 @@
 ## Reload ##
 
 - name: Miner | Software | Nanominer | Reload
-  shell: "killall {{ nanominer_script }}; nohup {{ nanominer_script }} &"
+  shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}; nohup {{ nanominer_script }} &"
   become_user: mfn
