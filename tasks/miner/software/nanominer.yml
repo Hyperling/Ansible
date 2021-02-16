@@ -162,8 +162,7 @@
 ## Permissions ##
 
 - name: Miner | Software | Nanominer | Permissions
-  shell: "chmod -R 755 {{ user_mfn.home }}/nanominer*"
-  become_user: mfn
+  shell: "chown -R mfn {{ user_mfn.home }}/nanominer*; chmod -R 755 {{ user_mfn.home }}/nanominer*"
 
 
 
