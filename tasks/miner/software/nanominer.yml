@@ -151,7 +151,7 @@
       }
 
     marker: '{mark}'
-    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_begin: "#!{{ bash_exec.stdout }} -x"
     marker_end: "exit 0"
     state: present
     create: yes
