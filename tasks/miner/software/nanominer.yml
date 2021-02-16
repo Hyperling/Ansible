@@ -41,6 +41,7 @@
       logpath = {{ nanominer_logs }}
       webPassword = {{ ansible_hostname }}
       useSSL = true
+      email = me@hyperling.com
     marker: ';{mark} MANAGED BY ANSIBLE - CPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
@@ -99,6 +100,7 @@
       webPassword = {{ ansible_hostname }}
       devices = {{ nanominer_gpus }}
       useSSL = true
+      email = me@hyperling.com
     marker: ';{mark} MANAGED BY ANSIBLE - GPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
