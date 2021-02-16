@@ -6,7 +6,7 @@
     miners:
     - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "exec": "{{ user_mfn.home }}/xmr_stak_cpu.sh" }
     - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "exec": "{{ user_mfn.home }}/ethminer.sh" }
-    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "exec": "{{ nanominer_exec }}" }
+    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "exec": "{{ nanominer_script }}" }
   
 
 - name: Miner | Account Management | Cron | Stop Jobs
@@ -14,7 +14,7 @@
     user: mfn
     name: "Stop {{ item.name }}"
     minute: "*/5"
-    job: "killall {{ item.name }}.sh"
+    job: "killall {{ item.exec }}"
     state: present
     disabled: "{{ item.enabled }}"
   loop: "{{ miners }}"
