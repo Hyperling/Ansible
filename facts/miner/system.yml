@@ -6,7 +6,7 @@
 - name: Miner | Facts | System | Global
   set_fact:
     file_server: 'ling@leet'
-    check_alive_start: "[[ `ps -ef | grep -v 'grep' | grep -v $$ | grep -c '"
+    check_alive_start: "[[ `ps -ef | grep -v 'grep' | grep -v '/bin/sh -c' | grep -v $$ | grep -c '"
     check_alive_end: "'` == '0' ]] &&"
 
 
