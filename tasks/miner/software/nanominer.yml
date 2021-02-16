@@ -134,3 +134,11 @@
 - name: Miner | Software | Nanominer | Permissions
   shell: "chmod -R 755 {{ user_mfn.home }}/nanominer*"
   become_user: mfn
+
+
+
+## Reload ##
+
+- name: Miner | Software | Nanominer | Reload
+  shell: "killall {{ nanominer_script }}; {{ nanominer_script }}"
+  become_user: mfn
