@@ -10,7 +10,7 @@
   become_user: mfn
 
 - name: Miner | Software | nanominer | Installation | Download Tarball
-  shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}; chmod 777 {{ nanominer_tar_local }}"
+  shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}; chown mfn {{ nanominer_tar_local }}"
 
 - name: Miner | Software | nanominer | Installation | Extract Tarball
   shell: "tar -xvf {{ nanominer_tar_local }}"
@@ -116,6 +116,6 @@
 
 ## Permissions ##
 
-- name: Miner | Software | nanominer | Executable | Create
+- name: Miner | Software | nanominer | Permissions
   shell: "chmod -R 755 {{ user_mfn.home }}/nanominer*"
   become_user: mfn
