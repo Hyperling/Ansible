@@ -36,24 +36,29 @@
 - name: Miner | Facts | Pools | Set GPU to Nanopool Eth
   set_fact:
     cpu_pool: "{{ nanopool_xmr }}"
-  when: nanominer_cpu == "xmr" and nanominer_cpu_pool == "nanopool"
+  when: nanominer_cpu is defined and nanominer_cpu_pool is defined and
+        nanominer_cpu == "xmr" and nanominer_cpu_pool == "nanopool"
+
 
 # GPU #
 
 - name: Miner | Facts | Pools | Set GPU to Nanopool Eth
   set_fact:
     gpu_pool: "{{ nanopool_eth }}"
-  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "nanopool"
+  when: nanominer_gpu is defined and nanominer_gpu_pool is defined and
+        nanominer_gpu == "eth" and nanominer_gpu_pool == "nanopool"
 
 - name: Miner | Facts | Pools | Set GPU to Etherpool Eth
   set_fact:
     gpu_pool: "{{ ethermine_eth }}"
-  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "etherpool"
+  when: nanominer_gpu is defined and nanominer_gpu_pool is defined and
+        nanominer_gpu == "eth" and nanominer_gpu_pool == "etherpool"
 
 - name: Miner | Facts | Pools | Set GPU to F2Pool Eth
   set_fact:
     gpu_pool: "{{ f2pool_eth }}"
-  when: nanominer_gpu == "eth" and nanominer_gpu_pool == "f2pool"
+  when: nanominer_gpu is defined and nanominer_gpu_pool is defined and
+        nanominer_gpu == "eth" and nanominer_gpu_pool == "f2pool"
   
 
 
