@@ -75,6 +75,8 @@
 
   pre_tasks:
     - include: tasks/miner/debug.yml
+    
+    - include: facts/miner/gather.yml
 
     - include: tasks/miner/acct_mgmt/users.yml
 
