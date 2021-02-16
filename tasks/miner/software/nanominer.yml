@@ -168,6 +168,9 @@
 
 ## Reload ##
 
+# TODO: Make this a script that always gets called by cron.
+# It should kill the miner if a user logs into an X session, such as if I'm gaming.
+# Then once I log out the job should come back within the minute.
 - name: Miner | Software | Nanominer | Reload
   shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}; killall nanominer.sh; killall nanominer"
   become_user: mfn
