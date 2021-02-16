@@ -25,4 +25,4 @@
 ## Clean Up ##
 
 - name: Miner | Facts | Config File | Delete
-  shell: "{{ config_file_local }}"
+  shell: "mv {{ config_file_local }} ~/TRASH/"
