@@ -118,7 +118,9 @@
       whoami
       pwd
 
-      time {{ nanominer_exec }} {{ nanominer_config }}
+      {{ check_alive_start }}{{ nanominer_script }}{{ check_alive_end }} {
+        time {{ nanominer_exec }} {{ nanominer_config }}
+      }
 
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"

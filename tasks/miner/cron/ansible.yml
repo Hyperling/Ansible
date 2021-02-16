@@ -26,7 +26,7 @@
     user: mfn
     name: "Start {{ item.name }}"
     minute: "*/5"
-    job: "[[ ps -ef | grep -v 'grep' | grep -c '{{ item.command }}' == '0' ]] && {{ item.command }}"
+    job: "{{ item.command }}"
     state: present
     disabled: "{{ not(item.enabled) }}"
   loop: "{{ miners }}"
