@@ -20,3 +20,9 @@
   loop: 
     - wallet_xmr
     - wallet_eth
+
+
+## Clean Up ##
+
+- name: Miner | Facts | Config File | Delete
+  shell: "{{ config_file_local }}"

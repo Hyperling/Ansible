@@ -7,6 +7,7 @@
 
 - name: Miner | Software | nanominer | Installation | Create Home
   shell: "mkdir -p {{ nanominer_home }}"
+  become_user: mfn
 
 - name: Miner | Software | nanominer | Installation | Download Tarball
   shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}; chmod 777 {{ nanominer_tar_local }}"
