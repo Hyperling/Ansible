@@ -39,7 +39,8 @@
       watchdog = true
       rigName = {{ ansible_hostname }}
       logpath = {{ nanominer_logs }}
-      webPassword = {{ ansible_hostname }}
+      ;webPassword = {{ ansible_hostname }}
+      webPort = 8080
       useSSL = true
       email = me@hyperling.com
     marker: ';{mark} MANAGED BY ANSIBLE - CPU Headers'
@@ -97,7 +98,8 @@
       watchdog = true
       rigName = {{ ansible_hostname }}
       logpath = {{ nanominer_logs }}
-      webPassword = {{ ansible_hostname }}
+      ;webPassword = {{ ansible_hostname }}
+      webPort = 8080
       devices = {{ nanominer_gpus }}
       useSSL = true
       email = me@hyperling.com
