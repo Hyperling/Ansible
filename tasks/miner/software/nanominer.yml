@@ -67,7 +67,7 @@
     block: |
       ;
     marker: ';'
-    state: "{{ item.state }}"
+    state: present
     create: no
   become_user: mfn
   when: nanominer_config is file
