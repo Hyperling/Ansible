@@ -64,7 +64,7 @@
 - name: Miner | Software | Nanominer | Configuration | CPU | End Section
   lineinfile:
     path: "{{ nanominer_config }}"
-    line: ";;;;;;;;;;;;;"
+    line: ";;;;;;;;;;;;; END CPU"
     state: present
     create: no
   become_user: mfn
@@ -122,7 +122,7 @@
 - name: Miner | Software | Nanominer | Configuration | GPU | End Section
   lineinfile:
     path: "{{ nanominer_config }}"
-    line: ";;;;;;;;;;;;;"
+    line: ";;;;;;;;;;;;; END GPU"
     state: present
     create: no
   become_user: mfn
