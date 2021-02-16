@@ -8,13 +8,6 @@
     file_server: 'ling@leet'
 
 
-## Executables ##
-
-- name: Miner | Facts | System | Executables
-  shell: "which bash"
-  register: bash_exec
-
-
 ## Config File ##
 
 - name: Miner | Facts | System | My Config File
