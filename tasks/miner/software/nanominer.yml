@@ -170,5 +170,5 @@
 ## Reload ##
 
 - name: Miner | Software | Nanominer | Reload
-  shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}; nohup {{ nanominer_script }} &"
+  shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}"
   become_user: mfn
