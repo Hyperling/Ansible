@@ -103,11 +103,19 @@
       whoami
       pwd
 
-      time {{ nanominer_exec }}
+      time {{ nanominer_exec }} {{ nanominer_config }}
 
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
     state: present
     create: yes
+  become_user: mfn
+
+
+
+## Permissions ##
+
+- name: Miner | Software | nanominer | Executable | Create
+  shell: "chmod -R 755 {{ user_mfn.home }}/nanominer*"
   become_user: mfn
