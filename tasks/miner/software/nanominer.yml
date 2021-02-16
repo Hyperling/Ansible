@@ -5,14 +5,14 @@
 
 ## Installation ##
 
-- name: Miner | Software | nanominer | Installation | Create Home
+- name: Miner | Software | Nanominer | Installation | Create Home
   shell: "mkdir -p {{ nanominer_home }}"
   become_user: mfn
 
-- name: Miner | Software | nanominer | Installation | Download Tarball
+- name: Miner | Software | Nanominer | Installation | Download Tarball
   shell: "scp {{ file_server }}:{{ nanominer_tar_remote }} {{ nanominer_tar_local }}; chown mfn {{ nanominer_tar_local }}"
 
-- name: Miner | Software | nanominer | Installation | Extract Tarball
+- name: Miner | Software | Nanominer | Installation | Extract Tarball
   shell: "tar -xvf {{ nanominer_tar_local }}"
   args:
     chdir: "{{ nanominer_home }}"
@@ -24,13 +24,13 @@
 
 # Delete Old Config #
 
-- name: Miner | Software | nanominer | Configuration | Reset
+- name: Miner | Software | Nanominer | Configuration | Reset
   shell: "mv {{ nanominer_config }} ~/TRASH/"
   ignore_errors: yes
 
 # CPU #
 
-- name: Miner | Software | nanominer | Configuration | CPU Header Info
+- name: Miner | Software | Nanominer | Configuration | CPU Header Info
   blockinfile:
     path: "{{ nanominer_config }}"
     block: |
@@ -49,18 +49,32 @@
   become_user: mfn
   when: nanominer_cpu is defined
 
-- name: Miner | Software | nanominer | Configuration | CPU Pools
+- name: Miner | Software | Nanominer | Configuration | CPU Pools
   lineinfile:
     path: "{{ nanominer_config }}"
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
+    create: no
   loop: "{{ cpu_pool }}"
   become_user: mfn
   when: nanominer_cpu is defined
 
+# Add Spacing #
+
+- name: Miner | Software | Nanominer | Configuration | Spacing
+  blockinfile:
+    path: "{{ nanominer_config }}"
+    block: |
+      ;
+    marker: ';'
+    state: "{{ item.state }}"
+    create: no
+  become_user: mfn
+  when: nanominer_config is file
+
 # GPU #
 
-- name: Miner | Software | nanominer | Configuration | GPU Header Info
+- name: Miner | Software | Nanominer | Configuration | GPU Header Info
   blockinfile:
     path: "{{ nanominer_config }}"
     block: |
@@ -80,11 +94,12 @@
   become_user: mfn
   when: nanominer_gpu is defined
 
-- name: Miner | Software | nanominer | Configuration | Add Pools
+- name: Miner | Software | Nanominer | Configuration | Add Pools
   lineinfile:
     path: "{{ nanominer_config }}"
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
+    create: no
   loop: "{{ gpu_pool }}"
   become_user: mfn
   when: nanominer_gpu is defined
@@ -93,7 +108,7 @@
 
 ## Executable ##
 
-- name: Miner | Software | nanominer | Executable | Create
+- name: Miner | Software | Nanominer | Executable | Create
   blockinfile:
     path: "{{ nanominer_script }}"
     block: |
@@ -116,6 +131,6 @@
 
 ## Permissions ##
 
-- name: Miner | Software | nanominer | Permissions
+- name: Miner | Software | Nanominer | Permissions
   shell: "chmod -R 755 {{ user_mfn.home }}/nanominer*"
   become_user: mfn
