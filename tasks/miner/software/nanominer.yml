@@ -170,6 +170,6 @@
 ## Reload ##
 
 - name: Miner | Software | Nanominer | Reload
-  shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}"
+  shell: "killall {{ nanominer_script }}; killall {{ nanominer_exec }}; killall nanominer"
   become_user: mfn
   ignore_errors: yes
