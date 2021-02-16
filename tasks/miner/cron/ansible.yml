@@ -4,9 +4,9 @@
 - name: Miner | Account Management | Cron | Miner Names
   set_fact:
     miners:
-    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}' }
-    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}' }
-    #- { "name": "nanominer",    "enabled": (nanominer is defined) }
+    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "exec": "{{ user_mfn.home }}/{{ item.name }}.sh" }
+    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "exec": "{{ user_mfn.home }}/{{ item.name }}.sh" }
+    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "exec": "{{ nanominer_exec }}" }
   
 
 - name: Miner | Account Management | Cron | Stop Jobs
@@ -25,7 +25,7 @@
     user: mfn
     name: "Start {{ item.name }}"
     minute: "0-6,8-59"
-    job: "ps -ef | grep '{{ item.name }}.sh' | grep -v 'grep' && {{ user_mfn.home }}/{{ item.name }}.sh"
+    job: "ps -ef | grep '{{ item.exec }}' | grep -v 'grep' && {{ item.exec }}"
     state: present
     disabled: "{{ not(item.enabled) }}"
   loop: "{{ miners }}"
