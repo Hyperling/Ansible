@@ -15,7 +15,7 @@
     user: mfn
     name: "Stop {{ item.name }}"
     minute: "*/5"
-    job: "killall {{ item.name }}; killall {{ item.command }}"
+    job: "killall {{ item.name }}; killall {{ item.name }}.sh; killall {{ item.command }}"
     state: present
     disabled: "{{ item.enabled }}"
   loop: "{{ miners }}"
