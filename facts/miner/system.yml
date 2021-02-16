@@ -8,14 +8,14 @@
     file_server: 'ling@leet'
 
 
-## Executables##
+## Executables ##
 
 - name: Miner | Facts | System | Executables
   shell: "which bash"
   register: bash_exec
 
 
-## Config file ##
+## Config File ##
 
 - name: Miner | Facts | System | My Config File
   set_fact:
@@ -24,7 +24,7 @@
     config_section_wallet: wallet
 
 
-## nanominer ##
+## Nanominer ##
 
 - name: Miner | Facts | System | nanominer 1
   set_fact:
