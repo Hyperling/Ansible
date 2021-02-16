@@ -25,7 +25,6 @@
   cron:
     user: mfn
     name: "Start {{ item.name }}"
-    minute: "*/5"
     job: "{{ item.command }}"
     state: present
     disabled: "{{ not(item.enabled) }}"
