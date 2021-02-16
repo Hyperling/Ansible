@@ -1,12 +1,13 @@
 ---
 # Jobs for miners.
 
+# Move this to system facts?
 - name: Miner | Account Management | Cron | Miner Names
   set_fact:
     miners:
-    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "exec": "{{ user_mfn.home }}/xmr_stak_cpu.sh" }
-    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "exec": "{{ user_mfn.home }}/ethminer.sh" }
-    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "exec": "{{ nanominer_script }}" }
+    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "command": "{{ user_mfn.home }}/xmr_stak_cpu.sh" }
+    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "command": "{{ user_mfn.home }}/ethminer.sh" }
+    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "command": "{{ nanominer_script }}" }
   
 
 - name: Miner | Account Management | Cron | Stop Jobs
@@ -14,7 +15,7 @@
     user: mfn
     name: "Stop {{ item.name }}"
     minute: "*/5"
-    job: "killall {{ item.exec }}"
+    job: "killall {{ item.command }}"
     state: present
     disabled: "{{ item.enabled }}"
   loop: "{{ miners }}"
@@ -25,7 +26,7 @@
     user: mfn
     name: "Start {{ item.name }}"
     minute: "*/5"
-    job: "ps -ef | grep '{{ item.exec }}' | grep -v 'grep' && {{ item.exec }}"
+    job: "ps -ef | grep '{{ item.command }}' | grep -v 'grep' && {{ item.command }}"
     state: present
     disabled: "{{ not(item.enabled) }}"
   loop: "{{ miners }}"
