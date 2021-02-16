@@ -30,7 +30,7 @@
 
 # CPU #
 
-- name: Miner | Software | Nanominer | Configuration | CPU Header Info
+- name: Miner | Software | Nanominer | Configuration | CPU | Header Info
   blockinfile:
     path: "{{ nanominer_config }}"
     block: |
@@ -41,7 +41,9 @@
       logpath = {{ nanominer_logs }}
       webPassword = {{ ansible_hostname }}
       useSSL = true
-    marker: '; {mark} MANAGED BY ANSIBLE - CPU Headers'
+    marker: ';{mark} MANAGED BY ANSIBLE - CPU Headers'
+    marker_begin: ';;;;;;;;;;;; BEGIN'
+    marker_end: ' END'
     state: "{{ item.state }}"
     create: yes
   loop:
@@ -49,13 +51,22 @@
   become_user: mfn
   when: nanominer_cpu is defined
 
-- name: Miner | Software | Nanominer | Configuration | CPU Pools
+- name: Miner | Software | Nanominer | Configuration | CPU | Add Pools
   lineinfile:
     path: "{{ nanominer_config }}"
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
     create: no
   loop: "{{ cpu_pool }}"
+  become_user: mfn
+  when: nanominer_cpu is defined
+
+- name: Miner | Software | Nanominer | Configuration | CPU | End Section
+  lineinfile:
+    path: "{{ nanominer_config }}"
+    line: ";;;;;;;;;;;;;"
+    state: present
+    create: no
   become_user: mfn
   when: nanominer_cpu is defined
 
@@ -66,6 +77,8 @@
     path: "{{ nanominer_config }}"
     block: |
       ;
+      ;
+      ;
     marker: ';'
     state: present
     create: no
@@ -74,7 +87,7 @@
 
 # GPU #
 
-- name: Miner | Software | Nanominer | Configuration | GPU Header Info
+- name: Miner | Software | Nanominer | Configuration | GPU | Header Info
   blockinfile:
     path: "{{ nanominer_config }}"
     block: |
@@ -86,7 +99,9 @@
       webPassword = {{ ansible_hostname }}
       devices = {{ nanominer_gpus }}
       useSSL = true
-    marker: '; {mark} MANAGED BY ANSIBLE - GPU Headers'
+    marker: ';{mark} MANAGED BY ANSIBLE - GPU Headers'
+    marker_begin: ';;;;;;;;;;;; BEGIN'
+    marker_end: ' END'
     state: "{{ item.state }}"
     create: yes
   loop:
@@ -94,13 +109,22 @@
   become_user: mfn
   when: nanominer_gpu is defined
 
-- name: Miner | Software | Nanominer | Configuration | Add Pools
+- name: Miner | Software | Nanominer | Configuration | GPU | Add Pools
   lineinfile:
     path: "{{ nanominer_config }}"
     line: "pool{{item.priority}} = {{ item.name }}"
     state: present
     create: no
   loop: "{{ gpu_pool }}"
+  become_user: mfn
+  when: nanominer_gpu is defined
+
+- name: Miner | Software | Nanominer | Configuration | GPU | End Section
+  lineinfile:
+    path: "{{ nanominer_config }}"
+    line: ";;;;;;;;;;;;;"
+    state: present
+    create: no
   become_user: mfn
   when: nanominer_gpu is defined
 
