@@ -15,7 +15,7 @@
 
 ## Security ##
 
-- name: Miner | Account Management | Cron | Ansible | Daily Performance Reboot
+- name: Miner | Account Management | Cron | Ansible | Daily Security Update
   cron:
     user: ansible
     name: Daily Security Update
