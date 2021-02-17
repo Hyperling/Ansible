@@ -7,5 +7,27 @@ dell-laptop
 usb
 
 [miner]
+;;;;;;; Available options - all require lowercase values ;;;;;;
+;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
+;                        Example: true
+;
+;          nanominer : Set to anything for installation of nanominer
+;                        Example: true
+;
+;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
+;                        Valid values: xmr
+;
+; nanominer_cpu_pool : Set to pool organization to use for CPU mining
+;                        Valid values: nanopool
+;
+;      nanominer_gpu : Set to coin code that you'd like the GPU to work on
+;                        Valid values: eth
+;
+;     nanominer_gpus : Set to comma list of GPU devices that should be used for nanominer
+;                        Example: 0,2,3
+;
+; nanominer_gpu_pool : Set to pool organization to use for GPU mining
+;                        Valid values: nanopool etherpool f2pool
+;
 usb  amdgpu=true
 x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
