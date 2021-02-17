@@ -106,6 +106,7 @@
   # Scheduling
   post_tasks:
     - include: tasks/miner/cron/ansible.yml
+    - include: tasks/miner/cron/mfn.yml
 
 
 # Create reports to analyze security.

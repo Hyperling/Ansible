@@ -1,31 +1,25 @@
 ---
-# Jobs for miners.
+# System tasks for mining machines.
 
-# Move this to system facts?
-- name: Miner | Account Management | Cron | Miner Names
-  set_fact:
-    miners:
-    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "command": "{{ user_mfn.home }}/xmr_stak_cpu.sh" }
-    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "command": "{{ user_mfn.home }}/ethminer.sh" }
-    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "command": "{{ nanominer_script }}" }
-  
+## Performance ##
 
-- name: Miner | Account Management | Cron | Stop Jobs
+- name: Miner | Account Management | Cron | Ansible | Daily Performance Reboot
   cron:
-    user: mfn
-    name: "Stop {{ item.name }}"
-    minute: "*/5"
-    job: "killall {{ item.name }}; killall {{ item.name }}.sh; killall {{ item.command }}"
+    user: ansible
+    name: Daily Performance Reboot
+    job: reboot
+    special_time: daily
     state: present
-    disabled: "{{ item.enabled }}"
-  loop: "{{ miners }}"
+    disabled: no
 
 
-- name: Miner | Account Management | Cron | Start Jobs
+## Security ##
+
+- name: Miner | Account Management | Cron | Ansible | Daily Performance Reboot
   cron:
-    user: mfn
-    name: "Start {{ item.name }}"
-    job: "{{ item.command }}"
+    user: ansible
+    name: Daily Security Update
+    job: apt update; apt dist-upgrade -y
+    special_time: reboot
     state: present
-    disabled: "{{ not(item.enabled) }}"
-  loop: "{{ miners }}"
+    disabled: no

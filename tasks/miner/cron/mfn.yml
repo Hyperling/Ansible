@@ -1,0 +1,23 @@
+---
+# Miner tasks.
+
+## Mining ##
+
+- name: Miner | Account Management | Cron | MFN | Stop Jobs
+  cron:
+    user: mfn
+    name: "Stop {{ item.name }}"
+    minute: "*/5"
+    job: "killall {{ item.name }}; killall {{ item.name }}.sh; killall {{ item.command }}"
+    state: present
+    disabled: "{{ item.enabled }}"
+  loop: "{{ miners }}"
+
+- name: Miner | Account Management | Cron | MFN | Start Jobs
+  cron:
+    user: mfn
+    name: "Start {{ item.name }}"
+    job: "{{ item.command }}"
+    state: present
+    disabled: "{{ not(item.enabled) }}"
+  loop: "{{ miners }}"
