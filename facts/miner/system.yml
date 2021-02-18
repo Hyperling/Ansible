@@ -3,11 +3,16 @@
 
 ## Global ##
 
-- name: Miner | Facts | System | Global
+- name: Miner | Facts | System | Global 1
   set_fact:
     file_server: 'ling@leet'
     check_alive_start: "[[ `ps -ef | grep -v 'grep' | grep -v '/bin/sh -c' | grep -v $$ | grep -c '"
     check_alive_end: "'` == '0' ]] &&"
+    combined_log_file: "{{ user_mfn.home }}/log.txt"
+
+- name: Miner | Facts | System | Global 2
+  set_fact:
+    use_combined_log_file: ">> {{ combined_log_file }} 2>&1"
 
 
 ## Config File ##
@@ -53,6 +58,6 @@
 - name: Miner | Facts | System | Miner Array
   set_fact:
     miners:
-    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "command": "{{ user_mfn.home }}/xmr_stak_cpu.sh" }
-    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "command": "{{ user_mfn.home }}/ethminer.sh" }
-    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "command": "{{ nanominer_script }}" }
+    - { "name": "xmr_stak_cpu", "enabled": '{{ (xmr_stak_cpu is defined) }}', "command": "{{ user_mfn.home }}/xmr_stak_cpu.sh {{ use_combined_log_file }}" }
+    - { "name": "ethminer",     "enabled": '{{ (ethminer is defined) }}',     "command": "{{ user_mfn.home }}/ethminer.sh {{ use_combined_log_file }}" }
+    - { "name": "nanominer",    "enabled": '{{ (nanominer is defined) }}',    "command": "{{ nanominer_script }} {{ use_combined_log_file }}" }
