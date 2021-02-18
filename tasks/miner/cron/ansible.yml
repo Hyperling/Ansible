@@ -7,7 +7,7 @@
   cron:
     user: ansible
     name: Daily Performance Reboot
-    job: reboot
+    job: sudo reboot
     special_time: daily
     state: present
     disabled: no
