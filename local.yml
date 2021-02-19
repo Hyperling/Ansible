@@ -37,6 +37,7 @@
       when: ansible_system == "FreeBSD"
 
 
+
 # Additional setup for systems with GUI.
 - name: Main | Workstation UI Setup
   hosts: workstation
@@ -65,6 +66,7 @@
   
   post_tasks:
     - include: tasks/workstation/settings/gnome.yml
+
 
 
 # Additional setup for miners!
@@ -107,6 +109,19 @@
   post_tasks:
     - include: tasks/miner/cron/ansible.yml
     - include: tasks/miner/cron/mfn.yml
+
+
+
+# Easy to deploy server configurations.
+- name: Main | Server Setup
+  hosts: server
+  connection: local
+  become: true
+
+  tasks:
+    - include: tasks/server/onlyoffice.yml
+      when: onlyoffice is defined and ansible_pkg_mgr == "apt"
+
 
 
 # Create reports to analyze security.

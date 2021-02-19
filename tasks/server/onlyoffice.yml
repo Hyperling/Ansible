@@ -1,0 +1,45 @@
+---
+# Create OnlyOffice server for use with Nextcloud.
+
+## Install ##
+# https://helpcenter.onlyoffice.com/installation/docs-community-install-ubuntu.aspx
+
+# Dependencies #
+
+- name: Server | OnlyOffice | Postgres | Install
+  package: 
+    name: postgresql
+    state: present
+
+- name: Server | OnlyOffice | Postgres | Configure
+  shell: '{{ item }}'
+  loop:
+    - 'sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"'
+    - 'sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"'
+    - 'sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"'
+
+- name: Server | OnlyOffice | RabbitMQ | Install
+  package: 
+    name: rabbitmq-server
+    state: present
+
+# Actual Program #
+
+- name: Server | OnlyOffice | Docs | Add Repo
+  shell: '{{ item }}'
+  loop:
+    - 'apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5'
+    - 'echo "deb https://download.onlyoffice.com/repo/debian squeeze main" | tee /etc/apt/sources.list.d/onlyoffice.list'
+    - 'apt update'
+
+- name: Server | OnlyOffice | Docs | Install
+  package: 
+    name: 
+      - ttf-mscorefonts-installer
+      - onlyoffice-documentserver
+    state: present
+
+
+
+## HTTPS ##
+# https://helpcenter.onlyoffice.com/installation/docs-community-https-linux.aspx
