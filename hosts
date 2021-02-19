@@ -6,6 +6,9 @@ x570
 dell-laptop
 usb
 
+[server]
+office onlyoffice=true
+
 [miner]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
