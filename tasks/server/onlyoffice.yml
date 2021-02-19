@@ -14,9 +14,9 @@
 - name: Server | OnlyOffice | Postgres | Configure
   shell: '{{ item }}'
   loop:
-    - 'sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"'
-    - 'sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"'
-    - 'sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"'
+    - sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"
+    - sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"
+    - sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"
 
 - name: Server | OnlyOffice | RabbitMQ | Install
   package: 
@@ -28,9 +28,9 @@
 - name: Server | OnlyOffice | Docs | Add Repo
   shell: '{{ item }}'
   loop:
-    - 'apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5'
-    - 'echo "deb https://download.onlyoffice.com/repo/debian squeeze main" | tee /etc/apt/sources.list.d/onlyoffice.list'
-    - 'apt update'
+    - apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5
+    - echo "deb https://download.onlyoffice.com/repo/debian squeeze main" | tee /etc/apt/sources.list.d/onlyoffice.list
+    - apt update
 
 - name: Server | OnlyOffice | Docs | Install
   package: 
