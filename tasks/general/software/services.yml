@@ -40,6 +40,7 @@
     create: no
     backup: yes
   loop:
+    - { "key": '^[\#]?PermitRootLogin',      "value": 'PermitRootLogin no'}
     - { "key": '^[\#]?AllowTcpForwarding',   "value": 'AllowTcpForwarding no'}
     - { "key": '^[\#]?ClientAliveCountMax',  "value": 'ClientAliveCountMax 2'}
     - { "key": '^[\#]?Compression',          "value": 'Compression no'}
@@ -60,8 +61,8 @@
     create: no
     backup: yes
   loop:
-    - { "key": '^[\#]?PermitRootLogin', "value": 'PermitRootLogin no'}
-  when: {{ not(ansible_kernel | select ("pve")) }}
+    - { "key": '^[\#]?PermitRootLogin', "value": 'PermitRootLogin yes'}
+  when: "'pve' in ansible_kernel"
 
 - name: General | Software | Services | Enable SSHD
   service:
