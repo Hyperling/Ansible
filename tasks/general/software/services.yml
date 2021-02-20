@@ -40,8 +40,10 @@
     create: no
     backup: yes
   loop:
+    - { "key": '^[\#]?AllowUsers',           "value": 'AllowUsers ling'}
     - { "key": '^[\#]?PermitRootLogin',      "value": 'PermitRootLogin no'}
     - { "key": '^[\#]?AllowTcpForwarding',   "value": 'AllowTcpForwarding no'}
+    - { "key": '^[\#]?ClientAliveInterval',  "value": 'ClientAliveInterval 60'}
     - { "key": '^[\#]?ClientAliveCountMax',  "value": 'ClientAliveCountMax 2'}
     - { "key": '^[\#]?Compression',          "value": 'Compression no'}
     - { "key": '^[\#]?LogLevel',             "value": 'LogLevel verbose'}
@@ -51,6 +53,7 @@
     - { "key": '^[\#]?TCPKeepAlive',         "value": 'TCPKeepAlive no'}
     - { "key": '^[\#]?X11Forwarding',        "value": 'X11Forwarding no'}
     - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
+    - { "key": '^[\#]?PermitEmptyPasswords', "value": 'PermitEmptyPasswords no'}
 
 - name: General | Software | Services | Configure SSHD
   lineinfile:
@@ -61,7 +64,9 @@
     create: no
     backup: yes
   loop:
+    - { "key": '^[\#]?AllowUsers',      "value": 'AllowUsers root ling'}
     - { "key": '^[\#]?PermitRootLogin', "value": 'PermitRootLogin yes'}
+    - { "key": '^[\#]?MaxSessions',     "value": 'MaxSessions 5'}
   when: "'pve' in ansible_kernel"
 
 - name: General | Software | Services | Enable SSHD
