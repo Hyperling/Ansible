@@ -1,6 +1,14 @@
 ---
 # Create OnlyOffice server for use with Nextcloud.
 
+## Pre-Reqs ##
+
+- name: Server | OnlyOffice | Pre-Requirements | Install
+  package: 
+    name: gnupg
+    state: present
+
+
 ## Install ##
 # https://helpcenter.onlyoffice.com/installation/docs-community-install-ubuntu.aspx
 
@@ -17,6 +25,7 @@
     - sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"
     - sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"
     - sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"
+  ignore_errors: yes
 
 - name: Server | OnlyOffice | RabbitMQ | Install
   package: 
