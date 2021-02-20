@@ -5,7 +5,9 @@
 
 - name: Server | OnlyOffice | Pre-Requirements | Install
   package: 
-    name: gnupg
+    name: 
+      - gnupg
+      - python3-certbot-nginx
     state: present
 
 
@@ -53,3 +55,42 @@
 
 ## HTTPS ##
 # https://helpcenter.onlyoffice.com/installation/docs-community-https-linux.aspx
+
+# Certs #
+
+- name: Server | OnlyOffice | HTTPS | Check For Cert
+  shell: ls -l /etc/letsencrypt/live/docs.hyperling.com/{fullchain,privkey}.pem
+  register: onlyoffice_cert
+
+- name: Server | OnlyOffice | HTTPS | Create Cert
+  shell: certbot --nginx -d docs.hyperling.com
+  when: onlyoffice_cert.failed
+
+# Config #
+
+#- name: Server | OnlyOffice | HTTPS | Check For Config
+#  shell: ls -l /etc/onlyoffice/documentserver/nginx/ds.conf
+#  register: onlyoffice_cert
+#
+#- name: Server | OnlyOffice | HTTPS | Create Config
+#  shell: cp -f /etc/onlyoffice/documentserver/nginx/ds-ssl.conf.tmpl /etc/onlyoffice/documentserver/nginx/ds.conf
+#  when: onlyoffice_cert.failed
+#
+#- name: Server | OnlyOffice | HTTPS | Modify Config
+#  lineinfile:
+#    path: /etc/onlyoffice/documentserver/nginx/ds.conf
+#    regexp: '{{ item.regexp }}'
+#    line: '{{ item.line }}; # MANAGED BY ANSIBLE'
+#    state: present
+#    create: no
+#    backup: yes
+#  loop:
+#    - { "regexp": "ssl_certificate ", "line": "  ssl_certificate /etc/letsencrypt/live/docs.hyperling.com/fullchain.pem" }
+#    - { "regexp": "ssl_certificate_key ", "line": "  ssl_certificate_key /etc/letsencrypt/live/docs.hyperling.com/privkey.pem" }
+
+# Services #
+
+- name: Server | OnlyOffice | HTTPS | Reload nginx
+  service:
+    name: nginx
+    status: reloaded
