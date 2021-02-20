@@ -1,0 +1,5 @@
+---
+# Network related variables.
+
+- name: Facts | Server | System | Not Used Yet
+  set_fact:

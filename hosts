@@ -6,9 +6,6 @@ x570
 dell-laptop
 usb
 
-[server]
-office onlyoffice=true
-
 [miner]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
@@ -34,3 +31,14 @@ office onlyoffice=true
 ;
 usb  amdgpu=true
 x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
+
+[server]
+;;;;;;; Parameters ;;;;;;
+;
+;     domain : Set to the domain which gives the server its FQDN
+;                Example: hyperling.com
+;
+; onlyoffice : Set to anything for this server to be configured as an OnlyOffice server.
+;                Example: true
+;
+office domain=hyperling.com onlyoffice=true

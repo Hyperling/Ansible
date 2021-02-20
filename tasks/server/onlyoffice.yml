@@ -54,19 +54,16 @@
 
 
 ## HTTPS ##
-# https://helpcenter.onlyoffice.com/installation/docs-community-https-linux.aspx
-
-- name: Server | OnlyOffice | HTTPS | Hostname
-  shell: hostname office
+# https://helpcenter.only{{ ansible_histname }}.com/installation/docs-community-https-linux.aspx
 
 # Certs #
 
 - name: Server | OnlyOffice | HTTPS | Check For Cert
-  shell: ls -l /etc/letsencrypt/live/office.hyperling.com/{fullchain,privkey}.pem
+  shell: "ls -l /etc/letsencrypt/live/{{ ansible_hostname }}.{{ domain }}/{fullchain,privkey}.pem"
   register: onlyoffice_cert
 
 - name: Server | OnlyOffice | HTTPS | Create Cert
-  shell: certbot --nginx -d office.hyperling.com -d docs.hyperling.com
+  shell: "certbot --nginx -d {{ ansible_hostname }}.{{ domain }}"
   when: onlyoffice_cert.failed
 
 # Config #
@@ -88,8 +85,8 @@
 #    create: no
 #    backup: yes
 #  loop:
-#    - { "regexp": "ssl_certificate ", "line": "  ssl_certificate /etc/letsencrypt/live/office.hyperling.com/fullchain.pem" }
-#    - { "regexp": "ssl_certificate_key ", "line": "  ssl_certificate_key /etc/letsencrypt/live/office.hyperling.com/privkey.pem" }
+#    - { "regexp": "ssl_certificate ", "line": "  ssl_certificate /etc/letsencrypt/live/{{ ansible_hostname }}.{{ domain }}/fullchain.pem" }
+#    - { "regexp": "ssl_certificate_key ", "line": "  ssl_certificate_key /etc/letsencrypt/live/{{ ansible_hostname }}.{{ domain }}/privkey.pem" }
 
 # Services #
 

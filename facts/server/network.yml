@@ -1,8 +1,0 @@
----
-# Network related variables.
-
-- name: Server | Network | Domains
-  set_fact:
-    hyperling: hyperling.com
-    tmcvideos: tmcvideos.com
-    demons: getthedemonsout.com
