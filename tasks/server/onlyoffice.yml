@@ -22,9 +22,10 @@
 - name: Server | OnlyOffice | Postgres | Configure
   shell: '{{ item }}'
   loop:
-    - sudo -i -u postgres psql -c "CREATE DATABASE onlyoffice;"
-    - sudo -i -u postgres psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"
-    - sudo -i -u postgres psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"
+    - psql -c "CREATE DATABASE onlyoffice;"
+    - psql -c "CREATE USER onlyoffice WITH password 'onlyoffice';"
+    - psql -c "GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"
+  become_user: postgres
   ignore_errors: yes
 
 - name: Server | OnlyOffice | RabbitMQ | Install
