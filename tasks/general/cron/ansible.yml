@@ -24,7 +24,7 @@
     user: ansible
     name: "Create Heartbeat Report"
     minute: "*/15"
-    job: "neofetch --stdout | tee {{ heartbeat_report }}; chmod 777 {{ heartbeat_report }}"
+    job: "neofetch --stdout | sudo tee {{ heartbeat_report }}; sudo chmod 777 {{ heartbeat_report }}"
     state: present
     disabled: no
 
