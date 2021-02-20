@@ -40,7 +40,6 @@
     create: no
     backup: yes
   loop:
-    - { "key": '^[\#]?PermitRootLogin',      "value": 'PermitRootLogin no'}
     - { "key": '^[\#]?AllowTcpForwarding',   "value": 'AllowTcpForwarding no'}
     - { "key": '^[\#]?ClientAliveCountMax',  "value": 'ClientAliveCountMax 2'}
     - { "key": '^[\#]?Compression',          "value": 'Compression no'}
@@ -51,6 +50,18 @@
     - { "key": '^[\#]?TCPKeepAlive',         "value": 'TCPKeepAlive no'}
     - { "key": '^[\#]?X11Forwarding',        "value": 'X11Forwarding no'}
     - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
+
+- name: General | Software | Services | Configure SSHD
+  lineinfile:
+    path: "{{ sshd_config }}"
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }} # MANAGED BY ANSIBLE'
+    state: present
+    create: no
+    backup: yes
+  loop:
+    - { "key": '^[\#]?PermitRootLogin', "value": 'PermitRootLogin no'}
+  when: {{ not(ansible_kernel | select ("pve")) }}
 
 - name: General | Software | Services | Enable SSHD
   service:
