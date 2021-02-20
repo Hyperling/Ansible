@@ -56,6 +56,9 @@
 ## HTTPS ##
 # https://helpcenter.onlyoffice.com/installation/docs-community-https-linux.aspx
 
+- name: Server | OnlyOffice | HTTPS | Hostname
+  shell: hostname office
+
 # Certs #
 
 - name: Server | OnlyOffice | HTTPS | Check For Cert
@@ -63,7 +66,7 @@
   register: onlyoffice_cert
 
 - name: Server | OnlyOffice | HTTPS | Create Cert
-  shell: certbot --nginx -d office.hyperling.com
+  shell: certbot --nginx -d office.hyperling.com -d docs.hyperling.com
   when: onlyoffice_cert.failed
 
 # Config #
