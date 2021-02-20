@@ -28,17 +28,6 @@
     state: present
     disabled: no
 
-#TODO Deleteme
-- name: General | Cron | Ansible | Enable Secure Copy Reports
-  cron: 
-    user: ansible
-    name: "Copy Reports"
-    minute: "05,20,35,50"
-    job: "sudo scp {{ ansible_pull_report }} {{ heartbeat_report }} {{ lynis_report }} {{ nmap_report }} {{ leet_ssh }}:{{ report_scp_location }}"
-    state: absent
-    disabled: no
-  when: not leet_drive_details.stat.exists
-
 - name: General | Cron | Ansible | Enable Secure Copy Reports
   cron: 
     user: ansible
