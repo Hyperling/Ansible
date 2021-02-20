@@ -11,11 +11,20 @@
     sshd: sshd
     sshd_pattern: sshd
     sshd_config: /etc/ssh/sshd_config
+    crond: cron
+    crond_pattern: cron
 
 
 - name: General | Facts | Service | Linux
   set_fact:
   when: ansible_system == "Linux"
+
+
+- name: General | Facts | Service | Linux
+  set_fact:
+    crond: cronie
+    crond_pattern: cronie
+  when: ansible_distribution == "Archlinux"
 
 
 - name: General | Facts | Service | FreeBSD
