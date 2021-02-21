@@ -1,9 +1,10 @@
 ---
 # Groups that do not come to all distros by default.
 
-- name: General | Account Management | Groups 
+- name: General | Account Management | System Groups 
   group:
     name: "{{ item }}"
+    system: yes
     state: present
   loop:
     - sudo
