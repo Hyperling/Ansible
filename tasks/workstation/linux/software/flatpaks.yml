@@ -22,6 +22,8 @@
     remote: flathub
     state: present
   loop:
+    - org.midori_browser.Midori
+    - com.github.Eloston.UngoogledChromium
     - org.mozilla.Thunderbird
     - com.discordapp.Discord
     - io.lbry.lbry-app
