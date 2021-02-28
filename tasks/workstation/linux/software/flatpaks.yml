@@ -45,18 +45,6 @@
 
 
 # Software not yet available or working properly in Flatpak form.
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
-  apt_repository: 
-    repo: ppa:lutris-team/lutris
-    update_cache: yes
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Install Lutris
-  package: 
-    name: lutris
-    state: present
-
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Install Firefox ESR
   package: 
     name: "{{ firefox_esr }}"
@@ -69,9 +57,19 @@
     state: absent
   when: firefox != firefox_esr
 
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Install VLC
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
+  apt_repository: 
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Applications
   package: 
-    name: vlc
+    name: 
+      - lutris
+      - vlc
+      - "{{ appimagelauncher }}"
     state: present
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Applciations

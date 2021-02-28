@@ -9,6 +9,7 @@
     evolution: evolution
     gnome_tweaks: gnome-tweaks
     dconf_editor: dconf-editor
+    appimagelauncher: htop #placeholder
 
 
 - name: Workstation | Facts | Package | Pop_OS!
@@ -40,6 +41,7 @@
     flatpak_distro: true
     firefox_esr: firefox
     psutil: python-psutil
+    appimagelauncher: appimagelauncher
   when: ansible_distribution == "Archlinux"
 
 
