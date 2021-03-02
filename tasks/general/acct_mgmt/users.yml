@@ -95,6 +95,7 @@
     path_additions: export PATH="~/bin:$PATH"
     function_wttr: |
       function weather() {
+        # 20210301 - Someone showed me an awesome weather API! Had to implement it!
         if [[ "$1" == "-"* || $2 != "" ]]; then
           echo 'USAGE: weather [location]
         Any "-" paramaters call the usage since this function does not take any options.
