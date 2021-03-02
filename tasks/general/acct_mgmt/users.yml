@@ -100,12 +100,12 @@
         Any "-" paramaters call the usage since this function does not take any options.
         Location is optional since the API can determine your connection'"'"'s location.
         Useful location types:
-          $zip_code                        | Ex: 12345
-          $city,$state                     | Ex: Austin,Texas
-          @$domain_dot_extension           | Ex: @github.com
-          ~$attraction_or_special_location | Ex: ~Manitou Incline
+          $zip_code              | Ex: 12345
+          $city,$state           | Ex: Austin,Texas
+          @$domain_dot_extension | Ex: @github.com
+          ~$special_location     | Ex: ~Manitou Incline
         Full documentation: https://github.com/chubin/wttr.in'
-          return
+          return 1
         fi
         curl "https://wttr.in/${1//\ /+}"
       }
