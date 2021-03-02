@@ -95,17 +95,19 @@
     path_additions: export PATH="~/bin:$PATH"
     function_wttr: |
       function weather() {
-        if [[ "$1" == "-"* ]]; then
+        if [[ "$1" == "-"* || $2 != "" ]]; then
           echo 'USAGE: weather [location]
-        Any "-" paramaters call the usage since it does not take any options.
+        Any "-" paramaters call the usage since this function does not take any options.
+        Location is optional since the API can determine your connection's location.
         Useful location types:
-          $zip_code
-          $city,$state
-          @$domain_dot_extension
+          $zip_code                        | Ex: 12345
+          $city,$state                     | Ex: Austin,Texas
+          @$domain_dot_extension           | Ex: @github.com
+          ~$attraction_or_special_location | Ex: ~Manitou Incline
         Full documentation: https://github.com/chubin/wttr.in'
           return
         fi
-        curl https://wttr.in/$1
+        curl "https://wttr.in/${1//\ /+}"
       }
 
 - name: General | Account Management | Users | Files | Common Variable
