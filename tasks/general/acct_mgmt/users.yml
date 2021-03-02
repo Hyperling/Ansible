@@ -98,7 +98,7 @@
         if [[ "$1" == "-"* || $2 != "" ]]; then
           echo 'USAGE: weather [location]
         Any "-" paramaters call the usage since this function does not take any options.
-        Location is optional since the API can determine your connection's location.
+        Location is optional since the API can determine your connection\'s location.
         Useful location types:
           $zip_code                        | Ex: 12345
           $city,$state                     | Ex: Austin,Texas
