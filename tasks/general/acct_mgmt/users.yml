@@ -87,14 +87,48 @@
 
 ## Files ##
 
+- name: General | Account Management | Users | Files | RC Variables
+  set_fact:
+    alias_cp: alias cp='cp -v'
+    alias_mv: alias mv='mv -v'
+    alias_rm: alias rm='echo "Use mv ~/TRASH/ instead!"'
+    path_additions: export PATH="~/bin:$PATH"
+    function_wttr: |
+      function weather() {
+        curl https://wttr.in/$1
+      }
+
+- name: General | Account Management | Users | Files | Common Variable
+  set_fact:
+    rc_common: |
+      {{ alias_cp }}
+      {{ alias_mv }}
+      {{ alias_rm }}
+      {{ path_additions }}
+      {{ function_wttr }}
+
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
     path: "{{ item }}/.bashrc"
     block: |
-      alias cp='cp -v'
-      alias mv='mv -v'
-      alias rm='echo "Use mv ~/TRASH/ instead!"'
-      export PATH="~/bin:$PATH"
+      {{ rc_common }}
+      echo "`date` - Set .bashrc preferences."
+    marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
+    state: present
+    create: yes
+    backup: yes
+  loop:
+    - "{{ user_root.home }}"
+    - "{{ user_ling.home }}"
+  ignore_errors: yes
+  when: user_root.home != "" and user_ling.home != ""
+
+- name: General | Account Management | Users | Files | .zshrc
+  blockinfile:
+    path: "{{ item }}/.zshrc"
+    block: |
+      {{ rc_common }}
+      echo "`date` - Set .zshrc preferences."
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
