@@ -96,13 +96,13 @@
     function_wttr: |
       function weather() {
         if [[ "$1" == "-"* ]]; then
-          echo "USAGE: weather [location]
-        Any '-' paramaters call the usage since it does not take any options.
+          echo 'USAGE: weather [location]
+        Any "-" paramaters call the usage since it does not take any options.
         Useful location types:
-          zip_code
-          city,state
-          @domain.com
-        Full documentation: https://github.com/chubin/wttr.in"
+          $zip_code
+          $city,$state
+          @$domain_dot_extension
+        Full documentation: https://github.com/chubin/wttr.in'
           return
         fi
         curl https://wttr.in/$1
