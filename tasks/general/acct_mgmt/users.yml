@@ -95,16 +95,26 @@
     path_additions: export PATH="~/bin:$PATH"
     function_wttr: |
       function weather() {
+        if [[ "$1" == "-"* ]]; then
+          echo "USAGE: weather [location]
+        Any '-' paramaters call the usage since it does not take any options.
+        Useful location types:
+          zip_code
+          city,state
+          @domain.com
+        Full documentation: https://github.com/chubin/wttr.in"
+          return
+        fi
         curl https://wttr.in/$1
       }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
     rc_common: |
+      {{ path_additions }}
       {{ alias_cp }}
       {{ alias_mv }}
       {{ alias_rm }}
-      {{ path_additions }}
       {{ function_wttr }}
 
 - name: General | Account Management | Users | Files | .bashrc
@@ -112,7 +122,7 @@
     path: "{{ item }}/.bashrc"
     block: |
       {{ rc_common }}
-      echo "`date` - Set .bashrc preferences."
+      echo "`date` - Ansible .bashrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
@@ -128,7 +138,7 @@
     path: "{{ item }}/.zshrc"
     block: |
       {{ rc_common }}
-      echo "`date` - Set .zshrc preferences."
+      echo "`date` - Ansible .zshrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
