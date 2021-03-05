@@ -15,7 +15,7 @@
 
 ## Security ##
 
-- name: Miner | Account Management | Cron | Ansible | Daily Security Update
+- name: Miner | Account Management | Cron | Ansible | Daily Security Update [apt]
   cron:
     user: ansible
     name: Daily Security Update
@@ -23,4 +23,3 @@
     special_time: reboot
     state: present
     disabled: no
-  when: ansible_pkg_mgr == "apt"
