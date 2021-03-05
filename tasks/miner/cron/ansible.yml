@@ -19,7 +19,7 @@
   cron:
     user: ansible
     name: Daily Security Update
-    job: apt update && apt dist-upgrade -y
+    job: sudo apt update && sudo apt dist-upgrade -y
     special_time: reboot
     state: present
     disabled: no
