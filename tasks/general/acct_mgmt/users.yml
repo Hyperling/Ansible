@@ -125,7 +125,7 @@
     path: "{{ item }}/.bashrc"
     block: |
       {{ rc_common }}
-      echo "`date` - Ansible .bashrc preferences loaded successfully!"
+      [[ $(whoami) != "root" ]] && echo "`date` - Ansible .bashrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
@@ -141,7 +141,7 @@
     path: "{{ item }}/.zshrc"
     block: |
       {{ rc_common }}
-      echo "`date` - Ansible .zshrc preferences loaded successfully!"
+      [[ $(whoami) != "root" ]] && echo "`date` - Ansible .zshrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
