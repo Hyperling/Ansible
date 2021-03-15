@@ -122,6 +122,10 @@
     - include: tasks/server/onlyoffice.yml
       when: onlyoffice is defined and ansible_pkg_mgr == "apt"
 
+  tasks:
+    - include: tasks/server/grafana.yml
+      when: grafana is defined and ansible_pkg_mgr == "apt"
+
 
 
 # Create reports to analyze security.
