@@ -40,4 +40,8 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ; onlyoffice : Set to anything for this server to be configured as an OnlyOffice server.
 ;                Example: true
 ;
+;    grafana : Set to anything for this server to be configured as an Grafana web server.
+;                Example: true
+;
 office domain=hyperling.com onlyoffice=true
+grafana grafana=true
