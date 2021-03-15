@@ -28,11 +28,9 @@
 
 ## Configure ##
 
-- name: Server | Grafana | Configure | Reload Daemons
-  shell: systemctl daemon-reload
-
-- name: Server | Grafana | Configure | Enable
-  shell: systemctl enable grafana-server
-
-- name: Server | Grafana | Configure | Start
-  shell: systemctl start grafana-server
+- name: Server | Grafana | Configure
+  shell: '{{ item }}'
+  loop:
+    - systemctl daemon-reload
+    - systemctl enable grafana-server
+    - systemctl start grafana-server
