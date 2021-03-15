@@ -34,3 +34,6 @@
     - systemctl daemon-reload
     - systemctl enable grafana-server
     - systemctl start grafana-server
+
+## SMTP ##
+# TODO allow server to send mail for invites, alerting, and password resets.
