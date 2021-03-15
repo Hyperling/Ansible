@@ -1,0 +1,38 @@
+---
+# Install everything needed for a Grafana subsite.
+
+## Pre-reqs ##
+
+- name: Server | Grafana | Pre-Requirements | Install
+  package: 
+    name: 
+      - apt-transport-https
+      - software-properties-common
+      - wget
+    state: present
+
+## Install ##
+
+- name: Server | Grafana | Install | Add Repo
+  shell: '{{ item }}'
+  loop:
+    - wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+    - echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+    - apt update
+
+- name: Server | Grafana | Install | Main
+  package: 
+    name: 
+      - grafana
+    state: present
+
+## Configure ##
+
+- name: Server | Grafana | Configure | Reload Daemons
+  shell: systemctl daemon-reload
+
+- name: Server | Grafana | Configure | Enable
+  shell: systemctl enable grafana-server
+
+- name: Server | Grafana | Configure | Start
+  shell: systemctl start grafana-server
