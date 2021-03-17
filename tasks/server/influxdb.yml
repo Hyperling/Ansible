@@ -1,7 +1,8 @@
 ---
 # Application that populates InfluxDB with metric data.
 
-- shell: "{{ item }}"
+- name: Server | InfluxDB | Install
+  shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
   loop:
