@@ -6,4 +6,4 @@
     chdir: "{{ ansible_env.HOME }}/Downloads/"
   loop:
     - wget https://dl.influxdata.com/telegraf/releases/telegraf_1.17.3-1_amd64.deb
-    - sudo dpkg -i telegraf_1.17.3-1_amd64.deb
+    - dpkg -i telegraf_1.17.3-1_amd64.deb
