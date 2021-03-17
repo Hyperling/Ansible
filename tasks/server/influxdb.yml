@@ -1,0 +1,9 @@
+---
+# Application that populates InfluxDB with metric data.
+
+- shell: "{{ item }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}/Downloads/"
+  loop:
+    - wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.4-amd64.deb
+    - sudo dpkg -i influxdb2-2.0.4-amd64.deb
