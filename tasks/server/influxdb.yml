@@ -1,10 +1,18 @@
 ---
 # Application that populates InfluxDB with metric data.
 
+- name: Server | InfluxDB | Check
+  shell: which influxd
+  register: influxdb_check
+  ignore_errors: yes
+
 - name: Server | InfluxDB | Install
   shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
   loop:
+    - mv influxdb2-2.0.4-amd64.deb ~/TRASH/ 2>/dev/null
     - wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.4-amd64.deb
     - dpkg -i influxdb2-2.0.4-amd64.deb
+    - service influxdb start
+  when: influxdb_check.failed
