@@ -48,6 +48,7 @@
     - tar xvf {{ telegraf_tar }}
     - mv {{ telegraf_tar }} ~/TRASH/
     - mv telegraf*/usr/bin/telegraf {{ telegraf_exec }}
+    - mv telegraf* ~/TRASH/
   when: ansible_system == "Linux"
 
 
@@ -62,7 +63,10 @@
 
 # Configuration #
 
-- name: Server | Telegraf | Config
+- name: Server | Telegraf | Config 1/2
+  shell: mv {{ telegraf_config }} ~/TRASH/
+
+- name: Server | Telegraf | Config 2/2
   blockinfile:
     path: "{{ telegraf_config }}"
     block: |
@@ -143,9 +147,7 @@
 
       {{ telegraf_input_temp }}
 
-    marker: '{mark} # MANAGED BY ANSIBLE'
-    marker_begin: '[global_tags]'
-    marker_end: '# END'
+    marker: '# {mark} MANAGED BY ANSIBLE - telegraf.yml'
     state: present
     create: yes
 
