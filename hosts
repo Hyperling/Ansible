@@ -2,7 +2,7 @@
 localhost
 
 [workstation]
-dell-laptop
+dell-laptop debug=true
 usb
 
 [miner]
@@ -28,7 +28,7 @@ usb
 ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
 ;                        Valid values: nanopool etherpool f2pool
 ;
-usb  amdgpu=true
+usb amdgpu=true
 x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
 
 [server]
@@ -43,5 +43,13 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;    grafana : Set to anything for this server to be configured as an Grafana web server.
 ;                Example: true
 ;
-office  domain=hyperling.com onlyoffice=true
-grafana domain=hyperling.com grafana=true influxdb1=true telegraf=true
+;  influxdb1 : Set to anything for this server to be configured as an Influx 1 DB server.
+;                Example: true
+;
+;  influxdb2 : Set to anything for this server to be configured as an Influx 2 DB + web server.
+;                Example: true
+;
+onlyoffice domain=hyperling.com onlyoffice=true
+grafana domain=hyperling.com grafana=true influxdb1=true
+test debug=true
+freeboy debug=true

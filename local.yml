@@ -131,18 +131,18 @@
     - include: tasks/server/grafana.yml
       when: grafana is defined and ansible_pkg_mgr == "apt"
 
-    - include: tasks/server/telegraf.yml
-      when: telegraf is defined and ansible_pkg_mgr == "apt"
 
 
-
-# Create reports to analyze security.
-- name: Main | Hardness Tests
+# Provide information for analysis.
+- name: Main | Reporting
   hosts: localhost
   connection: local
   become: true
 
   tasks:
+    - include: tasks/general/software/telegraf.yml
+      when: debug is defined
+
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
 

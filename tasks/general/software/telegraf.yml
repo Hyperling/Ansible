@@ -1,0 +1,168 @@
+---
+# Application that populates InfluxDB with metric data.
+# https://docs.influxdata.com/telegraf/v1.17/introduction/getting-started/
+
+# Variables #
+
+- name: Server | Telegraf | Variables 1/3
+  set_facts:
+    telegraf_tar: telegraf-1.18.0_linux_amd64.tar.gz
+    telegraf_config: /usr/local/etc/telegraf.conf
+    telegraf_exec: /usr/local/bin/telegraf
+    telegraf_user: "{{ user_ansible.name }}"
+    telegraf_log: "{{ user_ansible.home }}/telegraf.log"
+
+- name: Server | Telegraf | Variables 2/3
+  set_facts:
+    telegraf_cmd: "{{ telegraf_exec }} --config {{ telegraf_config }} >> {{ telegraf_log }} 2>&1"
+
+- name: Server | Telegraf | Variables 3/3
+  set_facts:
+    telegraf_restart: "killall telegraf; {{ telegraf_cmd }}"
+
+- name: Server | Telegraf | Variables | Linux
+  set_facts:
+    telegraf_input_temp: "[[inputs.temp]]"
+  when: ansible_system == "Linux"
+
+- name: Server | Telegraf | Variables | FreeBSD
+  set_facts:
+    telegraf_input_temp: ""
+  when: ansible_system == "FreeBSD"
+
+# Dependencies #
+
+- name: Server | Telegraf | Pre-Reqs
+  package:
+    name: wget
+  when: ansible_system == "Linux"
+
+# Install #
+
+- name: Server | Telegraf | Linux | Install
+  shell: "{{ item }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}/Downloads/"
+  loop:
+    - wget --no-check-certificate "https://dl.influxdata.com/telegraf/releases/{{ telegraf_tar }}"
+    - tar xvf {{ telegraf_tar }}
+    - mv {{ telegraf_tar }} ~/TRASH/
+    - mv telegraf*/usr/bin/telegraf {{ telegraf_exec }}
+  when: ansible_system == "Linux"
+
+
+- name: Server | Telegraf | FreeBSD | Install 1/2
+  shell: /usr/sbin/pwd_mkdb -p /etc/master.passwd
+  when: ansible_system == "FreeBSD"
+
+- name: Server | Telegraf | FreeBSD | Install 1/2
+  package:
+    name: telegraf
+  when: ansible_system == "FreeBSD"
+
+# Configuration #
+
+- name: Server | Telegraf | Config
+  blockinfile:
+    path: {{ telegraf_config }}
+    block: |
+      [global_tags]
+        # dc = "us-east-1" # will tag all metrics with dc=us-east-1
+        # rack = "1a"
+        ## Environment variables can be used as tags, and throughout the config file
+        # user = "$USER"
+      
+      [agent]
+        interval = "10s"
+        metric_batch_size = 1000
+        metric_buffer_limit = 10000
+        collection_jitter = "0s"
+        flush_interval = "10s"
+        flush_jitter = "0s"
+        precision = ""
+        # debug = false
+        # quiet = false
+        # logtarget = "file"
+        # logfile = ""
+        # logfile_rotation_interval = "0d"
+        # logfile_rotation_max_size = "0MB"
+        # logfile_rotation_max_archives = 5
+        hostname = ""
+        omit_hostname = false
+
+      [[outputs.influxdb]]
+        urls = ["http://influxdb.hyperling.com:8086"]
+        database = "main"
+        # database_tag = ""
+        # exclude_database_tag = false
+        # skip_database_creation = false
+        # retention_policy = ""
+        # retention_policy_tag = ""
+        # exclude_retention_policy_tag = false
+        # write_consistency = "any"
+        # timeout = "5s"
+        # username = "telegraf"
+        # password = "metricsmetricsmetricsmetrics"
+        # user_agent = "telegraf"
+        # udp_payload = "512B"
+        # tls_ca = "/etc/telegraf/ca.pem"
+        # tls_cert = "/etc/telegraf/cert.pem"
+        # tls_key = "/etc/telegraf/key.pem"
+        # insecure_skip_verify = false
+        # http_proxy = "http://corporate.proxy:3128"
+        # http_headers = {"X-Special-Header" = "Special-Value"}
+        # content_encoding = "gzip"
+        # influx_uint_support = false
+
+      [[inputs.cpu]]
+        percpu = true
+        totalcpu = true
+        collect_cpu_time = false
+        report_active = false
+
+      [[inputs.disk]]
+        # mount_points = ["/"]
+        ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs", "fdescfs"]
+
+      [[inputs.diskio]]
+        # devices = ["sda", "sdb", "vd*"]
+        # skip_serial_number = false
+        # device_tags = ["ID_FS_TYPE", "ID_FS_USAGE"]
+        # name_templates = ["$ID_FS_LABEL","$DM_VG_NAME/$DM_LV_NAME"]
+
+      [[inputs.kernel]]
+      
+      [[inputs.mem]]
+      
+      [[inputs.processes]]
+      
+      [[inputs.swap]]
+      
+      [[inputs.system]]
+        # fielddrop = ["uptime_format"]
+
+      {{ telegraf_input_temp }}
+
+    marker: ';{mark} MANAGED BY ANSIBLE'
+    marker_begin: ';;;;;;;;;;;; BEGIN'
+    marker_end: ' END'
+    state: present
+    create: yes
+
+# Run #
+
+- name: Server | Telegraf | Start
+  shell: "{{ telegraf_restart }}"
+  become_user: {{ telegraf_user }}
+
+- name: Server | Telegraf | Schedule
+  cron:
+    user: {{ telegraf_user }}
+    name: "{{ item.name }}"
+    job: "{{ item.command }}"
+    special_time: "{{ item.freq }}"
+    state: present
+    disabled: no
+  loop:
+    - { "name": "Telegraf Start Job",      "command": "{{ telegraf_cmd }}",     "freq": "reboot"}
+    - { "name": "Telegraf Keep-Alive Job", "command": "{{ telegraf_restart }}", "freq": "hourly"}
