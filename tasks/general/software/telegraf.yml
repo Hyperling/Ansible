@@ -145,7 +145,7 @@
 
     marker: '{mark} # MANAGED BY ANSIBLE'
     marker_begin: '[global_tags]'
-    marker_end: '; END'
+    marker_end: '# END'
     state: present
     create: yes
 
