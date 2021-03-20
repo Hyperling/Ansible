@@ -20,7 +20,7 @@
   dconf: 
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop', 
-             'org.midori_browser.Midori.desktop', 'firefox.desktop', 'com.github.Eloston.UngoogledChromium.desktop', 'org.mozilla.Thunderbird.desktop', 
+             'com.github.Eloston.UngoogledChromium.desktop', 'org.mozilla.Thunderbird.desktop', 
              'com.discordapp.Discord.desktop', 'io.lbry.lbry-app.desktop', 'com.visualstudio.code-oss.desktop', 'com.google.AndroidStudio.desktop', 
              'org.shotcut.Shotcut.desktop', 'com.obsproject.Studio.desktop', 'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop']"
     state: present
