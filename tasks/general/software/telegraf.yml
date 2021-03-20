@@ -22,7 +22,7 @@
 
 - name: Server | Telegraf | Variables 4/4
   set_fact:
-    telegraf_restart: "killall telegraf; {{ telegraf_cmd }}"
+    telegraf_watcher: "killall telegraf; {{ telegraf_cmd }}"
 
 - name: Server | Telegraf | Variables | Linux
   set_fact:
@@ -168,6 +168,5 @@
     state: present
     disabled: no
   loop:
-    - { "name": "Telegraf Start Job"     , "freq": "reboot", "command": "# Deprecated",}
-    - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ telegraf_cmd }}"}
-    - { "name": "Telegraf Keep-Alive Job", "freq": "hourly", "command": "{{ (ansible_system == 'Linux') | ternary(telegraf_restart, '# FreeBSD is smart.') }}"}
+    - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ (ansible_system == 'Linux') | ternary(telegraf_cmd, '# FreeBSD is smart.') }}"}
+    - { "name": "Telegraf Keep-Alive Job", "freq": "hourly", "command": "{{ telegraf_watcher }}"}
