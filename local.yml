@@ -141,7 +141,7 @@
 
   tasks:
     - include: tasks/general/software/telegraf.yml
-      when: debug is defined
+      when: ansible_hostname in ("dell-laptop", "freeboy", "test", "usb")
 
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
