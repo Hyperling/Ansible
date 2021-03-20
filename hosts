@@ -45,4 +45,4 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;
 office  domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true
-test influxdb=true telegraf=true
+test influxdb=true telegraf=true grafana=true
