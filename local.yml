@@ -133,17 +133,6 @@
 
 
 
-# Test anything that's being developed before ending.
-- name: Main | TESTING
-  hosts: debug
-  connection: local
-  become: true
-
-  tasks:
-    - include: tasks/general/software/telegraf.yml
-
-
-
 # Provide information for analysis.
 - name: Main | Reporting
   hosts: localhost

@@ -1,11 +1,6 @@
 [everything]
 localhost
 
-[debug]
-dell-laptop
-test
-usb
-
 [workstation]
 dell-laptop
 usb
