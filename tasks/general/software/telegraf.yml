@@ -7,13 +7,14 @@
 - name: Server | Telegraf | Variables 1/4
   set_fact:
     telegraf_tar: telegraf-1.18.0_linux_amd64.tar.gz
+    telegraf_path: /usr/local/bin
     telegraf_config_path: /usr/local/etc
-    telegraf_exec: /usr/local/bin/telegraf
     telegraf_user: "{{ user_ansible.name }}"
     telegraf_log: "{{ user_ansible.home }}/telegraf.log"
 
 - name: Server | Telegraf | Variables 2/4
   set_fact:
+    telegraf_exec: "{{ telegraf_path }}/telegraf"
     telegraf_config: "{{ telegraf_config_path }}/telegraf.conf"
 
 - name: Server | Telegraf | Variables 3/4
@@ -49,6 +50,7 @@
     chdir: "{{ ansible_env.HOME }}/Downloads/"
     warn: false
   loop:
+    - mkdir -p {{ telegraf_path }}
     - mkdir -p {{ telegraf_config_path }}
     - wget --no-check-certificate "https://dl.influxdata.com/telegraf/releases/{{ telegraf_tar }}"
     - tar xvf {{ telegraf_tar }}
