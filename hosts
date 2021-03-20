@@ -2,7 +2,7 @@
 localhost
 
 [workstation]
-dell-laptop debug=true
+dell-laptop
 usb
 
 [miner]
@@ -51,5 +51,4 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
-test debug=true
-freeboy debug=true
+test
