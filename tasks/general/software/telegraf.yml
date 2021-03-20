@@ -143,9 +143,9 @@
 
       {{ telegraf_input_temp }}
 
-    marker: ';{mark} MANAGED BY ANSIBLE'
-    marker_begin: ';;;;;;;;;;;; BEGIN'
-    marker_end: ' END'
+    marker: '{mark} # MANAGED BY ANSIBLE'
+    marker_begin: '[global_tags]'
+    marker_end: '; END'
     state: present
     create: yes
 
@@ -160,5 +160,6 @@
     state: present
     disabled: no
   loop:
-    - { "name": "Telegraf Start Job",      "command": "{{ telegraf_cmd }}",     "freq": "reboot"}
+    - { "name": "Telegraf Start Job",      "command": "# Deprecated",           "freq": "reboot"}
+    - { "name": "Telegraf Reboot Job",     "command": "{{ telegraf_cmd }}",     "freq": "reboot"}
     - { "name": "Telegraf Keep-Alive Job", "command": "{{ telegraf_restart }}", "freq": "hourly"}
