@@ -163,6 +163,6 @@
     state: present
     disabled: no
   loop:
-    - { "name": "Telegraf Start Job",      "command": "# Deprecated",           "freq": "reboot"}
-    - { "name": "Telegraf Reboot Job",     "command": "{{ telegraf_cmd }}",     "freq": "reboot"}
-    - { "name": "Telegraf Keep-Alive Job", "command": "{{ telegraf_restart }}", "freq": "hourly"}
+    - { "name": "Telegraf Start Job"     , "freq": "reboot", "command": "# Deprecated",}
+    - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ telegraf_cmd }}"}
+    - { "name": "Telegraf Keep-Alive Job", "freq": "hourly", "command": "{{ (ansible_system == 'Linux') | ternary(telegraf_restart, '# FreeBSD is smart.') }}"}
