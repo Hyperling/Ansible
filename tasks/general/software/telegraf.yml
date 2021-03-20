@@ -64,7 +64,7 @@
 
 - name: Server | Telegraf | Config
   blockinfile:
-    path: {{ telegraf_config }}
+    path: "{{ telegraf_config }}"
     block: |
       [global_tags]
         # dc = "us-east-1" # will tag all metrics with dc=us-east-1
@@ -153,11 +153,11 @@
 
 - name: Server | Telegraf | Start
   shell: "{{ telegraf_restart }}"
-  become_user: {{ telegraf_user }}
+  become_user: "{{ telegraf_user }}"
 
 - name: Server | Telegraf | Schedule
   cron:
-    user: {{ telegraf_user }}
+    user: "{{ telegraf_user }}"
     name: "{{ item.name }}"
     job: "{{ item.command }}"
     special_time: "{{ item.freq }}"
