@@ -48,7 +48,7 @@
     - tar xvf {{ telegraf_tar }}
     - mv {{ telegraf_tar }} ~/TRASH/
     - mv telegraf*/usr/bin/telegraf {{ telegraf_exec }}
-    - mv telegraf* ~/TRASH/
+    - rm -r telegraf*
   when: ansible_system == "Linux"
 
 
