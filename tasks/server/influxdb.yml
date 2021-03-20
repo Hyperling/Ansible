@@ -15,4 +15,5 @@
     - wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.4-amd64.deb
     - dpkg -i influxdb2-2.0.4-amd64.deb
     - service influxdb start
+    - influx setup -f -u ling -p initpassword -o Hyperling -b main -r 0
   when: influxdb_check.failed
