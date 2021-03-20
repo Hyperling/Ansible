@@ -1,5 +1,6 @@
 ---
 # Install everything needed for a Grafana subsite.
+# https://grafana.com/docs/grafana/latest/getting-started/getting-started/
 
 ## Pre-reqs ##
 
@@ -16,8 +17,8 @@
 - name: Server | Grafana | Install | Add Repo
   shell: '{{ item }}'
   loop:
-    - wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
-    - echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+    - wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -
+    - echo "deb https://packages.grafana.com/oss/deb stable main" | tee /etc/apt/sources.list.d/grafana.list
     - apt update
 
 - name: Server | Grafana | Install | Main

@@ -1,5 +1,6 @@
 ---
 # InfluxDB 1.* to be used with Grafana.
+# https://docs.influxdata.com/influxdb/v1.8/introduction/get-started/
 
 - name: Server | InfluxDB | Check
   shell: which influxd
@@ -24,3 +25,4 @@
     - influx -execute "create database main"
     - influx -execute "show databases"
     - influx -database main -execute "INSERT cpu,host=success,region=test value=1.00"
+  when: influxdb_check.failed

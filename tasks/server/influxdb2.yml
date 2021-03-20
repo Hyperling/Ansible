@@ -1,5 +1,6 @@
 ---
 # Create an Influx2.0 DB. Have not successfully used in Grafana yet.
+@ https://docs.influxdata.com/influxdb/v2.0/get-started/?t=Linux
 
 - name: Server | InfluxDB | Check
   shell: which influxd
