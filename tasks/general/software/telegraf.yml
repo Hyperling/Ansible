@@ -151,10 +151,6 @@
 
 # Run #
 
-- name: Server | Telegraf | Start
-  shell: "{{ telegraf_restart }}"
-  become_user: "{{ telegraf_user }}"
-
 - name: Server | Telegraf | Schedule
   cron:
     user: "{{ telegraf_user }}"
