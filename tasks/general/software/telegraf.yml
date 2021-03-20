@@ -70,6 +70,7 @@
 
 - name: Server | Telegraf | Config 1/2
   shell: mv {{ telegraf_config }} ~/TRASH/
+  ignore_errors: yes
 
 - name: Server | Telegraf | Config 2/2
   blockinfile:
