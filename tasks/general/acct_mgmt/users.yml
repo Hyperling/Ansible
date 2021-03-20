@@ -3,7 +3,7 @@
 
 ## Variables ##
 
-- name: General | Account Management | Users | use BASH (Default)
+- name: General | Account Management | Users | Use BASH (Default)
   set_fact:
     ling_shell: "{{ bash_exec.stdout }}"
 
