@@ -1,0 +1,24 @@
+---
+# Create an Influx2.0 DB. Have not successfully used in Grafana yet.
+
+- name: Server | InfluxDB | Check
+  shell: which influxd
+  register: influxdb_check
+  ignore_errors: yes
+
+- name: Server | InfluxDB | Install
+  shell: "{{ item }}"
+  args:
+    chdir: "{{ ansible_env.HOME }}/Downloads/"
+  loop:
+    - mv influxdb2-2.0.4-amd64.deb ~/TRASH/ 2>/dev/null; exit 0
+    - wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.4-amd64.deb
+    - sudo dpkg -i influxdb2-2.0.4-amd64.deb
+    - service influxdb start
+    - sleep 10
+  when: influxdb_check.failed
+
+- name: Server | InfluxDB | Config
+  shell: "{{ item }}"
+  loop:
+    - influx setup -f -u ling -p initpassword -o Hyperling -b main -r 0

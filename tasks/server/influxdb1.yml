@@ -1,5 +1,5 @@
 ---
-# Application that populates InfluxDB with metric data.
+# InfluxDB 1.* to be used with Grafana.
 
 - name: Server | InfluxDB | Check
   shell: which influxd
@@ -11,10 +11,16 @@
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
   loop:
-    - mv influxdb2-2.0.4-amd64.deb ~/TRASH/ 2>/dev/null; exit 0
     - mv influxdb_1.8.4_amd64.deb ~/TRASH/ 2>/dev/null; exit 0
     - wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.4_amd64.deb
     - sudo dpkg -i influxdb_1.8.4_amd64.deb
     - service influxdb start
-    - influx setup -f -u ling -p initpassword -o Hyperling -b main -r 0
+    - sleep 10
   when: influxdb_check.failed
+
+- name: Server | InfluxDB | Config
+  shell: "{{ item }}"
+  loop:
+    - influx -execute "create database main"
+    - influx -execute "show databases"
+    - influx -database main -execute "INSERT cpu,host=success,region=test value=1.00"
