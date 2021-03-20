@@ -2,12 +2,12 @@
 # InfluxDB 1.* to be used with Grafana.
 # https://docs.influxdata.com/influxdb/v1.8/introduction/get-started/
 
-- name: Server | InfluxDB | Check
+- name: Server | InfluxDB1 | Check
   shell: which influxd
   register: influxdb_check
   ignore_errors: yes
 
-- name: Server | InfluxDB | Install
+- name: Server | InfluxDB1 | Install
   shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
@@ -19,7 +19,7 @@
     - sleep 10
   when: influxdb_check.failed
 
-- name: Server | InfluxDB | Config
+- name: Server | InfluxDB1 | Config
   shell: "{{ item }}"
   loop:
     - influx -execute "create database main"
