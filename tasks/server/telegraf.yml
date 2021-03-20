@@ -1,5 +1,6 @@
 ---
 # Application that populates InfluxDB with metric data.
+# https://docs.influxdata.com/telegraf/v1.17/introduction/getting-started/
 
 - name: Server | Telegraf | Check
   shell: which telegraf
