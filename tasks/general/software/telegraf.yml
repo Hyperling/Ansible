@@ -50,6 +50,7 @@
     - mv telegraf*/usr/bin/telegraf {{ telegraf_exec }}
     - rm -r telegraf*
   when: ansible_system == "Linux"
+  warn: false
 
 
 - name: Server | Telegraf | FreeBSD | Install 1/2
