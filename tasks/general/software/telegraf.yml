@@ -168,5 +168,5 @@
     state: present
     disabled: no
   loop:
-    - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ (ansible_system == 'Linux') | ternary(telegraf_cmd, '# FreeBSD is smart.') }}"}
+    - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ telegraf_cmd }}"}
     - { "name": "Telegraf Keep-Alive Job", "freq": "hourly", "command": "{{ telegraf_watcher }}"}
