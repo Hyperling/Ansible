@@ -11,7 +11,7 @@
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
   loop:
-    - mv telegraf_1.17.3-1_amd64.deb ~/TRASH/ 2>/dev/null
+    - mv telegraf_1.17.3-1_amd64.deb ~/TRASH/ 2>/dev/null; exit 0
     - wget https://dl.influxdata.com/telegraf/releases/telegraf_1.17.3-1_amd64.deb
     - dpkg -i telegraf_1.17.3-1_amd64.deb
     - service telegraf start
