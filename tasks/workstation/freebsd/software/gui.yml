@@ -9,6 +9,7 @@
     - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
     - vscode
+    - gimp
     state: present
 
 - name: Workstation | FreeBSD | GUI | Uninstall Bloat
