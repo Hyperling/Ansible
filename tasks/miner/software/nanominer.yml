@@ -103,6 +103,7 @@
       devices = {{ nanominer_gpus }}
       useSSL = true
       email = me@hyperling.com
+      autoUpdate=true
     marker: ';{mark} MANAGED BY ANSIBLE - GPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
