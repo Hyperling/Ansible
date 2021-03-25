@@ -43,6 +43,7 @@
       webPort = 8080
       useSSL = true
       email = me@hyperling.com
+      autoUpdate=true
     marker: ';{mark} MANAGED BY ANSIBLE - CPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
