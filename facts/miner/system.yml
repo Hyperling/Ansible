@@ -36,7 +36,6 @@
     nanominer_version: "3.3.2"
     nanominer_script: "{{ user_mfn.home }}/nanominer.sh"
     nanominer_tar_remote: "InstallFiles/Miners/nanominer/*.tar.gz"
-  when: nanominer is defined
 
 - name: Miner | Facts | System | nanominer 2
   set_fact:
@@ -44,13 +43,11 @@
     nanominer_tar_remote: "InstallFiles/Miners/nanominer/*{{ nanominer_version }}*.tar.gz"
     nanominer_config: "{{ nanominer_home }}/config.ini"
     nanominer_logs: "{{ nanominer_home}}/logs"
-  when: nanominer is defined
 
 - name: Miner | Facts | System | nanominer 3
   set_fact:
     nanominer_tar_local: "{{ nanominer_bin }}.tar.gz"
     nanominer_exec: "{{ nanominer_bin }}/nanominer"
-  when: nanominer is defined
 
 
 ## Miner Array ##
