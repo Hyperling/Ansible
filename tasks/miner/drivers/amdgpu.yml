@@ -199,7 +199,7 @@
 
 ## We're done! ##
 - name: AMDGPU | Test Driver
-  shell: clinfo
+  shell: clinfo -l
   register: clinfo
 
 - name: AMDGPU | Test Results
