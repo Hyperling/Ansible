@@ -108,7 +108,7 @@
 
 ## Personal Script Setup ##
 - name: Ethminer | Script
-  shell: {{ item }}
+  shell: "{{ item }}""
   loop:
     - "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
     - "chmod 755 {{ user_mfn.home }}/ethminer.sh"
