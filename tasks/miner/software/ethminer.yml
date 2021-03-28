@@ -2,7 +2,7 @@
 # Mine Ethereum with GPU!
 
 ## Dependencies ##
-- name: Ethminer | Install Dependencies
+- name: Miner | Software | Ethminer | Install Dependencies
   package: 
     name: 
       - build-essential 
@@ -13,75 +13,75 @@
       - mesa-common-dev
     state: present
 
-- name: Ethminer | Add PPA
+- name: Miner | Software | Ethminer | Add PPA
   apt_repository: 
     repo: ppa:ethereum/ethereum
     update_cache: yes
     state: present
 
-- name: Ethminer | Install Ethereum
+- name: Miner | Software | Ethminer | Install Ethereum
   package: 
     name: ethereum
     state: present
 
 
 ## Test ##
-- name: Ethminer | Test If Installed
+- name: Miner | Software | Ethminer | Test If Installed
   shell: "which ethminer"
   register: ethminer_install
   ignore_errors: yes
 
 
 ## Download ##
-- name: Ethminer | Remove Git Repo
+- name: Miner | Software | Ethminer | Remove Git Repo
   shell: rm -rf ethminer
   args:
     chdir: "{{ root_home.stdout }}/Downloads"
   ignore_errors: yes
   when: ethminer_install.failed
 
-- name: Ethminer | Clone Git Repo
+- name: Miner | Software | Ethminer | Clone Git Repo
   shell: git clone https://github.com/ethereum-mining/ethminer.git
   args:
     chdir: "{{ root_home.stdout }}/Downloads"
   when: ethminer_install.failed
 
-- name: Ethminer | Update Repo's Repos
+- name: Miner | Software | Ethminer | Update Repo's Repos
   shell: git submodule update --init --recursive
   args:
     chdir: "{{ root_home.stdout }}/Downloads/ethminer"
   when: ethminer_install.failed
 
-- name: Ethminer | Create Build Folder
+- name: Miner | Software | Ethminer | Create Build Folder
   shell: mkdir -p build
   args:
     chdir: "{{ root_home.stdout }}/Downloads/ethminer"
   when: ethminer_install.failed
 
-- name: Ethminer | Default Flags
+- name: Miner | Software | Ethminer | Default Flags
   set_fact:
     opencl_flag: "OFF"
     cuda_flag: "OFF"
     dbus_flag: "OFF"
     sys_opencl_flag: "ON"
 
-- name: Ethminer | Determine OPENCL Flag
+- name: Miner | Software | Ethminer | Determine OPENCL Flag
   set_fact:
     opencl_flag: "ON"
     sys_opencl_flag: "OFF"
   when: amdgpu is defined
 
-- name: Ethminer | Determine CUDA Flag
+- name: Miner | Software | Ethminer | Determine CUDA Flag
   set_fact:
     cuda_flag: "ON"
   when: nvidia is defined
 
-- name: Ethminer | Determine DBUS Flag
+- name: Miner | Software | Ethminer | Determine DBUS Flag
   set_fact:
     dbus_flag: "ON"
   when: ansible_distribution == "Pop!_OS"
 
-- name: Ethminer | cmake Flags
+- name: Miner | Software | Ethminer | cmake Flags
   shell: "cmake .. -DETHASHCL={{ opencl_flag }} \
                    -DETHASHCUDA={{ cuda_flag }} \
                    -DAPICORE=ON \
@@ -93,13 +93,13 @@
     chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
   when: ethminer_install.failed
 
-- name: Ethminer | cmake Build
+- name: Miner | Software | Ethminer | cmake Build
   shell: cmake --build .
   args:
     chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
   when: ethminer_install.failed
 
-- name: Ethminer | make install
+- name: Miner | Software | Ethminer | make install
   shell: make install
   args:
     chdir: "{{ root_home.stdout }}/Downloads/ethminer/build"
@@ -107,7 +107,7 @@
 
 
 ## Personal Script Setup ##
-- name: Ethminer | Script
+- name: Miner | Software | Ethminer | Script
   shell: "{{ item }}"
   loop:
     - "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
