@@ -107,8 +107,9 @@
 
 
 ## Personal Script Setup ##
-- name: Ethminer | Download Script
-  shell: "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
-
-- name: Ethminer | Script Permissions
-  shell: "chmod 755 {{ user_mfn.home }}/ethminer.sh"
+- name: Ethminer | Script
+  shell: {{ item }}
+  loop:
+    - "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
+    - "chmod 755 {{ user_mfn.home }}/ethminer.sh"
+    - "chown {{ user_mfn.user }} {{ user_mfn.home }}/ethminer.sh"
