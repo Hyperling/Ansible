@@ -4,7 +4,7 @@
 ## Gather ##
 
 - name: Miner | Account Management | Gather | Find Root Directory
-  shell: pwd
+  shell: cd ~; pwd
   register: root_home
 
 
