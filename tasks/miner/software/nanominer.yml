@@ -43,7 +43,7 @@
       webPort = 8080
       useSSL = true
       email = me@hyperling.com
-      sortPools=true
+      sortPools = true
     marker: ';{mark} MANAGED BY ANSIBLE - CPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
@@ -104,7 +104,8 @@
       devices = {{ nanominer_gpus }}
       useSSL = true
       email = me@hyperling.com
-      sortPools=true
+      sortPools = true
+      memTweak = 0
     marker: ';{mark} MANAGED BY ANSIBLE - GPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'
