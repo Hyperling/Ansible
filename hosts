@@ -29,8 +29,9 @@ usb
 ;                        Valid values: nanopool etherpool f2pool
 ;
 usb amdgpu=true
-x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
+;x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
 ;x570 amdgpu=true ethminer=true
+x570 amdgpu=true nanominer_gpu=eth nanominer_gpu_pool=nanopool
 
 [server]
 ;;;;;;; Parameters ;;;;;;
