@@ -122,7 +122,7 @@
 
 - name: Miner | Driver | AMDGPU | Update + Clean System
   shell: "apt update; apt dist-upgrade -y; apt autoremove -y"
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and "1" == "0"
 
 # This is to ensure we can test adding `apt install --install-recommends linux-generic` later 
 - name: Miner | Driver | AMDGPU | Boot Default Kernel
@@ -132,11 +132,11 @@
     line: 'GRUB_DEFAULT=0'
     state: present
     backup: yes
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and "1" == "0"
 
 - name: Miner | Driver | AMDGPU | Update GRUB
   shell: update-grub
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and "1" == "0"
 
 - name: Miner | Driver | AMDGPU | Prepare Cron Job To SCM
   cron:
@@ -146,7 +146,7 @@
     job: "{{ amdgpu_cron_cmd }}"
     state: present
     disabled: no
-  when: amdgpu_install.failed and hwe_kernel.stdout != "0"
+  when: amdgpu_install.failed and hwe_kernel.stdout != "0" and "1" == "0"
 
 # This reboot may not be necessary.
 #- name: Miner | Driver | AMDGPU | Reboot To Ensure GA Is 0
