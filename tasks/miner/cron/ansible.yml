@@ -22,4 +22,4 @@
     job: sudo apt update && sudo apt dist-upgrade -y
     special_time: reboot
     state: present
-    disabled: no
+    disabled: yes
