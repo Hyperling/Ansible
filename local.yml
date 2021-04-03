@@ -45,6 +45,7 @@
   become: true
 
   pre_tasks:
+    - include: facts/general/system.yml
     - include: facts/workstation/package.yml
 
   tasks:
@@ -56,6 +57,9 @@
     # Additional tasks to configure systems with Desktop Environments
     - include: tasks/workstation/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and flatpak_distro
+
+    - include: tasks/workstation/linux/software/debs.yml
+      when: ansible_pkg_mgr == "apt"
 
     - name: Workstation | Linux | Packages | Not Implemented
       shell: echo "Not implemented yet. :("

@@ -1,0 +1,8 @@
+---
+# Install .deb packages on Debian and Ubuntu machines.
+
+- name: Workstattion | Linux | Software | Apt Distro | .deb Files
+  shell: 'dpkg -i {{ leet_drive }}/InstallFiles/Programs/{{ item }}.deb'
+  loop:
+    - atomicwallet
+  ignore_errors: yes
