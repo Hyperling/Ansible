@@ -123,18 +123,21 @@
   become: true
 
   tasks:
-    - include: tasks/server/onlyoffice.yml
+    - include: tasks/server/software/onlyoffice.yml
       when: onlyoffice is defined and ansible_pkg_mgr == "apt"
 
-    - include: tasks/server/influxdb1.yml
+    - include: tasks/server/software/influxdb1.yml
       when: influxdb1 is defined and ansible_pkg_mgr == "apt"
 
-    - include: tasks/server/influxdb2.yml
+    - include: tasks/server/software/influxdb2.yml
       when: influxdb2 is defined and ansible_pkg_mgr == "apt"
 
-    - include: tasks/server/grafana.yml
+    - include: tasks/server/software/grafana.yml
       when: grafana is defined and ansible_pkg_mgr == "apt"
 
+  post_tasks:
+    - include: tasks/server/cron/certbot.yml
+      when: certbot is defined
 
 
 # Provide information for analysis.
