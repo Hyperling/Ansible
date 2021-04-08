@@ -4,7 +4,7 @@
 
 # Variables #
 
-- name: Server | Telegraf | Variables 1/4
+- name: General | Telegraf | Variables 1/4
   set_fact:
     telegraf_tar: telegraf-1.18.0_linux_amd64.tar.gz
     telegraf_path: /usr/local/bin
@@ -12,39 +12,39 @@
     telegraf_user: "{{ user_ansible.name }}"
     telegraf_log: "{{ user_ansible.home }}/telegraf.log"
 
-- name: Server | Telegraf | Variables 2/4
+- name: General | Telegraf | Variables 2/4
   set_fact:
     telegraf_exec: "{{ telegraf_path }}/telegraf"
     telegraf_config: "{{ telegraf_config_path }}/telegraf.conf"
 
-- name: Server | Telegraf | Variables 3/4
+- name: General | Telegraf | Variables 3/4
   set_fact:
     telegraf_cmd: "{{ telegraf_exec }} --config {{ telegraf_config }} >> {{ telegraf_log }} 2>&1"
 
-- name: Server | Telegraf | Variables 4/4
+- name: General | Telegraf | Variables 4/4
   set_fact:
     telegraf_watcher: "killall telegraf; {{ telegraf_cmd }}"
 
-- name: Server | Telegraf | Variables | Linux
+- name: General | Telegraf | Variables | Linux
   set_fact:
     telegraf_input_temp: "[[inputs.temp]]"
   when: ansible_system == "Linux"
 
-- name: Server | Telegraf | Variables | FreeBSD
+- name: General | Telegraf | Variables | FreeBSD
   set_fact:
     telegraf_input_temp: ""
   when: ansible_system == "FreeBSD"
 
 # Dependencies #
 
-- name: Server | Telegraf | Pre-Reqs
+- name: General | Telegraf | Pre-Reqs
   package:
     name: wget
   when: ansible_system == "Linux"
 
 # Install #
 
-- name: Server | Telegraf | Linux | Install
+- name: General | Telegraf | Linux | Install
   shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
@@ -59,22 +59,22 @@
     - rm -r telegraf*
   when: ansible_system == "Linux"
 
-- name: Server | Telegraf | FreeBSD | Install 1/2
+- name: General | Telegraf | FreeBSD | Install 1/2
   shell: /usr/sbin/pwd_mkdb -p /etc/master.passwd
   when: ansible_system == "FreeBSD"
 
-- name: Server | Telegraf | FreeBSD | Install 2/2
+- name: General | Telegraf | FreeBSD | Install 2/2
   package:
     name: telegraf
   when: ansible_system == "FreeBSD"
 
 # Configuration #
 
-- name: Server | Telegraf | Config 1/2
+- name: General | Telegraf | Config 1/2
   shell: mv {{ telegraf_config }} ~/TRASH/
   ignore_errors: yes
 
-- name: Server | Telegraf | Config 2/2
+- name: General | Telegraf | Config 2/2
   blockinfile:
     path: "{{ telegraf_config }}"
     block: |
@@ -161,7 +161,7 @@
 
 # Run #
 
-- name: Server | Telegraf | Schedule
+- name: General | Telegraf | Schedule
   cron:
     user: "{{ telegraf_user }}"
     name: "{{ item.name }}"
