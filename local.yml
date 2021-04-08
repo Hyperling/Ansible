@@ -7,7 +7,7 @@
   connection: local
   become: true  
 
-  pre_tasks:
+  tasks:
     - include: facts/general/system.yml
     - include: facts/general/package.yml
     - include: facts/general/service.yml
@@ -15,7 +15,6 @@
 
     - include: tasks/general/start.yml
 
-  tasks:
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
       ignore_errors: yes
@@ -44,11 +43,10 @@
   connection: local
   become: true
 
-  pre_tasks:
+  tasks:
     - include: facts/general/system.yml
     - include: facts/workstation/package.yml
 
-  tasks:
     # Set up any systems that do not come with Desktop Environments
     # TODO Need to refactor. Maybe tasks/workstation/setup_gui/freebsd.yml
     - include: tasks/workstation/freebsd/software/gui.yml
@@ -67,10 +65,9 @@
 
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
-  
-  post_tasks:
-    - include: tasks/workstation/settings/gnome.yml
 
+    - include: tasks/workstation/settings/gnome.yml
+  
 
 
 # Additional setup for miners!
@@ -79,7 +76,8 @@
   connection: local
   become: true
 
-  pre_tasks:
+  tasks:
+    ##### Setup #####
     - include: tasks/miner/debug.yml
     
     - include: facts/miner/gather.yml
@@ -90,8 +88,7 @@
     - include: facts/miner/config.yml
     - include: facts/miner/pool.yml
 
-  # Installations
-  tasks:
+    ##### Installations #####
     ### CPU SECTION ###
     # Monero #
     - include: tasks/miner/software/xmr-stak-cpu.yml
@@ -109,8 +106,7 @@
     - include: tasks/miner/software/nanominer.yml
       when: nanominer is defined
 
-  # Scheduling
-  post_tasks:
+    ### Scheduling ###
     - include: tasks/miner/cron/ansible.yml
     - include: tasks/miner/cron/mfn.yml
 
@@ -135,9 +131,9 @@
     - include: tasks/server/software/grafana.yml
       when: grafana is defined and ansible_pkg_mgr == "apt"
 
-  post_tasks:
     - include: tasks/server/cron/certbot.yml
       when: certbot is defined
+
 
 
 # Provide information for analysis.
@@ -152,5 +148,4 @@
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
 
-  post_tasks:
     - include: tasks/general/finish.yml
