@@ -106,7 +106,7 @@
     - include: tasks/miner/software/nanominer.yml
       when: nanominer is defined
 
-    ### Scheduling ###
+    ##### Scheduling #####
     - include: tasks/miner/cron/ansible.yml
     - include: tasks/miner/cron/mfn.yml
 
