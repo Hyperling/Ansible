@@ -1,2 +1,6 @@
 ---
 # Mine monero with CPUs!
+
+- name: Miner | Software | XMR-Stak-CPU
+  shell: exit 0
+  when: "1" == "0"
