@@ -4,7 +4,7 @@
 # Check for special software that may need added to favorites.
 - name: Workstation | Account Management | GNOME | Checks | Defaults
   set_fact:
-    - browser: "com.github.Eloston.UngoogledChromium.desktop"
+    browser: "com.github.Eloston.UngoogledChromium.desktop"
 
 - name: Workstation | Account Management | GNOME | Checks | Brave | Locate
   shell: which brave-browser
@@ -13,7 +13,7 @@
 
 - name: Workstation | Account Management | GNOME | Checks | Brave | Set As Browser
   set_fact:
-    - browser: brave-browser.desktop
+    browser: brave-browser.desktop
   when: not brave.failed
 
 
