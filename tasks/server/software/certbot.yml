@@ -1,0 +1,16 @@
+---
+# Ensure certbot is installed.
+
+- name: Server | Software | Certbot | FreeBSD
+  package: 
+    name:
+      - py37-certbot
+      - py37-certbot-nginx
+    state: present
+  when: ansible_distribution == "FreeBSD"
+
+- name: Server | Software | Certbot | FreeBSD
+  package: 
+    - certbot
+    - python3-certbot-nginx
+  when: ansible_pkg_mgr == "apt"
