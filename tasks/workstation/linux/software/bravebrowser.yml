@@ -1,0 +1,22 @@
+---
+# Everything needed to install Brave with apt
+
+- name: Workstation | Software | Brave | Pre-Reqs
+  package:
+    name: 
+      - apt-transport-https
+      - curl
+    state: present
+
+- name: Workstation | Software | Brave | Add Repo
+  shell: "{{ item }}"
+  loop:
+    - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    - echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+    - apt update
+
+- name: Workstation | Software | Brave | Install
+  package:
+    name: 
+      - brave-browser
+    state: present
