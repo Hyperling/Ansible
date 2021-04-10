@@ -1,6 +1,22 @@
 ---
 # GNOME settings, extensions, and setup.
 
+# Check for special software that may need added to favorites.
+- name: Workstation | Account Management | GNOME | Checks | Defaults
+  set_fact:
+    - browser: "com.github.Eloston.UngoogledChromium.desktop"
+
+- name: Workstation | Account Management | GNOME | Checks | Brave | Locate
+  shell: which brave-browser
+  register: brave
+  ignore_errors: yes
+
+- name: Workstation | Account Management | GNOME | Checks | Brave | Set As Browser
+  set_fact:
+    - browser: brave-browser.desktop
+  when: not brave.failed
+
+
 # Make sure Gnome-Tweaks is installed
 - name: Workstation | Account Management | GNOME | Install Dependencies
   package:
@@ -26,7 +42,7 @@
   dconf: 
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop', 
-             'com.github.Eloston.UngoogledChromium.desktop', 'org.mozilla.Thunderbird.desktop', 
+             '{{ brave_browser }}', 'org.mozilla.Thunderbird.desktop', 
              'com.discordapp.Discord.desktop', 'io.lbry.lbry-app.desktop', 'com.visualstudio.code-oss.desktop', 'com.google.AndroidStudio.desktop', 
              'org.shotcut.Shotcut.desktop', 'com.obsproject.Studio.desktop', 'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop']"
     state: present
