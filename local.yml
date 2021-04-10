@@ -59,9 +59,8 @@
     - include: tasks/workstation/linux/software/debs.yml
       when: ansible_pkg_mgr == "apt"
 
-    - name: Workstation | Linux | Packages | Not Implemented
-      shell: echo "Not implemented yet. :("
-      when: ansible_system == "Linux" and not flatpak_distro
+    - include: tasks/workstation/linux/software/brave.yml
+      when: ansible_pkg_mgr == "apt"
 
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
