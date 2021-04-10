@@ -61,3 +61,4 @@ hyperling.com certbot=true
 tmcvideos     certbot=true
 tmcvideos.com certbot=true
 reverse-proxy certbot=true
+nextcloud     certbot=true
