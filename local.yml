@@ -130,6 +130,8 @@
     - include: tasks/server/software/grafana.yml
       when: grafana is defined and ansible_pkg_mgr == "apt"
 
+    - include: tasks/server/software/certbot.yml
+      when: certbot is defined
     - include: tasks/server/cron/certbot.yml
       when: certbot is defined
 
