@@ -7,7 +7,7 @@
       - py37-certbot
       - py37-certbot-nginx
     state: present
-  when: ansible_distribution == "FreeBSD"
+  when: ansible_system == "FreeBSD"
 
 - name: Server | Software | Certbot | Apt
   package: 
