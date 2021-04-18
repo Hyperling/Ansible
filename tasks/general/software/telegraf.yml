@@ -127,7 +127,7 @@
         # influx_uint_support = false
 
       [[inputs.cpu]]
-        percpu = true
+        percpu = false
         totalcpu = true
         collect_cpu_time = false
         report_active = false
