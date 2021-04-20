@@ -33,7 +33,7 @@
 - name: Miner | Facts | System | nanominer 1
   set_fact:
     nanominer_home: "{{ user_mfn.home }}/nanominer"
-    nanominer_version: "3.3.3"
+    nanominer_version: "3.3.4"
     nanominer_script: "{{ user_mfn.home }}/nanominer.sh"
     nanominer_tar_remote: "InstallFiles/Miners/nanominer/*.tar.gz"
 
