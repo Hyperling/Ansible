@@ -33,6 +33,7 @@
     - com.obsproject.Studio
     - com.valvesoftware.Steam
     - org.gimp.GIMP
+    - com.jetbrains.PyCharm-Community
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Application Uninstalls
   flatpak:
