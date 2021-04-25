@@ -10,6 +10,7 @@
     gnome_tweaks: gnome-tweaks
     dconf_editor: dconf-editor
     appimagelauncher: htop #placeholder
+    nfs: nfs-common
 
 
 - name: Workstation | Facts | Package | Pop_OS!

@@ -1,0 +1,28 @@
+---
+# Use Apt specific because they're consistent! :)
+
+- name: Workstation | Settings | NFS | Facts
+  set_fact:
+    media_folder: /mnt/media
+    
+- name: Workstation | Settings | NFS | Install
+  package: 
+    name: 
+      - "{{ nfs }}"
+    state: present
+
+- name: Workstation | Settings | NFS | Create Folders
+  file: 
+    path: "{{ item }}"
+    state: directory
+    mode: '0777'
+  loop:
+    - "{{ media_folder }}"
+
+- name: Workstation | Settings | NFS | Create Mount Instructions
+  blockinfile:
+    path: /etc/fstab
+    marker: "# {mark} MANAGED BY ANSIBLE | Media"
+    block: |
+      htpc:/mnt/hdd_unsafe/media {{ media_folder }} nfs defaults 0 0
+    backup: yes

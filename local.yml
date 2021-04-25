@@ -66,6 +66,8 @@
       when: ansible_system == "Linux"
 
     - include: tasks/workstation/settings/gnome.yml
+
+    - include: tasks/workstation/settings/nfs.yml
   
 
 
