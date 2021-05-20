@@ -22,8 +22,6 @@
     remote: flathub
     state: present
   loop:
-    - org.midori_browser.Midori
-    - com.github.Eloston.UngoogledChromium
     - org.mozilla.Thunderbird
     - com.discordapp.Discord
     - io.lbry.lbry-app
@@ -43,6 +41,8 @@
   loop:
     - org.mozilla.firefox
     - com.visualstudio.code # Why does this throw an error? It's the correct ID.
+    - org.midori_browser.Midori
+    - com.github.Eloston.UngoogledChromium
   ignore_errors: yes
 
 
