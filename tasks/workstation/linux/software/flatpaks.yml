@@ -32,6 +32,7 @@
     - com.valvesoftware.Steam
     - org.gimp.GIMP
     - com.jetbrains.PyCharm-Community
+  ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Application Uninstalls
   flatpak:
