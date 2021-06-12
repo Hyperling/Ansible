@@ -3,11 +3,14 @@ localhost
 
 [workstation]
 dell-laptop
-usb
+usb-workstation
 lbry-server-1
 lbry-server-2
 lbry-server-3
+
+[mobile]
 pinephone
+usb-mobile
 
 [miner]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
@@ -32,7 +35,7 @@ pinephone
 ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
 ;                        Valid values: nanopool etherpool f2pool
 ;
-usb amdgpu=true
+usb-miner amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
 x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
 ;x570 amdgpu=true ethminer=true
 
@@ -67,3 +70,4 @@ tmcvideos.com certbot=true
 reverse-proxy certbot=true
 nextcloud     certbot=true
 wordpress     certbot=true
+usb-server
