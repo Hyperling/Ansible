@@ -7,10 +7,12 @@ usb-workstation
 lbry-server-1
 lbry-server-2
 lbry-server-3
+aspire
 
 [mobile]
 pinephone
 usb-mobile
+silicon-power
 
 [miner]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
