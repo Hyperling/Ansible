@@ -9,7 +9,7 @@
   cron:
     user: root
     name: Monthly Renewal
-    job: "{{ certbot.stdout }} renew && reboot"
-    special_time: monthly
+    job: "{{ certbot.stdout }} renew"
+    special_time: weekly
     state: present
     disabled: no
