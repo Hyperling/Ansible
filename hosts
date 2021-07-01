@@ -2,7 +2,14 @@
 localhost
 
 [workstation]
-dell-laptop
+;;;;;;; Available options - all require lowercase values ;;;;;;
+;  coding : Define for installation of code editors (VSCode, PyCharm, Android Studio)
+;
+; editing : Define for installation of Audio/Video editors (Shotcut, Audacity, OBS Stdio, GIMP)
+;
+;  gaming : Define for installation of gaming software (Steam, Lutris)
+;
+dell-laptop coding=true editing=true
 usb-workstation
 lbry-server-1
 lbry-server-2

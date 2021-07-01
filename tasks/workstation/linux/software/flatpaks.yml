@@ -1,7 +1,7 @@
 ---
 # Use flatpaks because they're consistent! :)
 
-# Flatpak Pre-reqs
+## Flatpak Pre-reqs ##
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Install
   package:
     name: flatpak
@@ -15,8 +15,10 @@
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
 
-# Flatpak Installs
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Application Installs
+## Flatpak Installs ##
+
+# Generic #
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Installs
   flatpak:
     name: "{{ item }}"
     remote: flathub
@@ -25,15 +27,82 @@
     - org.mozilla.Thunderbird
     - com.discordapp.Discord
     - io.lbry.lbry-app
-    - com.visualstudio.code-oss
-    - com.google.AndroidStudio
-    - org.shotcut.Shotcut
-    - com.obsproject.Studio
-    - com.valvesoftware.Steam
-    - org.gimp.GIMP
-    - com.jetbrains.PyCharm-Community
   ignore_errors: yes
 
+# Coding #
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Installs
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: present
+  loop:
+    - com.visualstudio.code-oss
+    - com.google.AndroidStudio
+    - com.jetbrains.PyCharm-Community
+  ignore_errors: yes
+  when: coding is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Uninstalls
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: absent
+  loop:
+    - com.visualstudio.code-oss
+    - com.google.AndroidStudio
+    - com.jetbrains.PyCharm-Community
+  ignore_errors: yes
+  when: coding is not defined
+
+# Editor #
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Installs
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: present
+  loop:
+    - org.shotcut.Shotcut
+    - com.obsproject.Studio
+    - org.gimp.GIMP
+    - org.audacityteam.Audacity
+  ignore_errors: yes
+  when: editing is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninnstalls
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: absent
+  loop:
+    - org.shotcut.Shotcut
+    - com.obsproject.Studio
+    - org.gimp.GIMP
+    - org.audacityteam.Audacity
+  ignore_errors: yes
+  when: editing is not defined
+
+# Games #
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming Installs
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: present
+  loop:
+    - com.valvesoftware.Steam
+  ignore_errors: yes
+  when: gaming is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming Uninstalls
+  flatpak:
+    name: "{{ item }}"
+    remote: flathub
+    state: absent
+  loop:
+    - com.valvesoftware.Steam
+  ignore_errors: yes
+  when: gaming is not defined
+
+# Removals #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Application Uninstalls
   flatpak:
     name: "{{ item }}"
@@ -47,6 +116,8 @@
   ignore_errors: yes
 
 
+## Other Stuff ##
+
 # Software not yet available or working properly in Flatpak form.
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Install From Repo
   package: 
@@ -56,7 +127,45 @@
       - "{{ appimagelauncher }}"
     state: present
 
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Applciations
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Firefox Normal
+  package: 
+    name:
+    - "{{ firefox }}"
+    state: absent
+  when: firefox != firefox_esr
+
+# Lutris #
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
+  apt_repository: 
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: present
+  when: ansible_distribution == "Ubuntu" and gaming is defined
+
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris (besides ARM)
+  package: 
+    name: 
+      - lutris
+    state: present
+  when: ansible_architecture != "aarch64" and gaming is defined
+
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris (besides ARM)
+  package: 
+    name: 
+      - lutris
+    state: absent
+  ignore_errors: yes
+  when: ansible_architecture != "aarch64" and gaming is not defined
+
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris PPA (Ubuntu)
+  apt_repository: 
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: absent
+  when: ansible_distribution == "Ubuntu" and gaming is not defined
+
+# Remove Repo Software #
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Applications
   package: 
     name:
     - "{{ thunderbird }}"
@@ -65,24 +174,3 @@
     - vscode
     - code
     state: absent
-
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
-  apt_repository: 
-    repo: ppa:lutris-team/lutris
-    update_cache: yes
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris (besides ARM)
-  package: 
-    name: 
-      - lutris
-    state: present
-  when: ansible_architecture != "aarch64"
-
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Firefox Normal
-  package: 
-    name:
-    - "{{ firefox }}"
-    state: absent
-  when: firefox != firefox_esr
