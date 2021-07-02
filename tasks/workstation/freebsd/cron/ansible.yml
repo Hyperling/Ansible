@@ -6,6 +6,6 @@
     user: ansible
     name: "Security Update"
     special_time: daily
-    job: "sudo freebsd-update cron"
+    job: "sudo freebsd-update cron -t me@hyperling.com"
     state: present
     disabled: no
