@@ -7,7 +7,7 @@
     sshfs: sshfs
     locate: locate
     opensshd: openssh-server
-  when: ansible_pkg_mgr in ("apt", "zypper")
+  when: ansible_pkg_mgr = "apt"
 
 
 - name: General | Facts | Package | pacman
