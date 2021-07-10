@@ -50,6 +50,7 @@
     state: absent
   loop:
     - com.visualstudio.code-oss
+    - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
   ignore_errors: yes
