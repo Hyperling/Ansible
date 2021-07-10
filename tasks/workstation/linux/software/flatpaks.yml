@@ -26,6 +26,7 @@
   loop:
     - org.mozilla.Thunderbird
     - com.discordapp.Discord
+    - org.telegram.desktop
     - io.lbry.lbry-app
   ignore_errors: yes
 
@@ -68,7 +69,7 @@
   ignore_errors: yes
   when: editing is defined
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninnstalls
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninstalls
   flatpak:
     name: "{{ item }}"
     remote: flathub
