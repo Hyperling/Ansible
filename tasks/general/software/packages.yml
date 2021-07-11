@@ -4,7 +4,7 @@
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
   package:
     update_cache: yes
-    name: top
+    name: htop
   when: ansible_pkg_mgr in ["apt", "pacman"]
 
 - name: General | Software | Packages | Cache Refresh (FreeBSD)
@@ -16,7 +16,6 @@
     name:
     - bash
     - sudo
-    - htop
     - nmap
     - neofetch
     - "{{ sshfs }}"
