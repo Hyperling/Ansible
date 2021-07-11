@@ -60,3 +60,9 @@
     firefox_esr: firefox-esr
     psutil: py37-psutil
   when: ansible_system == "FreeBSD"
+
+
+- name: Workstation | Facts | Packages | Parrot OS Zypper Fix 
+  set_fact:
+    ansible_pkg_mgr: "apt"
+  when: ansible_distribution = "Parrot OS"

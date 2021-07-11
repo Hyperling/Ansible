@@ -7,7 +7,7 @@
     sshfs: sshfs
     locate: locate
     opensshd: openssh-server
-  when: ansible_pkg_mgr = "apt"
+  when: ansible_pkg_mgr == "apt"
 
 
 - name: General | Facts | Package | pacman
@@ -24,3 +24,10 @@
     locate: htop # Placeholder to prevent errors, locate built into FreeBSD.
     opensshd: htop # sshd comes installed on FreeBSD
   when: ansible_system == "FreeBSD"
+
+
+- name: General | Facts | Packages | Parrot OS Zypper Fix
+  set_fact:
+    ansible_pkg_mgr: "apt"
+  when: ansible_distribution == "Parrot OS"
+
