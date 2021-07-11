@@ -111,6 +111,7 @@
         fi
         curl "https://wttr.in/${1//\ /+}"
       }
+    PS1: "export PS1='[\u@\h \w]\$'"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -120,6 +121,7 @@
       {{ alias_mv }}
       {{ alias_rm }}
       {{ function_wttr }}
+      {{ PS1 }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
