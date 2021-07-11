@@ -64,8 +64,12 @@
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
   set_fact: 
-    dash_to_dock_ext_name: ['dash-to-dock@micxgx.gmail.com']
-    gnome_enabled_extensions_list: {{ gnome_enabled_extensions.value }} # Hopefully converts from String to Array??
+    dash_to_dock_ext_comma: ", "
+  when: gnome_enabled_extensions is defined and length(gnome_enabled_extensions.value) > 2
+
+- name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
+  set_fact: 
+    dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
   when: gnome_enabled_extensions is defined
 
 # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
@@ -75,13 +79,13 @@
   when: gnome_enabled_extensions is defined
 
 - debug:
-    var: gnome_enabled_extensions_list
+    var: gnome_enabled_extensions
   when: gnome_enabled_extensions is defined
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Union Arrays To Enable
   dconf: 
     key: /org/gnome/shell/enabled-extensions
-    value: "{{ gnome_enabled_extensions_list | union(dash_to_dock_ext_name) }}"
+    value: "{{ gnome_enabled_extensions.value | replace(']', dash_to_dock_ext_name) }}"
     state: present
   become_user: ling
   when: gnome_enabled_extensions is defined
