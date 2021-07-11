@@ -51,6 +51,7 @@
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
   shell: "cd ~/TRASH/dash-to-dock/; make; make install"
+  become_user: ling
   when: dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
@@ -63,6 +64,10 @@
 
 - debug:
     var: gnome_enabled_extensions
+
+- debug:
+    var: gnome_enabled_extensions
+  become_user: ling
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
   dconf: 
