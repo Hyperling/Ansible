@@ -4,6 +4,7 @@
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
   package:
     update_cache: yes
+    name: top
   when: ansible_pkg_mgr in ["apt", "pacman"]
 
 - name: General | Software | Packages | Cache Refresh (FreeBSD)
