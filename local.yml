@@ -65,6 +65,9 @@
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
 
+    - include: tasks/workstation/linux/software/gnome.yml
+      when: ansible_system == "Linux"
+
     - include: tasks/workstation/settings/gnome.yml
 
     - include: tasks/workstation/settings/nfs.yml
