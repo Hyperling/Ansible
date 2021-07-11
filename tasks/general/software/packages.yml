@@ -6,7 +6,14 @@
 # Probably for "security", but package module does not use the ansible_pkg_mgr variable
 #   so resetting the value to apt doesn't work. Just going to move it.
   shell: "mv `which zypper` `which zypper`.zz.`date +%Y%m%d`"
+  register: parrotos_zypper_removed
   when: ansible_distribution == "Parrot OS"
+  ignore_error: yes
+
+- name: General | Software | Packages | Fixed Parrot OS, Exit
+  debug:
+    var: parrotos_zypper_removed
+#  when: parrotos_zypper_removed is defined and parrotos_zypper_removed.success
 
 
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
