@@ -2,6 +2,12 @@
 # Define program names per OS for package builtin.
 # This is only for Workstation devices with UIs.
 
+- name: Workstation | Facts | Packages | Parrot OS Zypper Fix
+  set_fact:
+    ansible_pkg_mgr: "apt"
+  when: ansible_distribution == "Parrot OS"
+
+
 - name: Workstation | Facts | Package | Consistent
   set_fact:
     firefox: firefox
@@ -45,6 +51,14 @@
   when: ansible_distribution == "Linux Mint"
 
 
+- name: Workstation | Facts | Package | Parrot OS
+  set_fact:
+    flatpak_distro: true
+    firefox_esr: firefox-esr
+    psutil: python3-psutil
+  when: ansible_distribution == "Parrot OS"
+
+
 - name: Workstation | Facts | Package | Arch + Manjaro
   set_fact:
     flatpak_distro: true
@@ -61,8 +75,3 @@
     psutil: py37-psutil
   when: ansible_system == "FreeBSD"
 
-
-- name: Workstation | Facts | Packages | Parrot OS Zypper Fix 
-  set_fact:
-    ansible_pkg_mgr: "apt"
-  when: ansible_distribution = "Parrot OS"

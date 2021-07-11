@@ -2,6 +2,12 @@
 # Define program names for package builtin.
 # This file is for ALL systems and should not include UI components.
 
+- name: General | Facts | Packages | Parrot OS Zypper Fix
+  set_fact:
+    ansible_pkg_mgr: "apt"
+  when: ansible_distribution == "Parrot OS"
+
+
 - name: General | Facts | Package | apt
   set_fact:
     sshfs: sshfs
@@ -24,18 +30,4 @@
     locate: htop # Placeholder to prevent errors, locate built into FreeBSD.
     opensshd: htop # sshd comes installed on FreeBSD
   when: ansible_system == "FreeBSD"
-
-
-- debug:
-    var: ansible_pkg_mgr
-  when: ansible_distribution == "Parrot OS"
-
-- name: General | Facts | Packages | Parrot OS Zypper Fix
-  set_fact:
-    ansible_pkg_mgr: "apt"
-  when: ansible_distribution == "Parrot OS"
-
-- debug:
-    var: ansible_pkg_mgr 
-  when: ansible_distribution == "Parrot OS"
 
