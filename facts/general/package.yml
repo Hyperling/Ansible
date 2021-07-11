@@ -2,9 +2,10 @@
 # Define program names for package builtin.
 # This file is for ALL systems and should not include UI components.
 
-- name: General | Facts | Packages | Parrot OS Zypper Fix
+- name: General | Facts | Packages | Parrot OS Fixes
   set_fact:
     ansible_pkg_mgr: "apt"
+    ansible_python_interpreter: "/usr/bin/python3"
   when: ansible_distribution == "Parrot OS"
 
 
