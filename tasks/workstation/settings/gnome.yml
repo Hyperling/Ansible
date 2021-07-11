@@ -54,7 +54,7 @@
   become_user: ling
   when: dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
+- name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extensions
   dconf: 
     key: /org/gnome/shell/enabled-extensions
     state: read
@@ -62,31 +62,25 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
-- debug:
-    var: gnome_enabled_extensions
-
-- debug:
-    var: gnome_enabled_extensions
-  become_user: ling
-
-- name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
+# https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
+- name: Workstation | Account Management | GNOME | Dash To Dock | Enable Extension
   dconf: 
     key: /org/gnome/shell/enabled-extensions
-    value: "{{ gnome_enabled_extensions.value }}, 'dash-to-dock@micxgx.gmail.com'"
+    value: "{{ gnome_enabled_extensions.value | union(['dash-to-dock@micxgx.gmail.com']) }}"
     state: present
   become_user: ling
   when: gnome_enabled_extensions is defined
 
 # Settings #
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
+- name: Workstation | Account Management | GNOME | Dash To Dock | Dock Position
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dock-position
     value: "LEFT"
     state: present
   become_user: ling
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
+- name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
     value: true
