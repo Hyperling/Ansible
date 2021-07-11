@@ -111,7 +111,8 @@
         fi
         curl "https://wttr.in/${1//\ /+}"
       }
-    PS1: "export PS1='[\u@\h \w]\$'"
+    PS1: |
+      export PS1='[\u@\h \w]\$'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
