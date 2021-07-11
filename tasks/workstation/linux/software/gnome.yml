@@ -9,6 +9,11 @@
   register: gnome_install
   when: ansible_distribution in ("Parrot OS")
 
+- name: Workstation | Linux | Software | GNOME | TEST
+  debug:
+    var: gnome_install
+  when: gnome_install is defined and gnome_install.changed
+
 - name: Workstation | Linux | Software | GNOME | Note Before Exiting
   debug:
     msg: "You will probably need to run `dpkg-reconfigure gdm3` to ensure gdm3 is selected."
