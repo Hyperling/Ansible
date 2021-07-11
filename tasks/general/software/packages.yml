@@ -10,10 +10,14 @@
   ignore_errors: yes
   when: ansible_distribution == "Parrot OS"
 
-- name: General | Software | Packages | Fixed Parrot OS, Exit
+- name: General | Software | Packages | Fixed Parrot OS, Exit Incoming
   debug:
-    var: parrotos_zypper_removed
-#  when: parrotos_zypper_removed is defined and parrotos_zypper_removed.success
+    msg: "A silly zypper file was renamed successfully. Please try running Ansible again."
+  when: parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
+
+- name: General | Software | Packages | Fixed Parrot OS, Exiting
+  shell: exit 1
+  when: parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
 
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
