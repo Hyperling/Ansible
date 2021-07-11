@@ -54,7 +54,7 @@
   become_user: ling
   when: dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extensions
+- name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
   dconf: 
     key: /org/gnome/shell/enabled-extensions
     state: read
@@ -62,11 +62,17 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
+- name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
+  set_fact: 
+    dash_to_dock_ext_name: ['dash-to-dock@micxgx.gmail.com']
+  when: dash_to_dock_exists.failed
+
 # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
-- name: Workstation | Account Management | GNOME | Dash To Dock | Enable Extension
+
+- name: Workstation | Account Management | GNOME | Dash To Dock | Union Arrays To Enable
   dconf: 
     key: /org/gnome/shell/enabled-extensions
-    value: "{{ gnome_enabled_extensions.value | union(['dash-to-dock@micxgx.gmail.com']) }}"
+    value: "{{ gnome_enabled_extensions.value | union(dash_to_dock_ext_name) }}"
     state: present
   become_user: ling
   when: gnome_enabled_extensions is defined
