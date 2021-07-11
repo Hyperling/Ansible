@@ -2,7 +2,9 @@
 
 - name: Workstation | Linux | Software | GNOME | Install
   package:
-    name: gnome gdm3
+    name: 
+      - gnome 
+      - gdm3
     state: present
   register: gnome_install
   when: ansible_distribution in ("Parrot OS")
