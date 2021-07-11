@@ -26,8 +26,14 @@
   when: ansible_system == "FreeBSD"
 
 
+- debug
+    var: ansible_pkg_mgr
+  when: ansible_distribution == "Parrot OS"
 - name: General | Facts | Packages | Parrot OS Zypper Fix
   set_fact:
     ansible_pkg_mgr: "apt"
+  when: ansible_distribution == "Parrot OS"
+- debug
+    var: ansible_pkg_mgr 
   when: ansible_distribution == "Parrot OS"
 
