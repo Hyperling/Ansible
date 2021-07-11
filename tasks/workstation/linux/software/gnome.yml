@@ -1,24 +1,28 @@
 # Some Linux distros come with meh DE's, this fixes that.
 
+- name: Workstation | Linux | Software | GNOME | Check (Parrot OS Only)
+  shell: which gdm3
+  register: gnome_install
+  when: ansible_distribution in ("Parrot OS")
+
 - name: Workstation | Linux | Software | GNOME | Install
   package:
     name: 
       - gnome 
       - gdm3
     state: present
-  register: gnome_install
-  when: ansible_distribution in ("Parrot OS")
+  when: gnome_install is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | TEST
   debug:
     var: gnome_install
-  when: gnome_install is defined and gnome_install.changed
+  when: gnome_install is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Note Before Exiting
   debug:
     msg: "You will probably need to run `dpkg-reconfigure gdm3` to ensure gdm3 is selected."
-  when: gnome_install is defined and gnome_install.changed
+  when: gnome_install is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Exiting
   shell: exit 1
-  when: gnome_install is defined and gnome_install.changed
+  when: gnome_install is defined and gnome_install.failed
