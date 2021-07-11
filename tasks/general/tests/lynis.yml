@@ -8,6 +8,9 @@
     clone: yes
     force: yes
 
+- name: General | Tests | Lynis | Fix Permissions (Looking at you Parrot OS!)
+  shell: "chown -R root:root {{ lynis_install_dir }}"
+
 - name: General | Tests | Lynis | Run System Audit
   shell: "{{ lynis_install_dir }}/lynis audit system --no-colors > {{ lynis_report }} 2>&1"
   args:
