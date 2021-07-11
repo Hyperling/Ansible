@@ -5,7 +5,7 @@
 # They have zypper higher in the path, but it's really apt renamed.
 # Probably for "security", but package module does not use the ansible_pkg_mgr variable
 #   so resetting the value to apt doesn't work. Just going to move it.
-  shell: mv `which zypper` `which zypper`.zz.`date +%Y%m%d`
+  shell: "mv `which zypper` `which zypper`.zz.`date +%Y%m%d`"
   when ansible_distribution == "Parrot OS"
 
 
