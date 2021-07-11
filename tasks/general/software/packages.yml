@@ -7,8 +7,8 @@
 #   so resetting the value to apt doesn't work. Just going to move it.
   shell: "mv `which zypper` `which zypper`.zz.`date +%Y%m%d`"
   register: parrotos_zypper_removed
+  ignore_errors: yes
   when: ansible_distribution == "Parrot OS"
-  ignore_error: yes
 
 - name: General | Software | Packages | Fixed Parrot OS, Exit
   debug:
