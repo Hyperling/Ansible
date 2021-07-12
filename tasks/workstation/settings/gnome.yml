@@ -62,10 +62,10 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
+- name: Workstation | Account Management | GNOME | Dash To Dock | Check If We Need Comma
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: gnome_enabled_extensions is defined and length(gnome_enabled_extensions.value) > 2
+  when: gnome_enabled_extensions is defined and gnome_enabled_extensions.value != "[]"
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
   set_fact: 
