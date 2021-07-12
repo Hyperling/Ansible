@@ -62,35 +62,40 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Initialize Comma Variable
+# https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
+
+- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 1
   set_fact: 
+    gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
     dash_to_dock_ext_comma: ""
   when: gnome_enabled_extensions is defined
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Check If We Need Comma
+- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: gnome_enabled_extensions is defined and gnome_enabled_extensions.value != "@as []"
+  when: gnome_enabled_extensions is defined and gnome_enabled_extensions.value != "[]"
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
+- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
   set_fact: 
     dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
   when: gnome_enabled_extensions is defined
-
-# https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
 - debug:
     var: dash_to_dock_ext_name
   when: gnome_enabled_extensions is defined
 
 - debug:
-    var: gnome_enabled_extensions.value
+    var: gnome_enabled_extensions
+  when: gnome_enabled_extensions is defined
+
+- debug:
+    msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
   when: gnome_enabled_extensions is defined
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Union Arrays To Enable
   dconf: 
     key: /org/gnome/shell/enabled-extensions
-    value: "{{ gnome_enabled_extensions.value | replace(']', dash_to_dock_ext_name) }}"
+    value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
     state: present
   become_user: ling
   when: gnome_enabled_extensions is defined
