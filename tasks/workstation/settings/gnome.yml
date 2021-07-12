@@ -92,7 +92,7 @@
     msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
   when: gnome_enabled_extensions is defined
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Union Arrays To Enable
+- name: Workstation | Account Management | GNOME | Dash To Dock | Enable
   dconf: 
     key: /org/gnome/shell/enabled-extensions
     value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
@@ -105,7 +105,7 @@
 - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Position
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dock-position
-    value: "LEFT"
+    value: "'LEFT'"
     state: present
   become_user: ling
 
