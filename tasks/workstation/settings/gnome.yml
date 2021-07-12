@@ -62,6 +62,11 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
+- name: Workstation | Account Management | GNOME | Dash To Dock | Initialize Comma Variable
+  set_fact: 
+    dash_to_dock_ext_comma: ""
+  when: gnome_enabled_extensions is defined
+
 - name: Workstation | Account Management | GNOME | Dash To Dock | Check If We Need Comma
   set_fact: 
     dash_to_dock_ext_comma: ", "
