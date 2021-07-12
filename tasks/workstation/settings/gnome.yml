@@ -65,7 +65,7 @@
 - name: Workstation | Account Management | GNOME | Dash To Dock | Check If We Need Comma
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: gnome_enabled_extensions is defined and gnome_enabled_extensions.value != "[]"
+  when: gnome_enabled_extensions is defined and gnome_enabled_extensions.value != "@as []"
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Array This Extension Name
   set_fact: 
@@ -79,7 +79,7 @@
   when: gnome_enabled_extensions is defined
 
 - debug:
-    var: gnome_enabled_extensions
+    var: gnome_enabled_extensions.value
   when: gnome_enabled_extensions is defined
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Union Arrays To Enable
