@@ -112,7 +112,7 @@
 - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
-    value: true
+    value: "true"
     state: present
   become_user: ling
 
