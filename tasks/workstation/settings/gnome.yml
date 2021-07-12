@@ -73,7 +73,7 @@
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: gnome_enabled_extensions is defined and gnome_enabled_extensions != "[]"
+  when: gnome_enabled_extensions is defined and gnome_enabled_extensions != "[]" and gnome_enabled_extensions != []
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
   set_fact: 
