@@ -5,6 +5,7 @@
 [everything]
 localhost
 freeboy              branch=dev
+dell-laptop          branch=dev
 parrotsec-dev-www    branch=dev 
 my-parrotsec-dev-www branch=dev
 
@@ -22,7 +23,7 @@ lbry-server-1
 lbry-server-2
 lbry-server-3
 aspire
-freeboy branch=dev
+freeboy
 
 [mobile]
 pinephone
@@ -92,5 +93,5 @@ reverse-proxy certbot=true
 nextcloud     certbot=true
 wordpress     certbot=true
 usb-server
-parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/parrotsec/website
-my-parrotsec-dev-www domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/parrotsec/website-hyperling
+parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website
+my-parrotsec-dev-www domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website-hyperling
