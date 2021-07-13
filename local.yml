@@ -140,6 +140,9 @@
     - include: tasks/server/cron/certbot.yml
       when: certbot is defined
 
+    - include: tasks/server/software/hugo.yml
+      when: hugo is defined
+
 
 
 # Provide information for analysis.
