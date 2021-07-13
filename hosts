@@ -83,5 +83,5 @@ reverse-proxy certbot=true
 nextcloud     certbot=true
 wordpress     certbot=true
 usb-server
-parrotsec-dev-www    hugo=true domain=hyperling.com
-my-parrotsec-dev-www hugo=true domain=hyperling.com
+parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/parrotsec/website
+my-parrotsec-dev-www hugo=true domain=hyperling.com hugo_site_path=/mnt/leet/Code/parrotsec/website-hyperling
