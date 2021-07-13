@@ -34,7 +34,9 @@ Specifically for the Pinephone.
 ### Arch Linux x86
 Would be great to have Arch get built up by this. Used for many years but left after update problems due to a long computer hiatus.
 
-## Next Steps
+## Future Goals
+Make the preferred user's name per-device, specified in the hosts file, rather than the hard-coded `ling`.
+
 Eventually some of the scripts and install files will be put into the files folder. This will allow initializing systems outside of the maintainer's home network. 
 
 There may also be a refactor of task-specific facts to be in their task file so that some playbooks can be more self-sufficient and be provided to the community without hacking. The original goal was to never define facts in tasks, but the benefit has yet to be seen for some tasks. Shared facts will definitely continue to exist under the facts tree.
