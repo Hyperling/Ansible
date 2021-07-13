@@ -13,11 +13,11 @@
 - name: General | Software | Packages | Fixed Parrot OS, Exit Incoming
   debug:
     msg: "A silly zypper file was renamed successfully. Please try running Ansible again."
-  when: parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
+  when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
 - name: General | Software | Packages | Fixed Parrot OS, Exiting
   shell: exit 1
-  when: parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
+  when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
 
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
