@@ -1,0 +1,17 @@
+# Install HUGO to host sites like parrotsec.org
+
+- name: Server | Software | HUGO | Variables (apt)
+  set_fact:
+    hugo_package: hugo
+  when: ansible_pkg_mgr == "apt"
+
+- name: Server | Software | HUGO | Variables (FreeBSD)
+  set_fact:
+    hugo_package: gohugo
+  when: ansible_system == "FreeBSD"
+
+
+- name: Server | Software | HUGO | Variables (FreeBSD)
+  package:
+    name: "{{ hugo_package }}"
+    state: present
