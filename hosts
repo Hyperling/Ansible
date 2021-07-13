@@ -51,7 +51,7 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 [server]
 ;;;;;;; Parameters ;;;;;;
 ;
-;     domain : Set to the domain which gives the server its FQDN
+;     domain : Set to the domain which gives the server its FQDN.
 ;                Example: hyperling.com
 ;
 ; onlyoffice : Set to anything for this server to be configured as an OnlyOffice server.
@@ -66,7 +66,10 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;  influxdb2 : Set to anything for this server to be configured as an Influx 2 DB + web server.
 ;                Example: true
 ;
-;    certbot : Set to anything to add cron job for `certbot renew`
+;    certbot : Set to anything to add cron job for `certbot renew`.
+;                Example: true
+;
+;       hugo : Set to anything to install HUGO static website generator.
 ;                Example: true
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
@@ -80,3 +83,5 @@ reverse-proxy certbot=true
 nextcloud     certbot=true
 wordpress     certbot=true
 usb-server
+parrotsec-dev-www    hugo=true domain=hyperling.com
+my-parrotsec-dev-www hugo=true domain=hyperling.com
