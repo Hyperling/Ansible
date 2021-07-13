@@ -1,3 +1,7 @@
+;;;;;;; Available options - all require lowercase values ;;;;;;
+; branch : Provide the Github branch that the machine should poll.
+;            Exampel: main, dev
+;
 [everything]
 localhost
 
@@ -83,5 +87,5 @@ reverse-proxy certbot=true
 nextcloud     certbot=true
 wordpress     certbot=true
 usb-server
-parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/parrotsec/website
-my-parrotsec-dev-www hugo=true domain=hyperling.com hugo_site_path=/mnt/leet/Code/parrotsec/website-hyperling
+parrotsec-dev-www    branch=dev domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/parrotsec/website
+my-parrotsec-dev-www branch=dev hugo=true domain=hyperling.com hugo_site_path=/mnt/leet/Code/parrotsec/website-hyperling
