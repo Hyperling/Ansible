@@ -15,9 +15,9 @@
     crond_pattern: cron
 
 
-- name: General | Facts | Service | Linux
-  set_fact:
-  when: ansible_system == "Linux"
+#- name: General | Facts | Service | Linux
+#  set_fact:
+#  when: ansible_system == "Linux"
 
 
 - name: General | Facts | Service | Linux
@@ -27,6 +27,6 @@
   when: ansible_distribution == "Archlinux"
 
 
-- name: General | Facts | Service | FreeBSD
-  set_fact:
-  when: ansible_system == "FreeBSD"
+#- name: General | Facts | Service | FreeBSD
+#  set_fact:
+#  when: ansible_system == "FreeBSD"
