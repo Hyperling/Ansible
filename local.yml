@@ -3,7 +3,7 @@
 
 # Setup of any device connected to this repo.
 - name: Main | Default Setup
-  hosts: localhost
+  hosts: everything
   connection: local
   become: true  
 
