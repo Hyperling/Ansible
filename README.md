@@ -1,34 +1,40 @@
 # ansible
-Getting real with my system management using ansible-pull.
+Getting real with system management via ansible-pull.
 
+## Disclaimer
 This setup is specific for my devices and my needs. You're welcome to use it as an example for your needs, but do not expect it to work as-is.
 
 ## Currently Supported Linux Systems
 ### Debian Family
 #### Debian
-But only if you can get a recent enough version of Ansible. `pip` likely works better than `apt` for this.
+But only if using a recent enough version of Ansible. `pip` likely has a better version than `apt`.
 #### Ubuntu
 100%
 #### Pop!_OS
 100%
 #### Mint
-But not really used by me, just tested it for fun.
-#### Parrot OS
+But not really used, just tested once for fun.
+#### Parrot Security OS (MATE)
 Still testing, but so far so good!
 
 ### Arch Family
-#### Arch
-100%
 #### Manjaro
-100% at some point, but started shying away from zsh.
+100% at some point.
 
 ## Currently Supported Unix Systems
 ### FreeBSD
 100% but untested since 12.1.
 Software choices are slightly more limited since not flatpak-enabled.
-Has not been attempted on FreeBSD 13 yet.
 
 ## Waiting To Be Tested
+### FreeBSD 13
 ### Kali Linux
 ### Arch Linux ARM 
 Specifically for the Pinephone.
+### Arch Linux x86
+Would be great to have Arch get built up by this. Used for many years but left after update problems due to a long computer hiatus.
+
+## Next Steps
+Eventually some of the scripts and install files will be put into the files folder. This will allow initializing systems outside of my home network. 
+
+There may also be a refactor of task-specific facts to be in their task file so that some playbooks can be more self-sufficient and be provided to the community without hacking. The original goal was to never define facts in tasks, but the benefit  the facts are specific to a single playbook. Shared facts will definitely continue to exist under the facts tree.
