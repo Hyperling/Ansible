@@ -6,7 +6,7 @@
     user: ansible
     name: "Ansible Sync"
     minute: "*/15"
-    job: "sudo {{ ansible_pull_exec.stdout }} -o -U https://github.com/Hyperling/ansible.git"
+    job: "sudo {{ ansible_pull_exec.stdout }} -o -U https://github.com/Hyperling/ansible.git --checkout main"
     state: present
     disabled: no
 
