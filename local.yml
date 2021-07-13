@@ -147,7 +147,7 @@
 
 # Provide information for analysis.
 - name: Main | Reporting
-  hosts: localhost
+  hosts: everything
   connection: local
   become: true
 
