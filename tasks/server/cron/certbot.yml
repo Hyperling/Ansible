@@ -13,3 +13,4 @@
     special_time: weekly
     state: present
     disabled: no
+  when: certbot is defined
