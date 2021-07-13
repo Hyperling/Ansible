@@ -127,9 +127,12 @@
   dconf: 
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop', 
-             '{{ browser }}', 'org.mozilla.Thunderbird.desktop', 'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop', 
-             'rhythmbox.desktop', 'io.lbry.lbry-app.desktop', 'codium.desktop', 'com.visualstudio.code-oss.desktop', 
-             'org.shotcut.Shotcut.desktop', 'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop']"
+             '{{ browser }}', 'org.mozilla.Thunderbird.desktop',
+             'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop', 
+             'com.vscodium.codium.desktop', 'com.visualstudio.code-oss.desktop', 
+             'org.shotcut.Shotcut.desktop', 
+             'rhythmbox.desktop', 'io.lbry.lbry-app.desktop',
+             'com.valvesoftware.Steam.desktop', 'net.lutris.Lutris.desktop']"
     state: present
   become_user: ling
   when: ansible_system == "Linux"
