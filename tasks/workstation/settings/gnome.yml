@@ -68,29 +68,29 @@
   set_fact: 
     gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
     dash_to_dock_ext_comma: ""
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: gnome_enabled_extensions is defined and gnome_enabled_extensions != "[]" and gnome_enabled_extensions != []
+  when: dash_to_dock_exists.failed and gnome_enabled_extensions != "[]" and gnome_enabled_extensions != []
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
   set_fact: 
     dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 - debug:
     var: dash_to_dock_ext_name
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 - debug:
     var: gnome_enabled_extensions
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 - debug:
     msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Enable
   dconf: 
@@ -98,7 +98,7 @@
     value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
     state: present
   become_user: ling
-  when: gnome_enabled_extensions is defined
+  when: dash_to_dock_exists.failed
 
 # Settings #
 
