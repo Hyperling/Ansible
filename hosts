@@ -1,8 +1,9 @@
+[everything]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
+;
 ; branch : Provide the Github branch that the machine should poll.
 ;            Exampel: main, dev
 ;
-[everything]
 localhost
 freeboy              branch=dev
 dell-laptop          branch=dev
@@ -11,11 +12,18 @@ my-parrotsec-dev-www branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
+;
 ;  coding : Define for installation of code editors (VSCode, PyCharm, Android Studio)
 ;
 ; editing : Define for installation of Audio/Video editors (Shotcut, Audacity, OBS Stdio, GIMP)
 ;
 ;  gaming : Define for installation of gaming software (Steam, Lutris)
+;
+;     rdp : Define for installation of gaming software (Steam, Lutris)
+;             CURRENTLY FREEBSD-ONLY
+;
+;     vnc : Define for installation of gaming software (Steam, Lutris)
+;             NOT IMPLEMENTED YET
 ;
 dell-laptop coding=true editing=true
 usb-workstation
@@ -23,7 +31,7 @@ lbry-server-1
 lbry-server-2
 lbry-server-3
 aspire
-freeboy
+freeboy rdp=true
 
 [mobile]
 pinephone
@@ -81,8 +89,9 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;       hugo : Set to anything to install HUGO static website generator.
 ;                Example: true
 ;
-;     gitlab : Set to anything to install Gitlab project managemtn tool.
+;     gitlab : Set to anything to install Gitlab project management tool.
 ;                Example: true
+;                NOT IMPLEMENTED YET
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
