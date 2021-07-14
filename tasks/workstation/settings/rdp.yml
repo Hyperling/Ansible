@@ -1,8 +1,6 @@
 ---
 # Allow remote viewing via open/free RDP.
 
-
-
 - name: Workstation | Settings | RDP | FreeBSD | Install
   package:
     name: xrdp
@@ -21,12 +19,22 @@
     backup: yes
   when: ansible_system == "FreeBSD"
 
-#- name: Workstation | Settings | RDP | FreeBSD | Enable GNOME?
-#  lineinfile: search for gnome-session and uncomment it
-#    path: /usr/local/etc/xrdp/startwm.sh
-#  when: ansible_system == "FreeBSD"
-#
-#- name: Workstation | Settings | RDP | FreeBSD | Disable XTERM?
-#  lineinfile: search for gnome-session and uncomment it
-#    path: /usr/local/etc/xrdp/startwm.sh
-#  when: ansible_system == "FreeBSD"
+- name: Workstation | Settings | RDP | FreeBSD | Enable GNOME
+  lineinfile:
+    path: /usr/local/etc/xrdp/startwm.sh
+    regexp: 'gnome-session'
+    line: 'exec gnome-session # MANAGED BY ANSIBLE'
+    state: present
+    create: yes
+    backup: yes
+  when: ansible_system == "FreeBSD"
+
+- name: Workstation | Settings | RDP | FreeBSD | Disable xterm
+  lineinfile:
+    path: /usr/local/etc/xrdp/startwm.sh
+    regexp: 'xterm'
+    line: '#exec xterm # MANAGED BY ANSIBLE'
+    state: present
+    create: yes
+    backup: yes
+  when: ansible_system == "FreeBSD"
