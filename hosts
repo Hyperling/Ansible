@@ -81,6 +81,9 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;       hugo : Set to anything to install HUGO static website generator.
 ;                Example: true
 ;
+;     gitlab : Set to anything to install Gitlab project managemtn tool.
+;                Example: true
+;
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
 test
@@ -95,4 +98,4 @@ wordpress     certbot=true
 usb-server
 parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website
 my-parrotsec-dev-www domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website-hyperling
-gitlab domain=hyperling.com certbot=true
+gitlab domain=hyperling.com gitlab=true certbot=true
