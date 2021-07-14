@@ -3,6 +3,7 @@
 
 - name: General | Facts | System | Linux
   set_fact:
+    rc_conf: /dev/null
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
   when: ansible_system == "Linux"
@@ -10,6 +11,7 @@
 
 - name: General | Facts | System | FreeBSD
   set_fact:
+    rc_conf: /etc/rc.conf
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /usr/local/etc/sudoers.d/
   when: ansible_system == "FreeBSD"
