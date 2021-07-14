@@ -143,6 +143,9 @@
     - include: tasks/server/software/hugo.yml
       when: hugo is defined
 
+    - include: tasks/server/software/gitlab.yml
+      when: gitlab is defined
+
 
 
 # Provide information for analysis.
