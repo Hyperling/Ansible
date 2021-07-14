@@ -49,9 +49,13 @@
     - include: facts/workstation/package.yml
 
     # Set up any systems that do not come with Desktop Environments
-    # TODO Need to refactor. Maybe tasks/workstation/setup_gui/freebsd.yml
     - include: tasks/workstation/freebsd/software/gui.yml
       when: ansible_system == "FreeBSD"
+
+    - include: tasks/workstation/linux/software/gnome.yml
+      when: ansible_system == "Linux"
+
+    - include: tasks/workstation/settings/gnome.yml
 
     # Additional tasks to configure systems with Desktop Environments
     - include: tasks/workstation/linux/software/flatpaks.yml
@@ -65,11 +69,6 @@
 
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
-
-    - include: tasks/workstation/linux/software/gnome.yml
-      when: ansible_system == "Linux"
-
-    - include: tasks/workstation/settings/gnome.yml
 
     - include: tasks/workstation/settings/nfs.yml
   
