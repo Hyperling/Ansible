@@ -75,6 +75,5 @@
     firefox_esr: firefox-esr
     psutil: py38-psutil
     ansible_python_interpreter: "/usr/local/bin/python3.8"
-    nfs: htop
   when: ansible_system == "FreeBSD"
 
