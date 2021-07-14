@@ -24,7 +24,7 @@ Still testing, but so far so good!
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13
 100%, although GUI has not been tested on 13 yet.
-Software choices are slightly more limited since not flatpak-enabled.
+Software choices are slightly more limited since not `flatpak`-enabled and not feeling a `ports` setup.
 
 ## Waiting To Be Tested
 ### Kali Linux
