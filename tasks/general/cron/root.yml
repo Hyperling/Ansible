@@ -6,7 +6,7 @@
     user: root
     name: "1337 SSHFS"
     special_time: reboot
-    job: "{{ sshfs_leet_cmd }}"
+    job: "kldload fusefs && {{ sshfs_leet_cmd }}"
     state: absent
     disabled: no
   when: ansible_system == "FreeBSD"

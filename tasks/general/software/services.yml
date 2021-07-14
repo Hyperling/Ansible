@@ -13,7 +13,7 @@
 
 ## SSHFS ##
 
-- name: General | Software | Services | Enable SSHD (Linux?)
+- name: General | Software | Services | Enable SSHFS (FreeBSD)
   service:
     name: fusefs
     pattern: fusefs
