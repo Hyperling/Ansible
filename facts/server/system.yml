@@ -1,5 +1,10 @@
 ---
 # Network related variables.
 
-- name: Facts | Server | System | Not Used Yet
+#- name: Facts | Server | System | Not Used Yet
+#  set_fact:
+
+- name: Workstation | Facts | Package | FreeBSD
   set_fact:
+    ansible_python_interpreter: "/usr/local/bin/python3.8"
+  when: ansible_system == "FreeBSD"
