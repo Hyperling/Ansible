@@ -71,6 +71,11 @@
       when: ansible_system == "Linux"
 
     - include: tasks/workstation/settings/nfs.yml
+
+    - include: tasks/workstation/settings/vnc.yml
+      when: vnc is defined
+    - include: tasks/workstation/settings/rdp.yml
+      when: rdp is defined
   
 
 
