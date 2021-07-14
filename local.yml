@@ -30,6 +30,7 @@
     - include: tasks/general/scripts/root.yml
 
     - include: tasks/general/cron/ansible.yml
+    - include: tasks/general/cron/root.yml
     
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
     - include: tasks/workstation/freebsd/cron/ansible.yml
