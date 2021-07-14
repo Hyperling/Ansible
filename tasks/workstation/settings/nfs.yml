@@ -1,15 +1,45 @@
 ---
-# Use Apt specific because they're consistent! :)
+# Mount network shares.
 
 - name: Workstation | Settings | NFS | Facts
   set_fact:
     media_folder: /mnt/media
-    
-- name: Workstation | Settings | NFS | Install
+
+- name: Workstation | Settings | NFS | Facts (Linux)
+  set_fact:
+    mount_number: 0
+
+- name: Workstation | Settings | NFS | Facts (FreeBSD)
+  set_fact:
+    mount_number: 2
+
+
+- name: Workstation | Settings | NFS | Install (Linux)
   package: 
     name: 
       - "{{ nfs }}"
     state: present
+  when: ansible_system == "Linux"
+
+# https://www.unixmen.com/setup-nfs-server-on-freebsd/
+- name: Workstation | Settings | NFS | Install (FreeBSD)
+  blockinfile:
+    path: "{{ rc_conf }}"
+    marker: "# {mark} MANAGED BY ANSIBLE | NFS Components"
+    block: |
+      nfs_server_enable="YES"
+      nfs_server_flags="-u -t -n 4"
+      rpcbind_enable="YES"
+      mountd_flags="-r"
+      mountd_enable="YES"
+      nfs_client_enable="YES"
+      nfs_client_flags="-n 4"
+      rpc_lockd_enable="YES"
+      rpc_statd_enable="YES"
+    create: yes
+    backup: yes
+  when: ansible_system == "FreeBSD"
+
 
 - name: Workstation | Settings | NFS | Create Folders
   file: 
@@ -19,10 +49,11 @@
   loop:
     - "{{ media_folder }}"
 
+
 - name: Workstation | Settings | NFS | Create Mount Instructions
   blockinfile:
     path: /etc/fstab
     marker: "# {mark} MANAGED BY ANSIBLE | Media"
     block: |
-      htpc:/mnt/hdd_unsafe/media {{ media_folder }} nfs defaults 0 0
+      htpc:/mnt/hdd_unsafe/media {{ media_folder }} nfs defaults {{ mount_number }} {{ mount_number }}
     backup: yes
