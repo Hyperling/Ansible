@@ -4,16 +4,17 @@
 - name: Workstation | Settings | NFS | Facts
   set_fact:
     media_folder: /mnt/media
+    mount_number: 0
 
 - name: Workstation | Settings | NFS | Facts (Linux)
   set_fact:
     mount_options: defaults
-    mount_number: 0
+  when: ansible_system == "Linux"
 
 - name: Workstation | Settings | NFS | Facts (FreeBSD)
   set_fact:
     mount_options: rw
-    mount_number: 2
+  when: ansible_system == "FreeBSD"
 
 
 - name: Workstation | Settings | NFS | Install (Linux)
