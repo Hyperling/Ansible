@@ -5,11 +5,12 @@
   package: 
     name:
     - xorg
-    - gnome3
+    - gnome3-lite
     - "{{ firefox_esr }}"
     - "{{ thunderbird }}"
     - vscode
     - gimp
+    - telegram-desktop
     state: present
 
 - name: Workstation | FreeBSD | GUI | Uninstall Bloat
