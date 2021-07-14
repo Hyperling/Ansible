@@ -7,10 +7,12 @@
 
 - name: Workstation | Settings | NFS | Facts (Linux)
   set_fact:
+    mount_options: defaults
     mount_number: 0
 
 - name: Workstation | Settings | NFS | Facts (FreeBSD)
   set_fact:
+    mount_options: rw
     mount_number: 2
 
 
@@ -55,5 +57,5 @@
     path: /etc/fstab
     marker: "# {mark} MANAGED BY ANSIBLE | Media"
     block: |
-      htpc:/mnt/hdd_unsafe/media {{ media_folder }} nfs defaults {{ mount_number }} {{ mount_number }}
+      htpc:/mnt/hdd_unsafe/media {{ media_folder }} nfs {{ mount_options }} {{ mount_number }} {{ mount_number }}
     backup: yes
