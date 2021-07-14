@@ -1,3 +1,4 @@
+---
 # Install HUGO to host sites like parrotsec.org
 
 - name: Server | Software | HUGO | Variables (apt)
