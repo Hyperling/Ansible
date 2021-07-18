@@ -49,7 +49,6 @@
     remote: flathub
     state: absent
   loop:
-    - com.visualstudio.code-oss
     - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
@@ -113,6 +112,7 @@
   loop:
     - org.mozilla.firefox
     - com.visualstudio.code # Why does this throw an error? It's the correct ID.
+    - com.visualstudio.code-oss
     - org.midori_browser.Midori
     - com.github.Eloston.UngoogledChromium
   ignore_errors: yes
