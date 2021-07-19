@@ -1,0 +1,4 @@
+---
+# Download packages from Homebrew. 
+# Should this just be done in a Generic view? Is this really mac-specific, or just the facts?
+# FreeBSD has its own. May be good to keep it separate so it's more to-the-point.
