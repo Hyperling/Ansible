@@ -67,6 +67,12 @@
     - include: tasks/workstation/linux/software/brave.yml
       when: ansible_pkg_mgr == "apt"
 
+    - include: tasks/workstation/mac-os/software/brew.yml
+      when: ansible_system == "Darwin"
+
+    - include: tasks/workstation/mac-os/software/dmg.yml
+      when: ansible_system == "Darwin"
+
     # Configuration Tasks #
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
