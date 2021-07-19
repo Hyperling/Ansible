@@ -5,7 +5,7 @@
 ;            Exampel: main, dev
 ;
 localhost
-freeboy   branch=dev
+freeboy branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
@@ -29,7 +29,7 @@ lbry-server-2
 lbry-server-3
 aspire
 freeboy rdp=true
-airbook
+airbook coding=true editing=true
 
 [mobile]
 pinephone
