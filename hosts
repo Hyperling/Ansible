@@ -5,7 +5,7 @@
 ;            Exampel: main, dev
 ;
 localhost
-freeboy              branch=dev
+freeboy   branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
