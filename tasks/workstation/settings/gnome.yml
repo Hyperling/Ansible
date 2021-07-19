@@ -80,15 +80,18 @@
     dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
   when: dash_to_dock_exists.failed
 
-- debug:
+- name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append With
+  debug:
     var: dash_to_dock_ext_name
   when: dash_to_dock_exists.failed
 
-- debug:
+- name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append To
+  debug:
     var: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
-- debug:
+- name: Workstation | Account Management | GNOME | Dash To Dock | Print Combined Value
+  debug:
     msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
   when: dash_to_dock_exists.failed
 
