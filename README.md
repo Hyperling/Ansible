@@ -22,12 +22,11 @@ Still testing, but so far so good!
 100% at some point.
 
 ## Currently Supported Unix Systems
-### FreeBSD
-100% but untested since 12.1.
-Software choices are slightly more limited since not flatpak-enabled.
+### FreeBSD 12, 13
+100%, although GUI has not been tested on 13 yet.
+Software choices are slightly more limited since not `flatpak`-enabled and not feeling a `ports` setup.
 
 ## Waiting To Be Tested
-### FreeBSD 13
 ### Kali Linux
 ### Arch Linux ARM 
 Specifically for the Pinephone.

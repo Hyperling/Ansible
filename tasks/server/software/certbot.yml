@@ -4,8 +4,8 @@
 - name: Server | Software | Certbot | FreeBSD
   package: 
     name:
-      - py37-certbot
-      - py37-certbot-nginx
+      - py38-certbot
+      - py38-certbot-nginx
     state: present
   when: ansible_system == "FreeBSD"
 

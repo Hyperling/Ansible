@@ -3,7 +3,7 @@
 
 # Setup of any device connected to this repo.
 - name: Main | Default Setup
-  hosts: localhost
+  hosts: everything
   connection: local
   become: true  
 
@@ -30,6 +30,7 @@
     - include: tasks/general/scripts/root.yml
 
     - include: tasks/general/cron/ansible.yml
+    - include: tasks/general/cron/root.yml
     
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
     - include: tasks/workstation/freebsd/cron/ansible.yml
@@ -48,9 +49,13 @@
     - include: facts/workstation/package.yml
 
     # Set up any systems that do not come with Desktop Environments
-    # TODO Need to refactor. Maybe tasks/workstation/setup_gui/freebsd.yml
     - include: tasks/workstation/freebsd/software/gui.yml
       when: ansible_system == "FreeBSD"
+
+    - include: tasks/workstation/linux/software/gnome.yml
+      when: ansible_system == "Linux"
+
+    - include: tasks/workstation/settings/gnome.yml
 
     # Additional tasks to configure systems with Desktop Environments
     - include: tasks/workstation/linux/software/flatpaks.yml
@@ -65,12 +70,12 @@
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
 
-    - include: tasks/workstation/linux/software/gnome.yml
-      when: ansible_system == "Linux"
-
-    - include: tasks/workstation/settings/gnome.yml
-
     - include: tasks/workstation/settings/nfs.yml
+
+    - include: tasks/workstation/settings/rdp.yml
+      when: rdp is defined
+    - include: tasks/workstation/settings/vnc.yml
+      when: vnc is defined
   
 
 
@@ -143,11 +148,14 @@
     - include: tasks/server/software/hugo.yml
       when: hugo is defined
 
+    - include: tasks/server/software/gitlab.yml
+      when: gitlab is defined
+
 
 
 # Provide information for analysis.
 - name: Main | Reporting
-  hosts: localhost
+  hosts: everything
   connection: local
   become: true
 

@@ -3,6 +3,7 @@
 
 - name: General | Facts | System | Linux
   set_fact:
+    rc_conf: /dev/null
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
   when: ansible_system == "Linux"
@@ -10,6 +11,7 @@
 
 - name: General | Facts | System | FreeBSD
   set_fact:
+    rc_conf: /etc/rc.conf
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /usr/local/etc/sudoers.d/
   when: ansible_system == "FreeBSD"
@@ -67,3 +69,9 @@
     lynis_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/lynis/{{ lynis_report_name }}"
     nmap_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/nmap/{{ nmap_report_name }}"
   when: not leet_drive_details.stat.exists
+
+
+- name: General | Facts | System | Ansible Branch
+  set_fact:
+    branch: main
+  when: branch is not defined

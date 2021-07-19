@@ -73,6 +73,7 @@
   set_fact:
     flatpak_distro: false
     firefox_esr: firefox-esr
-    psutil: py37-psutil
+    psutil: py38-psutil
+    ansible_python_interpreter: "/usr/local/bin/python3.8"
   when: ansible_system == "FreeBSD"
 

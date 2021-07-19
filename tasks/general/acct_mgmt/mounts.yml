@@ -8,6 +8,11 @@
     state: directory
     mode: '0755'
 
+- name: General | Account Management | Mounts | Enable SSHFS (FreeBSD)
+  shell: "{{ load_fusefs }}"
+  ignore_errors: yes 
+  when: ansible_system == "FreeBSD"
+
 - name: General | Account Management | Mounts | Test SSHFS
   shell: "sshfs {{ leet_ssh }}: /mnt/test -o allow_other"
   register: sshfs_test

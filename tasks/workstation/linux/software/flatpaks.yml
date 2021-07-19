@@ -37,7 +37,6 @@
     remote: flathub
     state: present
   loop:
-    - com.visualstudio.code-oss
     - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
@@ -50,14 +49,13 @@
     remote: flathub
     state: absent
   loop:
-    - com.visualstudio.code-oss
     - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
   ignore_errors: yes
   when: coding is not defined
 
-# Editor #
+# Media Editors #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Installs
   flatpak:
     name: "{{ item }}"
@@ -84,7 +82,7 @@
   ignore_errors: yes
   when: editing is not defined
 
-# Games #
+# Gaming #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming Installs
   flatpak:
     name: "{{ item }}"
@@ -114,6 +112,7 @@
   loop:
     - org.mozilla.firefox
     - com.visualstudio.code # Why does this throw an error? It's the correct ID.
+    - com.visualstudio.code-oss
     - org.midori_browser.Midori
     - com.github.Eloston.UngoogledChromium
   ignore_errors: yes

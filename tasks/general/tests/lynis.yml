@@ -14,7 +14,7 @@
     state: directory
     mode: '0644'
     owner: root
-    group: root
+    group: "{{ root_group }}"
     recurse: yes
 
 - name: General | Tests | Lynis | Ensure Permissions 2

@@ -27,6 +27,12 @@
   when: ansible_distribution == "Archlinux"
 
 
-#- name: General | Facts | Service | FreeBSD
-#  set_fact:
-#  when: ansible_system == "FreeBSD"
+- name: General | Facts | Service | Non-FreeBSD
+  set_fact:
+    load_fusefs: "echo ''"
+  when: ansible_system != "FreeBSD"
+
+- name: General | Facts | Service | FreeBSD
+  set_fact:
+    load_fusefs: "kldload fusefs"
+  when: ansible_system == "FreeBSD"
