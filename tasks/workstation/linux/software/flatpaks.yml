@@ -25,6 +25,7 @@
     state: present
   loop:
     - org.mozilla.Thunderbird
+    - org.gnome.Geary
     - com.discordapp.Discord
     - org.telegram.desktop
     - io.lbry.lbry-app
