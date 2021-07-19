@@ -62,6 +62,11 @@
   register: gnome_enabled_extensions
   when: dash_to_dock_exists.failed
 
+- name: Workstation | Account Management | GNOME | Dash To Dock | dconf Return Object
+  debug:
+    var: gnome_enabled_extensions
+  when: dash_to_dock_exists.failed
+
 # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 1
@@ -70,10 +75,15 @@
     dash_to_dock_ext_comma: ""
   when: dash_to_dock_exists.failed
 
+- name: Workstation | Account Management | GNOME | Dash To Dock | After replace()
+  debug:
+    var: gnome_enabled_extensions
+  when: dash_to_dock_exists.failed
+
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: dash_to_dock_exists.failed and gnome_enabled_extensions != "[]" and gnome_enabled_extensions != []
+  when: dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
   set_fact: 
