@@ -43,8 +43,21 @@
     path: "{{ user_root.home }}/bin/scm-dev.sh"
     block: |
       # 20210713 - Make life easier for development!
+      
+      ## Variables ##
+
+      # Use a specific branch if it was asked for.
+      branch="dev"
+      if [[ $1 != "" ]]; then
+         branch="$1"
+      fi
+
+
+      ## Main ##
+
       push.sh
-      {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git --checkout dev
+      time {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git --checkout $branch
+
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
