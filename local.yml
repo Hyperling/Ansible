@@ -48,7 +48,7 @@
     - include: facts/general/system.yml
     - include: facts/workstation/package.yml
 
-    # Set up any systems that do not come with Desktop Environments
+    # Set Up Desktop Environments #
     - include: tasks/workstation/freebsd/software/gui.yml
       when: ansible_system == "FreeBSD"
 
@@ -57,7 +57,7 @@
 
     - include: tasks/workstation/settings/gnome.yml
 
-    # Additional tasks to configure systems with Desktop Environments
+    # Software Tasks #
     - include: tasks/workstation/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and flatpak_distro
 
@@ -67,6 +67,13 @@
     - include: tasks/workstation/linux/software/brave.yml
       when: ansible_pkg_mgr == "apt"
 
+    - include: tasks/workstation/mac-os/software/brew.yml
+      when: ansible_system == "Darwin"
+
+    - include: tasks/workstation/mac-os/software/dmg.yml
+      when: ansible_system == "Darwin"
+
+    # Configuration Tasks #
     - include: tasks/workstation/linux/cron/ansible.yml
       when: ansible_system == "Linux"
 

@@ -1,0 +1,51 @@
+---
+# Download packages from Homebrew. 
+# Should this just be done in a Generic view? Is this really mac-specific, or just the facts?
+# FreeBSD has its own. May be good to keep it separate so it's more to-the-point.
+
+- name: Workstation | Mac OS | Software | Brew | Install Packages
+  package:
+    name:
+      - atomic-wallet
+      - brave-browser
+      - discord
+      - garmin-express
+      - telegram-desktop
+    status: present
+
+- name: Workstation | Mac OS | Software | Brew | Install Packages (Coding)
+  package:
+    name:
+      - android studio
+      - firefox-esr
+      - visual-studio-code
+    status: present
+  when: coding is defined
+
+- name: Workstation | Mac OS | Software | Brew | Install Packages (Editing)
+  package:
+    name:
+      - audacity
+      - shotcut
+    status: present
+  when: editing is defined
+
+- name: Workstation | Mac OS | Software | Brew | Install Packages (Gaming)
+  package:
+    name:
+      - battle-net
+      - steam
+    status: present
+  when: gaming is defined
+
+- name: Workstation | Mac OS | Software | Brew | Install Packages (Cycling)
+  package:
+    name:
+      - zwift
+    status: present
+  when: cycling is defined
+
+#- name: Workstation | Mac OS | Software | Brew | Remove Packages
+#  package:
+#    name:
+#    status: present
