@@ -93,6 +93,8 @@
     alias_cp: alias cp='cp -v'
     alias_mv: alias mv='mv -v'
     alias_rm: alias rm='echo "Use mv ~/TRASH/ instead!"'
+    alias_clean: alias clean='mv * ~/TRASH/'
+    alias_clean_trash: alias clean-trash='sh -c "rm -rfv ~/TRASH/*"'
     path_additions: export PATH="~/bin:$PATH"
     function_wttr: |
       function weather() {
@@ -121,6 +123,8 @@
       {{ alias_cp }}
       {{ alias_mv }}
       {{ alias_rm }}
+      {{ alias_clean }}
+      {{ alias_clean_trash }}
       {{ function_wttr }}
       {{ PS1 }}
 
