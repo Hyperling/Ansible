@@ -4,6 +4,7 @@
   shell: which gdm3
   register: gnome_install
   when: ansible_distribution in ("Parrot OS")
+  ignore_errors: true
 
 - name: Workstation | Linux | Software | GNOME | Install
   package:
