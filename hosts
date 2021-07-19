@@ -6,9 +6,6 @@
 ;
 localhost
 freeboy              branch=dev
-dell-laptop          branch=dev
-parrotsec-dev-www    branch=dev 
-my-parrotsec-dev-www branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
