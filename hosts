@@ -16,10 +16,10 @@ freeboy branch=dev
 ;
 ;  gaming : Define for installation of gaming software (Steam, Lutris)
 ;
-;     rdp : Define for installation of gaming software (Steam, Lutris)
+;     rdp : Define for installation of RDP protocol
 ;             CURRENTLY FREEBSD-ONLY
 ;
-;     vnc : Define for installation of gaming software (Steam, Lutris)
+;     vnc : Define for installation of VNC protocol
 ;             NOT IMPLEMENTED YET
 ;
 dell-laptop coding=true editing=true
