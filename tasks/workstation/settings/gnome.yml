@@ -159,7 +159,7 @@
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 
              'firefox.desktop', 'org.mozilla.Thunderbird.desktop', 
-             'code-oss.desktop']"
+             'code-oss.desktop', 'org.telegram.desktop.desktop']"
     state: present
   become_user: ling
   when: ansible_system == "FreeBSD"
