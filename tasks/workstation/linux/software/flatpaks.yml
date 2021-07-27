@@ -26,6 +26,7 @@
   loop:
     - org.mozilla.Thunderbird
     - org.gnome.Geary
+    - org.libreoffice.LibreOffice
     - com.discordapp.Discord
     - org.telegram.desktop
     - io.lbry.lbry-app
@@ -176,4 +177,5 @@
     - steam
     - vscode
     - code
+    - '*libreoffice*'
     state: absent
