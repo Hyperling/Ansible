@@ -177,5 +177,5 @@
     - steam
     - vscode
     - code
-    - '"*"libreoffice"*"'
+    - '*libreoffice*'
     state: absent
