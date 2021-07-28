@@ -21,7 +21,7 @@
 
 - name: Workstation | Linux | Software | GNOME | Note Before Exiting
   debug:
-    msg: "You will probably need to run `dpkg-reconfigure gdm3` to ensure gdm3 is selected."
+    msg: "You will need to run `dpkg-reconfigure gdm3` to ensure gdm3 is selected."
   when: gnome_install is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Exiting
