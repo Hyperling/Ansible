@@ -100,7 +100,7 @@ hyperling.com certbot=true
 tmcvideos     certbot=true
 tmcvideos.com certbot=true
 reverse-proxy certbot=true
-nextcloud     certbot=true
+nextcloud
 wordpress     certbot=true
 usb-server
 parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website
