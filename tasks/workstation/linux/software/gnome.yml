@@ -11,6 +11,9 @@
   when: ansible_distribution in ("Parrot OS")
   ignore_errors: true
 
+- debug:
+    var: gnome_install
+
 - name: Workstation | Linux | Software | GNOME | Install
   package:
     name: 
