@@ -1,5 +1,10 @@
 # Some Linux distros come with meh DE's, this fixes that.
 
+- name: Workstation | Linux | Software | GNOME | Bypass for other other OS's
+  set_fact: which gdm3
+    gnome_install.failed: false
+  when: ansible_distribution not in ("Parrot OS")
+
 - name: Workstation | Linux | Software | GNOME | Check (Parrot OS Only)
   shell: which gdm3
   register: gnome_install
@@ -12,11 +17,6 @@
       - gnome 
       - gdm3
     state: present
-  when: gnome_install is defined and gnome_install.failed
-
-- name: Workstation | Linux | Software | GNOME | TEST
-  debug:
-    var: gnome_install
   when: gnome_install is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Note Before Exiting
