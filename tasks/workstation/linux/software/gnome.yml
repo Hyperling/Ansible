@@ -1,8 +1,8 @@
 # Some Linux distros come with meh DE's, this fixes that.
 
 - name: Workstation | Linux | Software | GNOME | Bypass for other other OS's
-  set_fact:
-    gnome_install.failed: false
+  shell: which htop
+  register: gnome_install
   when: ansible_distribution not in ("Parrot OS")
 
 - name: Workstation | Linux | Software | GNOME | Check (Parrot OS Only)
