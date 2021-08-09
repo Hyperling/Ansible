@@ -178,4 +178,5 @@
     - vscode
     - code
     - '*libreoffice*'
+    - gimp
     state: absent
