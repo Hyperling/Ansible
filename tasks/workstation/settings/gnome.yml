@@ -21,9 +21,9 @@
 - name: Workstation | Account Management | GNOME | Install Dependencies
   package:
     name: 
-    - "{{ gnome_tweaks }}"
-    - "{{ dconf_editor }}"
-    - "{{ psutil }}"
+      - "{{ gnome_tweaks }}"
+      - "{{ dconf_editor }}"
+      - "{{ psutil }}"
     state: present
 
 
@@ -47,12 +47,19 @@
     force: no
     version: master
   become_user: ling
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+
+- name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
+  package:
+    name: 
+      - make
+    state: present
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
   shell: "cd ~/TRASH/dash-to-dock/; make; make install"
   become_user: ling
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
   dconf: 
@@ -60,12 +67,12 @@
     state: read
   become_user: ling
   register: gnome_enabled_extensions
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | dconf Return Object
   debug:
     var: gnome_enabled_extensions
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
@@ -73,42 +80,42 @@
   set_fact: 
     gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
     dash_to_dock_ext_comma: ""
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | After replace()
   debug:
     var: gnome_enabled_extensions
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
   set_fact: 
     dash_to_dock_ext_comma: ", "
-  when: dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
   set_fact: 
     dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 4
   set_fact:
     gnome_enabled_extensions: "[]"
-  when: dash_to_dock_exists.failed and gnome_enabled_extensions == "None"
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions == "None"
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append With
   debug:
     var: dash_to_dock_ext_name
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append To
   debug:
     var: gnome_enabled_extensions
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Print Combined Value
   debug:
     msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Enable
   dconf: 
@@ -116,7 +123,7 @@
     value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
     state: present
   become_user: ling
-  when: dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 # Settings #
 
