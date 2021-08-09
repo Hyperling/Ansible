@@ -15,13 +15,13 @@
       - gnome 
       - gdm3
     state: present
-  when: gnome_install is defined and gnome_install.failed is define gnome_install.failed
+  when: gnome_install is defined and gnome_install.failed is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Note Before Exiting
   debug:
     msg: "You will need to run `dpkg-reconfigure gdm3` to ensure gdm3 is selected."
-  when: gnome_install is defined and gnome_install.failed is define gnome_install.failed
+  when: gnome_install is defined and gnome_install.failed is defined and gnome_install.failed
 
 - name: Workstation | Linux | Software | GNOME | Exiting
   shell: exit 1
-  when: gnome_install is defined and gnome_install.failed is define gnome_install.failed
+  when: gnome_install is defined and gnome_install.failed is defined and gnome_install.failed
