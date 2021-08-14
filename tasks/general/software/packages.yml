@@ -1,7 +1,7 @@
 ---
 # Cross-platform package management.
 
-- name: General | Software | Packages | Fix Parrot OS
+- name: General | Software | Packages | Fix Parrot OS (zypper)
 # They have zypper higher in the path, but it's really apt renamed.
 # Probably for "security", but package module does not use the ansible_pkg_mgr variable
 #   so resetting the value to apt doesn't work. Just going to move it.
@@ -10,14 +10,21 @@
   ignore_errors: yes
   when: ansible_distribution == "Parrot OS"
 
-- name: General | Software | Packages | Fixed Parrot OS, Exit Incoming
+- name: General | Software | Packages | Fix Parrot OS (zypper), Exit Incoming
   debug:
     msg: "A silly zypper file was renamed successfully. Please try running Ansible again."
   when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
-- name: General | Software | Packages | Fixed Parrot OS, Exiting
+- name: General | Software | Packages | Fix Parrot OS (zypper), Exiting
   shell: exit 1
   when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
+
+# More Parrot OS junk. They have a command called update in /usr/bin. Doesn't have sudo or anything in it either. 
+# Hide it in preference for .bashrc update function.
+- name: General | Software | Packages | Fix Parrot OS 2 (update)
+  shell: "mv `which update` `which update`.zz.`date +%Y%m%d`"
+  ignore_errors: yes
+  when: ansible_distribution == "Parrot OS"
 
 
 - name: General | Software | Packages | Cache Refresh (Apt and Pacman)
