@@ -1,0 +1,70 @@
+---
+# Create file to easily push git changes and call SCM.
+
+- name: General | Scripts | User | scm.sh
+  blockinfile:
+    path: "{{ user_ling.home }}/bin/scm.sh"
+    block: |
+      # 20210211 - Make life easier!
+      push.sh
+      time curl https://scm.hyperling.com | sudo bash
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+
+- name: General | Scripts | User | scm.sh Permissions
+  file: 
+    path: "{{ user_ling.home }}/bin/scm.sh"
+    mode: '0755'
+
+
+- name: General | Scripts | User | push.sh
+  blockinfile:
+    path: "{{ user_ling.home }}/bin/push.sh"
+    block: |
+      # 20210215 - Make life even easier!
+      ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+
+- name: General | Scripts | User | push.sh Permissions
+  file: 
+    path: "{{ user_ling.home }}/bin/push.sh"
+    mode: '0755'
+
+
+- name: General | Scripts | User | scm-dev.sh
+  blockinfile:
+    path: "{{ user_ling.home }}/bin/scm-dev.sh"
+    block: |
+      # 20210713 - Make life easier for development!
+      
+      ## Variables ##
+
+      # Use a specific branch if it was asked for.
+      branch="dev"
+      if [[ $1 != "" ]]; then
+         branch="$1"
+      fi
+
+
+      ## Main ##
+
+      push.sh
+      time sudo {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git --checkout $branch
+
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+
+- name: General | Scripts | User | scm-dev.sh Permissions
+  file: 
+    path: "{{ user_ling.home }}/bin/scm-dev.sh"
+    mode: '0755'
