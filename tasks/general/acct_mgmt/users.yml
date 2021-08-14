@@ -113,8 +113,36 @@
         fi
         curl "https://wttr.in/${1//\ /+}"
       }
-    PS1: |
-      export PS1='[\u@\h \w]\$ '
+    PS1: export PS1='[\u@\h \w]\$ '
+    remount: alias remount='sudo umount /mnt/*; sudo umount /mnt/*/*; sudo mount -a; echo -e "\nRemount completed!"; mount | grep /mnt'
+    update: |
+      function update() {
+        PROG=$FUNCNAME
+        usage="Usage: $PROG [-y]
+        $PROG is used to run all the system's package manager commands 
+            in one swoop. Flow stops if any command returns a failure code.
+            The hope is to run something as easy as 'pacman -Syyu'.
+        -y : Assume yes to any prompts."
+
+        unset OPTIND
+        while getopts ":hy" opt; do
+            case $opt in
+              h) echo -e "$usage"
+                  return 0 ;;
+              y) accept="-y" ;;
+              *) echo "ERROR: -$OPTARG is not a recognized option."
+                  echo -e "$usage"
+                  return 1 ;;
+            esac
+        done
+
+        {{ update_package_manager }}
+        {{ update_flatpak }}
+        return 0
+
+        echo "$PROG experienced a problem and has aborted."
+        return 1
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:

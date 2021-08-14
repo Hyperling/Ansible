@@ -8,7 +8,6 @@
     ansible_python_interpreter: "/usr/bin/python3"
   when: ansible_distribution == "Parrot OS"
 
-
 - name: General | Facts | Package | apt
   set_fact:
     sshfs: sshfs
@@ -16,14 +15,12 @@
     opensshd: openssh-server
   when: ansible_pkg_mgr == "apt"
 
-
 - name: General | Facts | Package | pacman
   set_fact:
     sshfs: sshfs
     locate: mlocate
     opensshd: openssh
   when: ansible_pkg_mgr == "pacman"
-  
 
 - name: General | Facts | Package | FreeBSD
   set_fact:
@@ -33,3 +30,58 @@
     ansible_python_interpreter: "/usr/local/bin/python3.8"
   when: ansible_system == "FreeBSD"
 
+
+- name: General | Facts | Package | Update Commands | Helpers
+  set_fact:
+    update_accept_var: '$accept'
+
+- name: General | Facts | Package | Update Commands | apt
+  set_fact:
+    update_package_manager: |
+      echo "*** Apt ***" &&
+      sudo apt update &&
+      sudo apt autoremove {{ update_accept_var }} && 
+      sudo apt dist-upgrade {{ update_accept_var }} &&
+  when: ansible_pkg_mgr == "apt"
+
+- name: General | Facts | Package | Update Commands | pacman
+  set_fact:
+    update_package_manager: |
+      echo "*** Pacman ***" && 
+      sudo pacman -Syyu &&
+  when: ansible_pkg_mgr == "pacman"
+
+- name: General | Facts | Package | Update Commands | pkg
+  set_fact:
+    update_package_manager: |
+      echo "*** Pkg ***" &&
+      sudo pkg update &&
+      sudo pkg upgrade && 
+  when: ansible_pkg_mgr == "pkg"
+
+- name: General | Facts | Package | Update Commands | parrot-upgrade
+  set_fact:
+    update_package_manager: |
+      parrot_mirrors_suck=true
+      echo "*** Parrot ***"
+      while [[ $parrot_mirrors_suck ]]; do
+        unset parrot_mirrors_suck
+        sudo parrot-upgrade
+        if [[ $? != 0 ]]; then
+          parrot_mirrors_suck=true
+          sudo apt update --fix-missing
+        fi
+      done
+  when: ansible_distribution == "Parrot OS"
+
+- name: General | Facts | Package | Update Commands | flatpak (Linux)
+  set_fact:
+    update_flatpak: |
+      echo "*** Flatpak ***" &&
+      flatpak update &&
+  when: ansible_system == "Linux"
+
+- name: General | Facts | Package | Update Commands | flatpak (FreeBSD)
+  set_fact:
+    update_flatpak: echo "*** No Flatpak ***"
+  when: ansible_system == "FreeBSD"
