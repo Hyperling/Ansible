@@ -71,17 +71,11 @@
           parrot_mirrors_suck=true
           sudo apt update --fix-missing
         fi
-      done
+      done &&
   when: ansible_distribution == "Parrot OS"
 
-- name: General | Facts | Package | Update Commands | flatpak (Linux)
+- name: General | Facts | Package | Update Commands | flatpak
   set_fact:
     update_flatpak: |
-      echo "*** Flatpak ***" &&
-      flatpak update &&
-  when: ansible_system == "Linux"
-
-- name: General | Facts | Package | Update Commands | flatpak (FreeBSD)
-  set_fact:
-    update_flatpak: echo "*** No Flatpak ***"
-  when: ansible_system == "FreeBSD"
+      echo "*** Flatpak ***" && 
+      flatpak update {{ update_accept_var }} || echo "Flatpak not installed or configured." &&
