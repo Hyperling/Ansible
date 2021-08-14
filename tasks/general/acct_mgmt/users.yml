@@ -120,8 +120,8 @@
         PROG=$FUNCNAME
         usage="Usage: $PROG [-y]
         $PROG is used to run all the system's package manager commands 
-            in one swoop. Flow stops if any command returns a failure code.
-            The hope is to run something as easy as 'pacman -Syyu'.
+          in one swoop. Flow stops if any command returns a failure code.
+          The hope is to run something as easy as 'pacman -Syyu'.
         -y : Assume yes to any prompts."
 
         unset OPTIND
@@ -140,7 +140,7 @@
         {{ update_flatpak }}
         return 0
 
-        echo "$PROG experienced a problem and has aborted."
+        echo "ERROR: $PROG experienced a problem and has aborted."
         return 1
       }
 
