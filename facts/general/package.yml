@@ -41,7 +41,9 @@
       echo "*** Apt ***" &&
       sudo apt update &&
       sudo apt autoremove {{ update_accept_var }} && 
-      sudo apt dist-upgrade {{ update_accept_var }} &&
+      sudo dpkg --configure -a &&
+      sudo apt --fix-broken --fix-missing install &&
+      sudo apt dist-upgrade --allow-downgrades --fix-broken --fix-missing {{ update_accept_var }} &&
   when: ansible_pkg_mgr == "apt"
 
 - name: General | Facts | Package | Update Commands | pacman
@@ -62,8 +64,10 @@
 - name: General | Facts | Package | Update Commands | parrot-upgrade
   set_fact:
     update_package_manager: |
-      parrot_mirrors_suck=true
       echo "*** Parrot ***"
+      sudo apt update &&
+      sudo apt autoremove {{ update_accept_var }} &&
+      parrot_mirrors_suck=true &&
       while [[ $parrot_mirrors_suck ]]; do
         unset parrot_mirrors_suck
         sudo parrot-upgrade
