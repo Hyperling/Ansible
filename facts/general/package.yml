@@ -66,7 +66,7 @@
     update_package_manager: |
       echo "*** Parrot ***"
       sudo apt update &&
-      sudo apt autoremove &&
+      sudo apt autoremove {{ update_accept_var }} &&
       parrot_mirrors_suck=true &&
       while [[ $parrot_mirrors_suck ]]; do
         unset parrot_mirrors_suck
