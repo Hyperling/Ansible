@@ -130,7 +130,7 @@
       - "{{ firefox_esr }}"
       - vlc
       - "{{ appimagelauncher }}"
-      - "{{ evolution }}"
+      - "{{ evolution }}*"
     state: present
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Firefox Normal
