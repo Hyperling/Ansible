@@ -256,7 +256,7 @@
 
 # Schemas to try after looking at gsettings list-schemas | sort
 # org.gnome.ControlCenter -- not very interesting
-# org.gnome.desktop.default-applications -- nothing?? Where do we set Firefox and Evolution?
+# org.gnome.desktop.default-applications -- nothing?? Where do we set Brave and Evolution?
 # org.gnome.desktop.interface -- Good stuff in here.
 # org.gnome.desktop.peripherals -- Nothing :(
 # org.gnome.desktop.privacy -- Good stuff here too!! Cool!
