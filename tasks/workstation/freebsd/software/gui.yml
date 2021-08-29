@@ -7,7 +7,7 @@
     - xorg
     - gnome3-lite
     - "{{ firefox_esr }}"
-    - "{{ thunderbird }}"
+    - "{{ evolution }}"
     - vscode
     - gimp
     - telegram-desktop
@@ -17,7 +17,7 @@
   package: 
     name:
     - "{{ firefox }}"
-    - "{{ evolution }}"
+    - "{{ thunderbird }}"
     state: absent
 
 - name: Workstation | FreeBSD | GUI | Create rc.conf Entries
