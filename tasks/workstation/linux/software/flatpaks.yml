@@ -117,7 +117,7 @@
     - com.visualstudio.code-oss
     - org.midori_browser.Midori
     - com.github.Eloston.UngoogledChromium
-    - org.gnome.Evolution # Doesn't pick up GNOME theme while contained.
+    - org.gnome.Evolution # Doesn't pick up GNOME theme since contained.
   ignore_errors: yes
 
 
