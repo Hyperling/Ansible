@@ -53,6 +53,7 @@
   package:
     name: 
       - make
+      - "{{ msgfmt }}"
     state: present
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
