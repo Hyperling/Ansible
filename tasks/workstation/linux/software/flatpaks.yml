@@ -130,11 +130,6 @@
       - "{{ firefox_esr }}"
       - vlc
       - "{{ appimagelauncher }}"
-    state: present
-
-- name: Workstation | Linux | Flatpak Distro | Package Manager | Update From Repo
-  package: 
-    name: 
       - "{{ evolution }}"
       - "{{ evolution }}*"
     state: present
@@ -181,7 +176,6 @@
   package: 
     name:
     - "{{ thunderbird }}"
-    - "{{ evolution }}"
     - steam
     - vscode
     - code
