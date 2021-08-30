@@ -117,6 +117,7 @@
     - com.visualstudio.code-oss
     - org.midori_browser.Midori
     - com.github.Eloston.UngoogledChromium
+    - org.gnome.Evolution # Doesn't pick up GNOME theme since contained.
   ignore_errors: yes
 
 
@@ -129,6 +130,13 @@
       - "{{ firefox_esr }}"
       - vlc
       - "{{ appimagelauncher }}"
+    state: present
+
+- name: Workstation | Linux | Flatpak Distro | Package Manager | Update From Repo
+  package: 
+    name: 
+      - "{{ evolution }}"
+      - "{{ evolution }}*"
     state: present
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Firefox Normal

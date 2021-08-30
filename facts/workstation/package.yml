@@ -18,6 +18,7 @@
     dconf_editor: dconf-editor
     appimagelauncher: htop #placeholder
     nfs: nfs-common
+    msgfmt: gettext
 
 
 - name: Workstation | Facts | Package | Pop_OS!
