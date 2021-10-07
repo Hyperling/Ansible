@@ -42,6 +42,7 @@
     - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
+    - io.dbeaver.DBeaverCommunity
   ignore_errors: yes
   when: coding is defined
 
@@ -54,6 +55,7 @@
     - com.vscodium.codium
     - com.google.AndroidStudio
     - com.jetbrains.PyCharm-Community
+    - io.dbeaver.DBeaverCommunity
   ignore_errors: yes
   when: coding is not defined
 
@@ -67,7 +69,7 @@
     - org.shotcut.Shotcut
     - com.obsproject.Studio
     - org.gimp.GIMP
-    - org.audacityteam.Audacity
+#    - org.audacityteam.Audacity
   ignore_errors: yes
   when: editing is defined
 

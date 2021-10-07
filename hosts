@@ -5,7 +5,7 @@
 ;            Exampel: main, dev
 ;
 localhost
-freeboy branch=dev
+dell-laptop branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
@@ -23,11 +23,11 @@ freeboy branch=dev
 ;             NOT IMPLEMENTED YET
 ;
 dell-laptop coding=true editing=true
-usb-workstation
+usb-workstation coding=true
 lbry-server-1
 lbry-server-2
 lbry-server-3
-aspire
+aspire  coding=true editing=true gaming=true
 freeboy rdp=true
 airbook coding=true editing=true
 
@@ -94,7 +94,6 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
 test
-freeboy branch=dev
 hyperling     certbot=true
 hyperling.com certbot=true
 tmcvideos     certbot=true
@@ -103,6 +102,3 @@ reverse-proxy certbot=true
 nextcloud
 wordpress     certbot=true
 usb-server
-parrotsec-dev-www    domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website
-my-parrotsec-dev-www domain=hyperling.com hugo=true hugo_site_path=/mnt/leet/Code/ParrotOS/website-hyperling
-gitlab domain=hyperling.com gitlab=true certbot=true
