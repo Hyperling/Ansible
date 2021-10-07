@@ -5,7 +5,7 @@
 ;            Exampel: main, dev
 ;
 localhost
-freeboy branch=dev
+dell-laptop branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
@@ -94,7 +94,6 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
 test
-freeboy branch=dev
 hyperling     certbot=true
 hyperling.com certbot=true
 tmcvideos     certbot=true
