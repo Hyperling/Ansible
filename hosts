@@ -23,6 +23,7 @@ dell-laptop branch=dev
 ;             NOT IMPLEMENTED YET
 ;
 dell-laptop coding=true editing=true
+dell-inspiron coding=true
 usb-workstation coding=true
 lbry-server-1
 lbry-server-2
