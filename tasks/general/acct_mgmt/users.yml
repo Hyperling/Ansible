@@ -143,6 +143,7 @@
         echo "ERROR: $PROG experienced a problem and has aborted."
         return 1
       }
+    sync: alias sync='date && echo "Syncing!" && sync && date'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -157,6 +158,7 @@
       {{ PS1 }}
       {{ remount }}
       {{ update }}
+      {{ sync }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
