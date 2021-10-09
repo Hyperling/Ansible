@@ -24,8 +24,6 @@
     remote: flathub
     state: present
   loop:
-    - org.mozilla.Thunderbird
-    - org.gnome.Geary
     - org.libreoffice.LibreOffice
     - com.discordapp.Discord
     - org.telegram.desktop
@@ -69,7 +67,6 @@
     - org.shotcut.Shotcut
     - com.obsproject.Studio
     - org.gimp.GIMP
-#    - org.audacityteam.Audacity
   ignore_errors: yes
   when: editing is defined
 
@@ -82,7 +79,6 @@
     - org.shotcut.Shotcut
     - com.obsproject.Studio
     - org.gimp.GIMP
-    - org.audacityteam.Audacity
   ignore_errors: yes
   when: editing is not defined
 
@@ -120,6 +116,8 @@
     - org.midori_browser.Midori
     - com.github.Eloston.UngoogledChromium
     - org.gnome.Evolution # Doesn't pick up GNOME theme since contained.
+    - org.mozilla.Thunderbird # Doesn't integrate with Nextcloud as well as Evolution.
+    - org.audacityteam.Audacity # Say "no thanks" to spyware.
   ignore_errors: yes
 
 
