@@ -88,7 +88,7 @@
   set_fact:
     update_flatpak: |
       echo "*** Flatpak ***" && 
-      flatpak update {{ update_accept_var }} &&
+      sudo flatpak update {{ update_accept_var }} &&
   when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
   
 - name: General | Facts | Package | Update Commands | flatpak | not exists
