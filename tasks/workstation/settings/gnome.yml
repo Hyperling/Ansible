@@ -153,7 +153,7 @@
   dconf: 
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop', 
-             '{{ browser }}', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop',
+             '{{ browser }}', 'org.gnome.Evolution.desktop', 
              'com.vscodium.codium.desktop', 'org.shotcut.Shotcut.desktop', 
              'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop', 
              'rhythmbox.desktop', 'io.lbry.lbry-app.desktop',
