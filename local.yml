@@ -86,7 +86,7 @@
     - include: tasks/workstation/settings/vnc.yml
       when: vnc is defined
 
-    - include: tasks/workstation/software/services.yml
+    - include: tasks/workstation/settings/services.yml
       ignore_errors: yes
   
 
