@@ -40,7 +40,7 @@
 
 
 # Additional setup for systems with GUI.
-- name: Main | Workstation UI Setup
+- name: Main | Workstation Setup
   hosts: workstation
   connection: local
   become: true
