@@ -55,7 +55,7 @@
       - make
       - "{{ msgfmt }}"
     state: present
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  when: ansible_distribution not in ("Ubuntu", "FreeBSD") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
   shell: "cd ~/TRASH/dash-to-dock/; make; make install"
