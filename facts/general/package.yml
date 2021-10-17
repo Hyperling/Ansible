@@ -59,7 +59,7 @@
       echo "*** Pkg ***" &&
       sudo pkg update &&
       sudo pkg upgrade && 
-  when: ansible_pkg_mgr == "pkg"
+  when: ansible_pkg_mgr in ("pkg", "pkgng")
 
 - name: General | Facts | Package | Update Commands | parrot-upgrade
   set_fact:
