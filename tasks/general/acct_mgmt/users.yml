@@ -144,6 +144,7 @@
         return 1
       }
     sync: alias sync='date && echo "Syncing!" && sync && date'
+    editor: export EDITOR='vi'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -159,6 +160,7 @@
       {{ remount }}
       {{ update }}
       {{ sync }}
+      {{ editor }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
