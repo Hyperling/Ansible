@@ -19,6 +19,7 @@
     appimagelauncher: htop #placeholder
     nfs: nfs-common
     msgfmt: gettext
+    make: make
 
 
 - name: Workstation | Facts | Package | Pop_OS!
@@ -76,5 +77,6 @@
     firefox_esr: firefox-esr
     psutil: py38-psutil
     ansible_python_interpreter: "/usr/local/bin/python3.8"
+    make: gmake # make comes with OS and cannot be installed with pkg. Try using gmake for better luck.
   when: ansible_system == "FreeBSD"
 
