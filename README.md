@@ -2,20 +2,20 @@
 Getting real with system management via ansible-pull.
 
 ## Disclaimer
-This setup is specific tom the maintainer's devices and needs. You're welcome to use it as an example for your needs, but do not expect it to work as-is.
+This setup is specific to the maintainer's devices and needs. You're welcome to use it as an example for your needs, but do not expect it to work as-is.
 
 ## Currently Supported Linux Systems
 ### Debian Family
 #### Debian
-But only if using a recent enough version of Ansible. `pip` likely has a better version than `apt`.
+100%, but only if using a recent enough version of Ansible. `pip` usually has a better version than `apt`.
 #### Ubuntu
-100%
+100%, both server and desktop.
 #### Pop!_OS
-100%
+100%, have not used for a while though.
 #### Mint
-But not really used, just tested once for fun.
+100%, but not really used, just tested once for fun.
 #### Parrot Security OS (MATE)
-Still testing, but so far so good!
+100% for a while, but OS did not serve maintainer's needs and 404 errors were terrible. Ubuntu Rolling Rhino filled the gap.
 
 ### Arch Family
 #### Manjaro
@@ -23,7 +23,7 @@ Still testing, but so far so good!
 
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13
-100%, although GUI has not been tested on 13 yet.
+100%, although GUI is not working completely on 13 yet (dash-to-dock doesn't compile).
 Software choices are slightly more limited since not `flatpak`-enabled and not feeling a `ports` setup.
 
 ## Waiting To Be Tested
