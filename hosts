@@ -62,8 +62,11 @@ silicon-power
 ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
 ;                        Valid values: nanopool etherpool f2pool
 ;
+;    eth_minhashrate : Set to minimum hashrate over 10 minutes before restarting. Can accept M for Million and K for thousand.
+;                        Example: 100K
+;
 usb-miner amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
-x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool
+x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu_pool=nanopool eth_minhashrate=50M
 ;x570 amdgpu=true ethminer=true
 
 [server]

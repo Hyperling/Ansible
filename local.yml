@@ -40,7 +40,7 @@
 
 
 # Additional setup for systems with GUI.
-- name: Main | Workstation UI Setup
+- name: Main | Workstation Setup
   hosts: workstation
   connection: local
   become: true
@@ -48,6 +48,7 @@
   tasks:
     - include: facts/general/system.yml
     - include: facts/workstation/package.yml
+    - include: facts/general/service.yml
 
     # Set Up Desktop Environments #
     - include: tasks/workstation/freebsd/software/gui.yml
@@ -84,6 +85,9 @@
       when: rdp is defined
     - include: tasks/workstation/settings/vnc.yml
       when: vnc is defined
+
+    - include: tasks/workstation/settings/services.yml
+      ignore_errors: yes
   
 
 

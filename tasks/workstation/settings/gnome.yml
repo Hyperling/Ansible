@@ -52,13 +52,13 @@
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
   package:
     name: 
-      - make
+      - "{{ make }}"
       - "{{ msgfmt }}"
     state: present
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
-  shell: "cd ~/TRASH/dash-to-dock/; make; make install"
+  shell: "cd ~/TRASH/dash-to-dock/; {{ make }}; {{ make }} install"
   become_user: ling
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 

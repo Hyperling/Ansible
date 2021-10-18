@@ -106,6 +106,9 @@
       email = me@hyperling.com
       sortPools = true
       memTweak = 0
+      minHashrate = {{ eth_minhashrate }}
+      restarts = 0
+      maxRejectedShares = 1
     marker: ';{mark} MANAGED BY ANSIBLE - GPU Headers'
     marker_begin: ';;;;;;;;;;;; BEGIN'
     marker_end: ' END'

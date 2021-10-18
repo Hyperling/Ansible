@@ -1,0 +1,18 @@
+---
+# Enable and disable services.
+
+## CUPS ##
+
+- name: General | Software | Services | Disable CUPS Daemon
+  service:
+    name: "{{ cups }}"
+    pattern: "{{ cups_pattern }}"
+    state: started
+    enabled: yes
+
+- name: General | Software | Services | Disable CUPS-Browse Daemon
+  service:
+    name: "{{ cups_browse }}"
+    pattern: "{{ cups_browse_pattern }}"
+    state: started
+    enabled: yes
