@@ -145,6 +145,9 @@
       }
     sync: alias sync='date && echo "Syncing!" && sync && date'
     editor: export EDITOR='vi'
+    init_aliases: |
+      alias init-video='mkdir -v raw; mkdir -v exports; cp ~/Templates/*video* ./' 
+      alias init-prog='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -161,6 +164,7 @@
       {{ update }}
       {{ sync }}
       {{ editor }}
+      {{ init_aliases }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
