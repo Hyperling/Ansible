@@ -31,7 +31,7 @@
     name: "{{ item.app }}"
     remote: flathub
     state: present
-  loop: {{ flatpaks_generic }}
+  loop: "{{ flatpaks_generic }}"
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executables
@@ -44,7 +44,7 @@
     marker_end: "exit 0"
     state: present
     create: yes
-  loop: {{ flatpaks_generic }}
+  loop: "{{ flatpaks_generic }}"
 
 # Coding #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Installs
