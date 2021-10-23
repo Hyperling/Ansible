@@ -18,17 +18,33 @@
 ## Flatpak Installs ##
 
 # Generic #
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Array
+  set_fact:
+    flatpaks_generic:
+      - { app: "org.libreoffice.LibreOffice", name: "office" }
+      - { app: "com.discordapp.Discord", name: "discord" }
+      - { app: "org.telegram.desktop", name: "telegram" }
+      - { app: "io.lbry.lbry-app", name: "lbry" }
+
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Installs
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: present
-  loop:
-    - org.libreoffice.LibreOffice
-    - com.discordapp.Discord
-    - org.telegram.desktop
-    - io.lbry.lbry-app
+  loop: {{ flatpaks_generic }}
   ignore_errors: yes
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executables
+  blockinfile:
+    path: "{{ user_ling.home }}/bin/{{ item.name }}"
+    block: |
+      flatpak run {{ item.app }}
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+  loop: {{ flatpaks_generic }}
 
 # Coding #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Installs
