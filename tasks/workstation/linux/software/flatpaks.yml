@@ -17,10 +17,13 @@
 
 ## Flatpak Installs ##
 
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Variables
+  set_fact:
+    flatpak_exec_dir: "{{ user_ling.home }}/bin"
+
 # Generic #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Array
   set_fact:
-    flatpak_exec_dir: "{{ user_ling.home }}/bin"
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office" }
       - { app: "com.discordapp.Discord", name: "discord" }
