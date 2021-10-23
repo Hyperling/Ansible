@@ -20,6 +20,7 @@
 # Generic #
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Array
   set_fact:
+    flatpak_exec_dir: "{{ user_ling.home }}/bin"
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office" }
       - { app: "com.discordapp.Discord", name: "discord" }
@@ -36,7 +37,7 @@
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executables
   blockinfile:
-    path: "{{ user_ling.home }}/bin/{{ item.name }}"
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     block: |
       flatpak run {{ item.app }}
     marker: '{mark}'
@@ -44,6 +45,14 @@
     marker_end: "exit 0"
     state: present
     create: yes
+  loop: "{{ flatpaks_generic }}"
+  become_user: ling
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executable Permissions
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: file
+    mode: '0755'
   loop: "{{ flatpaks_generic }}"
 
 # Coding #
