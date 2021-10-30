@@ -147,7 +147,10 @@
     editor: export EDITOR='vi'
     init_aliases: |
       alias init-video='mkdir -v raw; mkdir -v exports; cp ~/Templates/*video* ./' 
-      alias init-prog='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
+      alias init-vid=init-video
+      alias init-program='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
+      alias init-prog=init-program
+    bye: alias bye="{{ shutdown_command }}"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -165,6 +168,7 @@
       {{ sync }}
       {{ editor }}
       {{ init_aliases }}
+      {{ bye }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:

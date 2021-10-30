@@ -6,6 +6,7 @@
     rc_conf: /dev/null
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
+    shutdown_command: sudo shutdown -h now
   when: ansible_system == "Linux"
 
 
@@ -14,6 +15,7 @@
     rc_conf: /etc/rc.conf
     lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /usr/local/etc/sudoers.d/
+    shutdown_command: sudo shutdown -p now
   when: ansible_system == "FreeBSD"
 
 
