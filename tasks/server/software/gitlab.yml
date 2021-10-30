@@ -1,3 +1,55 @@
 ---
-# Install a Gitlab server.
+# Install a Gitlab server for hosting software projects.
 # https://about.gitlab.com/install/#ubuntu
+
+## Install ##
+
+- name: Server | Software | GitLab | Check
+  package: 
+    name: gitlab-ee
+    state: present
+  ignore_errors: yes
+  register: gitlab_installed
+
+- name: Server | Software | GitLab | Pre-Reqs
+  package:
+    update_cache: yes
+    name: 
+      - curl 
+      - openssh-server 
+      - ca-certificates 
+      - tzdata 
+      - perl
+#      - postfix
+    state: present 
+  when: not gitlab_installed.success
+  
+- name: Server | Software | GitLab | Add Repo
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+  when: not gitlab_installed.success
+
+- name: Server | Software | GitLab | Install
+  shell: EXTERNAL_URL="https://gitlab.{{ domain }}" apt install gitlab-ee
+  when: not gitlab_installed.success
+
+- name: Server | Software | GitLab | Get Password
+  shell: cat /etc/gitlab/initial_root_password
+  register: gitlab_passwd
+  when: not gitlab_installed.success
+
+- name: Server | Software | GitLab | Print Password
+  debug: 
+    name: gitlab_passwd
+  when: not gitlab_installed.success
+
+- name: Server | Software | GitLab | Exit For Configuration
+  shell: exit 0
+  when: not gitlab_installed.success
+
+
+## Configuration ##
+# https://docs.gitlab.com/ee/install/next_steps.html
+
+- name: Server | Software | GitLab | TBD
+  shell: echo "hooray" # TBD
+  when: gitlab_installed.success
