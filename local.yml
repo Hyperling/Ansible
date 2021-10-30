@@ -57,6 +57,9 @@
     - include: tasks/workstation/linux/software/gnome.yml
       when: ansible_system == "Linux"
 
+    - include: tasks/workstation/linux/software/dwm.yml
+      when: ansible_system in ("Linux", "FreeBSD")
+
     # Software Tasks #
     - include: tasks/workstation/linux/software/flatpaks.yml
       when: ansible_system == "Linux" and flatpak_distro

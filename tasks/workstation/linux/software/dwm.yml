@@ -1,0 +1,61 @@
+---
+# Nice, simply, and easy to use tiling window manager.
+# https://dwm.suckless.org/
+# https://sites.google.com/site/lazyboxx/-articles/dwm-a-newbie-s-guide#TOC-Status-Bar
+
+## Pre-reqs ##
+
+- name: Workstation | Linux | Software | DWM | Pre-Reqs
+  package:
+    name:
+      - git
+      - "{{ make }}"
+    update_cache: yes
+
+
+## Download ##
+
+- name: Workstation | Linux | Software | DWM | Git Clone
+  git: 
+    repo: https://git.suckless.org/dwm
+    dest: "{{ dwm_install_dir }}"
+    clone: yes
+    force: yes
+
+## Configuration ##
+
+- name: Workstation | Linux | Software | DWM | Config File
+  copy:
+    src: dwm/dwm.desktop
+    dest: "{{ dwm_install_dir }}"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+
+
+## Install ##
+
+- name: Workstation | Linux | Software | DWM | Install
+  shell: "cd {{ dwm_install_dir }}; {{ make }} clean install"
+
+
+## X Init Sript ##
+
+- name: Workstation | Linux | Software | DWM | Shell Script
+  copy:
+    src: dwm/dwm.sh
+    dest: "{{ global_bin }}"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0755
+
+
+## Desktop File ##
+
+- name: Workstation | Linux | Software | DWM | Desktop File
+  copy:
+    src: dwm/dwm.desktop
+    dest: "{{ x_desktops }}"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
