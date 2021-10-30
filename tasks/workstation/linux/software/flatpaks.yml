@@ -2,6 +2,7 @@
 # Use flatpaks because they're consistent! :)
 
 ## Flatpak Pre-reqs ##
+
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Install
   package:
     name: flatpak
@@ -20,17 +21,39 @@
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Variables
   set_fact:
     flatpak_exec_dir: "{{ user_ling.home }}/bin"
+    flatoak_exec: "flatpak run"
 
-# Generic #
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Array
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Arrays
   set_fact:
     flatpaks_generic:
-      - { app: "org.libreoffice.LibreOffice", name: "office" }
-      - { app: "com.discordapp.Discord", name: "discord" }
-      - { app: "org.telegram.desktop", name: "telegram" }
-      - { app: "io.lbry.lbry-app", name: "lbry" }
+      - { app: "org.libreoffice.LibreOffice", name: "office", extra: "dbus-launch" }
+      - { app: "com.discordapp.Discord", name: "discord", extra: "" }
+      - { app: "org.telegram.desktop", name: "telegram", extra: "" }
+      - { app: "io.lbry.lbry-app", name: "lbry", extra: "" }
+    flatpaks_coding:
+      - { app: "com.vscodium.codium", name: "codium", extra: "" }
+      - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
+      - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
+      - { app: "io.dbeaver.DBeaverCommunity", name: "dbeaver", extra: "" }
+    flatpaks_editing:
+      - { app: "org.shotcut.Shotcut", name: "shotcut", extra: "" }
+      - { app: "com.obsproject.Studio", name: "obs", extra: "" }
+      - { app: "org.gimp.GIMP", name: "gimp", extra: "" }
+    flatpaks_gaming:
+      - { app: "com.valvesoftware.Steam", name: "steam", extra: "" }
+    flatpaks_remove:
+      - { app: "org.mozilla.firefox", name: "firefox", extra: "" }
+      - { app: "com.visualstudio.code", name: "vscode", extra: "" } # Why does this throw an error? It's the correct ID.
+      - { app: "com.visualstudio.code-oss", name: "code-oss", extra: "" }
+      - { app: "org.midori_browser.Midori", name: "midori", extra: "" }
+      - { app: "com.github.Eloston.UngoogledChromium", name: "unchrome", extra: "" }
+      - { app: "org.gnome.Evolution", name: "evolution", extra: "" } # Doesn't pick up GNOME theme since contained.
+      - { app: "org.mozilla.Thunderbird", name: "thunderbird", extra: "" } # Doesn't integrate with Nextcloud as well as Evolution.
+      - { app: "org.audacityteam.Audacity", name: "audacity", extra: "" } # Say "no thanks" to spyware.
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Installs
+# Generic #
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Installs
   flatpak:
     name: "{{ item.app }}"
     remote: flathub
@@ -38,11 +61,11 @@
   loop: "{{ flatpaks_generic }}"
   ignore_errors: yes
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executables
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Executables
   blockinfile:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     block: |
-      flatpak run {{ item.app }}
+      {{ item.extra }} {{ flatpak_exec }} {{ item.app }}
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
@@ -51,7 +74,7 @@
   loop: "{{ flatpaks_generic }}"
   become_user: ling
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic Executable Permissions
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Executable Permissions
   file: 
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: file
@@ -59,99 +82,177 @@
   loop: "{{ flatpaks_generic }}"
 
 # Coding #
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Installs
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Installs
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: present
-  loop:
-    - com.vscodium.codium
-    - com.google.AndroidStudio
-    - com.jetbrains.PyCharm-Community
-    - io.dbeaver.DBeaverCommunity
+  loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
   when: coding is defined
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding Uninstalls
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executables
+  blockinfile:
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    block: |
+      {{ item.extra }} {{ flatpak_exec }} {{ item.app }}
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+  loop: "{{ flatpaks_coding }}"
+  become_user: ling
+  when: coding is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executable Permissions
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: file
+    mode: '0755'
+  loop: "{{ flatpaks_coding }}"
+  when: coding is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Uninstall
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: absent
-  loop:
-    - com.vscodium.codium
-    - com.google.AndroidStudio
-    - com.jetbrains.PyCharm-Community
-    - io.dbeaver.DBeaverCommunity
+  loop: "{{ flatpaks_coding }}"
+  ignore_errors: yes
+  when: coding is not defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Remove Executables
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: absent
+  loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
   when: coding is not defined
 
 # Media Editors #
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Installs
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Installs
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: present
-  loop:
-    - org.shotcut.Shotcut
-    - com.obsproject.Studio
-    - org.gimp.GIMP
+  loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
+  when: editing is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executables
+  blockinfile:
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    block: |
+      {{ item.extra }} {{ flatpak_exec }} {{ item.app }}
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+  loop: "{{ flatpaks_editing }}"
+  become_user: ling
+  when: editing is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executable Permissions
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: file
+    mode: '0755'
+  loop: "{{ flatpaks_editing }}"
   when: editing is defined
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninstalls
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: absent
-  loop:
-    - org.shotcut.Shotcut
-    - com.obsproject.Studio
-    - org.gimp.GIMP
+  loop: "{{ flatpaks_editing }}"
+  ignore_errors: yes
+  when: editing is not defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Remove Executables
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: absent
+  loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
   when: editing is not defined
 
 # Gaming #
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming Installs
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Installs
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: present
-  loop:
-    - com.valvesoftware.Steam
+  loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
   when: gaming is defined
 
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming Uninstalls
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executables
+  blockinfile:
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    block: |
+      {{ item.extra }} {{ flatpak_exec }} {{ item.app }}
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+  loop: "{{ flatpaks_gaming }}"
+  become_user: ling
+  when: gaming is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executable Permissions
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: file
+    mode: '0755'
+  loop: "{{ flatpaks_gaming }}"
+  when: gaming is defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Uninstalls
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: absent
-  loop:
-    - com.valvesoftware.Steam
+  loop: "{{ flatpaks_gaming }}"
+  ignore_errors: yes
+  when: gaming is not defined
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Remove Executables
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: absent
+  loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
   when: gaming is not defined
 
 # Removals #
-- name: Workstation | Linux | Flatpak Distro | Flatpak | Application Uninstalls
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Uninstalls | Uninstall
   flatpak:
-    name: "{{ item }}"
+    name: "{{ item.app }}"
     remote: flathub
     state: absent
-  loop:
-    - org.mozilla.firefox
-    - com.visualstudio.code # Why does this throw an error? It's the correct ID.
-    - com.visualstudio.code-oss
-    - org.midori_browser.Midori
-    - com.github.Eloston.UngoogledChromium
-    - org.gnome.Evolution # Doesn't pick up GNOME theme since contained.
-    - org.mozilla.Thunderbird # Doesn't integrate with Nextcloud as well as Evolution.
-    - org.audacityteam.Audacity # Say "no thanks" to spyware.
+  loop: "{{ flatpaks_remove }}"
+  ignore_errors: yes
+
+- name: Workstation | Linux | Flatpak Distro | Flatpak | Uninstalls | Remove Executables
+  file: 
+    path: "{{ flatpak_exec_dir }}/{{ item.name }}"
+    state: absent
+  loop: "{{ flatpaks_remove }}"
   ignore_errors: yes
 
 
 ## Other Stuff ##
 
 # Software not yet available or working properly in Flatpak form.
+
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Install From Repo
   package: 
     name: 
@@ -170,6 +271,7 @@
   when: firefox != firefox_esr
 
 # Lutris #
+
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
   apt_repository: 
     repo: ppa:lutris-team/lutris
@@ -200,6 +302,7 @@
   when: ansible_distribution == "Ubuntu" and gaming is not defined
 
 # Remove Repo Software #
+
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Applications
   package: 
     name:
