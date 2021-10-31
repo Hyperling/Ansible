@@ -93,9 +93,8 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;       hugo : Set to anything to install HUGO static website generator.
 ;                Example: true
 ;
-;     gitlab : Set to anything to install Gitlab project management tool.
+;     gitlab : Set to anything to install GitLab project management tool.
 ;                Example: true
-;                NOT IMPLEMENTED YET
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
 grafana domain=hyperling.com grafana=true influxdb1=true
@@ -108,3 +107,4 @@ reverse-proxy certbot=true
 nextcloud
 wordpress     certbot=true
 usb-server
+gitlab gitlab=true domain=hyperling.com
