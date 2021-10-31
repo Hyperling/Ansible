@@ -20,6 +20,7 @@
     nfs: nfs-common
     msgfmt: gettext
     make: make
+    font_awesome: fonts-font-awesome
 
 
 - name: Workstation | Facts | Package | Pop_OS!
@@ -78,5 +79,6 @@
     psutil: py38-psutil
     ansible_python_interpreter: "/usr/local/bin/python3.8"
     make: gmake # make comes with OS and cannot be installed with pkg. Try using gmake for better luck.
+    font_awesome: font-awesome
   when: ansible_system == "FreeBSD"
 

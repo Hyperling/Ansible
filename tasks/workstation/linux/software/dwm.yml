@@ -1,5 +1,5 @@
 ---
-# Nice, simply, and easy to use tiling window manager.
+# Nice, simple, and easy to use tiling window manager.
 # https://dwm.suckless.org/
 # https://sites.google.com/site/lazyboxx/-articles/dwm-a-newbie-s-guide#TOC-Status-Bar
 
@@ -10,6 +10,7 @@
     name:
       - git
       - "{{ make }}"
+      - "{{ font_awesome }}"
     update_cache: yes
 
 
@@ -26,11 +27,11 @@
 
 - name: Workstation | Linux | Software | DWM | Config File
   copy:
-    src: dwm/dwm.desktop
+    src: dwm/config.h
     dest: "{{ dwm_install_dir }}"
     owner: root
     group: "{{ root_group }}"
-    mode: 0644
+    mode: 0755
 
 
 ## Install ##
