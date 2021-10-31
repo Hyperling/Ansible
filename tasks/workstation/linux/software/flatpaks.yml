@@ -26,9 +26,9 @@
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Arrays
   set_fact:
     flatpaks_generic:
-      - { app: "org.libreoffice.LibreOffice", name: "office", extra: "dbus-launch" }
+      - { app: "org.libreoffice.LibreOffice", name: "office", extra: "" }
       - { app: "org.telegram.desktop", name: "telegram", extra: "" }
-      - { app: "io.lbry.lbry-app", name: "lbry", extra: "" }
+      - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" }
       - { app: "org.signal.Signal", name: "signal", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
