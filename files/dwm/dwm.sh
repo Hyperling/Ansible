@@ -27,7 +27,7 @@ eval `dbus-launch`
 # Custom #
 
 while true; do
-  xsetroot -name "`date +"%Y-%m-%d %H:%m:%S"`"
+  xsetroot -name "`date +"%Y-%m-%d %H:%M:%S"`"
 done &
 
 
