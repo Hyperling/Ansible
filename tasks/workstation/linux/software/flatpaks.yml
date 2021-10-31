@@ -27,9 +27,9 @@
   set_fact:
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office", extra: "dbus-launch" }
-      - { app: "com.discordapp.Discord", name: "discord", extra: "" }
       - { app: "org.telegram.desktop", name: "telegram", extra: "" }
       - { app: "io.lbry.lbry-app", name: "lbry", extra: "" }
+      - { app: "org.signal.Signal", name: "signal", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
@@ -50,6 +50,7 @@
       - { app: "org.gnome.Evolution", name: "evolution", extra: "" } # Doesn't pick up GNOME theme since contained.
       - { app: "org.mozilla.Thunderbird", name: "thunderbird", extra: "" } # Doesn't integrate with Nextcloud as well as Evolution.
       - { app: "org.audacityteam.Audacity", name: "audacity", extra: "" } # Say "no thanks" to spyware.
+      - { app: "com.discordapp.Discord", name: "discord", extra: "" } # Stopped working, just spins and says Starting.
 
 # Generic #
 
