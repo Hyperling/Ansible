@@ -21,7 +21,7 @@
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Variables
   set_fact:
     flatpak_exec_dir: "{{ user_ling.home }}/bin"
-    flatoak_exec: "flatpak run"
+    flatpak_exec: "flatpak run"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Arrays
   set_fact:
