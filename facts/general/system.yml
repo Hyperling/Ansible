@@ -7,6 +7,7 @@
     leet_drive: /mnt/leet
     lynis_install_dir: /usr/local/lynis
     dwm_install_dir: /usr/local/src/dwm
+    st_install_dir: /usr/local/src/st
     global_bin: /usr/local/bin
     x_desktops: /usr/share/xsessions
 

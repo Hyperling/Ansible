@@ -21,6 +21,7 @@
     msgfmt: gettext
     make: make
     font_awesome: fonts-font-awesome
+    dmenu: dmenu
 
 
 - name: Workstation | Facts | Package | Pop_OS!
@@ -36,6 +37,7 @@
     flatpak_distro: true
     firefox_esr: firefox
     psutil: python3-psutil
+    dmenu: suckless-tools
   when: ansible_distribution == "Ubuntu"
 
 
@@ -44,6 +46,7 @@
     flatpak_distro: true
     firefox_esr: firefox-esr
     psutil: python3-psutil
+    dmenu: suckless-tools
   when: ansible_distribution == "Debian"
 
 

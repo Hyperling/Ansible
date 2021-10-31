@@ -11,6 +11,7 @@
       - git
       - "{{ make }}"
       - "{{ font_awesome }}"
+      - "{{ dmenu }}"
     update_cache: yes
 
 
@@ -20,6 +21,13 @@
   git: 
     repo: https://git.suckless.org/dwm
     dest: "{{ dwm_install_dir }}"
+    clone: yes
+    force: yes
+
+- name: Workstation | Linux | Software | DWM | Git Clone (st)
+  git: 
+    repo: https://git.suckless.org/st
+    dest: "{{ st_install_dir }}"
     clone: yes
     force: yes
 
@@ -38,6 +46,9 @@
 
 - name: Workstation | Linux | Software | DWM | Install
   shell: "cd {{ dwm_install_dir }}; {{ make }} clean install"
+
+- name: Workstation | Linux | Software | DWM | Install (st)
+  shell: "cd {{ st_install_dir }}; {{ make }} clean install"
 
 
 ## X Init Sript ##
