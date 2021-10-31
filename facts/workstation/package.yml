@@ -84,4 +84,3 @@
     make: gmake # make comes with OS and cannot be installed with pkg. Try using gmake for better luck.
     font_awesome: font-awesome
   when: ansible_system == "FreeBSD"
-
