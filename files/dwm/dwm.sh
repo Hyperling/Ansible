@@ -1,6 +1,6 @@
 #!/bin/bash
 # 2021-10-30 Hyperling
-# Basically .xinitrc, but not placed there to avoid GDM problems.
+# Basically .xinitrc, but not placed there to avoid GDM/GNOME problems.
 
 ## System Libs ##
 
@@ -31,6 +31,6 @@ while true; do
 done &
 
 
-## Start DWM ##
+## Start ##
 
 exec dwm

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=DWM
+Name=dwm
 Comment=1337 Tiling Window Manager
 Exec=/usr/local/bin/dwm.sh
 Type=Application
