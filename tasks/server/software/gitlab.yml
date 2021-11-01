@@ -5,9 +5,7 @@
 ## Install ##
 
 - name: Server | Software | GitLab | Check
-  package: 
-    name: gitlab-ee
-    state: present
+  shell: which gitlab-ee
   ignore_errors: yes
   register: gitlab_installed
 
