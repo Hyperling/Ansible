@@ -27,7 +27,7 @@
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Install
-  shell: EXTERNAL_URL="https://gitlab.{{ domain }}" apt install gitlab-ee
+  shell: EXTERNAL_URL="http://gitlab.{{ domain }}" apt install gitlab-ee
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Get Password
