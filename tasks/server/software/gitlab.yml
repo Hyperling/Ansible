@@ -37,7 +37,7 @@
 
 - name: Server | Software | GitLab | Print Password
   debug: 
-    name: gitlab_passwd
+    var: gitlab_passwd
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Exit For Configuration
