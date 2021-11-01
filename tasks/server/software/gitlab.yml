@@ -18,12 +18,12 @@
       - ca-certificates 
       - tzdata 
       - perl
-#      - postfix
+      - postfix
     state: present 
   when:  gitlab_installed.failed
   
 - name: Server | Software | GitLab | Add Repo
-  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Install
