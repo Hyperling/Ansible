@@ -20,29 +20,29 @@
       - perl
 #      - postfix
     state: present 
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
   
 - name: Server | Software | GitLab | Add Repo
   shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Install
   shell: EXTERNAL_URL="https://gitlab.{{ domain }}" apt install gitlab-ee
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Get Password
   shell: cat /etc/gitlab/initial_root_password
   register: gitlab_passwd
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Print Password
   debug: 
     name: gitlab_passwd
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Exit For Configuration
   shell: exit 0
-  when: not gitlab_installed.success
+  when:  gitlab_installed.failed
 
 
 ## Configuration ##
@@ -50,4 +50,4 @@
 
 - name: Server | Software | GitLab | TBD
   shell: echo "hooray" # TBD
-  when: gitlab_installed.success
+  when: not gitlab_installed.failed
