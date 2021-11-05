@@ -150,7 +150,9 @@
       alias init-vid=init-video
       alias init-program='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
       alias init-prog=init-program
-    bye: alias bye="{{ shutdown_command }}"
+    bye: |
+      alias bye="{{ shutdown_command }}"
+      alias goodbye="update -y && bye"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
