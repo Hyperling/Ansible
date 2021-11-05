@@ -41,6 +41,8 @@
       - { app: "org.gimp.GIMP", name: "gimp", extra: "" }
     flatpaks_gaming:
       - { app: "com.valvesoftware.Steam", name: "steam", extra: "" }
+      - { app: "com.play0ad.zeroad", name: "zeroad", extra: "" }
+      - { app: "net.supertuxkart.SuperTuxKart", name: "tuxkart", extra: "" }
     flatpaks_remove:
       - { app: "org.mozilla.firefox", name: "firefox", extra: "" }
       - { app: "com.visualstudio.code", name: "vscode", extra: "" } # Why does this throw an error? It's the correct ID.

@@ -24,7 +24,7 @@ x570 branch=dev
 ;     vnc : Define for installation of VNC protocol
 ;             NOT IMPLEMENTED YET
 ;
-dell-laptop coding=true editing=true
+dell-laptop coding=true editing=true gaming=true
 dell-inspiron coding=true
 usb-workstation coding=true
 lbry-server-1
