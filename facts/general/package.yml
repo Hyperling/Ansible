@@ -89,7 +89,7 @@
   set_fact:
     update_package_manager: |
       echo "*** DNF ***" &&
-      sudo dnf upgrade {{ update accept var }} &&
+      sudo dnf upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("dnf")
 
 
