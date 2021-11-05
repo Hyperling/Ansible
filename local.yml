@@ -59,6 +59,7 @@
 
     - include: tasks/workstation/linux/software/dwm.yml
       when: ansible_system in ("Linux", "FreeBSD")
+      ignore_errors: yes
 
     # Software Tasks #
     - include: tasks/workstation/linux/software/flatpaks.yml
