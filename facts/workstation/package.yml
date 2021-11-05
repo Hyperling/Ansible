@@ -12,7 +12,7 @@
 - name: Workstation | Facts | Package | Consistent
   set_fact:
     firefox: firefox
-    firefox-esr: firefox-esr
+    firefox_esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
     psutil: python3-psutil
