@@ -12,8 +12,10 @@
 - name: Workstation | Facts | Package | Consistent
   set_fact:
     firefox: firefox
+    firefox-esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
+    psutil: python3-psutil
     gnome_tweaks: gnome-tweaks
     dconf_editor: dconf-editor
     appimagelauncher: htop #placeholder
@@ -28,7 +30,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -36,7 +37,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
     dmenu: suckless-tools
   when: ansible_distribution == "Ubuntu"
 
@@ -44,8 +44,6 @@
 - name: Workstation | Facts | Package | Debian
   set_fact:
     flatpak_distro: true
-    firefox_esr: firefox-esr
-    psutil: python3-psutil
     dmenu: suckless-tools
   when: ansible_distribution == "Debian"
 
@@ -54,7 +52,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
   when: ansible_distribution == "Linux Mint"
 
 
@@ -62,7 +59,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox-esr
-    psutil: python3-psutil
   when: ansible_distribution == "Parrot OS"
 
 
@@ -78,7 +74,6 @@
 - name: Workstation | Facts | Package | FreeBSD
   set_fact:
     flatpak_distro: false
-    firefox_esr: firefox-esr
     psutil: py38-psutil
     ansible_python_interpreter: "/usr/local/bin/python3.8"
     make: gmake # make comes with OS and cannot be installed with pkg. Try using gmake for better luck.
