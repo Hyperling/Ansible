@@ -30,6 +30,13 @@
     ansible_python_interpreter: "/usr/local/bin/python3.8"
   when: ansible_system == "FreeBSD"
 
+- name: General | Facts | Package | dnf
+  set_fact:
+    sshfs: fuse-sshfs
+    locate: mlocate
+    opensshd: openssh
+  when: ansible_pkg_mgr == "dnf"
+
 
 - name: General | Facts | Package | Update Commands | Helpers
   set_fact:
@@ -77,6 +84,13 @@
         fi
       done &&
   when: ansible_distribution == "Parrot OS"
+
+- name: General | Facts | Package | Update Commands | dnf
+  set_fact:
+    update_package_manager: |
+      echo "*** DNF ***" &&
+      sudo dnf upgrade {{ update accept var }} &&
+  when: ansible_pkg_mgr in ("dnf")
 
 
 - name: General | Facts | Package | Update Commands | flatpak | check
