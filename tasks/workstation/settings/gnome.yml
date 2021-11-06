@@ -2,7 +2,7 @@
 # GNOME settings, extensions, and setup.
 
 # Check for special software that may need added to favorites.
-- name: Workstation | Account Management | GNOME | Checks | Defaults
+- name: Workstation | Account Management | GNOME | Facts | Defaults
   set_fact:
     browser: "com.github.Eloston.UngoogledChromium.desktop"
 
@@ -13,8 +13,18 @@
 
 - name: Workstation | Account Management | GNOME | Checks | Brave | Set As Browser
   set_fact:
-    browser: brave-browser.desktop
+    browser: "brave-browser.desktop"
   when: not brave.failed
+
+- name: Workstation | Account Management | GNOME | Checks | LibreWolf | Locate
+  shell: which librewolf
+  register: librewolf
+  ignore_errors: yes
+
+- name: Workstation | Account Management | GNOME | Checks | LibreWolf | Set As Browser
+  set_fact:
+    browser: "io.gitlab.librewolf-community.desktop"
+  when: not librewolf.failed || (flatpak_distro is defined && flatpak_distro)
 
 
 # Make sure Gnome-Tweaks is installed
@@ -154,7 +164,7 @@
   dconf: 
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop', 
-             '{{ browser }}', 'io.gitlab.librewolf-community.desktop', 'org.gnome.Evolution.desktop', 
+             '{{ browser }}', 'org.gnome.Evolution.desktop', 
              'com.vscodium.codium.desktop', 'org.shotcut.Shotcut.desktop', 
              'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop', 
              'io.lbry.lbry-app.desktop',
