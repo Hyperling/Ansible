@@ -3,12 +3,6 @@
 
 ## Cron ##
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora)
-  package:
-    name: cronie
-    state: present
-  when: ansible_pkg_mgr == "dnf"
-
 - name: General | Software | Services | Enable CROND
   service:
     name: "{{ crond }}"

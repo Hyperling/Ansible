@@ -50,6 +50,12 @@
     - "{{ opensshd }}"
     state: present
 
+- name: General | Software | Services | Install CROND (Looking at you, Fedora)
+  package:
+    name: cronie
+    state: present
+  when: ansible_pkg_mgr == "dnf"
+
 - name: General | Software | Packages | Update Software (Disabled)
   package: 
     name:
