@@ -23,7 +23,8 @@ This setup is specific to the maintainer's devices and needs. You're welcome to 
 
 ### Fedora Family
 #### Fedora 35
-In progress.
+Workstation: 99%
+Server: Untested
 
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13
