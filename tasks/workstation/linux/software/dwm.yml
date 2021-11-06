@@ -11,14 +11,8 @@
       - git
       - "{{ make }}"
       - "{{ dmenu }}"
-    update_cache: yes
-
-- name: Workstation | Linux | Software | DWM | Extras
-  package:
-    name:
       - "{{ font_awesome }}"
     update_cache: yes
-  ignore_errors: yes
 
 
 ## Download ##
