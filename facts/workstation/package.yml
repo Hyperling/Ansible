@@ -24,6 +24,7 @@
     make: make
     font_awesome: fonts-font-awesome
     dmenu: dmenu
+    sassc: sassc
 
 
 - name: Workstation | Facts | Package | Pop_OS!
@@ -86,4 +87,5 @@
     flatpak_distro: true
     firefox_esr: firefox
     font_awesome: python3-XStatic-Font-Awesome
+    nfs: nfs-utls
   when: ansible_distribution == "Fedora"
