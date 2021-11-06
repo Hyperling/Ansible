@@ -87,5 +87,5 @@
     flatpak_distro: true
     firefox_esr: firefox
     font_awesome: python3-XStatic-Font-Awesome
-    nfs: nfs-utls
+    nfs: nfs-utils
   when: ansible_distribution == "Fedora"
