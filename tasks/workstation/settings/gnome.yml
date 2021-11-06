@@ -24,7 +24,7 @@
 - name: Workstation | Account Management | GNOME | Checks | LibreWolf | Set As Browser
   set_fact:
     browser: "io.gitlab.librewolf-community.desktop"
-  when: not librewolf.failed || (flatpak_distro is defined && flatpak_distro)
+  when: not librewolf.failed or (flatpak_distro is defined and flatpak_distro)
 
 
 # Make sure Gnome-Tweaks is installed
