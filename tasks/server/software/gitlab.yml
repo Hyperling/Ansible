@@ -1,15 +1,42 @@
 ---
 # Install a Gitlab server for hosting software projects.
-# https://about.gitlab.com/install/#ubuntu
+
+##  Checks ##
+
+- name: "Server | Software | GitLab | Checks | Host Variable: {{ gitlab }}"
+  shell: echo "ERROR! Variable has an invalid value!" && exit 1
+  when: gitlab not in ("ee", "ce")
+
+- name: Server | Software | GitLab | Checks | Play Variables
+  set_fact:
+    gitlab_bundle: "gitlab-{{ gitlab }}"
+    gitlab_config: /etc/gitlab/gitlab.rb
+    gitlab_url_prefix: "https://git"
+
+# Ensure other version is not installed.
+- name: Server | Software | GitLab | Checks | Remove EE
+  package:
+    name: gitlab-ee
+    state: absent
+  when: gitlab == "ce"
+
+- name: Server | Software | GitLab | Checks | Remove CE
+  package:
+    name: gitlab-ce
+    state: absent
+  when: gitlab == "ee"
+
 
 ## Install ##
+# https://about.gitlab.com/install/?version=ce#ubuntu
+# https://about.gitlab.com/install/?version=ce#centos-8 (Fedora)
 
-- name: Server | Software | GitLab | Check
-  shell: which gitlab-ee
+- name: Server | Software | GitLab | Install | Check
+  shell: which gitlab-ctl
   ignore_errors: yes
   register: gitlab_installed
 
-- name: Server | Software | GitLab | Pre-Reqs
+- name: Server | Software | GitLab | Install | Pre-Reqs
   package:
     update_cache: yes
     name: 
@@ -22,20 +49,24 @@
     state: present 
   when:  gitlab_installed.failed
   
-- name: Server | Software | GitLab | Add Repo
-  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash
+- name: Server | Software | GitLab | Install | Add Repo (apt)
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }}/script.deb.sh | bash
+  when:  gitlab_installed.failed and ansible_pkg_mnr == "apt"
+  
+- name: Server | Software | GitLab | Install | Add Repo (dnf)
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }/script.rpm.sh | bash
+  when:  gitlab_installed.failed and ansible_pkg_mnr == "dnf"
+
+- name: Server | Software | GitLab | Install | Install
+  shell: EXTERNAL_URL="{{ gitlab_url_prefix }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }
   when:  gitlab_installed.failed
 
-- name: Server | Software | GitLab | Install
-  shell: EXTERNAL_URL="http://gitlab.{{ domain }}" apt install gitlab-ee
-  when:  gitlab_installed.failed
-
-- name: Server | Software | GitLab | Get Password
-  shell: cat /etc/gitlab/initial_root_password
+- name: Server | Software | GitLab | Install | Get Password
+  shell: cat /etc/gitlab/initial_root_password && cp /etc/gitlab/initial_root_password ~/
   register: gitlab_passwd
   when:  gitlab_installed.failed
 
-- name: Server | Software | GitLab | Print Password
+- name: Server | Software | GitLab | Install | Print Password
   debug: 
     var: gitlab_passwd.stdout_lines
   when:  gitlab_installed.failed
@@ -44,6 +75,26 @@
 ## Configuration ##
 # https://docs.gitlab.com/ee/install/next_steps.html
 
-- name: Server | Software | GitLab | TBD
-  shell: echo "hooray" # TBD
-  when: not gitlab_installed.failed
+# Need to make server think it's https but not actually listen for it, otherwise reverse proxy doesn't work.
+# https://www.itsfullofstars.de/2019/06/gitlab-behind-a-reverse-proxy/
+
+- name: Server | Software | GitLab | Configure |Check External URL
+  lineinfile:
+    path: "{{ gitlab_config }}"
+    regexp: '^external_url '
+    line: "external_url '{{ gitlab_url_prefix }}.{{ domain }}' # Managed by Ansible"
+    state: present
+    backup: yes
+
+- name: Server | Software | GitLab | Configure | Turn Off Serving Local SSL
+  blockinfile:
+    path: "{{ gitlab_config }}"
+    block: |
+      nginx['listen_port'] = 80
+      nginx['listen_https'] = false
+    marker: "# {mark} MANAGED BY ANSIBLE - {{ gitlab_config }}"
+    state: present
+    create: yes
+
+- name: Server | Software | GitLab | Configure | Reconfigure
+  shell: gitlab-ctl reconfigure
