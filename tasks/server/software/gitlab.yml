@@ -54,7 +54,7 @@
   when:  gitlab_installed.failed and ansible_pkg_mnr == "apt"
   
 - name: Server | Software | GitLab | Install | Add Repo (dnf)
-  shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }/script.rpm.sh | bash
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }}/script.rpm.sh | bash
   when:  gitlab_installed.failed and ansible_pkg_mnr == "dnf"
 
 - name: Server | Software | GitLab | Install | Install
