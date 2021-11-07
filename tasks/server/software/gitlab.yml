@@ -84,6 +84,7 @@
     regexp: '^external_url '
     line: "external_url '{{ gitlab_url_prefix }}.{{ domain }}' # Managed by Ansible"
     state: present
+    create: no
     backup: yes
 
 - name: Server | Software | GitLab | Configure | Turn Off Serving Local SSL
@@ -94,7 +95,8 @@
       nginx['listen_https'] = false
     marker: "# {mark} MANAGED BY ANSIBLE - {{ gitlab_config }}"
     state: present
-    create: yes
+    create: no
+    backup: yes
 
 - name: Server | Software | GitLab | Configure | Reconfigure
   shell: gitlab-ctl reconfigure

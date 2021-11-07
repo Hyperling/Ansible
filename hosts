@@ -108,5 +108,5 @@ reverse-proxy certbot=true
 nextcloud
 wordpress     certbot=true
 usb-server
-gitlab  gitlab=ee domain=hyperling.com
+gitlab  gitlab=ce domain=hyperling.com
 gitlab2 gitlab=ce domain=hyperling.com
