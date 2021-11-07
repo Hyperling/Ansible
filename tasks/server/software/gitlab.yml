@@ -51,11 +51,11 @@
   
 - name: Server | Software | GitLab | Install | Add Repo (apt)
   shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }}/script.deb.sh | bash
-  when:  gitlab_installed.failed and ansible_pkg_mnr == "apt"
+  when:  gitlab_installed.failed and ansible_pkg_mgr == "apt"
   
 - name: Server | Software | GitLab | Install | Add Repo (dnf)
   shell: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_bundle }}/script.rpm.sh | bash
-  when:  gitlab_installed.failed and ansible_pkg_mnr == "dnf"
+  when:  gitlab_installed.failed and ansible_pkg_mgr == "dnf"
 
 - name: Server | Software | GitLab | Install | Install
   shell: EXTERNAL_URL="{{ gitlab_url_prefix }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }}
@@ -84,7 +84,7 @@
     regexp: '^external_url '
     line: "external_url '{{ gitlab_url_prefix }}.{{ domain }}' # Managed by Ansible"
     state: present
-    create: no
+    create: yes
     backup: yes
 
 - name: Server | Software | GitLab | Configure | Turn Off Serving Local SSL
@@ -95,7 +95,7 @@
       nginx['listen_https'] = false
     marker: "# {mark} MANAGED BY ANSIBLE - {{ gitlab_config }}"
     state: present
-    create: no
+    create: yes
     backup: yes
 
 - name: Server | Software | GitLab | Configure | Reconfigure
