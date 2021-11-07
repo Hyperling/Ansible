@@ -304,7 +304,6 @@
     name: 
       - lutris
     state: absent
-  ignore_errors: yes
   when: ansible_architecture != "aarch64" and gaming is not defined
   ignore_errors: yes
 
