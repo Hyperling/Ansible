@@ -3,7 +3,7 @@
 
 - name: General | Account Management | Sudo | Copy Ansible
   copy:
-    src: sudoers_ansible
+    src: sudo/sudoers_ansible
     dest: "{{ sudoers_install_dir }}"
     owner: root
     group: "{{ root_group }}"
@@ -11,7 +11,7 @@
 
 - name: General | Account Management | Sudo | Copy Sudo Group
   copy:
-    src: sudoers_sudo
+    src: sudo/sudoers_sudo
     dest: "{{ sudoers_install_dir }}"
     owner: root
     group: "{{ root_group }}"

@@ -15,11 +15,16 @@ This setup is specific to the maintainer's devices and needs. You're welcome to 
 #### Mint
 100%, but not really used, just tested once for fun.
 #### Parrot Security OS (MATE)
-100% for a while, but OS did not serve maintainer's needs and 404 errors were terrible. Ubuntu Rolling Rhino filled the gap.
+100% for a while, but OS did not serve maintainer's needs and 404 errors were terrible while updating. Ubuntu Rolling Rhino filled the gap.
 
 ### Arch Family
 #### Manjaro
 100% at some point.
+
+### Fedora Family
+#### Fedora 35
+Workstation: 100%
+Server: 100%
 
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13

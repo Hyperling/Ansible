@@ -12,21 +12,25 @@
 - name: Workstation | Facts | Package | Consistent
   set_fact:
     firefox: firefox
+    firefox_esr: firefox-esr
     thunderbird: thunderbird
     evolution: evolution
+    psutil: python3-psutil
     gnome_tweaks: gnome-tweaks
     dconf_editor: dconf-editor
     appimagelauncher: htop #placeholder
     nfs: nfs-common
     msgfmt: gettext
     make: make
+    font_awesome: fonts-font-awesome
+    dmenu: dmenu
+    sassc: sassc
 
 
 - name: Workstation | Facts | Package | Pop_OS!
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
   when: ansible_distribution == "Pop!_OS"
 
 
@@ -34,15 +38,14 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
+    dmenu: suckless-tools
   when: ansible_distribution == "Ubuntu"
 
 
 - name: Workstation | Facts | Package | Debian
   set_fact:
     flatpak_distro: true
-    firefox_esr: firefox-esr
-    psutil: python3-psutil
+    dmenu: suckless-tools
   when: ansible_distribution == "Debian"
 
 
@@ -50,7 +53,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox
-    psutil: python3-psutil
   when: ansible_distribution == "Linux Mint"
 
 
@@ -58,7 +60,6 @@
   set_fact:
     flatpak_distro: true
     firefox_esr: firefox-esr
-    psutil: python3-psutil
   when: ansible_distribution == "Parrot OS"
 
 
@@ -74,9 +75,17 @@
 - name: Workstation | Facts | Package | FreeBSD
   set_fact:
     flatpak_distro: false
-    firefox_esr: firefox-esr
     psutil: py38-psutil
     ansible_python_interpreter: "/usr/local/bin/python3.8"
     make: gmake # make comes with OS and cannot be installed with pkg. Try using gmake for better luck.
+    font_awesome: font-awesome
   when: ansible_system == "FreeBSD"
 
+
+- name: Workstation | Facts | Package | Fedora
+  set_fact:
+    flatpak_distro: true
+    firefox_esr: firefox
+    font_awesome: python3-XStatic-Font-Awesome
+    nfs: nfs-utils
+  when: ansible_distribution == "Fedora"

@@ -1,26 +1,32 @@
 ---
 # Define file, folder, and other facts per OS.
 
+- name: General | Facts | System | Global
+  set_fact:
+    leet_ssh: 'ling@leet'
+    leet_drive: /mnt/leet
+    lynis_install_dir: /usr/local/lynis
+    dwm_install_dir: /usr/local/src/dwm
+    st_install_dir: /usr/local/src/st
+    global_bin: /usr/local/bin
+    x_desktops: /usr/share/xsessions
+
+
 - name: General | Facts | System | Linux
   set_fact:
     rc_conf: /dev/null
-    lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /etc/sudoers.d/
+    shutdown_command: sudo shutdown -h now
   when: ansible_system == "Linux"
 
 
 - name: General | Facts | System | FreeBSD
   set_fact:
     rc_conf: /etc/rc.conf
-    lynis_install_dir: /usr/local/lynis
     sudoers_install_dir: /usr/local/etc/sudoers.d/
+    shutdown_command: sudo shutdown -p now
   when: ansible_system == "FreeBSD"
 
-
-- name: General | Facts | System | 1337 Drive
-  set_fact:
-    leet_ssh: 'ling@leet'
-    leet_drive: /mnt/leet
 
 - name: General | Facts | System | 1337 Drive Mounted?
   stat:
