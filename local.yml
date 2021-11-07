@@ -166,6 +166,7 @@
 
     - include: tasks/server/software/gitlab.yml
       when: gitlab is defined
+      when: grafana is defined and ansible_pkg_mgr in ("apt", "dnf")
 
 
 
