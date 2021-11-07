@@ -8,6 +8,7 @@ localhost
 dell-laptop branch=dev
 airbook branch=dev
 x570 branch=dev
+test branch=dev
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
