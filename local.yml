@@ -18,6 +18,9 @@
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
       ignore_errors: yes
+    - include: tasks/general/software/sendmail.yml
+      ignore_errors: yes
+      when: ansible_system == "FreeBSD"
 
     - include: facts/general/gather.yml
 

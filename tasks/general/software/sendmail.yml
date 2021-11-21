@@ -1,0 +1,47 @@
+---
+# Ensure /var/spool/clientmque folder doesn't overflow.
+# Preferably only on servers that don't already have postfix?
+
+- name: Server | Sendmail | Variables
+  set_fact:
+    sendmail: sendmail
+    sendmail_queue: sendmail_msp_queue
+
+- name: Server | Sendmail | Check
+  shell: which postfix
+  register: postfix
+
+- name: Server | Sendmail | Install
+  package:
+    name: 
+      - "{{ sendmail }}"
+    state: present
+  when: postfix.failed
+
+- name: Server | Sendmail | Configure
+  blockinfile:
+    path: /etc/rc.conf
+    block: |
+      sendmail_enable="YES"
+      sendmail_msp_queue_enable="YES"
+    marker: "# {mark} MANAGED BY ANSIBLE - sendmail"
+    state: present
+    create: yes
+    backup: yes
+  when: postfix.failed and ansible_system == "FreeBSD"
+
+- name: Server | Sendmail | Enable + Start | Main
+  service:
+    name: "{{ sendmail }}"
+    pattern: "{{ sendmail }}"
+    state: started
+    enabled: yes
+  when: postfix.failed
+
+- name: Server | Sendmail | Enable + Start | Queue
+  service:
+    name: "{{ sendmail_queue }}"
+    pattern: "{{ sendmail_queue }}"
+    state: started
+    enabled: yes
+  when: postfix.failed and ansible_system == "FreeBSD"

@@ -3,15 +3,19 @@
 
 ##  Checks ##
 
-- name: "Server | Software | GitLab | Checks | Host Variable: {{ gitlab }}"
+- name: "Server | Software | GitLab | Checks | Host Variable [gitlab]={{ gitlab }}"
   shell: echo "ERROR! Variable has an invalid value!" && exit 1
   when: gitlab not in ("ee", "ce")
+
+- name: "Server | Software | GitLab | Checks | Host Variable [gitlab_url]={{ gitlab_url }}"
+  set_fact:
+    gitlab_url: "https://gitlab"
+  when: gitlab_url is not defined
 
 - name: Server | Software | GitLab | Checks | Play Variables
   set_fact:
     gitlab_bundle: "gitlab-{{ gitlab }}"
     gitlab_config: /etc/gitlab/gitlab.rb
-    gitlab_url_prefix: "https://git"
 
 # Ensure other version is not installed.
 - name: Server | Software | GitLab | Checks | Remove EE
@@ -58,7 +62,7 @@
   when:  gitlab_installed.failed and ansible_pkg_mgr == "dnf"
 
 - name: Server | Software | GitLab | Install | Install
-  shell: EXTERNAL_URL="{{ gitlab_url_prefix }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }}
+  shell: EXTERNAL_URL="{{ gitlab_url | replace("https","http") }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }}
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Install | Get Password
@@ -78,11 +82,11 @@
 # Need to make server think it's https but not actually listen for it, otherwise reverse proxy doesn't work.
 # https://www.itsfullofstars.de/2019/06/gitlab-behind-a-reverse-proxy/
 
-- name: Server | Software | GitLab | Configure |Check External URL
+- name: Server | Software | GitLab | Configure | Check External URL
   lineinfile:
     path: "{{ gitlab_config }}"
     regexp: '^external_url '
-    line: "external_url '{{ gitlab_url_prefix }}.{{ domain }}' # Managed by Ansible"
+    line: "external_url '{{ gitlab_url }}.{{ domain }}' # Managed by Ansible"
     state: present
     create: yes
     backup: yes

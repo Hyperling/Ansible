@@ -33,9 +33,8 @@
 - name: Miner | Facts | System | nanominer 1
   set_fact:
     nanominer_home: "{{ user_mfn.home }}/nanominer"
-    nanominer_version: "3.3.13" # Download link: https://github.com/nanopool/nanominer/releases
+    nanominer_version: "3.4.3" # Download link: https://github.com/nanopool/nanominer/releases
     nanominer_script: "{{ user_mfn.home }}/nanominer.sh"
-    nanominer_tar_remote: "InstallFiles/Miners/nanominer/*.tar.gz"
 
 - name: Miner | Facts | System | nanominer 2
   set_fact:

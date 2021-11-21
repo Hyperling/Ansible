@@ -6,7 +6,7 @@
 
 - name: General | Telegraf | Variables 1/4
   set_fact:
-    telegraf_tar: telegraf-1.18.0_linux_amd64.tar.gz
+    telegraf_tar: telegraf-1.20.3_linux_amd64.tar.gz
     telegraf_path: /usr/local/bin
     telegraf_config_path: /usr/local/etc
     telegraf_user: "{{ user_ansible.name }}"
