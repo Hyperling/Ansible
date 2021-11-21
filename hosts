@@ -98,7 +98,8 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;              ce - Installs Community Edition. Excludes paid features if you'll never use them. Supposedly difficult to move to EE.
 ;                Example: ce
 ;
-; gitlab_url : The URL prefix for the server. Using 'mygitlabserver' would result in "https://mygitlabserver.{{domain}}".
+; gitlab_url : The URL prefix for the server. Using 'https://mygitlabserver' would result in "https://mygitlabserver.{{domain}}".
+;              Regardless of whether you choose http or https, the Certbot config will be skipped since the maintainer uses a reverse proxy.
 ;                Example: gitlab
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
@@ -112,5 +113,5 @@ reverse-proxy certbot=true
 nextcloud
 wordpress     certbot=true
 usb-server
-git     gitlab=ce domain=hyperling.com gitlab_url=git
-gitlab  gitlab=ce domain=hyperling.com gitlab_url=gitlab
+git     gitlab=ce domain=hyperling.com gitlab_url=https://git
+gitlab  gitlab=ce domain=hyperling.com gitlab_url=https://gitlab
