@@ -82,7 +82,7 @@
 # Need to make server think it's https but not actually listen for it, otherwise reverse proxy doesn't work.
 # https://www.itsfullofstars.de/2019/06/gitlab-behind-a-reverse-proxy/
 
-- name: Server | Software | GitLab | Configure |Check External URL
+- name: Server | Software | GitLab | Configure | Check External URL
   lineinfile:
     path: "{{ gitlab_config }}"
     regexp: '^external_url '
