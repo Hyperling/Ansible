@@ -102,7 +102,7 @@ x570 amdgpu=true nanominer=true nanominer_gpu=eth nanominer_gpus=0 nanominer_gpu
 ;                Example: gitlab
 ;
 onlyoffice domain=hyperling.com onlyoffice=true
-grafana domain=hyperling.com grafana=true influxdb1=true
+grafana    domain=hyperling.com grafana=true influxdb1=true
 test
 hyperling     certbot=true
 hyperling.com certbot=true

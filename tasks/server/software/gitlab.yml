@@ -3,11 +3,11 @@
 
 ##  Checks ##
 
-- name: "Server | Software | GitLab | Checks | Host Variable: {{ gitlab }}"
+- name: "Server | Software | GitLab | Checks | Host Variable [gitlab]={{ gitlab }}"
   shell: echo "ERROR! Variable has an invalid value!" && exit 1
   when: gitlab not in ("ee", "ce")
 
-- name: Server | Software | GitLab | Checks | Host Variables [Prefix]
+- name: "Server | Software | GitLab | Checks | Host Variable [gitlab_url]={{ gitlab_url }}"
   set_fact:
     gitlab_url: "https://gitlab"
   when: gitlab_url is not defined
