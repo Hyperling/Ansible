@@ -4,6 +4,8 @@
 
 - name: General | Finish | Ansible Pull Report | Finish File
   shell: "echo 'FINISH' >> {{ ansible_pull_report }}"
+  when: leet_drive_details.stat.exists
   
 - name: General | Finish | Ansible Pull Report | Add Date Entry
   shell: "date >> {{ ansible_pull_report }}"
+  when: leet_drive_details.stat.exists
