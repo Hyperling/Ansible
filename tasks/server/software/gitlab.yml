@@ -62,7 +62,7 @@
   when:  gitlab_installed.failed and ansible_pkg_mgr == "dnf"
 
 - name: Server | Software | GitLab | Install | Install
-  shell: EXTERNAL_URL="{{ gitlab_url }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }}
+  shell: EXTERNAL_URL="{{ gitlab_url | replace("https","http") }}.{{ domain }}" {{ ansible_pkg_mgr }} install -y {{ gitlab_bundle }}
   when:  gitlab_installed.failed
 
 - name: Server | Software | GitLab | Install | Get Password
