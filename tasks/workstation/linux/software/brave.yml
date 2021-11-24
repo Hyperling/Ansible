@@ -1,19 +1,34 @@
 ---
-# Everything needed to install Brave with apt
+# Everything needed to install Brave
 
-- name: Workstation | Software | Brave | Pre-Reqs
+- name: Workstation | Software | Brave | Pre-Reqs [apt]
   package:
     name: 
       - apt-transport-https
-      - curl
     state: present
+  when: ansible_pkg_mgr == "apt"
 
-- name: Workstation | Software | Brave | Add Repo
+- name: Workstation | Software | Brave | Pre-Reqs [dnf]
+  package:
+    name: 
+      - dnf-plugins-core
+    state: present
+  when: ansible_pkg_mgr == "dnf"
+
+- name: Workstation | Software | Brave | Add Repo [apt]
   shell: "{{ item }}"
   loop:
     - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
     - echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
     - apt update
+  when: ansible_pkg_mgr == "apt"
+
+- name: Workstation | Software | Brave | Add Repo [dnf]
+  shell: "{{ item }}"
+  loop:
+    - dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+    - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+  when: ansible_pkg_mgr == "dnf"
 
 - name: Workstation | Software | Brave | Install
   package:

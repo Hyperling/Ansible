@@ -72,7 +72,7 @@
       when: ansible_pkg_mgr == "apt"
 
     - include: tasks/workstation/linux/software/brave.yml
-      when: ansible_pkg_mgr == "apt"
+      when: ansible_pkg_mgr in ("apt", "dnf")
 
     - include: tasks/workstation/mac-os/software/brew.yml
       when: ansible_system == "Darwin"
