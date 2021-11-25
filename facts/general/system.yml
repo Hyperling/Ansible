@@ -81,3 +81,14 @@
   set_fact:
     branch: main
   when: branch is not defined
+
+
+- name: General | Facts | System | Users | Root
+  user:
+    name: root
+  register: user_root
+
+- name: General | Facts | System | Users | Hyperling
+  user:
+    name: ling
+  register: user_ling
