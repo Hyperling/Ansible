@@ -31,7 +31,7 @@
       ; pentesting : Set to anything to install tools such as metasploit (nmap is already provided for reporting)
       ;                Example: true
       ;
-      [general]
+      [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
     state: present
     create: yes
