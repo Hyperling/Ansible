@@ -4,14 +4,17 @@
 - name: General | Facts | Gather | Locate bash
   shell: which bash
   register: bash_exec
+  ingore_errors: yes
 
 - name: General | Facts | Gather | Locate ansible-pull
   shell: which ansible-pull
   register: ansible_pull_exec
+  ingore_errors: yes
 
 - name: General | Facts | Gather | Locate zsh
   shell: which zsh
   register: zsh_exec
+  ingore_errors: yes
 
 ### TODO: Remove these after going to file-based settings rather than hosts variables. ###
 - name: General | Facts | System | Users | Root

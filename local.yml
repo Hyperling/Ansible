@@ -8,8 +8,9 @@
   become: true  
 
   tasks:
+    - include: facts/general/gather.yml
     - include: tasks/general/acct_mgmt/provision_config.yml
-    
+
     - include: facts/general/system.yml
     - include: facts/general/package.yml
     - include: facts/general/service.yml
@@ -24,7 +25,7 @@
       ignore_errors: yes
       when: ansible_system == "FreeBSD"
 
-    - include: facts/general/gather.yml
+    - include: facts/general/gather.yml 
 
     - include: tasks/general/acct_mgmt/groups.yml
     - include: tasks/general/acct_mgmt/users.yml
