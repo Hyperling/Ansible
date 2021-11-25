@@ -9,4 +9,4 @@
     - mkdir -p /usr/local/bin/
     - mv ./msfinstall /usr/local/bin/msfinstall
     - msfinstall
-  when: ansible_distribution in ("Linux", "Darwin")
+  when: ansible_system in ("Linux", "Darwin")
