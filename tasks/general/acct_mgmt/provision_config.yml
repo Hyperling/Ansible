@@ -196,7 +196,7 @@
       ;              ce - Installs Community Edition. Excludes paid features if you'll never use them. Supposedly difficult to move to EE.
       ;                Example: ce
       ;
-      ; gitlab_url : The URL prefix for the server. Using 'http://mygitlabserver' would result in "http://mygitlabserver.{{domain}}".
+      ; gitlab_url : The URL prefix for the server. Using 'http://mygitlabserver' would result in "http://mygitlabserver.((domain))".
       ;              Regardless of whether you choose http or https, the Certbot config will be skipped since the maintainer uses a reverse proxy.
       ;                Example: https://gitlab
       ;
