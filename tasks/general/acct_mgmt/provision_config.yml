@@ -73,8 +73,8 @@
 
 - name: General | Account Management | Provisioning Configuration | Load General 3
   set_fact:
-    branch: "{{ lookup('ini', 'branch file={{gen_file}}') }}"
-    pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}}') }}"
+    branch: "{{ lookup('ini', 'branch file={{gen_file}} default="main"') }}"
+    pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=""') }}"
   ignore_errors: yes
 
 - name: General | Account Management | Provisioning Configuration | Debug General 3
