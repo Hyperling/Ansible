@@ -47,7 +47,7 @@
 #  ignore_errors: yes
 #
 #- name: General | Account Management | Provisioning Configuration | Debug General 1
-#- debug: 
+#  debug: 
 #    var: "{{ item }}"
 #  loop:
 #    - branch
@@ -64,7 +64,7 @@
 #  ignore_errors: yes
 #
 #- name: General | Account Management | Provisioning Configuration | Debug General 2
-#- debug: 
+#  debug: 
 #    var: "{{ item }}"
 #  loop:
 #    - branch
@@ -78,7 +78,7 @@
   ignore_errors: yes
 
 - name: General | Account Management | Provisioning Configuration | Debug General 3
-- debug: 
+  debug: 
     var: "{{ item }}"
   loop:
     - branch
