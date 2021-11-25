@@ -34,15 +34,15 @@ localhost
 ;     vnc : Define for installation of VNC protocol
 ;             NOT IMPLEMENTED YET
 ;
-dell-laptop coding=true editing=true gaming=true
-dell-inspiron coding=true gaming=true
-usb-workstation coding=true
-lbry-server-1
-lbry-server-2
-lbry-server-3
-aspire  coding=true editing=true gaming=true
-freeboy rdp=true
-airbook coding=true editing=true gaming=true
+;dell-laptop coding=true editing=true gaming=true
+;dell-inspiron coding=true gaming=true
+;usb-workstation coding=true
+;lbry-server-1
+;lbry-server-2
+;lbry-server-3
+;aspire  coding=true editing=true gaming=true
+;freeboy rdp=true
+;airbook coding=true editing=true gaming=true
 
 [mobile]
 pinephone

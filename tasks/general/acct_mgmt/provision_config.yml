@@ -9,8 +9,8 @@
   set_fact:
     gen_file: "{{ prov_dir }}/general.ini"
     gui_file: "{{ prov_dir }}/workstation.ini"
-    srv_file: "{{ prov_dir }}/server.ini"
     mnr_file: "{{ prov_dir }}/miner.ini"
+    srv_file: "{{ prov_dir }}/server.ini"
 
 - name: General | Account Management | Provisioning Configuration | Create Directory
   file: 
@@ -45,8 +45,6 @@
   set_fact:
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
-  when: branch is not defined and 
-        pentesting is not defined
 
 - name: General | Account Management | Provisioning Configuration | General | Print
   debug: 
@@ -93,12 +91,6 @@
     gaming:      "{{ lookup('ini', 'gaming  file={{gui_file}} default=false') }}"
     rdp:         "{{ lookup('ini', 'rdp     file={{gui_file}} default=false') }}"
     vnc:         "{{ lookup('ini', 'vnc     file={{gui_file}} default=false') }}"
-  when: workstation is not defined and 
-        coding is not defined and
-        editing is not defined and
-        gaming is not defined and
-        rdp is not defined and
-        vnc is not defined
 
 - name: General | Account Management | Provisioning Configuration | Workstation | Print
   debug: 
@@ -111,6 +103,126 @@
     - rdp
     - vnc
 
-# TBD: Create Server
 
-# TBD: Create Miner
+## Miner ##
+
+- name: General | Account Management | Provisioning Configuration | Miner | Create
+  blockinfile:
+    path: "{{ mnr_file }}"
+    block: |
+      ;;;;;;; Available options - all require lowercase values ;;;;;;
+      ;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
+      ;                        Example: true
+      ;
+      ;          nanominer : Set to anything for installation of nanominer
+      ;                        Example: true
+      ;
+      ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
+      ;                        Valid values: xmr
+      ;
+      ; nanominer_cpu_pool : Set to pool organization to use for CPU mining
+      ;                        Valid values: nanopool
+      ;
+      ;      nanominer_gpu : Set to coin code that you'd like the GPU to work on
+      ;                        Valid values: eth
+      ;
+      ;     nanominer_gpus : Set to comma list of GPU devices that should be used for nanominer
+      ;                        Example: 0,2,3
+      ;
+      ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
+      ;                        Valid values: nanopool etherpool f2pool
+      ;
+      ;    eth_minhashrate : Set to minimum hashrate over 10 minutes before restarting. Can accept M for Million and K for thousand.
+      ;                        Example: 100K
+      ;
+      [global]
+    marker: '; {mark} MANAGED BY ANSIBLE | Miner Config'
+    state: present
+    create: yes
+    backup: yes
+  when: user_root.home != ""
+
+#- name: General | Account Management | Provisioning Configuration | Miner | Load
+#  set_fact:
+#    workstation: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+#    coding:      "{{ lookup('ini', 'coding  file={{gui_file}} default=false') }}"
+#    editing:     "{{ lookup('ini', 'editing file={{gui_file}} default=false') }}"
+#    gaming:      "{{ lookup('ini', 'gaming  file={{gui_file}} default=false') }}"
+#    rdp:         "{{ lookup('ini', 'rdp     file={{gui_file}} default=false') }}"
+#    vnc:         "{{ lookup('ini', 'vnc     file={{gui_file}} default=false') }}"
+#
+#- name: General | Account Management | Provisioning Configuration | Miner | Print
+#  debug: 
+#    var: "{{ item }}"
+#  loop:
+#    - workstation
+#    - coding
+#    - editing
+#    - gaming
+#    - rdp
+#    - vnc
+
+
+## Server ##
+
+- name: General | Account Management | Provisioning Configuration | Server | Create
+  blockinfile:
+    path: "{{ srv_file }}"
+    block: |
+      ;;;;;;; Parameters ;;;;;;
+      ;
+      ;     domain : Set to the domain which gives the server its FQDN.
+      ;                Example: hyperling.com
+      ;
+      ; onlyoffice : Set to anything for this server to be configured as an OnlyOffice server.
+      ;                Example: true
+      ;
+      ;    grafana : Set to anything for this server to be configured as an Grafana web server.
+      ;                Example: true
+      ;
+      ;  influxdb1 : Set to anything for this server to be configured as an Influx 1 DB server.
+      ;                Example: true
+      ;
+      ;  influxdb2 : Set to anything for this server to be configured as an Influx 2 DB + web server.
+      ;                Example: true
+      ;
+      ;    certbot : Set to anything to add cron job for `certbot renew`.
+      ;                Example: true
+      ;
+      ;       hugo : Set to anything to install HUGO static website generator.
+      ;                Example: true
+      ;
+      ;     gitlab : ee - Installs Enterprise Edition Free Tier. Basically CE with an easier upgrade path for Paid Features.
+      ;              ce - Installs Community Edition. Excludes paid features if you'll never use them. Supposedly difficult to move to EE.
+      ;                Example: ce
+      ;
+      ; gitlab_url : The URL prefix for the server. Using 'http://mygitlabserver' would result in "http://mygitlabserver.{{domain}}".
+      ;              Regardless of whether you choose http or https, the Certbot config will be skipped since the maintainer uses a reverse proxy.
+      ;                Example: https://gitlab
+      ;
+      [global]
+    marker: '; {mark} MANAGED BY ANSIBLE | Server Config'
+    state: present
+    create: yes
+    backup: yes
+  when: user_root.home != ""
+
+#- name: General | Account Management | Provisioning Configuration | Server | Load
+#  set_fact:
+#    workstation: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+#    coding:      "{{ lookup('ini', 'coding  file={{gui_file}} default=false') }}"
+#    editing:     "{{ lookup('ini', 'editing file={{gui_file}} default=false') }}"
+#    gaming:      "{{ lookup('ini', 'gaming  file={{gui_file}} default=false') }}"
+#    rdp:         "{{ lookup('ini', 'rdp     file={{gui_file}} default=false') }}"
+#    vnc:         "{{ lookup('ini', 'vnc     file={{gui_file}} default=false') }}"
+#
+#- name: General | Account Management | Provisioning Configuration | Server | Print
+#  debug: 
+#    var: "{{ item }}"
+#  loop:
+#    - workstation
+#    - coding
+#    - editing
+#    - gaming
+#    - rdp
+#    - vnc
