@@ -50,9 +50,10 @@
 
 # Additional setup for systems with GUI.
 - name: Main | Workstation Setup
-  hosts: workstation
+  hosts: eveything
   connection: local
   become: true
+  when: workstation == "true"
 
   tasks:
     - include: facts/general/gather.yml
@@ -110,9 +111,10 @@
 
 # Additional setup for miners.
 - name: Main | Miner Setup
-  hosts: miner
+  hosts: everything
   connection: local
   become: true
+  when: miner == "true"
 
   tasks:
     ##### Setup #####
@@ -152,9 +154,10 @@
 
 # Easy to deploy server configurations.
 - name: Main | Server Setup
-  hosts: server
+  hosts: everything
   connection: local
   become: true
+  when: server == "true"
 
   tasks:
     - include: facts/general/gather.yml
