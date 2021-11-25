@@ -153,7 +153,7 @@
     bye: |
       alias bye="{{ shutdown_command }}"
       alias goodbye="update -y && bye"
-    metasploit:
+    metasploit: |
       alias metasploit="msfconsole"
       alias hax="metasploit"
 
