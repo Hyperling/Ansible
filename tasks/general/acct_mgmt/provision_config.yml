@@ -31,6 +31,7 @@
       ; pentesting : Set to anything to install tools such as metasploit (nmap is already provided for reporting)
       ;                Example: true
       ;
+      [general]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
     state: present
     create: yes
@@ -74,8 +75,7 @@
 - name: General | Account Management | Provisioning Configuration | Load General 3
   set_fact:
     branch: "{{ lookup('ini', 'branch file={{gen_file}} default=main') }}"
-    pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
-  ignore_errors: yes
+    pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}}') }}"
 
 - name: General | Account Management | Provisioning Configuration | Debug General 3
   debug: 
@@ -83,7 +83,6 @@
   loop:
     - branch
     - pentesting
-  ignore_errors: yes
 
 ## Holding off on these until concept is confirmed to work. ##
 # TBD: Create Workstation
