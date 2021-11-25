@@ -34,7 +34,7 @@ localhost
 ;     vnc : Define for installation of VNC protocol
 ;             NOT IMPLEMENTED YET
 ;
-dell-laptop 
+dell-laptop coding=true editing=true gaming=true
 dell-inspiron coding=true gaming=true
 usb-workstation coding=true
 lbry-server-1
