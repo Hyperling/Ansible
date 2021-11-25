@@ -8,10 +8,10 @@
 ;                Example: true
 ;
 localhost
-dell-laptop branch=dev pentesting=true
-airbook branch=dev pentesting=true
-x570 branch=dev
-test branch=dev pentesting=true
+;dell-laptop branch=dev pentesting=true
+;airbook branch=dev pentesting=true
+;x570 branch=dev
+;test branch=dev pentesting=true
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
