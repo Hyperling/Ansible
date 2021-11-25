@@ -1,5 +1,5 @@
 ---
-# Harmonize my systems rather than doing everything manually. :)
+# Harmonize systems rather than doing everything manually. :)
 
 # Setup of any device connected to this repo.
 - name: Main | Default Setup
@@ -39,6 +39,9 @@
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
     - include: tasks/workstation/freebsd/cron/ansible.yml
       when: ansible_system == "FreeBSD"
+
+    - include: tasks/general/software/metasploit.yml
+      when: pentesting is defined
 
 
 
@@ -98,7 +101,7 @@
   
 
 
-# Additional setup for miners!
+# Additional setup for miners.
 - name: Main | Miner Setup
   hosts: miner
   connection: local

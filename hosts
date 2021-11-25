@@ -1,14 +1,17 @@
 [everything]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;
-; branch : Provide the Github branch that the machine should poll.
-;            Exampel: main, dev
+;     branch : Provide the Github branch that the machine should poll.
+;                Example: main, dev
+;
+; pentesting : Set to anything to install tools such as metasploit (nmap is already provided for reporting)
+;                Example: true
 ;
 localhost
-dell-laptop branch=dev
-airbook branch=dev
+dell-laptop branch=dev pentesting=true
+airbook branch=dev pentesting=true
 x570 branch=dev
-test branch=dev
+test branch=dev pentesting=true
 
 [workstation]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
