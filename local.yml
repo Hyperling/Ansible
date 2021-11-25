@@ -8,6 +8,8 @@
   become: true  
 
   tasks:
+    - include: tasks/general/acct_mgmt/provision_config.yml
+    
     - include: facts/general/system.yml
     - include: facts/general/package.yml
     - include: facts/general/service.yml
