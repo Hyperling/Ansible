@@ -44,7 +44,7 @@
       when: ansible_system == "FreeBSD"
 
     - include: tasks/general/software/metasploit.yml
-      when: pentesting is defined
+      when: pentesting != "false"
 
 
 
