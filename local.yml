@@ -56,6 +56,8 @@
 
   tasks:
     - include: facts/general/gather.yml
+    ## TODO: Remove this when all includes are under 'everything' rather than relying on hosts tags. ##
+    - include: tasks/general/acct_mgmt/provision_config.yml
 
     - include: facts/general/system.yml
     - include: facts/workstation/package.yml
