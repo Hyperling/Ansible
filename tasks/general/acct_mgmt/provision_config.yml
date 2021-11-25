@@ -37,32 +37,47 @@
     backup: yes
   when: user_root.home != ""
 
-- name: General | Account Management | Provisioning Configuration | Load General 1
-  ini:
-    file: "{{ gen_file }}"
-    _terms: 
-      - branch
-      - pentesting
+# ini module not being recognized. Try it the lookup way.
+#- name: General | Account Management | Provisioning Configuration | Load General 1
+#  ini:
+#    file: "{{ gen_file }}"
+#    _terms: 
+#      - branch
+#      - pentesting
+#  ignore_errors: yes
+#
+#- name: General | Account Management | Provisioning Configuration | Debug General 1
+#- debug: 
+#    var: "{{ item }}"
+#  loop:
+#    - branch
+#    - pentesting
+#  ignore_errors: yes
+#
+#- name: General | Account Management | Provisioning Configuration | Load General 2
+#  ini:
+#    file: "{{ gen_file }}"
+#    _terms: "{{ item }}"
+#  loop:
+#    - branch
+#    - pentesting
+#  ignore_errors: yes
+#
+#- name: General | Account Management | Provisioning Configuration | Debug General 2
+#- debug: 
+#    var: "{{ item }}"
+#  loop:
+#    - branch
+#    - pentesting
+#  ignore_errors: yes
+
+- name: General | Account Management | Provisioning Configuration | Load General 3
+  set_fact:
+    branch: "{{ lookup('ini', 'branch file={{gen_file}}') }}"
+    pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}}') }}"
   ignore_errors: yes
 
-- name: General | Account Management | Provisioning Configuration | Debug General 1
-- debug: 
-    var: "{{ item }}"
-  loop:
-    - branch
-    - pentesting
-  ignore_errors: yes
-
-- name: General | Account Management | Provisioning Configuration | Load General 2
-  ini:
-    file: "{{ gen_file }}"
-    _terms: "{{ item }}"
-  loop:
-    - branch
-    - pentesting
-  ignore_errors: yes
-
-- name: General | Account Management | Provisioning Configuration | Debug General 2
+- name: General | Account Management | Provisioning Configuration | Debug General 3
 - debug: 
     var: "{{ item }}"
   loop:
