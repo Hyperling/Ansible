@@ -52,6 +52,8 @@
   become: true
 
   tasks:
+    - include: facts/general/gather.yml
+
     - include: facts/general/system.yml
     - include: facts/workstation/package.yml
     - include: facts/general/service.yml
@@ -111,7 +113,7 @@
     ##### Setup #####
     - include: tasks/miner/debug.yml
     
-    - include: facts/miner/gather.yml
+    - include: facts/general/gather.yml
 
     - include: tasks/miner/acct_mgmt/users.yml
 
@@ -150,6 +152,8 @@
   become: true
 
   tasks:
+    - include: facts/general/gather.yml
+
     - include: tasks/server/software/onlyoffice.yml
       when: onlyoffice is defined and ansible_pkg_mgr == "apt"
 

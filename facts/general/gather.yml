@@ -12,3 +12,13 @@
 - name: General | Facts | Gather | Locate zsh
   shell: which zsh
   register: zsh_exec
+
+### TODO: Remove these after going to file-based settings rather than hosts variables. ###
+- name: General | Facts | System | Users | Root
+  user:
+    name: root
+  register: user_root
+- name: General | Facts | System | Users | Hyperling
+  user:
+    name: ling
+  register: user_ling

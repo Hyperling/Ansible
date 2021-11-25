@@ -1,8 +1,0 @@
----
-# Find things we will use later.
-
-## Executables ##
-
-- name: Miner | Facts | System | Executables
-  shell: "which bash"
-  register: bash_exec
