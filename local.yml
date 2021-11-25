@@ -44,7 +44,7 @@
       when: ansible_system == "FreeBSD"
 
     - include: tasks/general/software/metasploit.yml
-      when: pentesting != "false"
+      when: pentesting == "true"
 
 
 
@@ -97,9 +97,9 @@
     - include: tasks/workstation/settings/nfs.yml
 
     - include: tasks/workstation/settings/rdp.yml
-      when: rdp is defined
+      when: rdp == "true"
     - include: tasks/workstation/settings/vnc.yml
-      when: vnc is defined
+      when: vnc == "true"
 
     - include: tasks/workstation/settings/services.yml
       ignore_errors: yes

@@ -1,3 +1,9 @@
+;;; DEPRECATION WARNING ;;;
+; The move to file-based variables has begun. 
+; This file will be removed once all variables are converted and all hosts have been modified.
+; Please see tasks/general/acct_mgmt/provision_config.yml for details.
+;;; END DEPRECATION WARNING ;;;
+
 [everything]
 ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;
@@ -28,7 +34,7 @@ localhost
 ;     vnc : Define for installation of VNC protocol
 ;             NOT IMPLEMENTED YET
 ;
-dell-laptop coding=true editing=true gaming=true
+dell-laptop 
 dell-inspiron coding=true gaming=true
 usb-workstation coding=true
 lbry-server-1

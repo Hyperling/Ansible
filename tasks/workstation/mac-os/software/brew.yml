@@ -20,7 +20,7 @@
       - firefox-esr
       - visual-studio-code
     status: present
-  when: coding is defined
+  when: coding == "true"
 
 - name: Workstation | Mac OS | Software | Brew | Install Packages (Editing)
   package:
@@ -28,7 +28,7 @@
       - audacity
       - shotcut
     status: present
-  when: editing is defined
+  when: editing == "true"
 
 - name: Workstation | Mac OS | Software | Brew | Install Packages (Gaming)
   package:
@@ -36,14 +36,14 @@
       - battle-net
       - steam
     status: present
-  when: gaming is defined
+  when: gaming == "true"
 
 - name: Workstation | Mac OS | Software | Brew | Install Packages (Cycling)
   package:
     name:
       - zwift
     status: present
-  when: cycling is defined
+  when: cycling == "true"
 
 #- name: Workstation | Mac OS | Software | Brew | Remove Packages
 #  package:
