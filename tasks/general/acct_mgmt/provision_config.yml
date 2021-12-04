@@ -32,7 +32,6 @@
       ;                Example: main, dev
       ;
       ; pentesting : Set to true to install tools such as metasploit (nmap is already provided for reporting)
-      ;                Example: true
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
@@ -114,11 +113,9 @@
       ;
       ;             enable : Set to true for system to be considered a miner.
       ;
-      ;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
-      ;                        Example: true
+      ;             amdgpu : Set to true for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
       ;
-      ;          nanominer : Set to anything for installation of nanominer
-      ;                        Example: true
+      ;          nanominer : Set to true for installation of nanominer
       ;
       ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
       ;                        Valid values: xmr
@@ -147,7 +144,7 @@
 
 - name: General | Account Management | Provisioning Configuration | Miner | Load
   set_fact:
-    miner: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+    miner: "{{ lookup('ini', 'enable  file={{mnr_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Miner | Print
   debug: 
@@ -169,23 +166,17 @@
       ;     domain : Set to the domain which gives the server its FQDN.
       ;                Example: hyperling.com
       ;
-      ; onlyoffice : Set to anything for this server to be configured as an OnlyOffice server.
-      ;                Example: true
+      ; onlyoffice : Set to true for this server to be configured as an OnlyOffice server.
       ;
-      ;    grafana : Set to anything for this server to be configured as an Grafana web server.
-      ;                Example: true
+      ;    grafana : Set to true for this server to be configured as an Grafana web server.
       ;
-      ;  influxdb1 : Set to anything for this server to be configured as an Influx 1 DB server.
-      ;                Example: true
+      ;  influxdb1 : Set to true for this server to be configured as an Influx 1 DB server.
       ;
-      ;  influxdb2 : Set to anything for this server to be configured as an Influx 2 DB + web server.
-      ;                Example: true
+      ;  influxdb2 : Set to true for this server to be configured as an Influx 2 DB + web server.
       ;
-      ;    certbot : Set to anything to add cron job for `certbot renew`.
-      ;                Example: true
+      ;    certbot : Set to true to add cron job for `certbot renew`.
       ;
-      ;       hugo : Set to anything to install HUGO static website generator.
-      ;                Example: true
+      ;       hugo : Set to true to install HUGO static website generator.
       ;
       ;     gitlab : ee - Installs Enterprise Edition Free Tier. Basically CE with an easier upgrade path for Paid Features.
       ;              ce - Installs Community Edition. Excludes paid features if you'll never use them. Supposedly difficult to move to EE.
@@ -204,7 +195,7 @@
 
 - name: General | Account Management | Provisioning Configuration | Server | Load
   set_fact:
-    server: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+    server: "{{ lookup('ini', 'enable  file={{srv_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Server | Print
   debug: 
