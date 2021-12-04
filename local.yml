@@ -66,7 +66,7 @@
           - miner
           - server
 
-      - name: FORTESTING | Inside Block | W Test 1 # Did not run on true. :()
+      - name: FORTESTING | Inside Block | W Test 1 # Did not run on true. :(
         shell: echo "test"
         when: workstation == "true"
 
@@ -78,27 +78,27 @@
         shell: echo "test"
         when: workstation
 
-      - name: FORTESTING | Inside Block | M Test 1
+      - name: FORTESTING | Inside Block | M Test 1 # Skipped on false. :)
         shell: echo "test"
         when: miner == "true"
 
-      - name: FORTESTING | Inside Block | M Test 2
+      - name: FORTESTING | Inside Block | M Test 2 # Skipped on false. :)
         shell: echo "test"
         when: miner == true
 
-      - name: FORTESTING | Inside Block | M Test 3
+      - name: FORTESTING | Inside Block | M Test 3 # Skipped on false. :)
         shell: echo "test"
         when: miner
 
-      - name: FORTESTING | Inside Block | S Test 1
+      - name: FORTESTING | Inside Block | S Test 1 # Skipped on false. :)
         shell: echo "test"
         when: server == "true"
 
-      - name: FORTESTING | Inside Block | S Test 2
+      - name: FORTESTING | Inside Block | S Test 2 # Skipped on false. :)
         shell: echo "test"
         when: server == true
 
-      - name: FORTESTING | Inside Block | S Test 3
+      - name: FORTESTING | Inside Block | S Test 3 # Skipped on false. :)
         shell: echo "test"
         when: server
 
