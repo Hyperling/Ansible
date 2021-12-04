@@ -66,8 +66,21 @@
           - miner
           - server
 
-      - name: FORTESTING | Inside Block | Exit
+      - name: FORTESTING | Inside Block | Exit 1
         shell: exit 1
+        when: workstation == "true"
+
+      - name: FORTESTING | Inside Block | Exit 2
+        shell: exit 1
+        when: workstation == true
+
+      - name: FORTESTING | Inside Block | Exit 3
+        shell: exit 1
+        when: workstation
+
+      - name: FORTESTING | Inside Block | Exit 4
+        shell: exit 1
+        when: workstation is defined
 
 
 
