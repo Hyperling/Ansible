@@ -66,21 +66,20 @@
           - miner
           - server
 
-      - name: FORTESTING | Inside Block | Exit 1
-        shell: exit 1
+      - name: FORTESTING | Inside Block | Test 1 # Got Skipped
+        shell: echo "test"
         when: workstation == "true"
 
-      - name: FORTESTING | Inside Block | Exit 2
-        shell: exit 1
+      - name: FORTESTING | Inside Block | Test 2 # Success!
+        shell: echo "test"
         when: workstation == true
 
-      - name: FORTESTING | Inside Block | Exit 3
-        shell: exit 1
+      - name: FORTESTING | Inside Block | Test 3
+        shell: echo "test"
         when: workstation
 
-      - name: FORTESTING | Inside Block | Exit 4
-        shell: exit 1
-        when: workstation is defined
+    - name: FORTESTING | Exit
+      shell: exit 1
 
 
 
