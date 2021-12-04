@@ -66,17 +66,41 @@
           - miner
           - server
 
-      - name: FORTESTING | Inside Block | Test 1 # Got Skipped
+      - name: FORTESTING | Inside Block | W Test 1 # Did not run on true. :()
         shell: echo "test"
         when: workstation == "true"
 
-      - name: FORTESTING | Inside Block | Test 2 # Success!
+      - name: FORTESTING | Inside Block | W Test 2 # Did run on true! :)
         shell: echo "test"
         when: workstation == true
 
-      - name: FORTESTING | Inside Block | Test 3
+      - name: FORTESTING | Inside Block | W Test 3 # Did run on true! :)
         shell: echo "test"
         when: workstation
+
+      - name: FORTESTING | Inside Block | M Test 1
+        shell: echo "test"
+        when: miner == "true"
+
+      - name: FORTESTING | Inside Block | M Test 2
+        shell: echo "test"
+        when: miner == true
+
+      - name: FORTESTING | Inside Block | M Test 3
+        shell: echo "test"
+        when: miner
+
+      - name: FORTESTING | Inside Block | S Test 1
+        shell: echo "test"
+        when: server == "true"
+
+      - name: FORTESTING | Inside Block | S Test 2
+        shell: echo "test"
+        when: server == true
+
+      - name: FORTESTING | Inside Block | S Test 3
+        shell: echo "test"
+        when: server
 
     - name: FORTESTING | Exit
       shell: exit 1
