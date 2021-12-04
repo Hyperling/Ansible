@@ -111,6 +111,9 @@
     path: "{{ mnr_file }}"
     block: |
       ;;;;;;; Available options - all require lowercase values ;;;;;;
+      ;
+      ;             enable : Set to true for system to be considered a miner.
+      ;
       ;             amdgpu : Set to anything for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
       ;                        Example: true
       ;
@@ -142,25 +145,15 @@
     backup: yes
   when: user_root.home != ""
 
-#- name: General | Account Management | Provisioning Configuration | Miner | Load
-#  set_fact:
-#    workstation: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
-#    coding:      "{{ lookup('ini', 'coding  file={{gui_file}} default=false') }}"
-#    editing:     "{{ lookup('ini', 'editing file={{gui_file}} default=false') }}"
-#    gaming:      "{{ lookup('ini', 'gaming  file={{gui_file}} default=false') }}"
-#    rdp:         "{{ lookup('ini', 'rdp     file={{gui_file}} default=false') }}"
-#    vnc:         "{{ lookup('ini', 'vnc     file={{gui_file}} default=false') }}"
-#
-#- name: General | Account Management | Provisioning Configuration | Miner | Print
-#  debug: 
-#    var: "{{ item }}"
-#  loop:
-#    - workstation
-#    - coding
-#    - editing
-#    - gaming
-#    - rdp
-#    - vnc
+- name: General | Account Management | Provisioning Configuration | Miner | Load
+  set_fact:
+    miner: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+
+- name: General | Account Management | Provisioning Configuration | Miner | Print
+  debug: 
+    var: "{{ item }}"
+  loop:
+    - miner
 
 
 ## Server ##
@@ -170,6 +163,8 @@
     path: "{{ srv_file }}"
     block: |
       ;;;;;;; Parameters ;;;;;;
+      ;
+      ;     enable : Set to true for system to be considered a server.
       ;
       ;     domain : Set to the domain which gives the server its FQDN.
       ;                Example: hyperling.com
@@ -207,22 +202,12 @@
     backup: yes
   when: user_root.home != ""
 
-#- name: General | Account Management | Provisioning Configuration | Server | Load
-#  set_fact:
-#    workstation: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
-#    coding:      "{{ lookup('ini', 'coding  file={{gui_file}} default=false') }}"
-#    editing:     "{{ lookup('ini', 'editing file={{gui_file}} default=false') }}"
-#    gaming:      "{{ lookup('ini', 'gaming  file={{gui_file}} default=false') }}"
-#    rdp:         "{{ lookup('ini', 'rdp     file={{gui_file}} default=false') }}"
-#    vnc:         "{{ lookup('ini', 'vnc     file={{gui_file}} default=false') }}"
-#
-#- name: General | Account Management | Provisioning Configuration | Server | Print
-#  debug: 
-#    var: "{{ item }}"
-#  loop:
-#    - workstation
-#    - coding
-#    - editing
-#    - gaming
-#    - rdp
-#    - vnc
+- name: General | Account Management | Provisioning Configuration | Server | Load
+  set_fact:
+    server: "{{ lookup('ini', 'enable  file={{gui_file}} default=false') }}"
+
+- name: General | Account Management | Provisioning Configuration | Server | Print
+  debug: 
+    var: "{{ item }}"
+  loop:
+    - server
