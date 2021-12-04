@@ -47,6 +47,30 @@
       when: pentesting == "true"
 
 
+    - name: FORTESTING | Outside Block | Output Block Variables
+      debug: 
+        var: "{{ item }}"
+      loop:
+        - workstation
+        - miner
+        - server
+
+    - name: FORTESTING | Block
+      block: 
+      
+      - name: FORTESTING | Inside Block | Output Block Variables
+        debug: 
+          var: "{{ item }}"
+        loop:
+          - workstation
+          - miner
+          - server
+
+      - name: FORTESTING | Inside Block | Exit
+        shell: exit 1
+
+
+
 ####### Workstations #######
 # Additional setup for systems with GUI.
     - name: Main | Workstation Setup
@@ -177,11 +201,10 @@
 
   ####### Reporting #######
   # Provide information for analysis.
-    - block:
 
-      - include: tasks/general/software/telegraf.yml
+    - include: tasks/general/software/telegraf.yml
 
-      - include: tasks/general/tests/nmap.yml
-      - include: tasks/general/tests/lynis.yml
+    - include: tasks/general/tests/nmap.yml
+    - include: tasks/general/tests/lynis.yml
 
-      - include: tasks/general/finish.yml
+    - include: tasks/general/finish.yml
