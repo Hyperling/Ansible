@@ -74,7 +74,7 @@
     ansible_pull_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/pull/{{ ansible_pull_report_name }}"
     lynis_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/lynis/{{ lynis_report_name }}"
     nmap_report_scp: "{{ leet_ssh }}:{{ report_scp_location }}/nmap/{{ nmap_report_name }}"
-  when: not leet_drive_details.stat.exists
+  #when: not leet_drive_details.stat.exists
 
 
 - name: General | Facts | System | Ansible Branch
