@@ -4,7 +4,7 @@
 
 - name: General | Finish | Ansible Pull Report | Debug
   debug:
-    name: leet_drive_details
+    var: leet_drive_details
   when: leet_drive_details is defined
 
 - name: General | Finish | Ansible Pull Report | Finish File
