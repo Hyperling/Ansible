@@ -3,7 +3,7 @@
 
 - name: General | Account Management | Provisioning Configuration | Variables 1
   set_fact:
-    prov_dir: "{{ user_root.home }}/.provision_config"
+    prov_dir: "{{ config_dir }}/hyperling-scm"
 
 - name: General | Account Management | Provisioning Configuration | Variables 2
   set_fact:
