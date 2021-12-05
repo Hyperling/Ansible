@@ -5,7 +5,7 @@
   cron:
     user: ansible
     name: "Ansible Sync"
-    minute: "*/15"
+    minute: "*/30"
     job: "sudo {{ ansible_pull_exec.stdout }} -o -U https://github.com/Hyperling/ansible.git --checkout {{ branch }}"
     state: present
     disabled: no
