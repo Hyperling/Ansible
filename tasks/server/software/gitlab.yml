@@ -10,7 +10,7 @@
 - name: "Server | Software | GitLab | Checks | Host Variable [gitlab_url]={{ gitlab_url }}"
   set_fact:
     gitlab_url: "https://gitlab"
-  when: gitlab_url is not defined
+  when: gitlab_url is not defined or not gitlab
 
 - name: Server | Software | GitLab | Checks | Play Variables
   set_fact:
