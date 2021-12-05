@@ -163,6 +163,11 @@
       alias show-config-srv="cat {{ srv_file }}"
       alias show-config-all="cat {{ prov_dir }}/*.ini"
       alias show-config="show-config-all"
+    edit_config: |
+      alias edit-config-gen="sudo $EDITOR {{ gen_file }}"
+      alias edit-config-wrk="sudo $EDITOR {{ wrk_file }}"
+      alias edit-config-mnr="sudo $EDITOR {{ mnr_file }}"
+      alias edit-config-srv="sudo $EDITOR {{ srv_file }}"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -183,6 +188,7 @@
       {{ bye }}
       {{ metasploit }}
       {{ show_config }}
+      {{ edit_config }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
