@@ -127,4 +127,3 @@ localhost
 ;;; usb-server
 ;;; git     gitlab=ce domain=hyperling.com gitlab_url=https://git
 ;;; gitlab  gitlab=ce domain=hyperling.com gitlab_url=https://gitlab
-;;; 
