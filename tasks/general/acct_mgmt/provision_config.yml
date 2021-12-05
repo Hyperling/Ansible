@@ -3,7 +3,7 @@
 
 - name: General | Account Management | Provisioning Configuration | Variables 1
   set_fact:
-    prov_dir: "{{ config_dir }}/hyperling-scm"
+    prov_dir: "/usr/local/etc/hyperling-scm"
 
 - name: General | Account Management | Provisioning Configuration | Variables 2
   set_fact:
