@@ -161,8 +161,8 @@
       alias show-config-wrk="cat {{ wrk_file }}"
       alias show-config-mnr="cat {{ mnr_file }}"
       alias show-config-srv="cat {{ srv_file }}"
-      alias show-config-all="cat {{ prov_dir }}/*"
-      alias show-config="show-all"
+      alias show-config-all="cat {{ prov_dir }}/*.ini"
+      alias show-config="show-config-all"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
