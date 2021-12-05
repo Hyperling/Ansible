@@ -43,7 +43,6 @@
     state: present
     create: yes
     backup: yes
-  when: user_root.home != ""
 
 - name: General | Account Management | Provisioning Configuration | General | Load
   set_fact:
@@ -89,7 +88,6 @@
     state: present
     create: yes
     backup: yes
-  when: user_root.home != ""
 
 - name: General | Account Management | Provisioning Configuration | Workstation | Load
   set_fact:
@@ -153,7 +151,6 @@
     state: present
     create: yes
     backup: yes
-  when: user_root.home != ""
 
 - name: General | Account Management | Provisioning Configuration | Miner | Load
   set_fact:
@@ -224,7 +221,6 @@
     state: present
     create: yes
     backup: yes
-  when: user_root.home != ""
 
 - name: General | Account Management | Provisioning Configuration | Server | Load
   set_fact:
