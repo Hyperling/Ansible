@@ -161,7 +161,7 @@
       alias show-config-wrk="cat {{ wrk_file }}"
       alias show-config-mnr="cat {{ mnr_file }}"
       alias show-config-srv="cat {{ srv_file }}"
-      alias show-config-all="cat {{ prov_dir }}/*.ini"
+      alias show-config-all="show-config-gen && echo '' && show-config-wrk && echo '' && show-config-mnr && echo '' && show-config-srv"
       alias show-config="show-config-all"
     edit_config: |
       alias edit-config-gen="sudo $EDITOR {{ gen_file }}"
