@@ -10,6 +10,7 @@
     st_install_dir: /usr/local/src/st
     global_bin: /usr/local/bin
     x_desktops: /usr/share/xsessions
+    config_dir: /usr/local/etc
 
 
 - name: General | Facts | System | Linux
