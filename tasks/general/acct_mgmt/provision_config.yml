@@ -27,10 +27,12 @@
     block: |
       ;;;;;;; Available options - all require lowercase values ;;;;;;
       ;
+      ;     enable : Provide true for the provision to occur.
+      ;
       ;       user : Provide the name of the user account.
       ;                Example: tom, jerry, kim, sarah
       ;
-      ;       user : Provide the name of the user account.
+      ;  user_desc : Provide the description of the user account.
       ;                Example: Thomas, Jerry, Kimberly, Sarah
       ;
       ;     branch : Provide the Github branch that the machine should poll.
@@ -46,6 +48,7 @@
 
 - name: General | Account Management | Provisioning Configuration | General | Load
   set_fact:
+    provision:  "{{ lookup('ini', 'enable     file={{gen_file}} default=false') }}"
     user:       "{{ lookup('ini', 'user       file={{gen_file}} default=ling') }}"
     user_desc:  "{{ lookup('ini', 'user_desc  file={{gen_file}} default=Hyperling') }}"
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
@@ -55,6 +58,7 @@
   debug: 
     var: "{{ item }}"
   loop:
+    - provision
     - user
     - user_desc
     - branch
@@ -249,3 +253,10 @@
     - hugo
     - gitlab
     - gitlab_url
+
+
+## Exit if not turned on yet ##
+
+- name: General | Account Management | Provisioning Configuration | Exit Check
+  shell: echo "Please configure the config files in {{ prov_dir }} then try again." && exit 1
+  when: provision != true
