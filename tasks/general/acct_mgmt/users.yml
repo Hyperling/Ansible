@@ -156,6 +156,13 @@
     metasploit: |
       alias metasploit="msfconsole"
       alias hax="metasploit"
+    show_config: |
+      alias show-config-gen="cat {{ gen_file }}"
+      alias show-config-wrk="cat {{ wrk_file }}"
+      alias show-config-mnr="cat {{ mnr_file }}"
+      alias show-config-srv="cat {{ srv_file }}"
+      alias show-config-all="cat {{ proc_dir }}/*"
+      alias show-config="show-all"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -175,6 +182,7 @@
       {{ init_aliases }}
       {{ bye }}
       {{ metasploit }}
+      {{ show_config }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
