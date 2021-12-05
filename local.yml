@@ -9,7 +9,6 @@
 
   tasks:
     - include: facts/general/gather.yml
-    - include: tasks/general/acct_mgmt/provision_config.yml
 
     - include: facts/general/system.yml
     - include: facts/general/package.yml
@@ -17,6 +16,8 @@
     - include: facts/general/user.yml
 
     - include: tasks/general/start.yml
+
+    - include: tasks/general/acct_mgmt/provision_config.yml
 
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
