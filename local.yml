@@ -227,7 +227,7 @@
         when: hugo == true
 
       - include: tasks/server/software/gitlab.yml
-        when: gitlab == true and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
+        when: gitlab and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
 
       when: server == true
 
