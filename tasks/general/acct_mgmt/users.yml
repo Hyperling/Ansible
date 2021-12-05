@@ -5,11 +5,11 @@
 
 - name: General | Account Management | Users | Use BASH (Default)
   set_fact:
-    ling_shell: "{{ bash_exec.stdout }}"
+    user_shell: "{{ bash_exec.stdout }}"
 
 - name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
   set_fact:
-    ling_shell: "{{ zsh_exec.stdout }}"
+    user_shell: "{{ zsh_exec.stdout }}"
   when: ansible_distribution == "Archlinux"
 
 
@@ -38,23 +38,23 @@
 
 - name: General | Account Management | Users | Hyperling
   user:
-    name: ling
-    comment: Hyperling
+    name: "{{ user }}"
+    comment: "{{ user_desc }}"
     groups: 
       - sudo
       - video
       - render
     append: yes
-    shell: "{{ ling_shell }}"
+    shell: "{{ user_shell }}"
     create_home: yes
     generate_ssh_key: yes
-  register: user_ling
+  register: user_user
 
 - name: General | Account Management | Users | Hyperling | Test Logging In
   shell: "echo SUCCESS"
   args:
-    executable: "{{ ling_shell }}"
-  become_user: ling
+    executable: "{{ user_shell }}"
+  become_user: "{{ user }}"
 
 
 ## Folders ##
@@ -76,14 +76,14 @@
     state: directory
     mode: '0755'
   loop:
-    - "{{ user_ling.home }}/bin"
-    - "{{ user_ling.home }}/LBRY"
-    - "{{ user_ling.home }}/TRASH"
-  become_user: ling
-  when: user_ling.home != ""
+    - "{{ user_user.home }}/bin"
+    - "{{ user_user.home }}/LBRY"
+    - "{{ user_user.home }}/TRASH"
+  become_user: "{{ user }}"
+  when: user_user.home != ""
 
 - name: General | Account Management | Users | Folders | Home Directories 700
-  shell: "chmod 700 {{ user_ling.home }}/../*"
+  shell: "chmod 700 {{ user_user.home }}/../*"
 
 
 ## Files ##
@@ -202,9 +202,9 @@
     backup: yes
   loop:
     - "{{ user_root.home }}"
-    - "{{ user_ling.home }}"
+    - "{{ user_user.home }}"
   ignore_errors: yes
-  when: user_root.home != "" and user_ling.home != ""
+  when: user_root.home != "" and user_user.home != ""
 
 - name: General | Account Management | Users | Files | .zshrc
   blockinfile:
@@ -218,6 +218,6 @@
     backup: yes
   loop:
     - "{{ user_root.home }}"
-    - "{{ user_ling.home }}"
+    - "{{ user_user.home }}"
   ignore_errors: yes
-  when: user_root.home != "" and user_ling.home != ""
+  when: user_root.home != "" and user_user.home != ""

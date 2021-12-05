@@ -21,7 +21,7 @@
   user:
     name: root
   register: user_root
-- name: General | Facts | System | Users | Hyperling
+- name: General | Facts | System | Users | {{ name_desc }}
   user:
-    name: ling
-  register: user_ling
+    name: "{{ user }}"
+  register: user_user

@@ -42,7 +42,7 @@
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Check
   shell: "cd ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/"
-  become_user: ling
+  become_user: "{{ user }}"
   register: dash_to_dock_exists
   ignore_errors: yes
 
@@ -56,7 +56,7 @@
     clone: yes
     force: no
     version: master
-  become_user: ling
+  become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
@@ -70,14 +70,14 @@
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
   shell: "cd ~/TRASH/dash-to-dock/; {{ make }}; {{ make }} install"
-  become_user: ling
+  become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
   dconf: 
     key: /org/gnome/shell/enabled-extensions
     state: read
-  become_user: ling
+  become_user: "{{ user }}"
   register: gnome_enabled_extensions
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
@@ -134,7 +134,7 @@
     key: /org/gnome/shell/enabled-extensions
     value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
 # Settings #
@@ -144,21 +144,21 @@
     key: /org/gnome/shell/extensions/dash-to-dock/dock-position
     value: "'LEFT'"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
   dconf: 
     key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
     value: "32"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Favorites (Linux)
   dconf: 
@@ -170,7 +170,7 @@
              'io.lbry.lbry-app.desktop',
              'com.valvesoftware.Steam.desktop']"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
   when: ansible_system == "Linux"
   
 - name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
@@ -180,7 +180,7 @@
              'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop', 
              'code-oss.desktop', 'org.telegram.desktop.desktop']"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
   when: ansible_system == "FreeBSD"
 
 
@@ -192,42 +192,42 @@
     key: /org/gnome/desktop/interface/clock-show-date
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - 24h Format
   dconf: 
     key: /org/gnome/desktop/interface/clock-format
     value: "'24h'"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Seconds
   dconf: 
     key: /org/gnome/desktop/interface/clock-show-seconds
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Weekday
   dconf: 
     key: /org/gnome/desktop/interface/clock-show-weekday
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - 24h Format
   dconf: 
     key: /org/gnome/desktop/interface/show-battery-percentage
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Week Date
   dconf: 
     key: /org/gnome/desktop/calendar/show-weekdate
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 
 # Never Prompt for Removal Media
@@ -246,7 +246,7 @@
     key: /org/gnome/desktop/wm/preferences/button-layout 
     value: "'appmenu:minimize,close'"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 
 # Security
@@ -255,14 +255,14 @@
     key: /org/gnome/desktop/privacy/disable-camera
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Privacy - Microphone
   dconf: 
     key: /org/gnome/desktop/privacy/disable-microphone
     value: "true"
     state: present
-  become_user: ling
+  become_user: "{{ user }}"
 
 
 

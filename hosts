@@ -7,6 +7,7 @@
 [global]
 localhost
 
+;;; Old hosts file:
 ;;; [everything]
 ;;; ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;;; ;

@@ -110,6 +110,6 @@
 - name: Miner | Software | Ethminer | Script
   shell: "{{ item }}"
   loop:
-    - "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
+    - "scp {{ user }}@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
     - "chmod 755 {{ user_mfn.home }}/ethminer.sh"
     - "chown {{ user_mfn.user }} {{ user_mfn.home }}/ethminer.sh"

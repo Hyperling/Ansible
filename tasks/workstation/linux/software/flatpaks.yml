@@ -27,7 +27,7 @@
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Variables
   set_fact:
-    flatpak_exec_dir: "{{ user_ling.home }}/bin"
+    flatpak_exec_dir: "{{ user_user.home }}/bin"
     flatpak_exec: "flatpak run"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Arrays
@@ -83,7 +83,7 @@
     state: present
     create: yes
   loop: "{{ flatpaks_generic }}"
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Executable Permissions
   file: 
@@ -114,7 +114,7 @@
     state: present
     create: yes
   loop: "{{ flatpaks_coding }}"
-  become_user: ling
+  become_user: "{{ user }}"
   when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executable Permissions
@@ -164,7 +164,7 @@
     state: present
     create: yes
   loop: "{{ flatpaks_editing }}"
-  become_user: ling
+  become_user: "{{ user }}"
   when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executable Permissions
@@ -214,7 +214,7 @@
     state: present
     create: yes
   loop: "{{ flatpaks_gaming }}"
-  become_user: ling
+  become_user: "{{ user }}"
   when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executable Permissions

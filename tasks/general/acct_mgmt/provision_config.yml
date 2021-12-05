@@ -27,6 +27,12 @@
     block: |
       ;;;;;;; Available options - all require lowercase values ;;;;;;
       ;
+      ;       user : Provide the name of the user account.
+      ;                Example: tom, jerry, kim, sarah
+      ;
+      ;       user : Provide the name of the user account.
+      ;                Example: Thomas, Jerry, Kimberly, Sarah
+      ;
       ;     branch : Provide the Github branch that the machine should poll.
       ;                Example: main, dev
       ;
@@ -41,6 +47,8 @@
 
 - name: General | Account Management | Provisioning Configuration | General | Load
   set_fact:
+    user:       "{{ lookup('ini', 'user       file={{gen_file}} default=ling') }}"
+    user_desc:  "{{ lookup('ini', 'user_desc  file={{gen_file}} default=Hyperling') }}"
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
 
@@ -48,6 +56,8 @@
   debug: 
     var: "{{ item }}"
   loop:
+    - user
+    - user_desc
     - branch
     - pentesting
 

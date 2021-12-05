@@ -5,7 +5,7 @@
 
 - name: Miner | Facts | System | Global 1
   set_fact:
-    file_server: 'ling@leet'
+    file_server: '{{ user }}@leet'
     check_alive_start: "[[ `ps -ef | grep -v 'grep' | grep -v '/bin/sh -c' | grep -v $$ | grep -c '"
     check_alive_end: "'` == '0' ]] &&"
     combined_log_file: "{{ user_mfn.home }}/log.txt"
