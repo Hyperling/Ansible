@@ -4,6 +4,9 @@
 ; Please see tasks/general/acct_mgmt/provision_config.yml for details.
 ;;; END DEPRECATION WARNING ;;;
 
+[global]
+localhost
+
 ;;; [everything]
 ;;; ;;;;;;; Available options - all require lowercase values ;;;;;;
 ;;; ;
