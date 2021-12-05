@@ -45,7 +45,7 @@
       when: ansible_system == "FreeBSD"
 
     - include: tasks/general/software/metasploit.yml
-      when: pentesting == "true"
+      when: pentesting == true
 
 
     - name: FORTESTING | Outside Block | Output Block Variables
@@ -150,9 +150,9 @@
       - include: tasks/workstation/settings/nfs.yml
 
       - include: tasks/workstation/settings/rdp.yml
-        when: rdp == "true"
+        when: rdp == true
       - include: tasks/workstation/settings/vnc.yml
-        when: vnc == "true"
+        when: vnc == true
 
       - include: tasks/workstation/settings/services.yml
         ignore_errors: yes

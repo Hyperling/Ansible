@@ -101,7 +101,7 @@
     state: present
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: coding == "true"
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executables
   blockinfile:
@@ -115,7 +115,7 @@
     create: yes
   loop: "{{ flatpaks_coding }}"
   become_user: ling
-  when: coding == "true"
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executable Permissions
   file: 
@@ -123,7 +123,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_coding }}"
-  when: coding == "true"
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Uninstall
   flatpak:
@@ -132,7 +132,7 @@
     state: absent
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: not coding == "true"
+  when: not coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Remove Executables
   file: 
@@ -140,7 +140,7 @@
     state: absent
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: not coding == "true"
+  when: not coding == true
 
 # Media Editors #
 
@@ -151,7 +151,7 @@
     state: present
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: editing == "true"
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executables
   blockinfile:
@@ -165,7 +165,7 @@
     create: yes
   loop: "{{ flatpaks_editing }}"
   become_user: ling
-  when: editing == "true"
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executable Permissions
   file: 
@@ -173,7 +173,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_editing }}"
-  when: editing == "true"
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninstalls
   flatpak:
@@ -182,7 +182,7 @@
     state: absent
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: not editing == "true"
+  when: not editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Remove Executables
   file: 
@@ -190,7 +190,7 @@
     state: absent
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: not editing == "true"
+  when: not editing == true
 
 # Gaming #
 
@@ -201,7 +201,7 @@
     state: present
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: gaming == "true"
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executables
   blockinfile:
@@ -215,7 +215,7 @@
     create: yes
   loop: "{{ flatpaks_gaming }}"
   become_user: ling
-  when: gaming == "true"
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executable Permissions
   file: 
@@ -223,7 +223,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_gaming }}"
-  when: gaming == "true"
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Uninstalls
   flatpak:
@@ -232,7 +232,7 @@
     state: absent
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: not gaming == "true"
+  when: not gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Remove Executables
   file: 
@@ -240,7 +240,7 @@
     state: absent
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: not gaming == "true"
+  when: not gaming == true
 
 # Removals #
 
@@ -288,7 +288,7 @@
     repo: ppa:lutris-team/lutris
     update_cache: yes
     state: present
-  when: ansible_distribution == "Ubuntu" and gaming == "true"
+  when: ansible_distribution == "Ubuntu" and gaming == true
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris (besides ARM)
@@ -296,7 +296,7 @@
     name: 
       - lutris
     state: present
-  when: ansible_architecture != "aarch64" and gaming == "true"
+  when: ansible_architecture != "aarch64" and gaming == true
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris (besides ARM)
