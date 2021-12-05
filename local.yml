@@ -102,9 +102,6 @@
         shell: echo "test"
         when: server
 
-    - name: FORTESTING | Exit
-      shell: exit 1
-
 
 
 ####### Workstations #######
@@ -159,7 +156,7 @@
       - include: tasks/workstation/settings/services.yml
         ignore_errors: yes
 
-      when: workstation == "true"
+      when: workstation == true
 
   
 
@@ -199,7 +196,7 @@
       - include: tasks/miner/cron/ansible.yml
       - include: tasks/miner/cron/mfn.yml
 
-      when: miner == "true"
+      when: miner == true
 
 
 
@@ -231,7 +228,7 @@
       - include: tasks/server/software/gitlab.yml
         when: gitlab is defined and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
 
-      when: server == "true"
+      when: server == true
 
 
 
