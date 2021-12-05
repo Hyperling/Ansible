@@ -16,12 +16,3 @@
   register: zsh_exec
   ignore_errors: yes
 
-### TODO: Remove these after going to file-based settings rather than hosts variables. ###
-- name: General | Facts | System | Users | Root
-  user:
-    name: root
-  register: user_root
-- name: General | Facts | System | Users | {{ name_desc }}
-  user:
-    name: "{{ user }}"
-  register: user_user
