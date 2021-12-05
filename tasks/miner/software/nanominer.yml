@@ -52,7 +52,7 @@
   loop:
     - { "algorithm": "RandomX", "wallet": '{{ wallet_xmr }}', "state": "{{ (nanominer_cpu == 'xmr') | ternary('present', 'absent') }}"}
   become_user: mfn
-  when: nanominer_cpu is defined
+  when: nanominer_cpu != false
 
 - name: Miner | Software | Nanominer | Configuration | CPU | Add Pools
   lineinfile:
@@ -62,7 +62,7 @@
     create: no
   loop: "{{ cpu_pool }}"
   become_user: mfn
-  when: nanominer_cpu is defined
+  when: nanominer_cpu != false
 
 - name: Miner | Software | Nanominer | Configuration | CPU | End Section
   lineinfile:
@@ -71,7 +71,7 @@
     state: present
     create: no
   become_user: mfn
-  when: nanominer_cpu is defined
+  when: nanominer_cpu != false
 
 # Add Spacing #
 
@@ -117,7 +117,7 @@
   loop:
     - { "algorithm": "Ethash", "wallet": '{{ wallet_eth }}', "state": "{{ (nanominer_gpu == 'eth') | ternary('present', 'absent') }}"}
   become_user: mfn
-  when: nanominer_gpu is defined
+  when: nanominer_gpu != false
 
 - name: Miner | Software | Nanominer | Configuration | GPU | Add Pools
   lineinfile:
@@ -127,7 +127,7 @@
     create: no
   loop: "{{ gpu_pool }}"
   become_user: mfn
-  when: nanominer_gpu is defined
+  when: nanominer_gpu != false
 
 - name: Miner | Software | Nanominer | Configuration | GPU | End Section
   lineinfile:
@@ -136,7 +136,7 @@
     state: present
     create: no
   become_user: mfn
-  when: nanominer_gpu is defined
+  when: nanominer_gpu != false
 
 
 

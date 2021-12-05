@@ -13,4 +13,4 @@
     special_time: weekly
     state: present
     disabled: no
-  when: certbot is defined and certbot.stdout is defined
+  when: certbot == true and certbot.stdout is defined

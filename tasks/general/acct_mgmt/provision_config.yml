@@ -17,7 +17,6 @@
     path: "{{ prov_dir }}"
     state: directory
     mode: '0755'
-  when: user_root.home != ""
 
 
 ## General ##
@@ -135,6 +134,10 @@
       ;    eth_minhashrate : Set to minimum hashrate over 10 minutes before restarting. Can accept M for Million and K for thousand.
       ;                        Example: 100K
       ;
+      ;           ethminer : Set to true for installation of ethminer
+      ;
+      ;             nvidia : Set to true for NVidia support in ethminer.
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Miner Config'
     state: present
@@ -144,13 +147,33 @@
 
 - name: General | Account Management | Provisioning Configuration | Miner | Load
   set_fact:
-    miner: "{{ lookup('ini', 'enable  file={{mnr_file}} default=false') }}"
+    miner:              "{{ lookup('ini', 'enable             file={{mnr_file}} default=false') }}"
+    amdgpu:             "{{ lookup('ini', 'amdgpu             file={{mnr_file}} default=false') }}"
+    nanominer:          "{{ lookup('ini', 'nanominer          file={{mnr_file}} default=false') }}"
+    nanominer_cpu:      "{{ lookup('ini', 'nanominer_cpu      file={{mnr_file}} default=false') }}"
+    nanominer_cpu_pool: "{{ lookup('ini', 'nanominer_cpu_pool file={{mnr_file}} default=false') }}"
+    nanominer_gpu:      "{{ lookup('ini', 'nanominer_gpu      file={{mnr_file}} default=false') }}"
+    nanominer_gpus:     "{{ lookup('ini', 'nanominer_gpus     file={{mnr_file}} default=false') }}"
+    nanominer_gpu_pool: "{{ lookup('ini', 'nanominer_gpu_pool file={{mnr_file}} default=false') }}"
+    eth_minhashrate:    "{{ lookup('ini', 'eth_minhashrate    file={{mnr_file}} default=false') }}"
+    ethminer:           "{{ lookup('ini', 'ethminer           file={{mnr_file}} default=false') }}"
+    nvidia:             "{{ lookup('ini', 'nvidia             file={{mnr_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Miner | Print
   debug: 
     var: "{{ item }}"
   loop:
     - miner
+    - amdgpu
+    - nanominer
+    - nanominer_cpu
+    - nanominer_cpu_pool
+    - nanominer_gpu
+    - nanominer_gpus
+    - nanominer_gpu_pool
+    - eth_minhashrate
+    - ethminer
+    - nvidia
 
 
 ## Server ##
@@ -195,10 +218,28 @@
 
 - name: General | Account Management | Provisioning Configuration | Server | Load
   set_fact:
-    server: "{{ lookup('ini', 'enable  file={{srv_file}} default=false') }}"
+    server:     "{{ lookup('ini', 'enable     file={{srv_file}} default=false') }}"
+    domain:     "{{ lookup('ini', 'domain     file={{srv_file}} default=hyperling.com') }}"
+    onlyoffice: "{{ lookup('ini', 'onlyoffice file={{srv_file}} default=false') }}"
+    grafana:    "{{ lookup('ini', 'grafana    file={{srv_file}} default=false') }}"
+    influxdb1:  "{{ lookup('ini', 'influxdb1  file={{srv_file}} default=false') }}"
+    influxdb2:  "{{ lookup('ini', 'influxdb2  file={{srv_file}} default=false') }}"
+    certbot:    "{{ lookup('ini', 'certbot    file={{srv_file}} default=false') }}"
+    hugo:       "{{ lookup('ini', 'hugo       file={{srv_file}} default=false') }}"
+    gitlab:     "{{ lookup('ini', 'gitlab     file={{srv_file}} default=false') }}"
+    gitlab_url: "{{ lookup('ini', 'gitlab_url file={{srv_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Server | Print
   debug: 
     var: "{{ item }}"
   loop:
     - server
+    - domain
+    - onlyoffice
+    - grafana
+    - influxdb1
+    - influxdb2
+    - certbot
+    - hugo
+    - gitlab
+    - gitlab_url

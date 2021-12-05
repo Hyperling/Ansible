@@ -184,14 +184,14 @@
       ### GPU Section ###
       ## Drivers ##
       - include: tasks/miner/drivers/amdgpu.yml
-        when: ansible_distribution == "Ubuntu" and amdgpu is defined
+        when: ansible_distribution == "Ubuntu" and amdgpu == true
 
       # Ethereum #
       - include: tasks/miner/software/ethminer.yml
-        when: ethminer is defined
+        when: ethminer == true
 
       - include: tasks/miner/software/nanominer.yml
-        when: nanominer is defined
+        when: nanominer == true
 
       ##### Scheduling #####
       - include: tasks/miner/cron/ansible.yml
@@ -207,27 +207,27 @@
       block:
 
       - include: tasks/server/software/onlyoffice.yml
-        when: onlyoffice is defined and ansible_pkg_mgr == "apt"
+        when: onlyoffice == true and ansible_pkg_mgr == "apt"
 
       - include: tasks/server/software/influxdb1.yml
-        when: influxdb1 is defined and ansible_pkg_mgr == "apt"
+        when: influxdb1 == true and ansible_pkg_mgr == "apt"
 
       - include: tasks/server/software/influxdb2.yml
-        when: influxdb2 is defined and ansible_pkg_mgr == "apt"
+        when: influxdb2 == true and ansible_pkg_mgr == "apt"
 
       - include: tasks/server/software/grafana.yml
-        when: grafana is defined and ansible_pkg_mgr == "apt"
+        when: grafana == true and ansible_pkg_mgr == "apt"
 
       - include: tasks/server/software/certbot.yml
-        when: certbot is defined
+        when: certbot == true
       - include: tasks/server/cron/certbot.yml
-        when: certbot is defined
+        when: certbot == true
 
       - include: tasks/server/software/hugo.yml
-        when: hugo is defined
+        when: hugo == true
 
       - include: tasks/server/software/gitlab.yml
-        when: gitlab is defined and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
+        when: gitlab == true and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
 
       when: server == true
 
