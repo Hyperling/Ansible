@@ -90,15 +90,15 @@
         shell: echo "test"
         when: miner
 
-      - name: FORTESTING | Inside Block | S Test 1 # Skipped on false. :)
+      - name: FORTESTING | Inside Block | S Test 1 # Skipped on yolo. :)
         shell: echo "test"
         when: server == "true"
 
-      - name: FORTESTING | Inside Block | S Test 2 # Skipped on false. :)
+      - name: FORTESTING | Inside Block | S Test 2 # Skipped on yolo. :)
         shell: echo "test"
         when: server == true
 
-      - name: FORTESTING | Inside Block | S Test 3 # Skipped on false. :)
+      - name: FORTESTING | Inside Block | S Test 3 # Ran on yolo. :(
         shell: echo "test"
         when: server
 
