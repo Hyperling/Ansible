@@ -85,7 +85,7 @@
       ;             CURRENTLY FREEBSD-ONLY
       ;
       ;     vnc : Set to true for installation of VNC protocol
-      ;             NOT IMPLEMENTED YET
+      ;             UNFINISHED/UNTESTED
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Workstation Config'
@@ -147,8 +147,13 @@
       ;                        Example: 100K
       ;
       ;           ethminer : Set to true for installation of ethminer
+      ;                        UNFINISHED/UNTESTED
       ;
       ;             nvidia : Set to true for NVidia support in ethminer.
+      ;                        UNFINISHED/UNTESTED
+      ;
+      ;       xmr_stak_cpu : Set to true for istallation
+      ;                        UNFINISHED/UNTESTED
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Miner Config'
@@ -169,6 +174,7 @@
     eth_minhashrate:    "{{ lookup('ini', 'eth_minhashrate    file={{mnr_file}} default=false') }}"
     ethminer:           "{{ lookup('ini', 'ethminer           file={{mnr_file}} default=false') }}"
     nvidia:             "{{ lookup('ini', 'nvidia             file={{mnr_file}} default=false') }}"
+    xmr_stak_cpu:       "{{ lookup('ini', 'xmr_stak_cpu       file={{mnr_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Miner | Print
   debug: 
@@ -185,6 +191,7 @@
     - eth_minhashrate
     - ethminer
     - nvidia
+    - xmr_stak_cpu
 
 
 ## Server ##
