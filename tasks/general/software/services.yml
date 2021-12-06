@@ -60,7 +60,7 @@
     create: no
     backup: yes
   loop:
-    - { "key": '^[\#]?AllowUsers',           "value": 'AllowUsers ling'}
+    - { "key": '^[\#]?AllowUsers',           "value": 'AllowUsers {{ user }}'}
     - { "key": '^[\#]?PermitRootLogin',      "value": 'PermitRootLogin no'}
     - { "key": '^[\#]?AllowTcpForwarding',   "value": 'AllowTcpForwarding no'}
     - { "key": '^[\#]?ClientAliveInterval',  "value": 'ClientAliveInterval 60'}
@@ -84,7 +84,7 @@
     create: no
     backup: yes
   loop:
-    - { "key": '^[\#]?AllowUsers',      "value": 'AllowUsers root ling'}
+    - { "key": '^[\#]?AllowUsers',      "value": 'AllowUsers root {{ user }}'}
     - { "key": '^[\#]?PermitRootLogin', "value": 'PermitRootLogin yes'}
     - { "key": '^[\#]?MaxSessions',     "value": 'MaxSessions 5'}
   when: "'pve' in ansible_kernel"

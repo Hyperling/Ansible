@@ -27,7 +27,7 @@
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Variables
   set_fact:
-    flatpak_exec_dir: "{{ user_ling.home }}/bin"
+    flatpak_exec_dir: "{{ user_user.home }}/bin"
     flatpak_exec: "flatpak run"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Arrays
@@ -83,7 +83,7 @@
     state: present
     create: yes
   loop: "{{ flatpaks_generic }}"
-  become_user: ling
+  become_user: "{{ user }}"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Executable Permissions
   file: 
@@ -101,7 +101,7 @@
     state: present
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: coding is defined
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executables
   blockinfile:
@@ -114,8 +114,8 @@
     state: present
     create: yes
   loop: "{{ flatpaks_coding }}"
-  become_user: ling
-  when: coding is defined
+  become_user: "{{ user }}"
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executable Permissions
   file: 
@@ -123,7 +123,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_coding }}"
-  when: coding is defined
+  when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Uninstall
   flatpak:
@@ -132,7 +132,7 @@
     state: absent
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: coding is not defined
+  when: not coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Remove Executables
   file: 
@@ -140,7 +140,7 @@
     state: absent
   loop: "{{ flatpaks_coding }}"
   ignore_errors: yes
-  when: coding is not defined
+  when: not coding == true
 
 # Media Editors #
 
@@ -151,7 +151,7 @@
     state: present
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: editing is defined
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executables
   blockinfile:
@@ -164,8 +164,8 @@
     state: present
     create: yes
   loop: "{{ flatpaks_editing }}"
-  become_user: ling
-  when: editing is defined
+  become_user: "{{ user }}"
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executable Permissions
   file: 
@@ -173,7 +173,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_editing }}"
-  when: editing is defined
+  when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editor Uninstalls
   flatpak:
@@ -182,7 +182,7 @@
     state: absent
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: editing is not defined
+  when: not editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Remove Executables
   file: 
@@ -190,7 +190,7 @@
     state: absent
   loop: "{{ flatpaks_editing }}"
   ignore_errors: yes
-  when: editing is not defined
+  when: not editing == true
 
 # Gaming #
 
@@ -201,7 +201,7 @@
     state: present
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: gaming is defined
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executables
   blockinfile:
@@ -214,8 +214,8 @@
     state: present
     create: yes
   loop: "{{ flatpaks_gaming }}"
-  become_user: ling
-  when: gaming is defined
+  become_user: "{{ user }}"
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executable Permissions
   file: 
@@ -223,7 +223,7 @@
     state: file
     mode: '0755'
   loop: "{{ flatpaks_gaming }}"
-  when: gaming is defined
+  when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Uninstalls
   flatpak:
@@ -232,7 +232,7 @@
     state: absent
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: gaming is not defined
+  when: not gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Remove Executables
   file: 
@@ -240,7 +240,7 @@
     state: absent
   loop: "{{ flatpaks_gaming }}"
   ignore_errors: yes
-  when: gaming is not defined
+  when: not gaming == true
 
 # Removals #
 
@@ -288,7 +288,7 @@
     repo: ppa:lutris-team/lutris
     update_cache: yes
     state: present
-  when: ansible_distribution == "Ubuntu" and gaming is defined
+  when: ansible_distribution == "Ubuntu" and gaming == true
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris (besides ARM)
@@ -296,7 +296,7 @@
     name: 
       - lutris
     state: present
-  when: ansible_architecture != "aarch64" and gaming is defined
+  when: ansible_architecture != "aarch64" and gaming == true
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris (besides ARM)

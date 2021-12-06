@@ -69,12 +69,12 @@
   set_fact:
     opencl_flag: "ON"
     sys_opencl_flag: "OFF"
-  when: amdgpu is defined
+  when: amdgpu == true
 
 - name: Miner | Software | Ethminer | Determine CUDA Flag
   set_fact:
     cuda_flag: "ON"
-  when: nvidia is defined
+  when: nvidia == true
 
 - name: Miner | Software | Ethminer | Determine DBUS Flag
   set_fact:
@@ -110,6 +110,6 @@
 - name: Miner | Software | Ethminer | Script
   shell: "{{ item }}"
   loop:
-    - "scp ling@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
+    - "scp {{ user }}@leet:InstallFiles/Miners/ethminer/ethminer.sh {{ user_mfn.home }}/"
     - "chmod 755 {{ user_mfn.home }}/ethminer.sh"
     - "chown {{ user_mfn.user }} {{ user_mfn.home }}/ethminer.sh"

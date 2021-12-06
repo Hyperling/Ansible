@@ -1,0 +1,12 @@
+---
+# Install Metasploit Framework
+
+- name: General | Software | Metasploit | Install
+  shell: "{{ item }}"
+  loop:
+    - curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+    - chmod 755 msfinstall
+    - mkdir -p /usr/local/bin/
+    - mv ./msfinstall /usr/local/bin/msfinstall
+    - msfinstall
+  when: ansible_system in ("Linux", "Darwin")

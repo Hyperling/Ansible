@@ -3,7 +3,7 @@
 
 - name: General | Scripts | User | scm.sh
   blockinfile:
-    path: "{{ user_ling.home }}/bin/scm.sh"
+    path: "{{ user_user.home }}/bin/scm.sh"
     block: |
       # 20210211 - Make life easier!
       push.sh
@@ -16,16 +16,16 @@
 
 - name: General | Scripts | User | scm.sh Permissions
   file: 
-    path: "{{ user_ling.home }}/bin/scm.sh"
+    path: "{{ user_user.home }}/bin/scm.sh"
     mode: '0755'
 
 
 - name: General | Scripts | User | push.sh
   blockinfile:
-    path: "{{ user_ling.home }}/bin/push.sh"
+    path: "{{ user_user.home }}/bin/push.sh"
     block: |
       # 20210215 - Make life even easier!
-      ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
+      ssh {{ user }}@leet "cd Code/Ansible/ansible-pull; git push"
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
@@ -34,13 +34,13 @@
 
 - name: General | Scripts | User | push.sh Permissions
   file: 
-    path: "{{ user_ling.home }}/bin/push.sh"
+    path: "{{ user_user.home }}/bin/push.sh"
     mode: '0755'
 
 
 - name: General | Scripts | User | scm-dev.sh
   blockinfile:
-    path: "{{ user_ling.home }}/bin/scm-dev.sh"
+    path: "{{ user_user.home }}/bin/scm-dev.sh"
     block: |
       # 20210713 - Make life easier for development!
       
@@ -66,5 +66,5 @@
 
 - name: General | Scripts | User | scm-dev.sh Permissions
   file: 
-    path: "{{ user_ling.home }}/bin/scm-dev.sh"
+    path: "{{ user_user.home }}/bin/scm-dev.sh"
     mode: '0755'

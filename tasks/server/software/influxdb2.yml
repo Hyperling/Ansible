@@ -22,4 +22,4 @@
 - name: Server | InfluxDB2 | Config
   shell: "{{ item }}"
   loop:
-    - influx setup -f -u ling -p initpassword -o Hyperling -b main -r 0
+    - influx setup -f -u {{ user }} -p initpassword -o Hyperling -b main -r 0

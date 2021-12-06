@@ -25,7 +25,7 @@
     path: "{{ user_root.home }}/bin/push.sh"
     block: |
       # 20210215 - Make life even easier!
-      ssh ling@leet "cd Code/Ansible/ansible-pull; git push"
+      ssh {{ user }}@leet "cd Code/Ansible/ansible-pull; git push"
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"

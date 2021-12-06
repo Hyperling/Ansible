@@ -4,11 +4,15 @@
 - name: General | Facts | Gather | Locate bash
   shell: which bash
   register: bash_exec
+  ignore_errors: yes
 
 - name: General | Facts | Gather | Locate ansible-pull
   shell: which ansible-pull
   register: ansible_pull_exec
+  ignore_errors: yes
 
 - name: General | Facts | Gather | Locate zsh
   shell: which zsh
   register: zsh_exec
+  ignore_errors: yes
+
