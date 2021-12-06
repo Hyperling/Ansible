@@ -7,6 +7,7 @@
     dest: "{{ lynis_install_dir }}"
     clone: yes
     force: yes
+  ignore_errors: yes
 
 - name: General | Tests | Lynis | Ensure Permissions (Looking at you Parrot OS!)
   file: 
