@@ -56,6 +56,12 @@
     state: present
   when: ansible_pkg_mgr == "dnf"
 
+- name: General | Software | Services | Install killall (Looking at you, Debian)
+  package:
+    name: psmisc
+    state: present
+  when: ansible_distribution == "Debian"
+
 - name: General | Software | Packages | Update Software (Disabled)
   package: 
     name:
