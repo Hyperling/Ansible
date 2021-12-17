@@ -125,6 +125,7 @@
         -y : Assume yes to any prompts."
 
         unset OPTIND
+        unset accept
         while getopts ":hy" opt; do
             case $opt in
               h) echo -e "$usage"
