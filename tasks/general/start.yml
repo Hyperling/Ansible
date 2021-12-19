@@ -6,6 +6,10 @@
   shell: "echo 'START' > {{ ansible_pull_report }}"
   when: leet_drive_details.stat.exists
 
+- name: General | Start | Ansible Pull Report | Add Provision Variables
+  shell: "echo '{{ provision_variables }}' > {{ ansible_pull_report }}"
+  when: leet_drive_details.stat.exists
+
 - name: General | Start | Ansible Pull Report | Make Viewable (SSHFS)
   file:
     path: "{{ ansible_pull_report }}"
