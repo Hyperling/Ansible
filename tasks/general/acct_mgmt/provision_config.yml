@@ -59,11 +59,11 @@
   set_fact: 
     provision_variables: "{{ provision_variables | combine({item}) }}"
   loop:
-    - "{{ 'provision': provision }}"
-    - "{{ 'user': user }}"
-    - "{{ 'user_desc': user_desc }}"
-    - "{{ 'branch': branch }}"
-    - "{{ 'pentesting': pentesting }}"
+    - "{ 'provision': provision }"
+    - "{ 'user': user }"
+    - "{ 'user_desc': user_desc }"
+    - "{ 'branch': branch }"
+    - "{ 'pentesting': pentesting }"
 
 
 ## Workstation ##
@@ -107,12 +107,12 @@
   set_fact: 
     provision_variables: "{{ provision_variables | combine({item}) }}"
   loop:
-    - "{{ 'workstation': workstation }}"
-    - "{{ 'coding': coding }}"
-    - "{{ 'editing': editing }}"
-    - "{{ 'gaming': gaming }}"
-    - "{{ 'rdp': rdp }}"
-    - "{{ 'vnc': vnc }}"
+    - "{ 'workstation': workstation }"
+    - "{ 'coding': coding }"
+    - "{ 'editing': editing }"
+    - "{ 'gaming': gaming }"
+    - "{ 'rdp': rdp }"
+    - "{ 'vnc': vnc }"
 
 
 ## Miner ##
@@ -181,18 +181,18 @@
   set_fact: 
     provision_variables: "{{ provision_variables | combine({item}) }}"
   loop:
-    - "{{ 'miner': miner }}"
-    - "{{ 'amdgpu': amdgpu }}"
-    - "{{ 'nanominer': nanominer }}"
-    - "{{ 'nanominer_cpu': nanominer_cpu }}"
-    - "{{ 'nanominer_cpu_pool': nanominer_cpu_pool }}"
-    - "{{ 'nanominer_gpu': nanominer_gpu }}"
-    - "{{ 'nanominer_gpus': nanominer_gpus }}"
-    - "{{ 'nanominer_gpu_pool': nanominer_gpu_pool }}"
-    - "{{ 'eth_minhashrate': eth_minhashrate }}"
-    - "{{ 'ethminer': ethminer }}"
-    - "{{ 'nvidia': nvidia }}"
-    - "{{ 'xmr_stak_cpu': xmr_stak_cpu }}"
+    - "{ 'miner': miner }"
+    - "{ 'amdgpu': amdgpu }"
+    - "{ 'nanominer': nanominer }"
+    - "{ 'nanominer_cpu': nanominer_cpu }"
+    - "{ 'nanominer_cpu_pool': nanominer_cpu_pool }"
+    - "{ 'nanominer_gpu': nanominer_gpu }"
+    - "{ 'nanominer_gpus': nanominer_gpus }"
+    - "{ 'nanominer_gpu_pool': nanominer_gpu_pool }"
+    - "{ 'eth_minhashrate': eth_minhashrate }"
+    - "{ 'ethminer': ethminer }"
+    - "{ 'nvidia': nvidia }"
+    - "{ 'xmr_stak_cpu': xmr_stak_cpu }"
 
 
 ## Server ##
@@ -270,21 +270,21 @@
   set_fact: 
     provision_variables: "{{ provision_variables | combine({item}) }}"
   loop:
-    - "{{ 'server': server }}"
-    - "{{ 'domain': domain }}"
-    - "{{ 'onlyoffice': onlyoffice }}"
-    - "{{ 'grafana': grafana }}"
-    - "{{ 'influxdb1': influxdb1 }}"
-    - "{{ 'influxdb2': influxdb2 }}"
-    - "{{ 'certbot': certbot }}"
-    - "{{ 'hugo': hugo }}"
-    - "{{ 'gitlab': gitlab }}"
-    - "{{ 'gitlab_url': gitlab_url }}"
-    - "{{ 'git': git }}"
-    - "{{ 'git_name': git_name }}"
-    - "{{ 'git_branch': git_branch }}"
-    - "{{ 'git_url': git_url }}"
-    - "{{ 'git_sep': git_sep }}"
+    - "{ 'server': server }"
+    - "{ 'domain': domain }"
+    - "{ 'onlyoffice': onlyoffice }"
+    - "{ 'grafana': grafana }"
+    - "{ 'influxdb1': influxdb1 }"
+    - "{ 'influxdb2': influxdb2 }"
+    - "{ 'certbot': certbot }"
+    - "{ 'hugo': hugo }"
+    - "{ 'gitlab': gitlab }"
+    - "{ 'gitlab_url': gitlab_url }"
+    - "{ 'git': git }"
+    - "{ 'git_name': git_name }"
+    - "{ 'git_branch': git_branch }"
+    - "{ 'git_url': git_url }"
+    - "{ 'git_sep': git_sep }"
 
 
 ## Exit if not turned on yet ##
