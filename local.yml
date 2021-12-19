@@ -228,6 +228,9 @@
       - include: tasks/server/software/gitlab.yml
         when: gitlab and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
 
+      - include: tasks/server/software/git.yml
+        when: git and ansible_pkg_mgr in ("apt")
+
       when: server == true
 
 
