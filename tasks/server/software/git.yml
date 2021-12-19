@@ -138,3 +138,20 @@
     pattern: nginx
     enabed: yes
     status: restarted
+
+
+## Cron ##
+
+- name: Server | Software | Git | Cron | Hourly
+  ansible.builtin.cron:
+    name: "{{ item.name }} hourly"
+    special_time: hourly
+    job: "cd {{ git_web_root }}/{{ item.name }}.git && git pull --rebase"
+  loop: "{{ git_projects }}"
+
+- name: Server | Software | Git | Cron | Reboot
+  ansible.builtin.cron:
+    name: "{{ item.name }} reboot"
+    special_time: reboot
+    job: "cd {{ git_web_root }}/{{ item.name }}.git && git pull --rebase"
+  loop: "{{ git_projects }}"
