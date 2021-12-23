@@ -103,9 +103,20 @@
     rdp:         "{{ lookup('ini', 'rdp     file={{wrk_file}} default=false') }}"
     vnc:         "{{ lookup('ini', 'vnc     file={{wrk_file}} default=false') }}"
 
+- name: General | Account Management | Provisioning Configuration | Workstation | DEBUG
+  debug: 
+    msg: "{{ item }}"
+  loop:
+    - "{ 'workstation': workstation }"
+    - "{ 'coding': coding }"
+    - "{ 'editing': editing }"
+    - "{ 'gaming': gaming }"
+    - "{ 'rdp': rdp }"
+    - "{ 'vnc': vnc }"
+
 - name: General | Account Management | Provisioning Configuration | Workstation | List
   set_fact: 
-    provision_variables: "{{ provision_variables | combine({item}) }}"
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - "{ 'workstation': workstation }"
     - "{ 'coding': coding }"
