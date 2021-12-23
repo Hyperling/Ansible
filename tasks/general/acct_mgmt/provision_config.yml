@@ -67,7 +67,7 @@
 
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact: 
-    provision_variables: "{{ provision_variables | combine({item}) }}"
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - { 'provision': "{{ provision }}" }
     - { 'user': "{{ user }}" }
