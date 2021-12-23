@@ -55,9 +55,19 @@
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
 
+- name: General | Account Management | Provisioning Configuration | General | DEBUG
+  debug: 
+    msg: "{{ item }}"
+  loop:
+    - "{ 'provision': provision }"
+    - "{ 'user': user }"
+    - "{ 'user_desc': user_desc }"
+    - "{ 'branch': branch }"
+    - "{ 'pentesting': pentesting }"
+
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact: 
-    provision_variables: "{{ provision_variables | combine({item}) }}"
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - "{ 'provision': provision }"
     - "{ 'user': user }"
