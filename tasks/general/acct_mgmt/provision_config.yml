@@ -59,21 +59,21 @@
   debug: 
     msg: "{{ item }}"
   loop:
-    - "{ 'provision': {{ provision }} }"
-    - "{ 'user': {{ user }} }"
-    - "{ 'user_desc': {{ user_desc }} }"
-    - "{ 'branch': {{ branch }} }"
-    - "{ 'pentesting': {{ pentesting }} }"
+    - { 'provision': {{ provision }} }
+    - { 'user': {{ user }} }
+    - { 'user_desc': {{ user_desc }} }
+    - { 'branch': {{ branch }} }
+    - { 'pentesting': {{ pentesting }} }
 
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact: 
     provision_variables: "{{ provision_variables | combine({item}) }}"
   loop:
-    - "{ 'provision': {{ provision }} }"
-    - "{ 'user': {{ user }} }"
-    - "{ 'user_desc': {{ user_desc }} }"
-    - "{ 'branch': {{ branch }} }"
-    - "{ 'pentesting': {{ pentesting }} }"
+    - { 'provision': {{ provision }} }
+    - { 'user': {{ user }} }
+    - { 'user_desc': {{ user_desc }} }
+    - { 'branch': {{ branch }} }
+    - { 'pentesting': {{ pentesting }} }
 
 
 ## Workstation ##
