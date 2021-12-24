@@ -4,6 +4,7 @@
 - name: General | Account Management | Provisioning Configuration | Variables 1
   set_fact:
     prov_dir: "/usr/local/etc/hyperling-scm"
+    provision_variables: []
 
 - name: General | Account Management | Provisioning Configuration | Variables 2
   set_fact:
@@ -54,15 +55,15 @@
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
 
-- name: General | Account Management | Provisioning Configuration | General | Print
-  debug: 
-    var: "{{ item }}"
+- name: General | Account Management | Provisioning Configuration | General | List
+  set_fact: 
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
-    - provision
-    - user
-    - user_desc
-    - branch
-    - pentesting
+    - { 'provision': "{{ provision }}" }
+    - { 'user': "{{ user }}" }
+    - { 'user_desc': "{{ user_desc }}" }
+    - { 'branch': "{{ branch }}" }
+    - { 'pentesting': "{{ pentesting }}" }
 
 
 ## Workstation ##
@@ -102,16 +103,16 @@
     rdp:         "{{ lookup('ini', 'rdp     file={{wrk_file}} default=false') }}"
     vnc:         "{{ lookup('ini', 'vnc     file={{wrk_file}} default=false') }}"
 
-- name: General | Account Management | Provisioning Configuration | Workstation | Print
-  debug: 
-    var: "{{ item }}"
+- name: General | Account Management | Provisioning Configuration | Workstation | List
+  set_fact: 
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
-    - workstation
-    - coding
-    - editing
-    - gaming
-    - rdp
-    - vnc
+    - { 'workstation': "{{ workstation }}" }
+    - { 'coding': "{{ coding }}" }
+    - { 'editing': "{{ editing }}" }
+    - { 'gaming': "{{ gaming }}" }
+    - { 'rdp': "{{ rdp }}" }
+    - { 'vnc': "{{ vnc }}" }
 
 
 ## Miner ##
@@ -176,22 +177,22 @@
     nvidia:             "{{ lookup('ini', 'nvidia             file={{mnr_file}} default=false') }}"
     xmr_stak_cpu:       "{{ lookup('ini', 'xmr_stak_cpu       file={{mnr_file}} default=false') }}"
 
-- name: General | Account Management | Provisioning Configuration | Miner | Print
-  debug: 
-    var: "{{ item }}"
+- name: General | Account Management | Provisioning Configuration | Miner | List
+  set_fact: 
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
-    - miner
-    - amdgpu
-    - nanominer
-    - nanominer_cpu
-    - nanominer_cpu_pool
-    - nanominer_gpu
-    - nanominer_gpus
-    - nanominer_gpu_pool
-    - eth_minhashrate
-    - ethminer
-    - nvidia
-    - xmr_stak_cpu
+    - { 'miner': "{{ miner }}" }
+    - { 'amdgpu': "{{ amdgpu }}" }
+    - { 'nanominer': "{{ nanominer }}" }
+    - { 'nanominer_cpu': "{{ nanominer_cpu }}" }
+    - { 'nanominer_cpu_pool': "{{ nanominer_cpu_pool }}" }
+    - { 'nanominer_gpu': "{{ nanominer_gpu }}" }
+    - { 'nanominer_gpus': "{{ nanominer_gpus }}" }
+    - { 'nanominer_gpu_pool': "{{ nanominer_gpu_pool }}" }
+    - { 'eth_minhashrate': "{{ eth_minhashrate }}" }
+    - { 'ethminer': "{{ ethminer }}" }
+    - { 'nvidia': "{{ nvidia }}" }
+    - { 'xmr_stak_cpu': "{{ xmr_stak_cpu }}" }
 
 
 ## Server ##
@@ -227,6 +228,20 @@
       ;              Regardless of whether you choose http or https, the Certbot config will be skipped since the maintainer uses a reverse proxy.
       ;                Example: https://gitlab
       ;
+      ;        git : Set to true for this server to be configured as an HTTP git server. 
+      ;
+      ;   git_name : Name(s) of project(s) that the Git server should host.
+      ;                Example: ansible#ansible-dev
+      ;
+      ; git_branch : Branch(es) of project(s) corresponding with git_name.
+      ;                Example: main#dev
+      ;
+      ;    git_url : URL(s) of project(s) corresponding with git_name.
+      ;                Example: https://github.com/Hyperling/ansible#https://github.com/Hyperling/ansible
+      ;
+      ;    git_sep : Separator for git variables above.
+      ;                Example: #
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Server Config'
     state: present
@@ -245,21 +260,31 @@
     hugo:       "{{ lookup('ini', 'hugo       file={{srv_file}} default=false') }}"
     gitlab:     "{{ lookup('ini', 'gitlab     file={{srv_file}} default=false') }}"
     gitlab_url: "{{ lookup('ini', 'gitlab_url file={{srv_file}} default=false') }}"
+    git:        "{{ lookup('ini', 'git        file={{srv_file}} default=false') }}"
+    git_name:   "{{ lookup('ini', 'git_name   file={{srv_file}} default=false') }}"
+    git_branch: "{{ lookup('ini', 'git_branch file={{srv_file}} default=false') }}"
+    git_url:    "{{ lookup('ini', 'git_url    file={{srv_file}} default=false') }}"
+    git_sep:    "{{ lookup('ini', 'git_sep    file={{srv_file}} default=false') }}"
 
-- name: General | Account Management | Provisioning Configuration | Server | Print
-  debug: 
-    var: "{{ item }}"
+- name: General | Account Management | Provisioning Configuration | Server | List
+  set_fact: 
+    provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
-    - server
-    - domain
-    - onlyoffice
-    - grafana
-    - influxdb1
-    - influxdb2
-    - certbot
-    - hugo
-    - gitlab
-    - gitlab_url
+    - { 'server': "{{ server }}" }
+    - { 'domain': "{{ domain }}" }
+    - { 'onlyoffice': "{{ onlyoffice }}" }
+    - { 'grafana': "{{ grafana }}" }
+    - { 'influxdb1': "{{ influxdb1 }}" }
+    - { 'influxdb2': "{{ influxdb2 }}" }
+    - { 'certbot': "{{ certbot }}" }
+    - { 'hugo': "{{ hugo }}" }
+    - { 'gitlab': "{{ gitlab }}" }
+    - { 'gitlab_url': "{{ gitlab_url }}" }
+    - { 'git': "{{ git }}" }
+    - { 'git_name': "{{ git_name }}" }
+    - { 'git_branch': "{{ git_branch }}" }
+    - { 'git_url': "{{ git_url }}" }
+    - { 'git_sep': "{{ git_sep }}" }
 
 
 ## Exit if not turned on yet ##
@@ -267,3 +292,10 @@
 - name: General | Account Management | Provisioning Configuration | Exit Check
   shell: echo "Please configure the config files in {{ prov_dir }} then try again." && exit 1
   when: provision != true
+
+
+## Display values ##
+
+- name: General | Account Management | Provisioning Configuration | Print
+  debug: 
+    var: provision_variables

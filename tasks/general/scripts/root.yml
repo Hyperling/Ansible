@@ -56,7 +56,7 @@
       ## Main ##
 
       push.sh
-      time {{ ansible_pull_exec.stdout }} -U https://github.com/Hyperling/ansible.git --checkout $branch
+      time {{ ansible_pull_exec.stdout }} -U {{ repo_github }} --checkout $branch
 
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"

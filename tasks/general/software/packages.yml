@@ -48,6 +48,7 @@
     - "{{ locate }}"
     - zsh
     - "{{ opensshd }}"
+    - tar
     state: present
 
 - name: General | Software | Services | Install CROND (Looking at you, Fedora)

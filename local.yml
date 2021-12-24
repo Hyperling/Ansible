@@ -47,62 +47,6 @@
       when: pentesting == true
 
 
-    - name: FORTESTING | Outside Block | Output Block Variables
-      debug: 
-        var: "{{ item }}"
-      loop:
-        - workstation
-        - miner
-        - server
-
-    - name: FORTESTING | Block
-      block: 
-      
-      - name: FORTESTING | Inside Block | Output Block Variables
-        debug: 
-          var: "{{ item }}"
-        loop:
-          - workstation
-          - miner
-          - server
-
-      - name: FORTESTING | Inside Block | W Test 1 # Did not run on true. :(
-        shell: echo "test"
-        when: workstation == "true"
-
-      - name: FORTESTING | Inside Block | W Test 2 # Did run on true! :)
-        shell: echo "test"
-        when: workstation == true
-
-      - name: FORTESTING | Inside Block | W Test 3 # Did run on true! :)
-        shell: echo "test"
-        when: workstation
-
-      - name: FORTESTING | Inside Block | M Test 1 # Skipped on false. :)
-        shell: echo "test"
-        when: miner == "true"
-
-      - name: FORTESTING | Inside Block | M Test 2 # Skipped on false. :)
-        shell: echo "test"
-        when: miner == true
-
-      - name: FORTESTING | Inside Block | M Test 3 # Skipped on false. :)
-        shell: echo "test"
-        when: miner
-
-      - name: FORTESTING | Inside Block | S Test 1 # Skipped on yolo. :)
-        shell: echo "test"
-        when: server == "true"
-
-      - name: FORTESTING | Inside Block | S Test 2 # Skipped on yolo. :)
-        shell: echo "test"
-        when: server == true
-
-      - name: FORTESTING | Inside Block | S Test 3 # Ran on yolo. :(
-        shell: echo "test"
-        when: server
-
-
 
     ####### Workstations #######
 
@@ -227,6 +171,9 @@
 
       - include: tasks/server/software/gitlab.yml
         when: gitlab and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
+
+      - include: tasks/server/software/git.yml
+        when: git and ansible_pkg_mgr in ("apt")
 
       when: server == true
 

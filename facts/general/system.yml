@@ -10,6 +10,13 @@
     st_install_dir: /usr/local/src/st
     global_bin: /usr/local/bin
     x_desktops: /usr/share/xsessions
+    repo_github: https://github.com/Hyperling/ansible.git
+    repo_local: https://git.hyperling.com/ansible.git
+
+- name: General | Facts | System | Dev
+  set_fact:
+    repo_local: https://git.hyperling.com/ansible-dev.git
+  when: branch == "dev"
 
 
 - name: General | Facts | System | Linux
