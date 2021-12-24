@@ -15,9 +15,9 @@
 
 - name: Server | Software | Git | Split Config Variables To Array
   set_fact:
-    git_names: "{{ git_name.split(git_sep) }}"
-    git_branches: "{{ git_branch.split(git_sep) }}"
-    git_urls: "{{ git_url.split(git_sep) }}"
+    git_names: [{{ git_name.split(git_sep) }}]
+    git_branches: [{{ git_branch.split(git_sep) }}]
+    git_urls: [{{ git_url.split(git_sep) }}]
     git_projects: []
 
 - name: Server | Software | Git | Build Dictionary
