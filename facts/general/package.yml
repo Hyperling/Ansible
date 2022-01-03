@@ -30,7 +30,7 @@
     locate: htop # Placeholder to prevent errors, locate built into FreeBSD.
     opensshd: htop # sshd comes installed on FreeBSD
     ansible_python_interpreter: "/usr/local/bin/python3.8"
-    tar: htop
+    tar: htop # tar already provided in FreeBSD
   when: ansible_system == "FreeBSD"
 
 - name: General | Facts | Package | dnf
