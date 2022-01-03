@@ -57,7 +57,7 @@
       - include: facts/workstation/package.yml
 
       # Set Up Desktop Environments #
-      - include: tasks/workstation/freebsd/software/gui.yml
+      - include: tasks/workstation/freebsd/software/gnome.yml
         when: ansible_system == "FreeBSD"
 
       - include: tasks/workstation/linux/software/gnome.yml
@@ -76,6 +76,9 @@
 
       - include: tasks/workstation/linux/software/brave.yml
         when: ansible_pkg_mgr in ("apt", "dnf")
+
+      - include: tasks/workstation/freebsd/software/packages.yml
+        when: ansible_system == "FreeBSD"
 
       - include: tasks/workstation/mac-os/software/brew.yml
         when: ansible_system == "Darwin"
