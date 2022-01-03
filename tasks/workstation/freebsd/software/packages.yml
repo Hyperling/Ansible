@@ -1,0 +1,74 @@
+---
+# Packages for FreeBSD workstation.
+
+# General #
+
+- name: Workstation | FreeBSD | Software | Packages | General | Install
+  package: 
+    name:
+    - "{{ firefox_esr }}"
+    - "{{ evolution }}"
+    - telegram-desktop
+    - libreoffice
+    state: present
+
+- name: Workstation | FreeBSD | Software | Packages | General | Uninstall Bloat
+  package: 
+    name:
+    - "{{ firefox }}"
+    - "{{ thunderbird }}"
+    state: absent
+
+# Coding #
+
+- name: Workstation | FreeBSD | Software | Packages | Coding | Install
+  package: 
+    name:
+    - vscode
+    state: present
+  when: coding == true
+
+- name: Workstation | FreeBSD | Software | Packages | Coding | Install
+  package: 
+    name:
+    - vscode
+    state: absent
+  when: not coding == true
+
+# Media Editors #
+
+- name: Workstation | FreeBSD | Software | Packages | Editing | Install
+  package: 
+    name:
+    - gimp
+    - shotcut
+    - obs-studio
+    state: present
+  when: editing == true
+
+- name: Workstation | FreeBSD | Software | Packages | Editing | Install
+  package: 
+    name:
+    - gimp
+    - shotcut
+    - obs-studio
+    state: absent
+  when: not editing == true
+
+# Gaming #
+
+- name: Workstation | FreeBSD | Software | Packages | Gaming | Install
+  package: 
+    name:
+    - 0ad
+    - supertuxkart
+    state: present
+  when: gaming == true
+
+- name: Workstation | FreeBSD | Software | Packages | Gaming | Install
+  package: 
+    name:
+    - 0ad
+    - supertuxkart
+    state: absent
+  when: not gaming == true
