@@ -2,6 +2,10 @@
 # Webserver to replace calling GitHub for projects.
 # https://www.howtoforge.com/how-to-install-http-git-server-with-nginx-on-debian-11/
 
+#TODO: Use gitweb instead??? I knew there was an easier way than apache/nginx/python stuff...
+# https://git-scm.com/docs/gitweb
+
+
 ## Variables ##
 
 - name: Server | Software | HTTPS Git Server | Check Config Variables
