@@ -1,0 +1,4 @@
+; Configuration is managed via /usr/local/etc/hyperling-scm/*.ini files.
+
+[global]
+localhost
