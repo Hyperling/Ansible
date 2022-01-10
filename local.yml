@@ -66,8 +66,7 @@
       - include: tasks/workstation/linux/software/gnome.yml
         when: ansible_system == "Linux"
 
-      - include: tasks/workstation/linux/software/dwm.yml
-        when: ansible_system in ("Linux", "FreeBSD")
+      - include: tasks/workstation/shared/software/dwm.yml
         ignore_errors: yes
 
       # Software Tasks #
@@ -90,20 +89,20 @@
         when: ansible_system == "Darwin"
 
       # Configuration Tasks #
-      - include: tasks/workstation/settings/gnome.yml
+      - include: tasks/workstation/shared/settings/gnome.yml
 
       - include: tasks/workstation/linux/cron/ansible.yml
         when: ansible_system == "Linux"
 
-      - include: tasks/workstation/settings/nfs.yml
+      - include: tasks/workstation/shared/settings/nfs.yml
 
-      - include: tasks/workstation/settings/rdp.yml
+      - include: tasks/workstation/shared/settings/rdp.yml
         when: rdp == true
 
-      - include: tasks/workstation/settings/vnc.yml
+      - include: tasks/workstation/shared/settings/vnc.yml
         when: vnc == true
 
-      - include: tasks/workstation/settings/services.yml
+      - include: tasks/workstation/shared/settings/services.yml
         ignore_errors: yes
 
       when: workstation == true
