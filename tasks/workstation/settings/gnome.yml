@@ -58,6 +58,7 @@
     version: master
   become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
   package:
@@ -67,11 +68,13 @@
       - "{{ sassc }}"
     state: present
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
   shell: "cd ~/TRASH/dash-to-dock/; {{ make }}; {{ make }} install"
   become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
   dconf: 
@@ -80,11 +83,13 @@
   become_user: "{{ user }}"
   register: gnome_enabled_extensions
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | dconf Return Object
   debug:
     var: gnome_enabled_extensions
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
@@ -136,6 +141,7 @@
     state: present
   become_user: "{{ user }}"
   when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  ignore_errors: yes
 
 # Settings #
 
@@ -145,6 +151,7 @@
     value: "'LEFT'"
     state: present
   become_user: "{{ user }}"
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
   dconf: 
@@ -152,6 +159,7 @@
     value: "true"
     state: present
   become_user: "{{ user }}"
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
   dconf: 
@@ -159,6 +167,7 @@
     value: "32"
     state: present
   become_user: "{{ user }}"
+  ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Favorites (Linux)
   dconf: 
