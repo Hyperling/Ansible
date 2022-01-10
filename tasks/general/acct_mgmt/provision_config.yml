@@ -114,85 +114,85 @@
     - { 'rdp': "{{ rdp }}" }
     - { 'vnc': "{{ vnc }}" }
 
-
-## Miner ##
-
-- name: General | Account Management | Provisioning Configuration | Miner | Create
-  blockinfile:
-    path: "{{ mnr_file }}"
-    block: |
-      ;;;;;;; Available options - all require lowercase values ;;;;;;
-      ;
-      ;             enable : Set to true for system to be considered a miner.
-      ;
-      ;             amdgpu : Set to true for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
-      ;
-      ;          nanominer : Set to true for installation of nanominer
-      ;
-      ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
-      ;                        Valid values: xmr
-      ;
-      ; nanominer_cpu_pool : Set to pool organization to use for CPU mining
-      ;                        Valid values: nanopool
-      ;
-      ;      nanominer_gpu : Set to coin code that you'd like the GPU to work on
-      ;                        Valid values: eth
-      ;
-      ;     nanominer_gpus : Set to comma list of GPU devices that should be used for nanominer
-      ;                        Example: 0,2,3
-      ;
-      ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
-      ;                        Valid values: nanopool etherpool f2pool
-      ;
-      ;    eth_minhashrate : Set to minimum hashrate over 10 minutes before restarting. Can accept M for Million and K for thousand.
-      ;                        Example: 100K
-      ;
-      ;           ethminer : Set to true for installation of ethminer
-      ;                        UNFINISHED/UNTESTED
-      ;
-      ;             nvidia : Set to true for NVidia support in ethminer.
-      ;                        UNFINISHED/UNTESTED
-      ;
-      ;       xmr_stak_cpu : Set to true for istallation
-      ;                        UNFINISHED/UNTESTED
-      ;
-      [global]
-    marker: '; {mark} MANAGED BY ANSIBLE | Miner Config'
-    state: present
-    create: yes
-    backup: yes
-
-- name: General | Account Management | Provisioning Configuration | Miner | Load
-  set_fact:
-    miner:              "{{ lookup('ini', 'enable             file={{mnr_file}} default=false') }}"
-    amdgpu:             "{{ lookup('ini', 'amdgpu             file={{mnr_file}} default=false') }}"
-    nanominer:          "{{ lookup('ini', 'nanominer          file={{mnr_file}} default=false') }}"
-    nanominer_cpu:      "{{ lookup('ini', 'nanominer_cpu      file={{mnr_file}} default=false') }}"
-    nanominer_cpu_pool: "{{ lookup('ini', 'nanominer_cpu_pool file={{mnr_file}} default=false') }}"
-    nanominer_gpu:      "{{ lookup('ini', 'nanominer_gpu      file={{mnr_file}} default=false') }}"
-    nanominer_gpus:     "{{ lookup('ini', 'nanominer_gpus     file={{mnr_file}} default=false') }}"
-    nanominer_gpu_pool: "{{ lookup('ini', 'nanominer_gpu_pool file={{mnr_file}} default=false') }}"
-    eth_minhashrate:    "{{ lookup('ini', 'eth_minhashrate    file={{mnr_file}} default=false') }}"
-    ethminer:           "{{ lookup('ini', 'ethminer           file={{mnr_file}} default=false') }}"
-    nvidia:             "{{ lookup('ini', 'nvidia             file={{mnr_file}} default=false') }}"
-    xmr_stak_cpu:       "{{ lookup('ini', 'xmr_stak_cpu       file={{mnr_file}} default=false') }}"
-
-- name: General | Account Management | Provisioning Configuration | Miner | List
-  set_fact: 
-    provision_variables: "{{ provision_variables | combine(item) }}"
-  loop:
-    - { 'miner': "{{ miner }}" }
-    - { 'amdgpu': "{{ amdgpu }}" }
-    - { 'nanominer': "{{ nanominer }}" }
-    - { 'nanominer_cpu': "{{ nanominer_cpu }}" }
-    - { 'nanominer_cpu_pool': "{{ nanominer_cpu_pool }}" }
-    - { 'nanominer_gpu': "{{ nanominer_gpu }}" }
-    - { 'nanominer_gpus': "{{ nanominer_gpus }}" }
-    - { 'nanominer_gpu_pool': "{{ nanominer_gpu_pool }}" }
-    - { 'eth_minhashrate': "{{ eth_minhashrate }}" }
-    - { 'ethminer': "{{ ethminer }}" }
-    - { 'nvidia': "{{ nvidia }}" }
-    - { 'xmr_stak_cpu': "{{ xmr_stak_cpu }}" }
+# No longer mining, this is now considered deprecated.
+### Miner ##
+#
+#- name: General | Account Management | Provisioning Configuration | Miner | Create
+#  blockinfile:
+#    path: "{{ mnr_file }}"
+#    block: |
+#      ;;;;;;; Available options - all require lowercase values ;;;;;;
+#      ;
+#      ;             enable : Set to true for system to be considered a miner.
+#      ;
+#      ;             amdgpu : Set to true for installation of AMDGPU-Pro drivers on Ubuntu (20.04 preferred)
+#      ;
+#      ;          nanominer : Set to true for installation of nanominer
+#      ;
+#      ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
+#      ;                        Valid values: xmr
+#      ;
+#      ; nanominer_cpu_pool : Set to pool organization to use for CPU mining
+#      ;                        Valid values: nanopool
+#      ;
+#      ;      nanominer_gpu : Set to coin code that you'd like the GPU to work on
+#      ;                        Valid values: eth
+#      ;
+#      ;     nanominer_gpus : Set to comma list of GPU devices that should be used for nanominer
+#      ;                        Example: 0,2,3
+#      ;
+#      ; nanominer_gpu_pool : Set to pool organization to use for GPU mining
+#      ;                        Valid values: nanopool etherpool f2pool
+#      ;
+#      ;    eth_minhashrate : Set to minimum hashrate over 10 minutes before restarting. Can accept M for Million and K for thousand.
+#      ;                        Example: 100K
+#      ;
+#      ;           ethminer : Set to true for installation of ethminer
+#      ;                        UNFINISHED/UNTESTED
+#      ;
+#      ;             nvidia : Set to true for NVidia support in ethminer.
+#      ;                        UNFINISHED/UNTESTED
+#      ;
+#      ;       xmr_stak_cpu : Set to true for istallation
+#      ;                        UNFINISHED/UNTESTED
+#      ;
+#      [global]
+#    marker: '; {mark} MANAGED BY ANSIBLE | Miner Config'
+#    state: present
+#    create: yes
+#    backup: yes
+#
+#- name: General | Account Management | Provisioning Configuration | Miner | Load
+#  set_fact:
+#    miner:              "{{ lookup('ini', 'enable             file={{mnr_file}} default=false') }}"
+#    amdgpu:             "{{ lookup('ini', 'amdgpu             file={{mnr_file}} default=false') }}"
+#    nanominer:          "{{ lookup('ini', 'nanominer          file={{mnr_file}} default=false') }}"
+#    nanominer_cpu:      "{{ lookup('ini', 'nanominer_cpu      file={{mnr_file}} default=false') }}"
+#    nanominer_cpu_pool: "{{ lookup('ini', 'nanominer_cpu_pool file={{mnr_file}} default=false') }}"
+#    nanominer_gpu:      "{{ lookup('ini', 'nanominer_gpu      file={{mnr_file}} default=false') }}"
+#    nanominer_gpus:     "{{ lookup('ini', 'nanominer_gpus     file={{mnr_file}} default=false') }}"
+#    nanominer_gpu_pool: "{{ lookup('ini', 'nanominer_gpu_pool file={{mnr_file}} default=false') }}"
+#    eth_minhashrate:    "{{ lookup('ini', 'eth_minhashrate    file={{mnr_file}} default=false') }}"
+#    ethminer:           "{{ lookup('ini', 'ethminer           file={{mnr_file}} default=false') }}"
+#    nvidia:             "{{ lookup('ini', 'nvidia             file={{mnr_file}} default=false') }}"
+#    xmr_stak_cpu:       "{{ lookup('ini', 'xmr_stak_cpu       file={{mnr_file}} default=false') }}"
+#
+#- name: General | Account Management | Provisioning Configuration | Miner | List
+#  set_fact: 
+#    provision_variables: "{{ provision_variables | combine(item) }}"
+#  loop:
+#    - { 'miner': "{{ miner }}" }
+#    - { 'amdgpu': "{{ amdgpu }}" }
+#    - { 'nanominer': "{{ nanominer }}" }
+#    - { 'nanominer_cpu': "{{ nanominer_cpu }}" }
+#    - { 'nanominer_cpu_pool': "{{ nanominer_cpu_pool }}" }
+#    - { 'nanominer_gpu': "{{ nanominer_gpu }}" }
+#    - { 'nanominer_gpus': "{{ nanominer_gpus }}" }
+#    - { 'nanominer_gpu_pool': "{{ nanominer_gpu_pool }}" }
+#    - { 'eth_minhashrate': "{{ eth_minhashrate }}" }
+#    - { 'ethminer': "{{ ethminer }}" }
+#    - { 'nvidia': "{{ nvidia }}" }
+#    - { 'xmr_stak_cpu': "{{ xmr_stak_cpu }}" }
 
 
 ## Server ##
