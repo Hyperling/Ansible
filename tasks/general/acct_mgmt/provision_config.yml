@@ -88,6 +88,9 @@
       ;     vnc : Set to true for installation of VNC protocol
       ;             UNFINISHED/UNTESTED
       ;
+      ; bsd_gpu : Set to [] to install GPU driver
+      ;             Example: amdgpu
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Workstation Config'
     state: present
@@ -102,6 +105,7 @@
     gaming:      "{{ lookup('ini', 'gaming  file={{wrk_file}} default=false') }}"
     rdp:         "{{ lookup('ini', 'rdp     file={{wrk_file}} default=false') }}"
     vnc:         "{{ lookup('ini', 'vnc     file={{wrk_file}} default=false') }}"
+    bsd_gpu:     "{{ lookup('ini', 'bsd_gpu file={{wrk_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Workstation | List
   set_fact: 
@@ -113,6 +117,7 @@
     - { 'gaming': "{{ gaming }}" }
     - { 'rdp': "{{ rdp }}" }
     - { 'vnc': "{{ vnc }}" }
+    - { 'bsd_gpu': "{{ bsd_gpu }}" }
 
 # No longer mining, this is now considered deprecated.
 ### Miner ##

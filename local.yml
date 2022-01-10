@@ -57,6 +57,9 @@
       - include: facts/workstation/package.yml
 
       # Set Up Desktop Environments #
+      - include: tasks/workstation/freebsd/software/gpu.yml
+        when: ansible_system == "FreeBSD" and bsd_gpu == true
+
       - include: tasks/workstation/freebsd/software/gnome.yml
         when: ansible_system == "FreeBSD"
 
@@ -96,6 +99,7 @@
 
       - include: tasks/workstation/settings/rdp.yml
         when: rdp == true
+
       - include: tasks/workstation/settings/vnc.yml
         when: vnc == true
 
