@@ -3,6 +3,11 @@
 # https://dwm.suckless.org/
 # https://sites.google.com/site/lazyboxx/-articles/dwm-a-newbie-s-guide#TOC-Status-Bar
 
+#TODO: Move this to tasks/shared/ pasth rather than tasks/linux/.
+#TODO: Generate files based on blockinfile.
+#TODO: Fix config.mk for FreeBSD automatically (use /usr/local/ for libs not /usr/X11RC/)
+#TODO: scm.sh to use bash variable so that FreeBSD correctly hits /usr/local/bin/bash.
+
 ## Pre-reqs ##
 
 - name: Workstation | Linux | Software | DWM | Pre-Reqs

@@ -4,7 +4,7 @@
 
 ## Variables ##
 
-- name: Server | Software | Git | Check Config Variables
+- name: Server | Software | HTTPS Git Server | Check Config Variables
   debug: 
     var: "{{ item }}"
   loop:
@@ -13,14 +13,14 @@
     - git_url
     - git_sep
 
-- name: Server | Software | Git | Split Config Variables To Array
+- name: Server | Software | HTTPS Git Server | Split Config Variables To Array
   set_fact:
     git_names: "{{ git_name.split(git_sep) }}"
     git_branches: "{{ git_branch.split(git_sep) }}"
     git_urls: "{{ git_url.split(git_sep) }}"
     git_projects: []
 
-- name: Server | Software | Git | Check Arrays
+- name: Server | Software | HTTPS Git Server | Check Arrays
   debug: 
     var: "{{ item }}"
   loop:
@@ -28,29 +28,34 @@
     - git_branches
     - git_urls
 
-- name: Server | Software | Git | Build Dictionary
+- name: Server | Software | HTTPS Git Server | Build Dictionary
   set_fact:
     git_projects: "{{ git_projects + [{ 'name': git_names[item], 'branch': git_branches[item], 'url': git_urls[item]  }] }}"
   loop: "{{ range(0, git_names|length) | list }}"
 
-- name: Server | Software | Git | Display Dictionary
+- name: Server | Software | HTTPS Git Server | Display Dictionary
   debug: 
     var: git_projects
 
-- name: Server | Software | Git | Variables 1
+- name: Server | Software | HTTPS Git Server | Variables 1
   set_fact: 
     git_web_root: /var/www/html/git
     git_config_file: /etc/nginx/conf.d/git.conf
     git_nginx_user: www-data
+    git_ssl_dir: /usr/local/etc/ssl/private
+    git_ssl_cert_name: cert.pem
+    git_ssl_key_name: key.pem
 
-- name: Server | Software | Git | Variables 2
+- name: Server | Software | HTTPS Git Server | Variables 2
   set_fact: 
     git_cron_commands: "git pull --rebase && cd {{ git_web_root }}/ && chown -R {{ git_nginx_user }} . && chmod -R 775 ."
+    git_ssl_cert: "{{ git_ssl_dir }}/{{ git_ssl_cert_name }}"
+    git_ssl_key: "{{ git_ssl_dir }}/{{ git_ssl_key_name }}"
 
 
 ## Pre-reqs ##
 
-- name: Server | Software | Git | Install
+- name: Server | Software | HTTPS Git Server | Install
   package: 
     name:
       - nginx
@@ -60,26 +65,32 @@
       - unzip
     state: present
   when: ansible_pkg_mgr == "apt"
+  
+- name: Server | Software | HTTPS Git Server | SSL Certificate
+  shell: "{{ item }}"
+  loop:
+    - mkdir -p {{ git_ssl_dir }} 
+    - openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout {{ git_ssl_key }} -out {{ git_ssl_cert }} -subj "/C=XX/ST=STATELESS/L=HOMELAB/O={{ domain }}/OU=Git Server/CN={{ domain }}"
 
 
 ## Repositories ##
 
-- name: Server | Software | Git | Delete
+- name: Server | Software | HTTPS Git Server | Delete
   file:
     path: "{{ git_web_root }}"
     state: absent
 
-- name: Server | Software | Git | Download
+- name: Server | Software | HTTPS Git Server | Download
   git: 
     repo: "{{ item.url }}"
     dest: "{{ git_web_root }}/{{ item.name }}.git"
     version: "{{ item.branch }}"
     clone: yes
     force: yes
-  #ignore_errors: yes
+  ignore_errors: yes
   loop: "{{ git_projects }}"
 
-- name: Server | Software | Git | Permissions
+- name: Server | Software | HTTPS Git Server | Permissions
   file:
     path: "{{ git_web_root }}/{{ item.name }}.git"
     state: directory
@@ -92,7 +103,7 @@
 
 ## NGINX ##
 
-- name: Server | Software | Git | Index
+- name: Server | Software | HTTPS Git Server | Index
   blockinfile:
     path: "{{ git_web_root }}/index.html"
     block: |
@@ -106,20 +117,22 @@
     marker: "<!-- {mark} {{ item.name }} -->"
   loop: "{{ git_projects }}"
 
-- name: Server | Software | Git | Config
+- name: Server | Software | HTTPS Git Server | Config
   blockinfile:
     path: "{{ git_config_file }}"
     block: |
       server {
-        listen 80;
+        listen 443;
+        server_name {{ ansible_hostname }}.{{ domain }};
+
+        ssl_certificate {{ git_ssl_cert }};
+        ssl_certificate_key {{ git_ssl_key }};
       
         root {{ git_web_root }};
       
         # Add index.php to the list if you are using PHP
         index index.html;
         #autoindex on;
-      
-        server_name {{ ansible_hostname }}.{{ domain }};
       
         location / {
           # First attempt to serve request as file, then
@@ -146,7 +159,7 @@
     backup: yes
     marker: "# {mark} Managed By Ansible Git Server Playbook -->"
     
-- name: Server | Software | Git | Service
+- name: Server | Software | HTTPS Git Server | Service
   service:
     name: nginx
     pattern: nginx
@@ -156,14 +169,14 @@
 
 ## Cron ##
 
-- name: Server | Software | Git | Cron | Hourly
+- name: Server | Software | HTTPS Git Server | Cron | Hourly
   ansible.builtin.cron:
     name: "{{ item.name }} hourly"
     special_time: hourly
     job: "cd {{ git_web_root }}/{{ item.name }}.git && {{ git_cron_commands }}"
   loop: "{{ git_projects }}"
 
-- name: Server | Software | Git | Cron | Reboot
+- name: Server | Software | HTTPS Git Server | Cron | Reboot
   ansible.builtin.cron:
     name: "{{ item.name }} reboot"
     special_time: reboot

@@ -1,0 +1,43 @@
+---
+# Provide FreeBSD with a DE.
+
+- name: Workstation | FreeBSD | Software | GUI | Install UI Components
+  package: 
+    name:
+    - xorg
+    - gnome3-lite
+    - "{{ firefox_esr }}"
+    - "{{ evolution }}"
+    - vscode
+    - gimp
+    - telegram-desktop
+    - lightdm
+    - lightdm-gtk-greeter
+    state: present
+
+- name: Workstation | FreeBSD | Software | GUI | Create rc.conf Entries
+  blockinfile:
+    path: "{{ rc_conf }}"
+    marker: "# {mark} MANAGED BY ANSIBLE | GNOME Components"
+    block: |
+      dbus_enable="YES"
+      hald_enable="YES"
+      gnome_enable="YES"
+      #gdm_enable="YES"
+      lightdm_enable="YES"
+    create: yes
+    backup: yes
+
+- name: Workstation | FreeBSD | Software | GUI | Create fstab Entries
+  blockinfile:
+    path: /etc/fstab
+    block: |
+      proc            /proc           procfs  rw      0       0
+    marker: '# {mark} MANAGED BY ANSIBLE | GNOME Components'
+    state: present
+    backup: yes
+
+- name: Workstation | FreeBSD | Software | GUI | Mount All
+  shell: mount -a
+  args:
+    warn: false

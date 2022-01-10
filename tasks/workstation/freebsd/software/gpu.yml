@@ -1,0 +1,17 @@
+---
+# Provide FreeBSD with GPU driver.
+
+- name: Workstation | FreeBSD | Software | GPU Driver | Install
+  package: 
+    name:
+    - drm-kmod
+    state: present
+
+- name: Workstation | FreeBSD | Software | GPU Driver | Create rc.conf Entries
+  blockinfile:
+    path: "{{ rc_conf }}"
+    marker: "# {mark} MANAGED BY ANSIBLE | GPU Components"
+    block: |
+      kld_list="{{ freebsd_gpu }}"
+    create: yes
+    backup: yes

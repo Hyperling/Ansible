@@ -61,10 +61,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+// Volume (https://varunbpatil.github.io/2013/09/28/dwm.html)
+static const char *mutecmd[] = {"amixer","-q","sset","Master","toggle",NULL};
+static const char *lowervolcmd[] = {"amixer","-q","sset","Master","1%-",NULL};
+static const char *raisevolcmd[] = {"amixer","-q","sset","Master","1%+",NULL};
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -97,7 +103,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 // Mine
-	{ MODKEY,             XK_q,      killclient,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
+// Volume (https://varunbpatil.github.io/2013/09/28/dwm.html) 
+    { 0,                            0x1008ff12,spawn,          {.v = mutecmd } },
+    { 0,                            0x1008ff11,spawn,          {.v = lowervolcmd } },
+    { 0,                            0x1008ff13,spawn,          {.v = raisevolcmd } },
 };
 
 /* button definitions */
