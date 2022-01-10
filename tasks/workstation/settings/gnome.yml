@@ -40,133 +40,128 @@
 ## Dash to Dock Extension ##
 # Note: Validate DtD by checking /org/gnome/shell/enabled-extensions for dash-to-dock@micxgx.gmail.com
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Check
-  shell: "cd ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/"
-  become_user: "{{ user }}"
-  register: dash_to_dock_exists
-  ignore_errors: yes
+- name: Workstation | Account Management | GNOME | Dash To Dock
+  block:
 
-# Install # 
-# https://micheleg.github.io/dash-to-dock/download.html
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Check
+    shell: "cd ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/"
+    become_user: "{{ user }}"
+    register: dash_to_dock_exists
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Install | Clone Repo
-  git: 
-    repo: https://github.com/micheleg/dash-to-dock.git
-    dest: "~/TRASH/dash-to-dock/"
-    clone: yes
-    force: no
-    version: master
-  become_user: "{{ user }}"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  # Install # 
+  # https://micheleg.github.io/dash-to-dock/download.html
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
-  package:
-    name: 
-      - "{{ make }}"
-      - "{{ msgfmt }}"
-      - "{{ sassc }}"
-    state: present
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Clone Repo
+    git: 
+      repo: https://github.com/micheleg/dash-to-dock.git
+      dest: "~/TRASH/dash-to-dock/"
+      clone: yes
+      force: no
+      version: master
+    become_user: "{{ user }}"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
-  shell: "cd ~/TRASH/dash-to-dock/; {{ make }}; {{ make }} install"
-  become_user: "{{ user }}"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
+    package:
+      name: 
+        - "{{ make }}"
+        - "{{ msgfmt }}"
+        - "{{ sassc }}"
+      state: present
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
-  dconf: 
-    key: /org/gnome/shell/enabled-extensions
-    state: read
-  become_user: "{{ user }}"
-  register: gnome_enabled_extensions
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Make
+    shell: "cd ~/TRASH/dash-to-dock/; {{ make }}; {{ make }} install"
+    become_user: "{{ user }}"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | dconf Return Object
-  debug:
-    var: gnome_enabled_extensions
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
+    dconf: 
+      key: /org/gnome/shell/enabled-extensions
+      state: read
+    become_user: "{{ user }}"
+    register: gnome_enabled_extensions
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-# https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
+  - name: Workstation | Account Management | GNOME | Dash To Dock | dconf Return Object
+    debug:
+      var: gnome_enabled_extensions
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 1
-  set_fact: 
-    gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
-    dash_to_dock_ext_comma: ""
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | After replace()
-  debug:
-    var: gnome_enabled_extensions
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 1
+    set_fact: 
+      gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
+      dash_to_dock_ext_comma: ""
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
-  set_fact: 
-    dash_to_dock_ext_comma: ", "
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
+  - name: Workstation | Account Management | GNOME | Dash To Dock | After replace()
+    debug:
+      var: gnome_enabled_extensions
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
-  set_fact: 
-    dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
+    set_fact: 
+      dash_to_dock_ext_comma: ", "
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Variables 4
-  set_fact:
-    gnome_enabled_extensions: "[]"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions == "None"
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
+    set_fact: 
+      dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append With
-  debug:
-    var: dash_to_dock_ext_name
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 4
+    set_fact:
+      gnome_enabled_extensions: "[]"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions == "None"
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append To
-  debug:
-    var: gnome_enabled_extensions
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append With
+    debug:
+      var: dash_to_dock_ext_name
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Print Combined Value
-  debug:
-    msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Print Value To Append To
+    debug:
+      var: gnome_enabled_extensions
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Enable
-  dconf: 
-    key: /org/gnome/shell/enabled-extensions
-    value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
-    state: present
-  become_user: "{{ user }}"
-  when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Print Combined Value
+    debug:
+      msg: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-# Settings #
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Enable
+    dconf: 
+      key: /org/gnome/shell/enabled-extensions
+      value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
+      state: present
+    become_user: "{{ user }}"
+    when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Dock Position
-  dconf: 
-    key: /org/gnome/shell/extensions/dash-to-dock/dock-position
-    value: "'LEFT'"
-    state: present
-  become_user: "{{ user }}"
-  ignore_errors: yes
+  # Settings #
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
-  dconf: 
-    key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
-    value: "true"
-    state: present
-  become_user: "{{ user }}"
-  ignore_errors: yes
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Position
+    dconf: 
+      key: /org/gnome/shell/extensions/dash-to-dock/dock-position
+      value: "'LEFT'"
+      state: present
+    become_user: "{{ user }}"
 
-- name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
-  dconf: 
-    key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
-    value: "32"
-    state: present
-  become_user: "{{ user }}"
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
+    dconf: 
+      key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
+      value: "true"
+      state: present
+    become_user: "{{ user }}"
+
+  - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
+    dconf: 
+      key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
+      value: "32"
+      state: present
+    become_user: "{{ user }}"
+    
   ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME | Favorites (Linux)
