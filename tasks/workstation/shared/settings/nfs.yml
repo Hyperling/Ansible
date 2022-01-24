@@ -8,7 +8,7 @@
 
 - name: Workstation | Settings | NFS | Facts (Linux)
   set_fact:
-    mount_options: defaults
+    mount_options: defaults,_netdev,noauto
   when: ansible_system == "Linux"
 
 - name: Workstation | Settings | NFS | Facts (FreeBSD)
