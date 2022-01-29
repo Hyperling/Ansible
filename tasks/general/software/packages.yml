@@ -63,6 +63,14 @@
     state: present
   when: ansible_distribution == "Debian"
 
+- name: General | Software | Services | Install "Bloat" (Looking at you, Arch Base)
+  package:
+    name: 
+      - which
+      - cronie
+    state: present
+  when: ansible_distribution == "Archlinux"
+
 - name: General | Software | Packages | Update Software (Disabled)
   package: 
     name:
