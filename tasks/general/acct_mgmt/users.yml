@@ -7,10 +7,10 @@
   set_fact:
     user_shell: "{{ bash_exec.stdout }}"
 
-- name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
-  set_fact:
-    user_shell: "{{ zsh_exec.stdout }}"
-  when: ansible_distribution == "Archlinux"
+#- name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
+#  set_fact:
+#    user_shell: "{{ zsh_exec.stdout }}"
+#  when: ansible_distribution == "Archlinux"
 
 
 ## Root ##
