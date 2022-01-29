@@ -7,9 +7,31 @@
   set_fact:
     user_shell: "{{ bash_exec.stdout }}"
 
+- name: General | Account Management | Users | Allow BASH (Arch)
+  lineinfile:
+    path: /etc/shells
+    regexp: "{{ bash_exec.stdout }}"
+    line: "{{ bash_exec.stdout }}"
+    insertbefore: "# End of file"
+    backup: yes
+    create: no
+    state: present
+  when: ansible_distribution == "Archlinux"
+  
 #- name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
 #  set_fact:
 #    user_shell: "{{ zsh_exec.stdout }}"
+#  when: ansible_distribution == "Archlinux"
+#
+#- name: General | Account Management | Users | Allow ZSH (Arch)
+#  lineinfile:
+#    path: /etc/shells
+#    regexp: "{{ zsh_exec.stdout }}"
+#    line: "{{ zsh_exec.stdout }}"
+#    insertbefore: "# End of file"
+#    backup: yes
+#    create: no
+#    state: present
 #  when: ansible_distribution == "Archlinux"
 
 
