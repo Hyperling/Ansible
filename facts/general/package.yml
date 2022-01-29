@@ -14,8 +14,8 @@
     locate: locate
     opensshd: openssh-server
     tar: tar
-    microcode_amd: amd64_microcode
-    microcode_intel: intel_microcode
+    microcode_amd: amd64-microcode
+    microcode_intel: intel-microcode
   when: ansible_pkg_mgr == "apt"
 
 - name: General | Facts | Package | pacman
