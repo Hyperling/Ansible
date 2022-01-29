@@ -51,6 +51,15 @@
     - "{{ tar }}"
     state: present
 
+- name: General | Software | Packages | Install Software (DEV)
+  package: 
+    name:
+    - "{{ microcode_amd }}"
+    - "{{ microcode_intel }}"
+    state: present
+  when: branch = "dev"
+
+
 - name: General | Software | Services | Install CROND (Looking at you, Fedora)
   package:
     name: cronie
