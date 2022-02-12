@@ -57,8 +57,8 @@
     - "{{ microcode_amd }}"
     - "{{ microcode_intel }}"
     state: present
-  when: branch = "dev"
-
+  when: branch == "dev"
+  ignore_errors: yes
 
 - name: General | Software | Services | Install CROND (Looking at you, Fedora)
   package:
