@@ -68,3 +68,28 @@
   file: 
     path: "{{ user_user.home }}/bin/scm-dev.sh"
     mode: '0755'
+
+
+- name: General | Scripts | User | scm-local.sh
+  blockinfile:
+    path: "{{ user_user.home }}/bin/scm-local.sh"
+    block: |
+      # 20220312 - Make life easier for development! Especially when Github can't be reached.
+      
+      ## Variables ##
+
+
+      ## Main ##
+
+      time sudo ansible-playbook /mnt/leet/Code/Ansible/ansible-pull/local.yml
+
+    marker: '{mark}'
+    marker_begin: "#!{{ bash_exec.stdout }}"
+    marker_end: "exit 0"
+    state: present
+    create: yes
+
+- name: General | Scripts | User | scm-local.sh Permissions
+  file: 
+    path: "{{ user_user.home }}/bin/scm-local.sh"
+    mode: '0755'
