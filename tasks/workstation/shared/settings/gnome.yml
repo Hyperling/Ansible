@@ -169,7 +169,7 @@
     key: /org/gnome/shell/favorite-apps
     value: "['org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'org.gnome.Nautilus.desktop'
             ,'io.gitlab.librewolf-community.desktop', '{{ browser }}', 'org.gnome.Evolution.desktop'
-            ,'chat.delta.desktop.desktop', 
+            ,'chat.delta.desktop.desktop'
             ,'com.vscodium.codium.desktop', 'org.shotcut.Shotcut.desktop'
             ,'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop', 'im.riot.Riot.desktop'
             ,'io.lbry.lbry-app.desktop'
