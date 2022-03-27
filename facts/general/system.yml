@@ -11,11 +11,15 @@
     global_bin: /usr/local/bin
     x_desktops: /usr/share/xsessions
     repo_github: https://github.com/Hyperling/ansible.git
-    repo_local: https://git.hyperling.com/ansible.git
+    #repo_local: https://git.hyperling.com/ansible.git
+    # Local server not working yet, go back to Github even though they throttle me.
+    repo_local: https://github.com/Hyperling/ansible.git
 
 - name: General | Facts | System | Dev
   set_fact:
-    repo_local: https://git.hyperling.com/ansible-dev.git
+    #repo_local: https://git.hyperling.com/ansible-dev.git
+    # Local server not working yet, go back to Github even though they throttle me.
+    repo_local: https://github.com/Hyperling/ansible.git
   when: branch == "dev"
 
 

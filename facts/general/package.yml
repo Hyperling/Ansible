@@ -14,6 +14,8 @@
     locate: locate
     opensshd: openssh-server
     tar: tar
+    microcode_amd: amd64-microcode
+    microcode_intel: intel-microcode
   when: ansible_pkg_mgr == "apt"
 
 - name: General | Facts | Package | pacman
@@ -22,6 +24,8 @@
     locate: mlocate
     opensshd: openssh
     tar: tar
+    microcode_amd: linux-firmware
+    microcode_intel: intel-ucode
   when: ansible_pkg_mgr == "pacman"
 
 - name: General | Facts | Package | FreeBSD
@@ -31,6 +35,8 @@
     opensshd: htop # sshd comes installed on FreeBSD
     ansible_python_interpreter: "/usr/local/bin/python3.8"
     tar: htop # tar already provided in FreeBSD
+    microcode_amd: htop # TODO
+    microcode_intel: htop # TODO
   when: ansible_system == "FreeBSD"
 
 - name: General | Facts | Package | dnf
@@ -39,6 +45,8 @@
     locate: mlocate
     opensshd: openssh
     tar: tar
+    microcode_amd: microcode_ctl
+    microcode_intel: microcode_ctl
   when: ansible_pkg_mgr == "dnf"
 
 

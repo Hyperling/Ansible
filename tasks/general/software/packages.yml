@@ -51,6 +51,15 @@
     - "{{ tar }}"
     state: present
 
+- name: General | Software | Packages | Install Software (DEV)
+  package: 
+    name:
+    - "{{ microcode_amd }}"
+    - "{{ microcode_intel }}"
+    state: present
+  when: branch == "dev"
+  ignore_errors: yes
+
 - name: General | Software | Services | Install CROND (Looking at you, Fedora)
   package:
     name: cronie
@@ -62,6 +71,14 @@
     name: psmisc
     state: present
   when: ansible_distribution == "Debian"
+
+- name: General | Software | Services | Install "Bloat" (Looking at you, Arch Base)
+  package:
+    name: 
+      - which
+      - cronie
+    state: present
+  when: ansible_distribution == "Archlinux"
 
 - name: General | Software | Packages | Update Software (Disabled)
   package: 

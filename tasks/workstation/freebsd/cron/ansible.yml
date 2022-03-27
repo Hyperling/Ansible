@@ -5,7 +5,7 @@
   cron:
     user: ansible
     name: "Security Update"
-    special_time: daily
+    special_time: weekly
     job: "sudo freebsd-update cron -t me@hyperling.com"
     state: present
     disabled: no
