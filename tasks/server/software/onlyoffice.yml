@@ -52,19 +52,20 @@
     state: present
 
 
-
+# 2022-04-13 Looks like this went live too early, finish commenting it out.
 ## HTTPS ##
-# https://helpcenter.only{{ ansible_histname }}.com/installation/docs-community-https-linux.aspx
+# https://helpcenter.onlyoffice.com/installation/docs-community-https-linux.aspx
 
 # Certs #
 
-- name: Server | OnlyOffice | HTTPS | Check For Cert
-  shell: "ls -l /etc/letsencrypt/live/{{ ansible_hostname }}.{{ domain }}/{fullchain,privkey}.pem"
-  register: onlyoffice_cert
-
-- name: Server | OnlyOffice | HTTPS | Create Cert
-  shell: "certbot --nginx -d {{ ansible_hostname }}.{{ domain }}"
-  when: onlyoffice_cert.failed
+#- name: Server | OnlyOffice | HTTPS | Check For Cert
+#  shell: "ls -l /etc/letsencrypt/live/{{ ansible_hostname }}.{{ domain }}/{fullchain,privkey}.pem"
+#  register: onlyoffice_cert
+#  ignore_errors: yes
+#
+#- name: Server | OnlyOffice | HTTPS | Create Cert
+#  shell: "certbot --nginx -d {{ ansible_hostname }}.{{ domain }}"
+#  when: onlyoffice_cert.failed
 
 # Config #
 
@@ -94,3 +95,4 @@
   service:
     name: nginx
     status: reloaded
+  ignore_errors: yes
