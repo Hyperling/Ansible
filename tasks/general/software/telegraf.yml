@@ -134,7 +134,7 @@
 
       [[inputs.disk]]
         # mount_points = ["/"]
-        ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs", "fdescfs"]
+        ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs", "fdescfs", "procfs", "nullfs"]
 
       [[inputs.diskio]]
         # devices = ["sda", "sdb", "vd*"]

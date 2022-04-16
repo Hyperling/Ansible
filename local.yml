@@ -155,6 +155,11 @@
     - name: Main | Server Setup
       block:
 
+      - include: tasks/server/software/certbot.yml
+        when: certbot == true
+      - include: tasks/server/cron/certbot.yml
+        when: certbot == true
+
       - include: tasks/server/software/onlyoffice.yml
         when: onlyoffice == true and ansible_pkg_mgr == "apt"
 
@@ -166,11 +171,6 @@
 
       - include: tasks/server/software/grafana.yml
         when: grafana == true and ansible_pkg_mgr == "apt"
-
-      - include: tasks/server/software/certbot.yml
-        when: certbot == true
-      - include: tasks/server/cron/certbot.yml
-        when: certbot == true
 
       - include: tasks/server/software/hugo.yml
         when: hugo == true
