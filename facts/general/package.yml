@@ -81,6 +81,11 @@
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
+      echo "*** FreeBSD-Update ***" &&
+      sh -c "rm -rf /var/db/freebsd-update" &&
+      sudo freebsd-update fetch &&
+      sudo freebsd-update install &&
+
       echo "*** Pkg ***" &&
       sudo pkg update &&
       sudo pkg clean {{ update_accept_var }} &&
