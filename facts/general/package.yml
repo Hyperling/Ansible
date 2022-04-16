@@ -82,7 +82,7 @@
   set_fact:
     update_package_manager: |
       echo "*** FreeBSD-Update ***" &&
-      sudo sh -c "rm -rf /var/db/freebsd-update" &&
+      sudo sh -c "rm -rf /var/db/freebsd-update; mkdir /var/db/freebsd-update" || echo "Already cleaned!" &&
       sudo freebsd-update fetch &&
       sudo freebsd-update install &&
 
