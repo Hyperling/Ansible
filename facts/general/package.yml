@@ -54,6 +54,11 @@
   set_fact:
     update_accept_var: '$accept'
 
+- name: General | Facts | Package | Update Commands | Helpers | pacman
+  set_fact:
+    update_accept_var: '--noconfirm'
+  when: ansible_pkg_mgr == "pacman"
+
 - name: General | Facts | Package | Update Commands | apt
   set_fact:
     update_package_manager: |
@@ -69,15 +74,17 @@
   set_fact:
     update_package_manager: |
       echo "*** Pacman ***" && 
-      sudo pacman -Syyu &&
+      sudo pacman -Syyu {{ update_accept_var }} &&
   when: ansible_pkg_mgr == "pacman"
 
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
       echo "*** Pkg ***" &&
+      sudo pkg clean {{ update_accept_var }} &&
+      sudo pkg autoremove {{ update_accept_var }} &&
       sudo pkg update &&
-      sudo pkg upgrade && 
+      sudo pkg upgrade {{ update_accept_var }} && 
   when: ansible_pkg_mgr in ("pkg", "pkgng")
 
 - name: General | Facts | Package | Update Commands | parrot-upgrade
