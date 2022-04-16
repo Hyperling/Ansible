@@ -81,10 +81,9 @@
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
-      echo "*** FreeBSD-Update ***" &&
-      sudo sh -c "rm -rf /var/db/freebsd-update; mkdir /var/db/freebsd-update" || echo "Already cleaned!" &&
-      sudo freebsd-update fetch &&
-      sudo freebsd-update install &&
+      echo "*** FreeBSD-Update Cleanup ***" &&
+      sudo sh -c "rm -rfv /var/db/freebsd-update; mkdir -v /var/db/freebsd-update" &&
+      sudo freebsd-update fetch install &&
 
       echo "*** Pkg ***" &&
       sudo pkg update &&
