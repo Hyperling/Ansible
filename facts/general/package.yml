@@ -64,7 +64,7 @@
     update_package_manager: |
       echo "*** Apt ***" &&
       sudo apt update &&
-      sudo apt autoclean {{ update_accept_var }} &&
+      sudo apt clean {{ update_accept_var }} &&
       sudo apt autoremove {{ update_accept_var }} && 
       sudo dpkg --configure -a &&
       sudo apt --fix-broken --fix-missing install &&
@@ -113,7 +113,7 @@
   set_fact:
     update_package_manager: |
       echo "*** DNF ***" &&
-      sudo dnf clean {{ update_accept_var }} &&
+      sudo dnf clean all {{ update_accept_var }} &&
       sudo dnf autoremove {{ update_accept_var }} &&
       sudo dnf upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("dnf")
