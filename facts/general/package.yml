@@ -113,6 +113,8 @@
   set_fact:
     update_package_manager: |
       echo "*** DNF ***" &&
+      sudo dnf clean {{ update_accept_var }} &&
+      sudo dnf autoremove {{ update_accept_var }} &&
       sudo dnf upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("dnf")
 
