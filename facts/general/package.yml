@@ -81,9 +81,16 @@
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
-      echo "*** FreeBSD-Update ***" &&
-      sudo sh -c "rm -rfv /var/db/freebsd-update; mkdir -v /var/db/freebsd-update" &&
-      sudo freebsd-update fetch install &&
+      echo "*** FreeBSD-Update ***" 
+      clean=""
+      [[ "{{ update_accept_var }}" == "-y" ]] || echo "Are you sure you'd like to clean /var/db/freebsd-update? [y/N] "
+      [[ "{{ update_accept_var }}" == "-y" ]] || read -N 1 clean
+      typeset -l clean
+      if [[ "{{ update_accept_var }}" == "-y" || "$clean" == "y" ]]; then
+        echo "Cleaning directory..."
+        sudo sh -c "rm -rfv /var/db/freebsd-update; mkdir -v /var/db/freebsd-update"
+      fi
+      sudo freebsd-update fetch install
 
       echo "*** Pkg ***" &&
       sudo pkg update &&
