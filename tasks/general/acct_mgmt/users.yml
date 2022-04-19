@@ -218,13 +218,15 @@
           sudo find $dir -name TRASH | while read trash; do 
             if [[ "$trash" != "" && `sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
-              sudo ls $trash
+              sudo ls -lh $trash
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
                 sudo sh -c "rm -rfv $trash/*"
               fi
             fi
           done 
+          echo "Checking but not cleaning /var/mail..."
+          du -ha /var/mail | sort -h
         done
         return 0
       }
