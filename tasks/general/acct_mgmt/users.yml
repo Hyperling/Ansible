@@ -191,6 +191,46 @@
       alias edit-config-wrk="sudo $EDITOR {{ wrk_file }}"
       alias edit-config-mnr="sudo $EDITOR {{ mnr_file }}"
       alias edit-config-srv="sudo $EDITOR {{ srv_file }}"
+    function_check_trash: |
+      function check-trash() {
+        unset OPTIND
+        while (( $# > 0 )); do
+          case $1 in
+            -c | -clean | --clean | -y ) clean="Y" ;;
+            * ) echo "
+            ERROR: Option '$1' with value '$2' not recognized.
+              $PROG [-c|-clean|--clean|-y]
+            " 
+            return 1
+          esac
+          shift
+        done
+        echo "clean=$clean"
+        echo "Grabbing sudo permissions..."
+        sudo echo "Success! Starting search..."
+        function dirs_to_check {
+          echo "/root"
+          echo "/home"
+          find /mnt -maxdepth 1 -mindepth 1 
+        }
+        dirs_to_check | while read dir; do 
+          echo "Checking $dir..."
+          sudo find $dir -name TRASH | while read trash; do 
+            if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+              echo "Found $trash with contents:"
+              sudo ls $trash
+              if [[ "$clean" == "Y" ]]; then
+                echo "Cleaning trash..."
+                sudo sh -c "rm -rfv $trash/*"
+              fi
+            fi
+          done 
+        done
+        return 0
+      }
+      function check_trash() {
+        check-trash $1
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -212,6 +252,7 @@
       {{ metasploit }}
       {{ show_config }}
       {{ edit_config }}
+      {{ function_check_trash }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
