@@ -197,21 +197,22 @@
         while (( $# > 0 )); do
           case $1 in
             -c | -clean | --clean | -y ) clean="Y" ;;
+            -n | -net | --network ) network="Y" ;;
             * ) echo "
             ERROR: Option '$1' with value '$2' not recognized.
-              $PROG [-c|-clean|--clean|-y]
+              $PROG [-c|-clean|--clean|-y] [-n|-net|--network]
             " 
             return 1
           esac
           shift
         done
         echo "clean=$clean"
+        echo "network=$network"
         echo "Grabbing sudo permissions..."
         sudo echo "Success! Starting search..."
         function dirs_to_check {
           echo "/root"
           echo "/home"
-          find /mnt -maxdepth 1 -mindepth 1 
         }
         dirs_to_check | while read dir; do 
           echo "Checking $dir..."
@@ -225,14 +226,33 @@
               fi
             fi
           done 
-          echo "Checking but not cleaning /var/mail..."
-          du -ha /var/mail | sort -h
         done
+        if [[ "$network" == "Y" ]]; then
+          function network_to_check {
+            find /mnt -maxdepth 1 -mindepth 1 
+          }
+          network_to_check | while read dir; do 
+            echo "Checking $dir..."
+            sudo find $dir -name TRASH | while read trash; do 
+              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+                echo "Found $trash with contents:"
+                sudo ls -lh $trash
+                if [[ "$clean" == "Y" ]]; then
+                  echo "Cleaning trash..."
+                  sudo sh -c "rm -rfv $trash/*"
+                fi
+              fi
+            done 
+          done
+        fi
+        echo "Checking but not cleaning /var/mail..."
+        du -ha /var/mail | sort -h
         return 0
       }
       function check_trash() {
         check-trash $1
       }
+
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
