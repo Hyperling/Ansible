@@ -115,7 +115,7 @@
     alias_cp: alias cp='cp -v'
     alias_mv: alias mv='mv -v'
     alias_rm: alias rm='echo "Use mv ~/TRASH/ instead!"'
-    alias_clean: alias clean='mv * ~/TRASH/'
+    alias_clean_dir: alias clean-dir='mv * ~/TRASH/'
     alias_clean_trash: alias clean-trash='sh -c "rm -rfv ~/TRASH/*"'
     path_additions: export PATH="~/bin:$PATH"
     function_wttr: |
@@ -191,6 +191,71 @@
       alias edit-config-wrk="sudo $EDITOR {{ wrk_file }}"
       alias edit-config-mnr="sudo $EDITOR {{ mnr_file }}"
       alias edit-config-srv="sudo $EDITOR {{ srv_file }}"
+    function_check_trash: |
+      function check-trash() {
+        unset OPTIND
+        while (( $# > 0 )); do
+          case $1 in
+            -c | -y | --clean ) clean="Y" ;;
+            -n | -net | --network ) network="Y" ;;
+            * ) echo "
+            ERROR: Option '$1' with value '$2' not recognized.
+              $PROG [-c|-clean|--clean|-y] [-n|-net|--network]
+            " 
+            return 1
+          esac
+          shift
+        done
+        echo "clean=$clean"
+        echo "network=$network"
+        echo "Grabbing sudo permissions..."
+        sudo echo "Success! Starting search..."
+        function dirs_to_check {
+          echo "/root"
+          echo "/home"
+        }
+        dirs_to_check | while read dir; do 
+          echo "Checking $dir..."
+          sudo find $dir -name TRASH | while read trash; do 
+            if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+              echo "Found $trash with contents:"
+              sudo ls -lh $trash
+              if [[ "$clean" == "Y" ]]; then
+                echo "Cleaning trash..."
+                sudo sh -c "rm -rfv $trash/*"
+              fi
+            fi
+          done 
+        done
+        if [[ "$network" == "Y" ]]; then
+          function network_to_check {
+            find /mnt -maxdepth 1 -mindepth 1 
+          }
+          network_to_check | while read dir; do 
+            echo "Checking $dir..."
+            sudo find $dir -name TRASH | while read trash; do 
+              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+                echo "Found $trash with contents:"
+                sudo ls -lh $trash
+                if [[ "$clean" == "Y" ]]; then
+                  echo "Cleaning trash..."
+                  sudo sh -c "rm -rfv $trash/*"
+                fi
+              fi
+            done 
+          done
+        fi
+        echo "Checking but not cleaning /var/mail..."
+        du -ha /var/mail | sort -h
+        return 0
+      }
+      alias check_trash="check-trash"
+    function_clean: |
+      function clean() {
+        sudo df -h
+        check-trash --clean
+        sudo df -h
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -199,7 +264,7 @@
       {{ alias_cp }}
       {{ alias_mv }}
       {{ alias_rm }}
-      {{ alias_clean }}
+      {{ alias_clean_dir }}
       {{ alias_clean_trash }}
       {{ function_wttr }}
       {{ PS1 }}
@@ -212,6 +277,8 @@
       {{ metasploit }}
       {{ show_config }}
       {{ edit_config }}
+      {{ function_check_trash }}
+      {{ function_clean }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:

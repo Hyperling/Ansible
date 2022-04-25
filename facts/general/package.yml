@@ -64,7 +64,7 @@
     update_package_manager: |
       echo "*** Apt ***" &&
       sudo apt update &&
-      sudo apt autoclean {{ update_accept_var }} &&
+      sudo apt clean {{ update_accept_var }} &&
       sudo apt autoremove {{ update_accept_var }} && 
       sudo dpkg --configure -a &&
       sudo apt --fix-broken --fix-missing install &&
@@ -81,9 +81,16 @@
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
-      echo "*** FreeBSD-Update ***" &&
-      sudo sh -c "rm -rfv /var/db/freebsd-update; mkdir -v /var/db/freebsd-update" &&
-      sudo freebsd-update fetch install &&
+      echo "*** FreeBSD-Update ***" 
+      clean=""
+      [[ "{{ update_accept_var }}" == "-y" ]] || echo "Are you sure you'd like to clean /var/db/freebsd-update? [y/N] "
+      [[ "{{ update_accept_var }}" == "-y" ]] || read -N 1 clean
+      typeset -l clean
+      if [[ "{{ update_accept_var }}" == "-y" || "$clean" == "y" ]]; then
+        echo "Cleaning directory..."
+        sudo sh -c "rm -rfv /var/db/freebsd-update; mkdir -v /var/db/freebsd-update"
+      fi
+      sudo freebsd-update fetch install
 
       echo "*** Pkg ***" &&
       sudo pkg update &&
@@ -113,6 +120,8 @@
   set_fact:
     update_package_manager: |
       echo "*** DNF ***" &&
+      sudo dnf clean all {{ update_accept_var }} &&
+      sudo dnf autoremove {{ update_accept_var }} &&
       sudo dnf upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("dnf")
 
@@ -126,6 +135,7 @@
   set_fact:
     update_flatpak: |
       echo "*** Flatpak ***" && 
+      sudo flatpak uninstall --unused {{ update_accept_var }} &&
       sudo flatpak update {{ update_accept_var }} &&
   when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
   

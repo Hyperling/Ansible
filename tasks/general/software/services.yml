@@ -3,7 +3,7 @@
 
 ## Cron ##
 
-- name: General | Software | Services | Enable CROND
+- name: General | Software | Services | CROND | Enable
   service:
     name: "{{ crond }}"
     pattern: "{{ crond_pattern }}"
@@ -13,7 +13,7 @@
 
 ## SSHFS ##
 
-- name: General | Software | Services | Enable FuseFS (FreeBSD rc.conf)
+- name: General | Software | Services | SSHFS | Enable FuseFS (FreeBSD rc.conf)
   lineinfile:
     path: "{{ rc_conf }}"
     regexp: 'fusefs_enable='
@@ -23,7 +23,7 @@
     backup: yes
   when: ansible_system == "FreeBSD"
 
-- name: General | Software | Services | Enable SSHFS (FreeBSD service)
+- name: General | Software | Services | SSHFS | Enable SSHFS (FreeBSD service)
   service:
     name: fusefs
     pattern: fusefs
@@ -34,14 +34,14 @@
 
 ## CUPS ##
 
-- name: General | Software | Services | Disable CUPS Daemon
+- name: General | Software | Services | CUPS | Disable
   service:
     name: "{{ cups }}"
     pattern: "{{ cups_pattern }}"
     state: stopped
     enabled: no
 
-- name: General | Software | Services | Disable CUPS-Browse Daemon
+- name: General | Software | Services | CUPS-Browse | Disable
   service:
     name: "{{ cups_browse }}"
     pattern: "{{ cups_browse_pattern }}"
@@ -51,7 +51,7 @@
 
 ## SSHD ##
 
-- name: General | Software | Services | Configure SSHD
+- name: General | Software | Services | SSHD | Configure
   lineinfile:
     path: "{{ sshd_config }}"
     regexp: '{{ item.key }}'
@@ -75,7 +75,7 @@
     - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
     - { "key": '^[\#]?PermitEmptyPasswords', "value": 'PermitEmptyPasswords no'}
 
-- name: General | Software | Services | Configure SSHD
+- name: General | Software | Services | SSHD | Configure (PVE)
   lineinfile:
     path: "{{ sshd_config }}"
     regexp: '{{ item.key }}'
@@ -89,9 +89,17 @@
     - { "key": '^[\#]?MaxSessions',     "value": 'MaxSessions 5'}
   when: "'pve' in ansible_kernel"
 
-- name: General | Software | Services | Enable SSHD
+- name: General | Software | Services | SSHD | Enable
   service:
     name: "{{ sshd }}"
     pattern: "{{ sshd_pattern }}"
     state: reloaded
     enabled: yes
+
+
+## JournalCTL ##
+
+- name: General | Software | Services | JournalCTL | Reduce Log Size
+  shell: journalctl --vacuum-size=100M
+  when: ansible_system == "Linux"
+  ignore_errors: yes
