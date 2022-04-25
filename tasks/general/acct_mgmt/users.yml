@@ -249,9 +249,7 @@
         du -ha /var/mail | sort -h
         return 0
       }
-      function check_trash() {
-        check-trash $1
-      }
+      alias check_trash="check-trash"
     function_clean: |
       function clean() {
         sudo df -h
