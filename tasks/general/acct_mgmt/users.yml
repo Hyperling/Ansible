@@ -194,8 +194,8 @@
     function_check_trash: |
       function check-trash() {
         unset OPTIND
-        clean=""
-        network=""
+        unset clean
+        unset network
         while (( $# > 0 )); do
           case $1 in
             -c | -y | --clean ) clean="Y" ;;
