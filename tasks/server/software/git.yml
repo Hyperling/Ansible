@@ -177,14 +177,14 @@
 ## Cron ##
 
 - name: Server | Software | HTTPS Git Server | Cron | Hourly
-  ansible.builtin.cron:
+  cron:
     name: "{{ item.name }} hourly"
     special_time: hourly
     job: "cd {{ git_web_root }}/{{ item.name }}.git && {{ git_cron_commands }}"
   loop: "{{ git_projects }}"
 
 - name: Server | Software | HTTPS Git Server | Cron | Reboot
-  ansible.builtin.cron:
+  cron:
     name: "{{ item.name }} reboot"
     special_time: reboot
     job: "cd {{ git_web_root }}/{{ item.name }}.git && {{ git_cron_commands }}"
