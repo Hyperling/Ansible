@@ -11,27 +11,6 @@
     enabled: yes
 
 
-## SSHFS ##
-
-- name: General | Software | Services | SSHFS | Enable FuseFS (FreeBSD rc.conf)
-  lineinfile:
-    path: "{{ rc_conf }}"
-    regexp: 'fusefs_enable='
-    line: 'fusefs_enable="YES" # MANAGED BY ANSIBLE'
-    state: present
-    create: yes
-    backup: yes
-  when: ansible_system == "FreeBSD"
-
-- name: General | Software | Services | SSHFS | Enable SSHFS (FreeBSD service)
-  service:
-    name: fusefs
-    pattern: fusefs
-    state: started
-    enabled: yes
-  when: ansible_system == "FreeBSD"
-
-
 ## CUPS ##
 
 - name: General | Software | Services | CUPS | Disable
