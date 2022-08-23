@@ -39,10 +39,8 @@
 
 - name: General | Facts | System | Report File Names
   set_fact:
-    heartbeat_report_name: "{{ ansible_hostname }}.txt"
-    ansible_pull_report_name: "{{ ansible_hostname }}_last_pull_times.txt"
-    lynis_report_name: "{{ ansible_hostname }}_lynis.txt"
-    nmap_report_name: "{{ ansible_hostname }}_nmap.txt"
+    lynis_report_name: "{{ lynis_install_dir }}/run.txt"
+    nmap_report_name: "{{ lynis_install_dir }}_nmap.txt"
 
 
 - name: General | Facts | System | Ansible Branch
