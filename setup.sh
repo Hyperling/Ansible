@@ -1,6 +1,11 @@
 #!/bin/bash
 # Script to initialize a system into Ansible collection.
 
+branch="main"
+if [[ $1 != "" ]]; then
+  branch="$1"
+fi
+
 os="$(cat /etc/os-release)"
 os="$os $(uname -a)"
 
@@ -41,7 +46,7 @@ echo "Installed!"
 #echo "Added!"
 
 echo "Running ansible-pull..."
-sudo ansible-pull -U https://github.com/Hyperling/ansible.git --checkout main
+sudo ansible-pull -U https://github.com/Hyperling/ansible.git --checkout $branch
 echo "Pulled!"
 
 echo "Mounting all drives..."
