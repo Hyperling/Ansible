@@ -1,9 +1,0 @@
----
-# SSH keys for day-to-day system usage.
-
-# Debian's ansible is too old to use this.
-#- name: Create Root's SSH Key
-#  openssh_keypair:
-#    path: /root/.ssh/id_rsa
-
-# DELETEME
