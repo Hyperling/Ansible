@@ -16,8 +16,6 @@
     - include: facts/general/service.yml
     - include: facts/general/user.yml
 
-    - include: tasks/general/start.yml
-
     - include: tasks/general/software/packages.yml
     - include: tasks/general/software/services.yml
       ignore_errors: yes
@@ -30,14 +28,11 @@
     - include: tasks/general/acct_mgmt/groups.yml
     - include: tasks/general/acct_mgmt/users.yml
     - include: tasks/general/acct_mgmt/sudo.yml
-    - include: tasks/general/acct_mgmt/keys.yml
-    - include: tasks/general/acct_mgmt/mounts.yml
 
     - include: tasks/general/scripts/root.yml
     - include: tasks/general/scripts/user.yml
 
     - include: tasks/general/cron/ansible.yml
-    - include: tasks/general/cron/root.yml
     
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
     - include: tasks/workstation/freebsd/cron/ansible.yml
@@ -73,9 +68,6 @@
       - include: tasks/workstation/linux/software/flatpaks.yml
         when: ansible_system == "Linux" and flatpak_distro
 
-      - include: tasks/workstation/linux/software/debs.yml
-        when: ansible_pkg_mgr == "apt"
-
       - include: tasks/workstation/linux/software/brave.yml
         when: ansible_pkg_mgr in ("apt", "dnf")
 
@@ -83,9 +75,6 @@
         when: ansible_system == "FreeBSD"
 
       - include: tasks/workstation/mac-os/software/brew.yml
-        when: ansible_system == "Darwin"
-
-      - include: tasks/workstation/mac-os/software/dmg.yml
         when: ansible_system == "Darwin"
 
       # Configuration Tasks #
@@ -192,5 +181,3 @@
 
     - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
-
-    - include: tasks/general/finish.yml
