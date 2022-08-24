@@ -2,12 +2,12 @@
 # Nmap port test
 
 - name: General | Tests | nmap | Run Count
-  shell: "nmap --open localhost | grep -c open > {{ nmap_report_name }}; echo success"
+  shell: "nmap --open localhost | grep -c open > {{ nmap_report }}; echo success"
 
 - name: General | Tests | nmap | Run Open
-  shell: "nmap --open localhost | grep open >> {{ nmap_report_name }}; echo success"
+  shell: "nmap --open localhost | grep open >> {{ nmap_report }}; echo success"
 
 - name: General | Tests | nmap | Make Viewable
   file:
-    path: "{{ nmap_report_name }}"
+    path: "{{ nmap_report }}"
     mode: '0777'
