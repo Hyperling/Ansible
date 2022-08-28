@@ -101,6 +101,7 @@
     - "{{ user_user.home }}/bin"
     - "{{ user_user.home }}/LBRY"
     - "{{ user_user.home }}/TRASH"
+    - "{{ user_user.home }}/Downloads"
   become_user: "{{ user }}"
   when: user_user.home != ""
 
