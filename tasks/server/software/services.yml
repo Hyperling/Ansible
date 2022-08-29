@@ -1,0 +1,20 @@
+---
+# Enable and disable services.
+
+## ACPID ##
+
+- name: Server | Software | Services | ACPID | Install
+  package:
+    name: "{{ acpi }}"
+    state: present
+  when: ansible_system == "Linux"
+  ignore_errors: yes
+
+- name: Server | Software | Services | ACPID | Enable
+  service:
+    name: "{{ acpi }}"
+    pattern: "{{ acpi_pattern }}"
+    state: started
+    enabled: yes
+  when: ansible_system == "Linux"
+  ignore_errors: yes

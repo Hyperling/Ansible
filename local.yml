@@ -144,6 +144,8 @@
     - name: Main | Server Setup
       block:
 
+      - include: tasks/server/software/services.yml
+
       - include: tasks/server/software/certbot.yml
         when: certbot == true
       - include: tasks/server/cron/certbot.yml

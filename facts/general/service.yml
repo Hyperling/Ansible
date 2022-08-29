@@ -12,12 +12,8 @@
     sshd_config: /etc/ssh/sshd_config
     crond: cron
     crond_pattern: cron
-
-
-#- name: General | Facts | Service | Linux
-#  set_fact:
-#  when: ansible_system == "Linux"
-
+    acpi: acpid
+    acpi_pattern: acpid
 
 - name: General | Facts | Service | Linux
   set_fact:
