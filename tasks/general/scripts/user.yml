@@ -6,8 +6,9 @@
     path: "{{ user_user.home }}/bin/scm.sh"
     block: |
       # 20210211 - Make life easier!
-      push.sh
-      time curl https://scm.hyperling.com | sudo bash
+      git clone {{ repo_github }} ansible-pull
+      ansible-pull/setup.sh
+      mv ansible-pull ~/TRASH/
     marker: '{mark}'
     marker_begin: "#!{{ bash_exec.stdout }}"
     marker_end: "exit 0"
@@ -37,7 +38,6 @@
 
       ## Main ##
 
-      push.sh
       time sudo {{ ansible_pull_exec.stdout }} -U {{ repo_github }} --checkout $branch
 
     marker: '{mark}'
