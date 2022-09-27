@@ -181,5 +181,6 @@
 
     - include: tasks/general/software/telegraf.yml
 
-    - include: tasks/general/tests/nmap.yml
     - include: tasks/general/tests/lynis.yml
+    - include: tasks/general/tests/nmap.yml
+
