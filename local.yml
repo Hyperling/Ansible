@@ -66,10 +66,10 @@
 
       # Software Tasks #
       - include: tasks/workstation/linux/software/flatpaks.yml
-        when: ansible_system == "Linux" and flatpak_distro
+        when: ansible_system == "Linux" and flatpak_distro and not mobile
 
       - include: tasks/workstation/linux/software/brave.yml
-        when: ansible_pkg_mgr in ("apt", "dnf")
+        when: ansible_pkg_mgr in ("apt", "dnf") and not mobile
 
       - include: tasks/workstation/freebsd/software/packages.yml
         when: ansible_system == "FreeBSD"
@@ -79,9 +79,10 @@
 
       # Configuration Tasks #
       - include: tasks/workstation/shared/settings/gnome.yml
+        when: not mobile
 
       - include: tasks/workstation/linux/cron/ansible.yml
-        when: ansible_system == "Linux"
+        when: ansible_system == "Linux" and not mobile
 
       - include: tasks/workstation/shared/settings/nfs.yml
 
