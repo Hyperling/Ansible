@@ -143,6 +143,7 @@
     update_flatpak: |
       echo "*** Flatpak ***" && 
       sudo flatpak uninstall --unused {{ update_accept_var }} &&
+      sudo flatpak repair &&
       sudo flatpak update {{ update_accept_var }} &&
   when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
   
