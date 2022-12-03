@@ -103,8 +103,7 @@
       ;             Example: amdgpu
       ;
       ;  mobile : Set to true if not using an amd64 processor.
-      ;             Not used yet but expecting it to be helpful for Pinephone.
-      ;             May eventually avoid things like Flatpak if they don't play well.
+      ;             Also used to disable tasks not helpful for Pinephone.
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Workstation Config'
