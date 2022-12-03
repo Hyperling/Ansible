@@ -1,8 +1,11 @@
 ---
 # Use flatpaks because they're consistent versions across different distros! :)
 
+## To see how much space is taken up try the .rc function flatpak-usage ##
+
 # If you'd like to remove flatpaks to save space:
-#  $ flatpak remove --all
+## Note: This functionality now exists in .rc function flatpak-purge ##
+#  $ flatpak remove --all --delete-data
 #  $ flatpak repair
 # Then remove, autoremove, and purge flatpak executable with package manager.
 # Source: https://softhints.com/how-to-completely-remove-flatpak-linux-mint/
