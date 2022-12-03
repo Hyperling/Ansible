@@ -16,6 +16,7 @@
     tar: tar
     microcode_amd: amd64-microcode
     microcode_intel: intel-microcode
+    cron: cron
   when: ansible_pkg_mgr == "apt"
 
 - name: General | Facts | Package | pacman
@@ -26,6 +27,7 @@
     tar: tar
     microcode_amd: linux-firmware
     microcode_intel: intel-ucode
+    cron: cronie
   when: ansible_pkg_mgr == "pacman"
 
 - name: General | Facts | Package | FreeBSD
@@ -47,6 +49,7 @@
     tar: tar
     microcode_amd: microcode_ctl
     microcode_intel: microcode_ctl
+    cron: cronie
   when: ansible_pkg_mgr == "dnf"
 
 
@@ -140,6 +143,7 @@
     update_flatpak: |
       echo "*** Flatpak ***" && 
       sudo flatpak uninstall --unused {{ update_accept_var }} &&
+      sudo flatpak repair &&
       sudo flatpak update {{ update_accept_var }} &&
   when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
   
