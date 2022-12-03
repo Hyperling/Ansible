@@ -15,8 +15,14 @@
     acpi: acpid
     acpi_pattern: acpid
 
-- name: General | Facts | Service | Linux
+- name: General | Facts | Service | Arch Linux
   set_fact:
     crond: cronie
     crond_pattern: cronie
   when: ansible_distribution == "Archlinux"
+
+- name: General | Facts | Service | Ubuntu Linux
+  set_fact:
+    sshd: ssh
+    sshd_pattern: ssh
+  when: ansible_distribution == "Ubuntu"
