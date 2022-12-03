@@ -61,7 +61,18 @@
   when: branch == "dev"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora+Mobian)
+- name: General | Software | Packages | Add Generic Kernel + Tools (Ubuntu)
+  package:
+    name:
+    - linux-image-generic
+    - linux-headers-generic
+    - linux-tools-generic
+    - linux-tools-common
+    state: present
+  when: ansible_distribution == "Ubuntu"
+  ignore_errors: yes
+
+- name: General | Software | Services | Install CROND (Looking at you, Fedora)
   package:
     name: "{{ cron }}"
     state: present

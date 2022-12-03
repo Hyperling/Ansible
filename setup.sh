@@ -13,14 +13,18 @@ BRANCH="main"
 # Accepts 1 parameter, it is used as the exit status.
 function usage {
 	cat <<- EOF
+
 	  $PROG [-l] [-b branch_name] [-h]
 	    Program to initialize synchronization with Hyperling's Ansible configuration.
-	       $URL
+	      $URL
 
 	    Parameters:
-	      -l : Run the local version associated with this setup.sh.
+	      -l : Run the local playbook associated with this $PROG. 
+	             This is helpful for development or just saving bandwidth.
+	             It also provides prettier colors than the plaintext from ansible-pull. ;)
 	      -b branch_name: Download and run a specific branch. Default is $BRANCH.
 	      -h : Display this help text
+	
 	EOF
 	exit $1
 }
@@ -106,6 +110,8 @@ mount -a
 echo "Mounted!"
 
 echo "Don't forget to set any new users' passwords!"
+
+## Finish ##
 
 echo "We're done!"
 
