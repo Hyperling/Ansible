@@ -269,6 +269,14 @@
           fi
         done | sort -n
       }
+    function_flatpak_purge: |
+      function flatpak-purge() {
+        flatpak remove --all --delete-data &&
+        flatpak repair &&
+        echo "Finished purging all Flatpak apps. Executable may still need uninstalled." &&
+        return
+        echo "ERROR: Something went wrong while removing Flatpak apps!"
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -293,6 +301,7 @@
       {{ function_check_trash }}
       {{ function_clean }}
       {{ function_flatpak_usage }}
+      {{ function_flatpak_purge }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
