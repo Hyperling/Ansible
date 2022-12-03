@@ -61,11 +61,11 @@
   when: branch == "dev"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora)
+- name: General | Software | Services | Install CROND (Looking at you, Fedora+Mobian)
   package:
-    name: cronie
+    name: "{{ cron }}"
     state: present
-  when: ansible_pkg_mgr == "dnf"
+  when: ansible_pkg_mgr == "dnf" or ansible_distribution == "Mobian"
 
 - name: General | Software | Services | Install killall (Looking at you, Debian)
   package:
@@ -77,7 +77,7 @@
   package:
     name: 
     - which
-    - cronie
+    - "{{ cron }}"
     - vi
     state: present
   when: ansible_distribution == "Archlinux"
