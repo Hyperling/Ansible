@@ -1,5 +1,11 @@
 ---
-# Use flatpaks because they're consistent! :)
+# Use flatpaks because they're consistent versions across different distros! :)
+
+# If you'd like to remove flatpaks to save space:
+#  $ flatpak remove --all
+#  $ flatpak repair
+# Then remove, autoremove, and purge flatpak executable with package manager.
+# Source: https://softhints.com/how-to-completely-remove-flatpak-linux-mint/
 
 ## Flatpak Pre-reqs ##
 
