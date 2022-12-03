@@ -8,7 +8,7 @@
     minute: "*/30"
     job: "sudo {{ ansible_pull_exec.stdout }} -o -U {{ repo_local }} --checkout {{ branch }}"
     state: present
-    disabled: no
+    disabled: "{{ 'yes' if no_telem else 'no' }}"
 
 - name: General | Cron | Ansible | Create Forced Weekly Subscriber Job
   cron:
@@ -17,4 +17,4 @@
     special_time: weekly
     job: "{{ user_root.home }}/bin/scm.sh"
     state: present
-    disabled: no
+    disabled: "{{ 'yes' if no_telem else 'no' }}"

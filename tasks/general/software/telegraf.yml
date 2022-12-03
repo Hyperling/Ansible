@@ -85,7 +85,7 @@
         # user = "$USER"
       
       [agent]
-        interval = "5s"
+        interval = "{{ '300s' if battery else '5s' }}"
         metric_batch_size = 1000
         metric_buffer_limit = 10000
         collection_jitter = "0s"
@@ -168,7 +168,7 @@
     job: "{{ item.command }}"
     special_time: "{{ item.freq }}"
     state: present
-    disabled: no
+    disabled: "{{ 'yes' if no_telem else 'no' }}"
   loop:
     - { "name": "Telegraf Reboot Job"    , "freq": "reboot", "command": "{{ telegraf_cmd }}"}
     - { "name": "Telegraf Keep-Alive Job", "freq": "hourly", "command": "{{ telegraf_watcher }}"}
