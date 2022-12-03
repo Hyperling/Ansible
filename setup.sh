@@ -13,7 +13,7 @@ BRANCH="main"
 # Accepts 1 parameter, it is used as the exit status.
 function usage {
 	cat <<- EOF
-	
+
 	  $PROG [-l] [-b branch_name] [-h]
 	    Program to initialize synchronization with Hyperling's Ansible configuration.
 	      $URL
@@ -110,6 +110,8 @@ mount -a
 echo "Mounted!"
 
 echo "Don't forget to set any new users' passwords!"
+
+## Finish ##
 
 echo "We're done!"
 
