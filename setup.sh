@@ -6,6 +6,7 @@
 PROG=`basename $0`
 LOCAL=`dirname $0`/local.yml
 URL="https://github.com/Hyperling/ansible"
+BRANCH="main"
 
 ## Functions ##
 
@@ -18,7 +19,7 @@ function usage {
 
 	    Parameters:
 	      -l : Run the local version associated with this setup.sh.
-	      -b branch_name: Download and run a specific branch. Default is main.
+	      -b branch_name: Download and run a specific branch. Default is $BRANCH.
 	      -h : Display this help text
 	EOF
 	exit $1
@@ -29,10 +30,13 @@ function usage {
 while getopts ":lb:h" arg; do
 	case $arg in
 		l)
+			echo "Running $LOCAL as the playbook."
 			local="Y"
 			;;
 		b)
+			echo -n "Using branch "
 			branch="$OPTARG"
+			echo "$branch instead of $BRANCH."
 			;;
 		h)
 			usage
@@ -45,7 +49,7 @@ while getopts ":lb:h" arg; do
 done
 
 if [[ $branch == "" ]]; then
-	branch="main"
+	branch="$BRANCH"
 fi
 
 ## Main ##
