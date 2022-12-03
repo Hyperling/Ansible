@@ -259,6 +259,17 @@
         check-trash --clean
         sudo df -h
       }
+    function_flatpak_usage: |
+      function flatpak-usage() {
+        flatpak list --columns=application | while read app; do
+          size=`flatpak info -s $app 2>/dev/null`
+          if [[ ! -z $size ]]; then
+            mb=$(( size / (1000*1000) ))
+            echo "${mb} MB, $size Bytes, $app"
+          fi
+        done | sort -n
+        echo "Done!"
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -282,6 +293,7 @@
       {{ edit_config }}
       {{ function_check_trash }}
       {{ function_clean }}
+      {{ function_flatpak_usage }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
