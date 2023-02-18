@@ -54,4 +54,4 @@ There may also be a refactor of task-specific facts to be in their task file so 
 
 ## Other Notes
 ### Get Setup Values
-In order to see the values for a new system you may be setting up, use this command: `ansible localhost -m setup --connection=local`.
+Use this command to see the variables for a system: `ansible localhost -m setup --connection=local`.
