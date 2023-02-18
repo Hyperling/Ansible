@@ -34,7 +34,7 @@ Generic: 100%
 Workstation: 100%
 
 ### openSUSE Leap 15.4
-Generic:100%
+Generic: 100%
 Workstation: Currently failing at `[Workstation | Linux | Flatpak Distro | Package Manager | Install From Repo]` with message `Problem: nothing provides libedataserver-1.2.so.24 needed by the to be installed evolution-data-server-32bit-3.34.4-3.3.1.x86_64`.
 
 ## Currently Supported Unix Systems
