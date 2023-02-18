@@ -29,9 +29,9 @@ Workstation: 100%
 Server: 100%
 
 ## Suse Family
-### openSUSE Tumbleweed
+### openSUSE Tumbleweed v2022-02-17
 Generic: 100%
-Workstation: In Progress
+Workstation: 100%
 
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13
