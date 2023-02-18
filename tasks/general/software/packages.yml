@@ -60,11 +60,11 @@
   when: branch == "dev"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora)
+- name: General | Software | Services | Install CROND (Looking at you, Fedora+openSUSE)
   package:
     name: cronie
     state: present
-  when: ansible_pkg_mgr == "dnf"
+  when: ansible_pkg_mgr in ("dnf", "zypper")
 
 - name: General | Software | Services | Install killall (Looking at you, Debian)
   package:
