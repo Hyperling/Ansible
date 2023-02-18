@@ -97,4 +97,4 @@
     firefox_esr: firefox-esr-branding-openSUSE
     font_awesome: fontawesome-fonts
     nfs: utils-libnfs
-  when: ansible_distribution == "openSUSE"
+  when: ansible_os_family == "Suse"
