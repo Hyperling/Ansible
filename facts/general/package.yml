@@ -153,7 +153,9 @@
       sudo zypper patch {{ update_accept_var }} &&
       sudo zypper update {{ update_accept_var }} &&
       sudo zypper dist-upgrade {{ update_accept_var }} &&
-      sudo zypper install-new-recommends &&
+      # This is a neat feature, but is installing things like GIMP from the 
+      #  repos when it is already installed through Flatpak, so not needed.
+      #sudo zypper install-new-recommends &&
   when: ansible_pkg_mgr in ("zypper")
 
 
