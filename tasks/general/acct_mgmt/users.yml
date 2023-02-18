@@ -259,6 +259,24 @@
         check-trash --clean
         sudo df -h
       }
+    function_flatpak_usage: |
+      function flatpak-usage() {
+        flatpak list --columns=application | while read app; do
+          size=`flatpak info -s $app 2>/dev/null`
+          if [[ ! -z $size ]]; then
+            mb=$(( size / (1000*1000) ))
+            echo "${mb} MB, $size Bytes, $app"
+          fi
+        done | sort -n
+      }
+    function_flatpak_purge: |
+      function flatpak-purge() {
+        flatpak remove --all --delete-data &&
+        flatpak repair &&
+        echo "Finished purging all Flatpak apps. Executable may still need uninstalled." &&
+        return
+        echo "ERROR: Something went wrong while removing Flatpak apps!"
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -282,6 +300,8 @@
       {{ edit_config }}
       {{ function_check_trash }}
       {{ function_clean }}
+      {{ function_flatpak_usage }}
+      {{ function_flatpak_purge }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:

@@ -41,6 +41,13 @@
       ;
       ; pentesting : Set to true to install tools such as metasploit (nmap is already provided for reporting)
       ;
+      ;   no_telem : Set to true to avoid setting up telemetry services.
+      ;                Disables GitHub updates to this project.
+      ;                Disables all telegraf pings.
+      ;
+      ;    battery : Set to true to attempt to save battery life.
+      ;                Slows down the rate of services such as telegraf and cron.
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
     state: present
@@ -54,6 +61,8 @@
     user_desc:  "{{ lookup('ini', 'user_desc  file={{gen_file}} default=Hyperling') }}"
     branch:     "{{ lookup('ini', 'branch     file={{gen_file}} default=main') }}"
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
+    no_telem:   "{{ lookup('ini', 'no_telem   file={{gen_file}} default=false') }}"
+    battery:    "{{ lookup('ini', 'battery    file={{gen_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact: 
@@ -64,6 +73,8 @@
     - { 'user_desc': "{{ user_desc }}" }
     - { 'branch': "{{ branch }}" }
     - { 'pentesting': "{{ pentesting }}" }
+    - { 'no_telem': "{{ no_telem }}" }
+    - { 'battery': "{{ battery }}" }
 
 
 ## Workstation ##
@@ -91,6 +102,9 @@
       ; bsd_gpu : Set to [] to install GPU driver
       ;             Example: amdgpu
       ;
+      ;  mobile : Set to true if not using an amd64 processor.
+      ;             Also used to disable tasks not helpful for Pinephone.
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Workstation Config'
     state: present
@@ -106,6 +120,7 @@
     rdp:         "{{ lookup('ini', 'rdp     file={{wrk_file}} default=false') }}"
     vnc:         "{{ lookup('ini', 'vnc     file={{wrk_file}} default=false') }}"
     bsd_gpu:     "{{ lookup('ini', 'bsd_gpu file={{wrk_file}} default=false') }}"
+    mobile:      "{{ lookup('ini', 'mobile  file={{wrk_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Workstation | List
   set_fact: 
@@ -118,6 +133,7 @@
     - { 'rdp': "{{ rdp }}" }
     - { 'vnc': "{{ vnc }}" }
     - { 'bsd_gpu': "{{ bsd_gpu }}" }
+    - { 'mobile': "{{ mobile }}" }
 
 # No longer mining, this is now considered deprecated.
 ### Miner ##
@@ -223,6 +239,10 @@
       ;
       ;    certbot : Set to true to add cron job for `certbot renew`.
       ;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;
+      ; Never got these fully working or did not understand how to use them.
+      ;
       ;       hugo : Set to true to install HUGO static website generator.
       ;
       ;     gitlab : ee - Installs Enterprise Edition Free Tier. Basically CE with an easier upgrade path for Paid Features.
@@ -247,6 +267,7 @@
       ;    git_sep : Separator for git variables above.
       ;                Example: #
       ;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Server Config'
     state: present

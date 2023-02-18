@@ -1,5 +1,14 @@
 ---
-# Use flatpaks because they're consistent! :)
+# Use flatpaks because they're consistent versions across different distros! :)
+
+## To see how much space is taken up try the .rc function flatpak-usage ##
+
+# If you'd like to remove flatpaks to save space:
+## Note: This functionality now exists in .rc function flatpak-purge ##
+#  $ flatpak remove --all --delete-data
+#  $ flatpak repair
+# Then remove, autoremove, and purge flatpak executable with package manager.
+# Source: https://softhints.com/how-to-completely-remove-flatpak-linux-mint/
 
 ## Flatpak Pre-reqs ##
 
@@ -27,16 +36,12 @@
   set_fact:
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office", extra: "" }
-      - { app: "org.telegram.desktop", name: "telegram", extra: "" }
       - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" }
-      - { app: "org.signal.Signal", name: "signal", extra: "" }
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
       - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
-      - { app: "im.riot.Riot", name: "element", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
-      - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
       - { app: "io.dbeaver.DBeaverCommunity", name: "dbeaver", extra: "" }
     flatpaks_editing:
       - { app: "org.shotcut.Shotcut", name: "shotcut", extra: "" }
@@ -56,6 +61,12 @@
       - { app: "org.mozilla.Thunderbird", name: "thunderbird", extra: "" } # Doesn't integrate with Nextcloud as well as Evolution.
       - { app: "org.audacityteam.Audacity", name: "audacity", extra: "" } # Say "no thanks" to spyware.
       - { app: "com.discordapp.Discord", name: "discord", extra: "" } # Stopped working, just spins and says Starting.
+      # 2022-11-20 No longer using any of these and they're taking up a lot of space. #
+      - { app: "im.riot.Riot", name: "element", extra: "" }
+      - { app: "org.signal.Signal", name: "signal", extra: "" }
+      - { app: "org.telegram.desktop", name: "telegram", extra: "" }
+      - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
+      # End 2022-11-20 #
 
 # Generic #
 

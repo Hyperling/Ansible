@@ -49,6 +49,7 @@
     - zsh
     - "{{ opensshd }}"
     - "{{ tar }}"
+    - curl
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
@@ -60,11 +61,22 @@
   when: branch == "dev"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora+openSUSE)
+- name: General | Software | Packages | Add Generic Kernel + Tools (Ubuntu)
   package:
-    name: cronie
+    name:
+    - linux-image-generic
+    - linux-headers-generic
+    - linux-tools-generic
+    - linux-tools-common
     state: present
-  when: ansible_pkg_mgr in ("dnf", "zypper")
+  when: ansible_distribution == "Ubuntu"
+  ignore_errors: yes
+
+- name: General | Software | Services | Install CROND (Looking at you, Fedora+Mobian+openSUSE)
+  package:
+    name: "{{ cron }}"
+    state: present
+  when: ansible_pkg_mgr in ("dnf", "zypper") or ansible_distribution == "Mobian"
 
 - name: General | Software | Services | Install killall (Looking at you, Debian)
   package:
@@ -75,8 +87,9 @@
 - name: General | Software | Services | Install "Bloat" (Looking at you, Arch Base)
   package:
     name: 
-      - which
-      - cronie
+    - which
+    - "{{ cron }}"
+    - vi
     state: present
   when: ansible_distribution == "Archlinux"
 
