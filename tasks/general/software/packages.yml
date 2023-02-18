@@ -51,6 +51,7 @@
     - "{{ tar }}"
     - curl
     - at
+    - gcc
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
