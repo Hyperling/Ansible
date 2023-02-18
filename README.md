@@ -46,3 +46,7 @@ Specifically for the Pinephone.
 Eventually some of the scripts and install files will be put into the files folder. This will allow initializing systems outside of the maintainer's home network. 
 
 There may also be a refactor of task-specific facts to be in their task file so that some playbooks can be more self-sufficient and be provided to the community without hacking. The original goal was to never define facts in tasks, but the benefit has yet to be seen for some tasks. Shared facts will definitely continue to exist under the facts tree.
+
+## Other Notes
+### Get Setup Values
+In order to see the values for a new system you may be setting up, use this command: `ansible localhost -m setup --connection=local`.
