@@ -28,6 +28,11 @@ This setup is specific to the maintainer's devices and needs. You're welcome to 
 Workstation: 100%
 Server: 100%
 
+## Suse Family
+### openSUSE Tumbleweed
+Generic: 100%
+Workstation: In Progress
+
 ## Currently Supported Unix Systems
 ### FreeBSD 12, 13
 100%, although GUI is not working completely on 13 yet (dash-to-dock doesn't compile).
