@@ -48,7 +48,6 @@
   shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
-    #warn: false # Ansible 2.14.2 on openSUSE Tumbleweed does not recognize this.
   loop:
     - mkdir -p {{ telegraf_path }}
     - mkdir -p {{ telegraf_config_path }}
