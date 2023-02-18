@@ -69,7 +69,7 @@
         when: ansible_system == "Linux" and flatpak_distro
 
       - include: tasks/workstation/linux/software/brave.yml
-        when: ansible_pkg_mgr in ("apt", "dnf")
+        when: ansible_pkg_mgr in ("apt", "dnf", "zypper")
 
       - include: tasks/workstation/freebsd/software/packages.yml
         when: ansible_system == "FreeBSD"
