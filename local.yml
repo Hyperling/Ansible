@@ -8,37 +8,37 @@
   become: true  
 
   tasks:
-    - include: facts/general/gather.yml
-    - include: tasks/general/acct_mgmt/provision_config.yml
+    - include_tasks: facts/general/gather.yml
+    - include_tasks: tasks/general/acct_mgmt/provision_config.yml
 
-    - include: facts/general/system.yml
-    - include: facts/general/package.yml
-    - include: facts/general/service.yml
-    - include: facts/general/user.yml
+    - include_tasks: facts/general/system.yml
+    - include_tasks: facts/general/package.yml
+    - include_tasks: facts/general/service.yml
+    - include_tasks: facts/general/user.yml
 
-    - include: tasks/general/software/packages.yml
-    - include: tasks/general/software/services.yml
+    - include_tasks: tasks/general/software/packages.yml
+    - include_tasks: tasks/general/software/services.yml
       ignore_errors: yes
-    - include: tasks/general/software/sendmail.yml
+    - include_tasks: tasks/general/software/sendmail.yml
       ignore_errors: yes
       when: ansible_system == "FreeBSD"
 
-    - include: facts/general/gather.yml 
+    - include_tasks: facts/general/gather.yml 
 
-    - include: tasks/general/acct_mgmt/groups.yml
-    - include: tasks/general/acct_mgmt/users.yml
-    - include: tasks/general/acct_mgmt/sudo.yml
+    - include_tasks: tasks/general/acct_mgmt/groups.yml
+    - include_tasks: tasks/general/acct_mgmt/users.yml
+    - include_tasks: tasks/general/acct_mgmt/sudo.yml
 
-    - include: tasks/general/scripts/root.yml
-    - include: tasks/general/scripts/user.yml
+    - include_tasks: tasks/general/scripts/root.yml
+    - include_tasks: tasks/general/scripts/user.yml
 
-    - include: tasks/general/cron/ansible.yml
+    - include_tasks: tasks/general/cron/ansible.yml
     
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
-    - include: tasks/workstation/freebsd/cron/ansible.yml
+    - include_tasks: tasks/workstation/freebsd/cron/ansible.yml
       when: ansible_system == "FreeBSD"
 
-    - include: tasks/general/software/metasploit.yml
+    - include_tasks: tasks/general/software/metasploit.yml
       when: pentesting == true
 
 
@@ -49,50 +49,50 @@
     - name: Main | Workstation Setup
       block:
 
-      - include: facts/workstation/package.yml
+      - include_tasks: facts/workstation/package.yml
 
       # Set Up Desktop Environments #
-      - include: tasks/workstation/freebsd/software/gpu.yml
+      - include_tasks: tasks/workstation/freebsd/software/gpu.yml
         when: ansible_system == "FreeBSD" and bsd_gpu == true
 
-      - include: tasks/workstation/freebsd/software/gnome.yml
+      - include_tasks: tasks/workstation/freebsd/software/gnome.yml
         when: ansible_system == "FreeBSD"
 
-      - include: tasks/workstation/linux/software/gnome.yml
+      - include_tasks: tasks/workstation/linux/software/gnome.yml
         when: ansible_system == "Linux"
 
-      - include: tasks/workstation/shared/software/dwm.yml
+      - include_tasks: tasks/workstation/shared/software/dwm.yml
         ignore_errors: yes
 
       # Software Tasks #
-      - include: tasks/workstation/linux/software/flatpaks.yml
+      - include_tasks: tasks/workstation/linux/software/flatpaks.yml
         when: ansible_system == "Linux" and flatpak_distro
 
-      - include: tasks/workstation/linux/software/brave.yml
+      - include_tasks: tasks/workstation/linux/software/brave.yml
         when: ansible_pkg_mgr in ("apt", "dnf", "zypper") and not mobile
 
-      - include: tasks/workstation/freebsd/software/packages.yml
+      - include_tasks: tasks/workstation/freebsd/software/packages.yml
         when: ansible_system == "FreeBSD"
 
-      - include: tasks/workstation/mac-os/software/brew.yml
+      - include_tasks: tasks/workstation/mac-os/software/brew.yml
         when: ansible_system == "Darwin"
 
       # Configuration Tasks #
-      - include: tasks/workstation/shared/settings/gnome.yml
+      - include_tasks: tasks/workstation/shared/settings/gnome.yml
         when: not mobile
 
-      - include: tasks/workstation/linux/cron/ansible.yml
+      - include_tasks: tasks/workstation/linux/cron/ansible.yml
         when: ansible_system == "Linux" and not mobile
 
-      - include: tasks/workstation/shared/settings/nfs.yml
+      - include_tasks: tasks/workstation/shared/settings/nfs.yml
 
-      - include: tasks/workstation/shared/settings/rdp.yml
+      - include_tasks: tasks/workstation/shared/settings/rdp.yml
         when: rdp == true
 
-      - include: tasks/workstation/shared/settings/vnc.yml
+      - include_tasks: tasks/workstation/shared/settings/vnc.yml
         when: vnc == true
 
-      - include: tasks/workstation/shared/settings/services.yml
+      - include_tasks: tasks/workstation/shared/settings/services.yml
         ignore_errors: yes
 
       when: workstation == true
@@ -106,35 +106,35 @@
 #      block:
 #
 #      ##### Setup #####
-#      - include: tasks/miner/debug.yml
+#      - include_tasks: tasks/miner/debug.yml
 #
-#      - include: tasks/miner/acct_mgmt/users.yml
+#      - include_tasks: tasks/miner/acct_mgmt/users.yml
 #
-#      - include: facts/miner/system.yml
-#      - include: facts/miner/config.yml
-#      - include: facts/miner/pool.yml
+#      - include_tasks: facts/miner/system.yml
+#      - include_tasks: facts/miner/config.yml
+#      - include_tasks: facts/miner/pool.yml
 #
 #      ##### Installations #####
 #      ### CPU SECTION ###
 #      # Monero #
-#      - include: tasks/miner/software/xmr-stak-cpu.yml
+#      - include_tasks: tasks/miner/software/xmr-stak-cpu.yml
 #        when: xmr_stak_cpu is defined
 #
 #      ### GPU Section ###
 #      ## Drivers ##
-#      - include: tasks/miner/drivers/amdgpu.yml
+#      - include_tasks: tasks/miner/drivers/amdgpu.yml
 #        when: ansible_distribution == "Ubuntu" and amdgpu == true
 #
 #      # Ethereum #
-#      - include: tasks/miner/software/ethminer.yml
+#      - include_tasks: tasks/miner/software/ethminer.yml
 #        when: ethminer == true
 #
-#      - include: tasks/miner/software/nanominer.yml
+#      - include_tasks: tasks/miner/software/nanominer.yml
 #        when: nanominer == true
 #
 #      ##### Scheduling #####
-#      - include: tasks/miner/cron/ansible.yml
-#      - include: tasks/miner/cron/mfn.yml
+#      - include_tasks: tasks/miner/cron/ansible.yml
+#      - include_tasks: tasks/miner/cron/mfn.yml
 #
 #      when: miner == true
 
@@ -145,32 +145,32 @@
     - name: Main | Server Setup
       block:
 
-      - include: tasks/server/software/services.yml
+      - include_tasks: tasks/server/software/services.yml
 
-      - include: tasks/server/software/certbot.yml
+      - include_tasks: tasks/server/software/certbot.yml
         when: certbot == true
-      - include: tasks/server/cron/certbot.yml
+      - include_tasks: tasks/server/cron/certbot.yml
         when: certbot == true
 
-      - include: tasks/server/software/onlyoffice.yml
+      - include_tasks: tasks/server/software/onlyoffice.yml
         when: onlyoffice == true and ansible_pkg_mgr == "apt"
 
-      - include: tasks/server/software/influxdb1.yml
+      - include_tasks: tasks/server/software/influxdb1.yml
         when: influxdb1 == true and ansible_pkg_mgr == "apt"
 
-      - include: tasks/server/software/influxdb2.yml
+      - include_tasks: tasks/server/software/influxdb2.yml
         when: influxdb2 == true and ansible_pkg_mgr == "apt"
 
-      - include: tasks/server/software/grafana.yml
+      - include_tasks: tasks/server/software/grafana.yml
         when: grafana == true and ansible_pkg_mgr == "apt"
 
-      - include: tasks/server/software/hugo.yml
+      - include_tasks: tasks/server/software/hugo.yml
         when: hugo == true
 
-      - include: tasks/server/software/gitlab.yml
+      - include_tasks: tasks/server/software/gitlab.yml
         when: gitlab and ansible_pkg_mgr in ("apt", "dnf") and ansible_distribution not in ("Fedora")
 
-      - include: tasks/server/software/git.yml
+      - include_tasks: tasks/server/software/git.yml
         when: git and ansible_pkg_mgr in ("apt")
 
       when: server == true
@@ -180,7 +180,7 @@
     ####### Reporting #######
     # Provide information for analysis.
 
-    - include: tasks/general/software/telegraf.yml
+    - include_tasks: tasks/general/software/telegraf.yml
 
-    - include: tasks/general/tests/lynis.yml
-    - include: tasks/general/tests/nmap.yml
+    - include_tasks: tasks/general/tests/lynis.yml
+    - include_tasks: tasks/general/tests/nmap.yml
