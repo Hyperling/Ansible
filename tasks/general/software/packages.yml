@@ -50,6 +50,7 @@
     - "{{ opensshd }}"
     - "{{ tar }}"
     - curl
+    - at
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
@@ -95,7 +96,7 @@
 
 # openSUSE Tumbleweed comes without gnome-control-center being able to open 
 #  properly. Hopefully just a one-time accident but I wanted bleeding edge so I 
-#  guess I got it! Luckily was easy to figure out based on CLI error launching.
+#  guess I got it! Luckily was easy to figure out based on CLI error on launch.
 - name: General | Software | Services | Install Fix (Looking at you, openSUSE)
   package:
     name: 
