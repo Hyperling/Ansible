@@ -72,11 +72,11 @@
   when: ansible_distribution == "Ubuntu"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora)
+- name: General | Software | Services | Install CROND (Looking at you, Fedora+Mobian+openSUSE)
   package:
     name: "{{ cron }}"
     state: present
-  when: ansible_pkg_mgr == "dnf" or ansible_distribution == "Mobian"
+  when: ansible_pkg_mgr in ("dnf", "zypper") or ansible_distribution == "Mobian"
 
 - name: General | Software | Services | Install killall (Looking at you, Debian)
   package:
@@ -92,6 +92,16 @@
     - vi
     state: present
   when: ansible_distribution == "Archlinux"
+
+# openSUSE Tumbleweed comes without gnome-control-center being able to open 
+#  properly. Hopefully just a one-time accident but I wanted bleeding edge so I 
+#  guess I got it! Luckily was easy to figure out based on CLI error launching.
+- name: General | Software | Services | Install Fix (Looking at you, openSUSE)
+  package:
+    name: 
+      - libvulkan1
+    state: present
+  when: ansible_pkg_mgr in ("zypper")
 
 - name: General | Software | Packages | Update Software (Disabled)
   package: 

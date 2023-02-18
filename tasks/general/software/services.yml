@@ -36,7 +36,7 @@
     regexp: '{{ item.key }}'
     line: '{{ item.value }} # MANAGED BY ANSIBLE'
     state: present
-    create: no
+    create: yes
     backup: yes
   loop:
     - { "key": '^[\#]?AllowUsers',           "value": 'AllowUsers {{ user }}'}
@@ -60,7 +60,7 @@
     regexp: '{{ item.key }}'
     line: '{{ item.value }} # MANAGED BY ANSIBLE'
     state: present
-    create: no
+    create: yes
     backup: yes
   loop:
     - { "key": '^[\#]?AllowUsers',      "value": 'AllowUsers root {{ user }}'}

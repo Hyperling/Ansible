@@ -85,6 +85,10 @@ if [[ `which ansible > /dev/null; echo $?` != 0 ]]; then
 		sudo dnf install -y ansible git python3-libselinux
 		sudo mkdir -p /etc/ansible
 		sudo sh -c 'echo "localhost ansible_connection=local" > /etc/ansible/hosts'
+	elif [[ $os == *openSUSE* ]]; then
+		sudo zypper install -y ansible git
+		sudo mkdir -p /etc/ansible
+		sudo sh -c 'echo "localhost ansible_connection=local" > /etc/ansible/hosts'
 	else
 		echo -e "ERROR: OS not detected."
 		echo -e "$os"

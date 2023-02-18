@@ -48,7 +48,6 @@
   shell: "{{ item }}"
   args:
     chdir: "{{ ansible_env.HOME }}/Downloads/"
-    warn: false
   loop:
     - mkdir -p {{ telegraf_path }}
     - mkdir -p {{ telegraf_config_path }}

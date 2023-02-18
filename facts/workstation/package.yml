@@ -89,3 +89,12 @@
     font_awesome: python3-XStatic-Font-Awesome
     nfs: nfs-utils
   when: ansible_distribution == "Fedora"
+
+
+- name: Workstation | Facts | Package | openSUSE
+  set_fact:
+    flatpak_distro: true
+    firefox_esr: firefox-esr-branding-openSUSE
+    font_awesome: fontawesome-fonts
+    nfs: utils-libnfs
+  when: ansible_os_family == "Suse"
