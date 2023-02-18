@@ -49,6 +49,16 @@
     microcode_intel: microcode_ctl
   when: ansible_pkg_mgr == "dnf"
 
+- name: General | Facts | Package | zypper
+  set_fact:
+    sshfs: sshfs
+    locate: mlocate
+    opensshd: openssh
+    tar: tar
+    microcode_amd: ucode-amd
+    microcode_intel: ucode-intel
+  when: ansible_pkg_mgr == "zypper"
+
 
 - name: General | Facts | Package | Update Commands | Helpers
   set_fact:
