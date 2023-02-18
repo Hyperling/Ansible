@@ -18,9 +18,7 @@
 
     - include_tasks: tasks/general/software/packages.yml
     - include_tasks: tasks/general/software/services.yml
-      ignore_errors: yes
     - include_tasks: tasks/general/software/sendmail.yml
-      ignore_errors: yes
       when: ansible_system == "FreeBSD"
 
     - include_tasks: facts/general/gather.yml 
@@ -42,7 +40,6 @@
       when: pentesting == true
 
 
-
     ####### Workstations #######
 
     # Additional setup for systems with GUI.
@@ -62,7 +59,6 @@
         when: ansible_system == "Linux"
 
       - include_tasks: tasks/workstation/shared/software/dwm.yml
-        ignore_errors: yes
 
       # Software Tasks #
       - include_tasks: tasks/workstation/linux/software/flatpaks.yml
@@ -93,7 +89,6 @@
         when: vnc == true
 
       - include_tasks: tasks/workstation/shared/settings/services.yml
-        ignore_errors: yes
 
       when: workstation == true
 
@@ -139,7 +134,6 @@
 #      when: miner == true
 
 
-
     ####### Servers #######
     # Easy to deploy server configurations.
     - name: Main | Server Setup
@@ -174,7 +168,6 @@
         when: git and ansible_pkg_mgr in ("apt")
 
       when: server == true
-
 
 
     ####### Reporting #######

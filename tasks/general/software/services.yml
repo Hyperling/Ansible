@@ -19,6 +19,7 @@
     pattern: "{{ cups_pattern }}"
     state: stopped
     enabled: no
+  ignore_errors: yes
 
 - name: General | Software | Services | CUPS-Browse | Disable
   service:
@@ -26,6 +27,7 @@
     pattern: "{{ cups_browse_pattern }}"
     state: stopped
     enabled: no
+  ignore_errors: yes
 
 
 ## SSHD ##
