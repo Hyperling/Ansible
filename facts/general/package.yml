@@ -74,8 +74,8 @@
     update_package_manager: |
       echo "*** Apt ***" &&
       sudo apt update &&
-      sudo apt clean {{ update_accept_var }} &&
       sudo apt autoremove {{ update_accept_var }} && 
+      sudo apt clean {{ update_accept_var }} &&
       sudo dpkg --configure -a &&
       sudo apt --fix-broken --fix-missing install &&
       sudo apt dist-upgrade --allow-downgrades --fix-broken --fix-missing {{ update_accept_var }} &&
@@ -138,6 +138,20 @@
       sudo dnf autoremove {{ update_accept_var }} &&
       sudo dnf upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("dnf")
+
+- name: General | Facts | Package | Update Commands | zypper
+  set_fact:
+    update_package_manager: |
+      echo "*** Zypper ***" &&
+      sudo zypper refresh &&
+      sudo zypper cleanlocks &&
+      sudo zypper purge-kernels &&
+      sudo zypper clean -a &&
+      sudo zypper patch {{ update_accept_var }} &&
+      sudo zypper update {{ update_accept_var }} &&
+      sudo zypper dist-upgrade {{ update_accept_var }} &&
+      sudo zypper install-new-recommends &&
+  when: ansible_pkg_mgr in ("zypper")
 
 
 - name: General | Facts | Package | Update Commands | flatpak | check
