@@ -14,6 +14,7 @@
   package:
     name:
       - doas
+  register: doas_install
   ignore_errors: yes
 
 - name: General | Software | DoAs | Configure [Linux]
@@ -25,7 +26,7 @@
     state: present
     create: yes
     backup: yes
-  when: ansible_system in ("Linux")
+  when: not doas_install.failed and ansible_system in ("Linux")
 
 - name: General | Software | DoAs | Configure [BSD]
   blockinfile:
@@ -36,7 +37,7 @@
     state: present
     create: yes
     backup: yes
-  when: ansible_system in ("FreeBSD")
+  when: not doas_install.failed and ansible_system in ("FreeBSD")
 
 - name: General | Software | DoAs | Configure [Other]
   blockinfile:
@@ -50,4 +51,4 @@
   loop:
     - "{{ doas_conf_file_linux }}"
     - "{{ doas_conf_file_bsd }}"
-  when: ansible_system not in ("Linux", "FreeBSD")
+  when: not doas_install.failed and ansible_system not in ("Linux", "FreeBSD") 
