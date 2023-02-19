@@ -102,6 +102,7 @@
     - "{{ user_user.home }}/LBRY"
     - "{{ user_user.home }}/TRASH"
     - "{{ user_user.home }}/Downloads"
+    - "{{ user_user.home }}/Reports"
   become_user: "{{ user }}"
   when: user_user.home != ""
 
@@ -277,6 +278,7 @@
         return
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
+    alias_vim: alias vi=vim
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -302,6 +304,7 @@
       {{ function_clean }}
       {{ function_flatpak_usage }}
       {{ function_flatpak_purge }}
+      {{ alias_vim }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
@@ -326,6 +329,31 @@
       {{ rc_common }}
       [[ $(whoami) != "root" ]] && echo "`date` - Ansible .zshrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
+    state: present
+    create: yes
+    backup: yes
+  loop:
+    - "{{ user_root.home }}"
+    - "{{ user_user.home }}"
+  ignore_errors: yes
+  when: user_root.home != "" and user_user.home != ""
+
+- name: General | Account Management | Users | Files | .vimrc
+  blockinfile:
+    path: "{{ item }}/.vimrc"
+    block: |
+      " Turn off syntax, flashy lights, etc. Make VIM into a basic editor.
+      syntax off
+      set nohlsearch
+      set noautoindent noautowrite noshowmatch wrapmargin=0 report=1 ts=3
+      set ignorecase
+
+      " Turn off auto-commenting.
+      autocmd Filetype * set fo-=c fo-=r fo-=o
+
+      " qq shortcut for immediately exiting all files without saving.
+      nnoremap qq :qa!<cr>
+    marker: '" {mark} MANAGED BY ANSIBLE | vimrc'
     state: present
     create: yes
     backup: yes

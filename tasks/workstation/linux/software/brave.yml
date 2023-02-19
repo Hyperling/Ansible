@@ -37,8 +37,9 @@
   shell: "{{ item }}"
   loop:
     - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-    - sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    - zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
   when: ansible_pkg_mgr == "zypper"
+  ignore_errors: yes
 
 - name: Workstation | Software | Brave | Install
   package:

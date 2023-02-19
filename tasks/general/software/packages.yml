@@ -50,6 +50,9 @@
     - "{{ opensshd }}"
     - "{{ tar }}"
     - curl
+    - at
+    - gcc
+    - vim
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
@@ -89,17 +92,18 @@
     name: 
     - which
     - "{{ cron }}"
-    - vi
     state: present
   when: ansible_distribution == "Archlinux"
 
-# openSUSE Tumbleweed comes without gnome-control-center being able to open 
-#  properly. Hopefully just a one-time accident but I wanted bleeding edge so I 
-#  guess I got it! Luckily was easy to figure out based on CLI error launching.
 - name: General | Software | Services | Install Fix (Looking at you, openSUSE)
   package:
     name: 
+      # openSUSE Tumbleweed comes without gnome-control-center being able to open 
+      #  properly. Hopefully just a one-time accident but I wanted bleeding edge so I 
+      #  guess I got it! Luckily was easy to figure out based on CLI error on launch.
       - libvulkan1
+      # Provides c99 used to compile ST for DWM.
+      - posix_cc
     state: present
   when: ansible_pkg_mgr in ("zypper")
 

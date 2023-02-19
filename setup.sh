@@ -53,7 +53,13 @@ while getopts ":lb:h" arg; do
 done
 
 if [[ $branch == "" ]]; then
+	echo "Using default branch $BRANCH."
 	branch="$BRANCH"
+fi
+
+if [[ $1 != "-"* ]]; then
+	echo "ERROR: '$1' is not a valid option, please check your parameters and try again."
+	usage 1
 fi
 
 ## Main ##

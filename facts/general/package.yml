@@ -60,6 +60,7 @@
     tar: tar
     microcode_amd: ucode-amd
     microcode_intel: ucode-intel
+    cron: cronie
   when: ansible_pkg_mgr == "zypper"
 
 

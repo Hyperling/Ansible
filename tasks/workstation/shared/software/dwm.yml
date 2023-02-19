@@ -51,9 +51,11 @@
 
 - name: Workstation | Linux | Software | DWM | Install
   shell: "cd {{ dwm_install_dir }}; {{ make }} clean install"
+  ignore_errors: yes
 
 - name: Workstation | Linux | Software | DWM | Install (st)
   shell: "cd {{ st_install_dir }}; {{ make }} clean install"
+  ignore_errors: yes
 
 
 ## X Init Sript ##

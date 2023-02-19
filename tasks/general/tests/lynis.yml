@@ -1,6 +1,14 @@
 ---
 # Lynis hardness check.
 
+- name: General | Tests | Lynis | Set Facts
+  set_fact:
+    lynis_file: "{{ user_user.home }}/Reports/{{ lynis_report }}"
+
+- name: General | Tests | Lynis | Set Facts 2
+  set_fact:
+    lynis_temp_file: "{{ lynis_file }}.tmp"
+
 - name: General | Tests | Lynis | Rename Old Install
   shell: mv "/usr/local/lynis" "/usr/local/src/"
   ignore_errors: yes
@@ -27,13 +35,23 @@
     path: "{{ lynis_install_dir }}/lynis"
     mode: '0755'
 
+- name: General | Tests | Lynis | Ensure Folder Permissions
+  file: 
+    path: "{{ lynis_install_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: no
+
 - name: General | Tests | Lynis | Run System Audit
-  shell: "./lynis audit system --no-colors > {{ lynis_report }} 2>&1"
+  shell: "{{ item }}"
+  loop:
+    - "./lynis audit system --no-colors > {{ lynis_temp_file }} 2>&1"
+    - "mv {{ lynis_temp_file }} {{ lynis_file }}"
   args:
     executable: "{{ bash_exec.stdout }}"
     chdir: "{{ lynis_install_dir }}"
 
 - name: General | Tests | Lynis | Make Report Readable
   file:
-    path: "{{ lynis_report }}"
-    mode: '0777'
+    path: "{{ lynis_file }}"
+    mode: '0644'

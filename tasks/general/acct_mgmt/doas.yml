@@ -1,0 +1,53 @@
+---
+# Install and configure doas.
+
+- name: General | Software | DoAs | Facts
+  set_fact:
+    doas_config: |
+      permit persist :wheel as root
+      permit persist :admin as root
+      permit persist :sudo as root
+    doas_conf_file_linux: /etc/doas.conf
+    doas_conf_file_bsd: /usr/local/etc/doas.conf
+
+- name: General | Software | DoAs | Install
+  package:
+    name:
+      - doas
+  ignore_errors: yes
+
+- name: General | Software | DoAs | Configure [Linux]
+  blockinfile:
+    path: "{{ doas_conf_file_linux }}"
+    block: |
+      {{ doas_config }}
+    marker: '# {mark} MANAGED BY ANSIBLE | doas Linux'
+    state: present
+    create: yes
+    backup: yes
+  when: ansible_system in ("Linux")
+
+- name: General | Software | DoAs | Configure [BSD]
+  blockinfile:
+    path: "{{ doas_conf_file_linux }}"
+    block: |
+      {{ doas_config }}
+    marker: '# {mark} MANAGED BY ANSIBLE | doas BSD'
+    state: present
+    create: yes
+    backup: yes
+  when: ansible_system in ("FreeBSD")
+
+- name: General | Software | DoAs | Configure [Other]
+  blockinfile:
+    path: "{{ item }}"
+    block: |
+      {{ doas_config }}
+    marker: '# {mark} MANAGED BY ANSIBLE | doas Other'
+    state: present
+    create: yes
+    backup: yes
+  loop:
+    - "{{ doas_conf_file_linux }}"
+    - "{{ doas_conf_file_bsd }}"
+  when: ansible_system not in ("Linux", "FreeBSD")
