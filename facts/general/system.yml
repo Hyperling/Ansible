@@ -39,8 +39,8 @@
 
 - name: General | Facts | System | Report File Names
   set_fact:
-    lynis_report: "{{ lynis_install_dir }}/run.txt"
-    nmap_report: "{{ lynis_install_dir }}/nmap.txt"
+    lynis_report: "lynis_hardness_check.txt"
+    nmap_report: "nmap_port_check.txt"
 
 
 - name: General | Facts | System | Ansible Branch

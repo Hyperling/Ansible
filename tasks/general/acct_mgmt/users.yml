@@ -102,6 +102,7 @@
     - "{{ user_user.home }}/LBRY"
     - "{{ user_user.home }}/TRASH"
     - "{{ user_user.home }}/Downloads"
+    - "{{ user_user.home }}/Reports"
   become_user: "{{ user }}"
   when: user_user.home != ""
 
@@ -277,6 +278,12 @@
         return
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
+    #alias_lynis: alias lynis="{{ lynis_install_dir }}/lynis"
+    function_lynis: |
+      function lynis() {
+        cd "{{ lynis_install_dir }}
+        ./lynis $1 $2 $3 $4 $5 $6 $7
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -302,6 +309,7 @@
       {{ function_clean }}
       {{ function_flatpak_usage }}
       {{ function_flatpak_purge }}
+      {{ function_lynis }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
