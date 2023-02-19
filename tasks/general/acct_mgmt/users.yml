@@ -278,12 +278,6 @@
         return
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
-    #alias_lynis: alias lynis="{{ lynis_install_dir }}/lynis"
-    function_lynis: |
-      function lynis() {
-        cd {{ lynis_install_dir }}
-        ./lynis $1 $2 $3 $4 $5 $6 $7
-      }
     alias_vim: alias vi=vim
 
 - name: General | Account Management | Users | Files | Common Variable
@@ -310,7 +304,6 @@
       {{ function_clean }}
       {{ function_flatpak_usage }}
       {{ function_flatpak_purge }}
-      {{ function_lynis }}
       {{ alias_vim }}
 
 - name: General | Account Management | Users | Files | .bashrc

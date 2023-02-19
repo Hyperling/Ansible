@@ -21,7 +21,7 @@
   file: 
     path: "{{ lynis_install_dir }}"
     state: directory
-    mode: '0755'
+    mode: '0644'
     owner: root
     group: "{{ root_group }}"
     recurse: yes
@@ -30,6 +30,13 @@
   file: 
     path: "{{ lynis_install_dir }}/lynis"
     mode: '0755'
+
+- name: General | Tests | Lynis | Ensure Folder Permissions
+  file: 
+    path: "{{ lynis_install_dir }}"
+    state: directory
+    mode: '0755'
+    recurse: no
 
 - name: General | Tests | Lynis | Run System Audit
   shell: "{{ lynis_install_dir }}/lynis audit system --no-colors > {{ lynis_file }} 2>&1"
