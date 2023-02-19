@@ -5,6 +5,10 @@
   set_fact:
     lynis_file: "{{ user_user.home }}/Reports/{{ lynis_report }}"
 
+- name: General | Tests | Lynis | Set Facts 2
+  set_fact:
+    lynis_temp_file: "{{ lynis_file }}.tmp"
+
 - name: General | Tests | Lynis | Rename Old Install
   shell: mv "/usr/local/lynis" "/usr/local/src/"
   ignore_errors: yes
@@ -39,7 +43,10 @@
     recurse: no
 
 - name: General | Tests | Lynis | Run System Audit
-  shell: "./lynis audit system --no-colors > {{ lynis_file }} 2>&1"
+  shell: "{{ item }}"
+  loop:
+    - "./lynis audit system --no-colors > {{ lynis_temp_file }} 2>&1"
+    - "mv {{ lynis_temp_file }} {{ lynis_file }}"
   args:
     executable: "{{ bash_exec.stdout }}"
     chdir: "{{ lynis_install_dir }}"
