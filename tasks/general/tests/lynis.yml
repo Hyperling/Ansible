@@ -39,9 +39,10 @@
     recurse: no
 
 - name: General | Tests | Lynis | Run System Audit
-  shell: "{{ lynis_install_dir }}/lynis audit system --no-colors > {{ lynis_file }} 2>&1"
+  shell: "./lynis audit system --no-colors > {{ lynis_file }} 2>&1"
   args:
     executable: "{{ bash_exec.stdout }}"
+    chdir: "{{ lynis_install_dir }}"
 
 - name: General | Tests | Lynis | Make Report Readable
   file:
