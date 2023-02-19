@@ -52,6 +52,7 @@
     - curl
     - at
     - gcc
+    - vim
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
@@ -91,7 +92,6 @@
     name: 
     - which
     - "{{ cron }}"
-    - vi
     state: present
   when: ansible_distribution == "Archlinux"
 
