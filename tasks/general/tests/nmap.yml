@@ -6,32 +6,23 @@
     nmap_file: "{{ user_user.home }}/Reports/{{ nmap_report }}"
     nmap_separator: "\n*******************************\n\n"
 
-- name: General | Tests | nmap | Date Header
-  shell: "date > {{ nmap_file }}"
+- name: General | Tests | nmap | Set Facts 2
+  set_fact:
+    nmap_temp_file: "{{ nmap_file }}.tmp"
 
-- name: General | Tests | nmap | Add Separator
-  shell: "printf '{{ nmap_separator }}' >> {{ nmap_file }}"
-
-- name: General | Tests | nmap | Open Report Description
-  shell: "echo '-=Open Ports=-' >> {{ nmap_file }}"
-
-- name: General | Tests | nmap | Count Description
-  shell: "printf 'Number of open ports: ' >> {{ nmap_file }}"
-
-- name: General | Tests | nmap | Run Count
-  shell: "nmap --open localhost | grep -c open >> {{ nmap_file }}; echo success"
-
-- name: General | Tests | nmap | Run Open
-  shell: "nmap --open localhost | grep open >> {{ nmap_file }}; echo success"
-
-- name: General | Tests | nmap | Add Separator
-  shell: "printf '{{ nmap_separator }}' >> {{ nmap_file }}"
-
-- name: General | Tests | nmap | Aggressive Report Description
-  shell: "echo '-=Aggressive Vulnerability Check=-' >> {{ nmap_file }}"
-
-- name: General | Tests | nmap | Run Aggressive
-  shell: "nmap -A localhost >> {{ nmap_file }}; echo success"
+- name: General | Tests | nmap | Create Report
+  shell: "{{ item }}"
+  loop: 
+    - "date > {{ nmap_temp_file }}"
+    - "printf '{{ nmap_separator }}' >> {{ nmap_temp_file }}"
+    - "echo '-=Open Ports=-' >> {{ nmap_temp_file }}"
+    - "printf 'Number of open ports: ' >> {{ nmap_temp_file }}"
+    - "nmap --open localhost | grep -c open >> {{ nmap_temp_file }}; echo success"
+    - "nmap --open localhost | grep open >> {{ nmap_temp_file }}; echo success"
+    - "printf '{{ nmap_separator }}' >> {{ nmap_temp_file }}"
+    - "echo '-=Aggressive Vulnerability Check=-' >> {{ nmap_temp_file }}"
+    - "nmap -A localhost >> {{ nmap_temp_file }}; echo success"
+    - "mv {{ nmap_temp_file }} {{ nmap_file }}"
 
 - name: General | Tests | nmap | Make Viewable
   file:
