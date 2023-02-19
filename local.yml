@@ -26,6 +26,7 @@
     - include_tasks: tasks/general/acct_mgmt/groups.yml
     - include_tasks: tasks/general/acct_mgmt/users.yml
     - include_tasks: tasks/general/acct_mgmt/sudo.yml
+    - include_tasks: tasks/general/acct_mgmt/doas.yml
 
     - include_tasks: tasks/general/scripts/root.yml
     - include_tasks: tasks/general/scripts/user.yml
