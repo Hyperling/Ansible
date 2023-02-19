@@ -330,6 +330,8 @@
     - steam
     - vscode
     - code
+    - libreoffice
+    - "*libreoffice*"
     - '*libreoffice*'
     - gimp
     state: absent
