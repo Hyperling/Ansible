@@ -25,6 +25,7 @@
   set_fact:
     rc_conf: /dev/null
     sudoers_install_dir: /etc/sudoers.d/
+    sudoers_config: /etc/sudoers
     shutdown_command: sudo shutdown -h now
   when: ansible_system == "Linux"
 
