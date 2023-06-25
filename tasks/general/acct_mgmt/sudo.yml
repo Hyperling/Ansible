@@ -16,3 +16,18 @@
     owner: root
     group: "{{ root_group }}"
     mode: 0440
+
+# Disable these two lines in openSUSE default configuration.
+#Defaults targetpw   # ask for the password of the target user i.e. root
+#ALL   ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
+- name: General | Account Management | Sudo | Disable openSUSE Root PW Prompt
+  lineinfile:
+    path: "{{ sudoers_config }}"
+    regexp: '{{ item.key }}'
+    line: '{{ item.value }} # MANAGED BY ANSIBLE'
+    state: present
+    create: yes
+    backup: yes
+  loop:
+    - { "key": '^[\#]?Defaults targetpw',   "value": '#Defaults targetpw'}
+    - { "key": '^[\#]?ALL   ALL\=\(ALL\) ALL', "value": '#ALL   ALL=(ALL) ALL'}
