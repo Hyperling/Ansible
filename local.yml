@@ -30,6 +30,7 @@
 
     - include_tasks: tasks/general/scripts/root.yml
     - include_tasks: tasks/general/scripts/user.yml
+    - include_tasks: tasks/general/scripts/install.yml
 
     - include_tasks: tasks/general/cron/ansible.yml
     
