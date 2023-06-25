@@ -279,6 +279,7 @@
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
     alias_vim: alias vi=vim
+    alias_here: alias here="ls -lh `pwd`/*"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -305,6 +306,7 @@
       {{ function_flatpak_usage }}
       {{ function_flatpak_purge }}
       {{ alias_vim }}
+      {{ alias_here }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
