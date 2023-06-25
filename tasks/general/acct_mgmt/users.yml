@@ -279,7 +279,7 @@
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
     alias_vim: alias vi=vim
-    alias_here: alias here="ls -lh `pwd`/*"
+    alias_here: alias here='ls -lh `pwd`/*'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
