@@ -1,0 +1,16 @@
+---
+# Copy everything from PROJECT/files/scripts/ to /usr/local/bin/.
+
+- name: General | Scripts | Install | Ensure Directory Exists
+  ansible.builtin.file:
+    path: '{{ global_bin }}'
+    state: directory
+    mode: '0755'
+
+- name: General | Scripts | Install | Copy Files
+  copy:
+    src: 'scripts/'
+    dest: "{{ global_bin }}/"
+    owner: root
+    group: "{{ root_group }}"
+    mode: '0755'
