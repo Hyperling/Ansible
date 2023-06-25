@@ -18,8 +18,8 @@ function usage {
 		Parameters:
 		  -f input : The input file or folder with which to search for video files. 
 		             If nothing is provided, current directory (.) is assumed.
-		  -v bitrate : The video bitrate to convert to.
-		  -a bitrate : The audio bitrate to convert to.
+		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
+		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
 		  -h : Display this help messaging.
 	EOF
 	exit $1
@@ -82,7 +82,8 @@ ls $input | while read file; do
 	# Convert the file.
 	echo "Converting $file to $newfile."
 	ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i $file -b:v 2000k -b:a 128k $newfile
+			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
+			$newfile
 done
 
 exit 0
