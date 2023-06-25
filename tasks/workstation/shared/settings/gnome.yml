@@ -171,11 +171,10 @@
             , 'org.gnome.Nautilus.desktop'
             , 'io.gitlab.librewolf-community.desktop', '{{ browser }}'
             , 'org.gnome.Evolution.desktop', 'chat.delta.desktop.desktop'
-            , 'org.signal.Signal.desktop'
             , 'com.vscodium.codium.desktop', 'org.shotcut.Shotcut.desktop'
-            , 'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop'
-            , 'im.riot.Riot.desktop'
             , 'io.lbry.lbry-app.desktop'
+            , 'org.signal.Signal.desktop', 'im.riot.Riot.desktop'
+            , 'org.telegram.desktop.desktop', 'com.discordapp.Discord.desktop'
             , 'com.valvesoftware.Steam.desktop'
             ]"
     state: present
