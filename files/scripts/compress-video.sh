@@ -44,7 +44,7 @@ while getopts ":f:v:a:h" opt; do
 done
 
 if [[ -z $input && ! -z $1 ]]; then
-	echo "WARNING: Program was not passed a file. Using input 1."
+	echo "WARNING: Program was not passed a file. Using input $1."
 	input=$1
 else
 	echo "WARNING: Program was not passed a file. Using current directory."
@@ -83,7 +83,7 @@ ls $input | while read file; do
 	echo "Converting $file to $newfile."
 	ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
-			$newfile
+			-vcodec libopenh264 $newfile
 done
 
 exit 0
