@@ -17,20 +17,21 @@ function usage {
 		  Currently only set up for libopenh264 and mp4 files.
 		
 		Parameters:
-		  -f input : The input file or folder with which to search for video files. 
+		  -i input : The input file or folder with which to search for video files. 
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
 		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
 		  -r : Recurse the entire directory structure, compressing all video files.
+		  -f : Force recompressing any files by deleting it if it already exists.
 		  -h : Display this help messaging.
 	EOF
 	exit $1
 }
 
 ## Parse Input
-while getopts ":f:v:a:rh" opt; do
+while getopts ":i:v:a:rfh" opt; do
 	case $opt in
-		f) input="$OPTARG"
+		i) input="$OPTARG"
 			echo "input='$input'"
 			;;
 		v) video_bitrate="$OPTARG"
@@ -42,6 +43,9 @@ while getopts ":f:v:a:rh" opt; do
 		r) recurse="Y"
 			search_command=find
 			echo "recurse='$recurse', search_command='$search_command'"
+			;;
+		f) force="Y"
+			echo "force='$force'"
 			;;
 		h) usage 0
 			;;
@@ -75,6 +79,8 @@ filename_flag='compressed.'
 
 ## Main Loop
 $search_command $input | while read file; do
+	echo ""
+
 	## Exception Checks
 	if [[ $file != *'.mp4' && $file != *'.mpeg' ]]; then
 		echo "Skipping $file, not an MP4 or MPEG."
@@ -85,9 +91,17 @@ $search_command $input | while read file; do
 	extension=${file##*.}
 	newfile=${file//$extension/$filename_flag$extension}
 
-	if [[ $file == *"$filename_flag"* || -e $newfile ]]; then
-		echo "Skipping $file, already compressed."
-		continue
+	if [[ -e $newfile ]]; then
+		if [[ $force == "Y" ]]; then
+			echo "FORCE: Removing $newfile."
+			rm -vf $newfile
+		elif [[ $file == *"$filename_flag"* ]]; then
+			echo "Skipping $file, the input is already compressed."
+			continue
+		else
+			echo "Skipping $file, already has a compressed version."
+			continue
+		fi
 	fi
 
 	# Convert the file.
