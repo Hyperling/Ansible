@@ -79,11 +79,15 @@ filename_flag='compressed.'
 
 ## Main Loop
 $search_command $input | while read file; do
-	echo ""
+	echo -e "\n$file"
 
-	## Exception Checks
-	if [[ $file != *'.mp4' && $file != *'.mpeg' ]]; then
-		echo "Skipping $file, not an MP4 or MPEG."
+	# Exception checks for the existing file.
+	if [[ $file != *'.mp4' ]]; then
+		echo "SKIP: Not an MP4."
+		continue
+	fi
+	if [[ $file == *"$filename_flag"* ]]; then
+		echo "SKIP: Input is already compressed."
 		continue
 	fi
 
@@ -91,21 +95,19 @@ $search_command $input | while read file; do
 	extension=${file##*.}
 	newfile=${file//$extension/$filename_flag$extension}
 
+	# More exception checks based on the new file.
 	if [[ -e $newfile ]]; then
 		if [[ $force == "Y" ]]; then
 			echo "FORCE: Removing $newfile."
 			rm -vf $newfile
-		elif [[ $file == *"$filename_flag"* ]]; then
-			echo "Skipping $file, the input is already compressed."
-			continue
 		else
-			echo "Skipping $file, already has a compressed version."
+			echo "SKIP: Already has a compressed version ($newfile)."
 			continue
 		fi
 	fi
 
 	# Convert the file.
-	echo "Converting $file to $newfile."
+	echo "Converting to $newfile."
 	ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
 			-vcodec libopenh264 -movflags +faststart $newfile
