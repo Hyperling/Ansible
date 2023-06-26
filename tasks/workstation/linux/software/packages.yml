@@ -1,0 +1,9 @@
+---
+# Packages specific to workstations.
+
+- name: Workstation | Software | Packages | Install Software [Editing]
+  package: 
+    name:
+    - "{{ ffmpeg }}"
+    state: present
+  when: editing == true
