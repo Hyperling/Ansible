@@ -1,7 +1,7 @@
 ---
 # Packages specific to workstations.
 
-- name: Workstation | Software | Packages | Install Software [Editing]
+- name: Workstation | Software | Packages | Install Software (Editing)
   package: 
     name:
     - "{{ ffmpeg }}"
