@@ -25,6 +25,7 @@
     font_awesome: fonts-font-awesome
     dmenu: dmenu
     sassc: sassc
+    ffmpeg: ffmpeg
 
 
 - name: Workstation | Facts | Package | Pop_OS!

@@ -39,6 +39,7 @@
       - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" }
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
       - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
+      - { app: "org.signal.Signal", name: "signal", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
@@ -63,7 +64,6 @@
       - { app: "com.discordapp.Discord", name: "discord", extra: "" } # Stopped working, just spins and says Starting.
       # 2022-11-20 No longer using any of these and they're taking up a lot of space. #
       - { app: "im.riot.Riot", name: "element", extra: "" }
-      - { app: "org.signal.Signal", name: "signal", extra: "" }
       - { app: "org.telegram.desktop", name: "telegram", extra: "" }
       - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
       # End 2022-11-20 #

@@ -2,6 +2,11 @@
 # Define program names for package builtin.
 # This file is for ALL systems and should not include UI components.
 
+- name: General | Facts | Packages | Shared Defaults
+  set_fact:
+    sshfs: sshfs
+    tar: tar
+
 - name: General | Facts | Packages | Parrot OS Fixes
   set_fact:
     ansible_pkg_mgr: "apt"
@@ -10,10 +15,8 @@
 
 - name: General | Facts | Package | apt
   set_fact:
-    sshfs: sshfs
     locate: locate
     opensshd: openssh-server
-    tar: tar
     microcode_amd: amd64-microcode
     microcode_intel: intel-microcode
     cron: cron
@@ -21,10 +24,8 @@
 
 - name: General | Facts | Package | pacman
   set_fact:
-    sshfs: sshfs
     locate: mlocate
     opensshd: openssh
-    tar: tar
     microcode_amd: linux-firmware
     microcode_intel: intel-ucode
     cron: cronie
@@ -46,7 +47,6 @@
     sshfs: fuse-sshfs
     locate: mlocate
     opensshd: openssh
-    tar: tar
     microcode_amd: microcode_ctl
     microcode_intel: microcode_ctl
     cron: cronie
@@ -54,10 +54,8 @@
 
 - name: General | Facts | Package | zypper
   set_fact:
-    sshfs: sshfs
     locate: mlocate
     opensshd: openssh
-    tar: tar
     microcode_amd: ucode-amd
     microcode_intel: ucode-intel
     cron: cronie
