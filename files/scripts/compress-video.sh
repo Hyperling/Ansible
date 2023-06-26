@@ -14,41 +14,48 @@ function usage {
 	cat <<- EOF 
 		Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
+		  Currently only set up for libopenh264 and mp4 files.
 		
 		Parameters:
 		  -f input : The input file or folder with which to search for video files. 
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
 		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
+		  -r : Recurse the entire directory structure, compressing all video files.
 		  -h : Display this help messaging.
 	EOF
 	exit $1
 }
 
 ## Parse Input
-while getopts ":f:v:a:h" opt; do
+while getopts ":f:v:a:rh" opt; do
 	case $opt in
-		f) 
-			input="$OPTARG"
+		f) input="$OPTARG"
+			echo "input='$input'"
 			;;
-		v) 
-			video_bitrate="$OPTARG"
+		v) video_bitrate="$OPTARG"
+			echo "video_bitrate='$video_bitrate'"
 			;;
-		a) 
-			audio_bitrate="$OPTARG"
+		a) audio_bitrate="$OPTARG"
+			echo "audio_bitrate='$audio_bitrate'"
 			;;
-		h) 
-			usage 0
+		r) recurse="Y"
+			search_command=find
+			echo "recurse='$recurse', search_command='$search_command'"
+			;;
+		h) usage 0
 			;;
 	esac
 done
 
-if [[ -z $input && ! -z $1 ]]; then
-	echo "WARNING: Program was not passed a file. Using input $1."
-	input=$1
-else
-	echo "WARNING: Program was not passed a file. Using current directory."
-	input='.'
+if [[ -z "$input" ]]; then
+	if [[ ! -z "$1" ]]; then
+		echo "WARNING: Program was not passed a file. Using input $1."
+		input=$1
+	else
+		echo "WARNING: Program was not passed a file. Using current directory."
+		input='.'
+	fi
 fi
 
 if [[ -z $video_bitrate ]]; then
@@ -59,11 +66,15 @@ if [[ -z $audio_bitrate ]]; then
 	audio_bitrate='128k'
 fi
 
+if [[ -z $recurse ]]; then
+	search_command=ls
+fi
+
 ## Other Variables
 filename_flag='compressed.'
 
 ## Main Loop
-ls $input | while read file; do
+$search_command $input | while read file; do
 	## Exception Checks
 	if [[ $file != *'.mp4' && $file != *'.mpeg' ]]; then
 		echo "Skipping $file, not an MP4 or MPEG."
@@ -83,7 +94,7 @@ ls $input | while read file; do
 	echo "Converting $file to $newfile."
 	ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
-			-vcodec libopenh264 $newfile
+			-vcodec libopenh264 -movflags +faststart $newfile
 done
 
 exit 0
