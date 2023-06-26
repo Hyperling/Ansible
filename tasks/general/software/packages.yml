@@ -19,8 +19,8 @@
   shell: exit 1
   when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
-# More Parrot OS junk. They have a command called update in /usr/bin. Doesn't have sudo or anything in it either. 
-# Hide it in preference for .bashrc update function.
+# More Parrot OS junk. They have a command called update in /usr/bin. Doesn't 
+# have sudo or anything in it. Hide it in preference for .bashrc update function.
 - name: General | Software | Packages | Fix Parrot OS 2 (update)
   shell: "mv `which update` `which update`.zz.`date +%Y%m%d`"
   ignore_errors: yes
