@@ -53,13 +53,8 @@ while getopts ":i:v:a:rfh" opt; do
 done
 
 if [[ -z "$input" ]]; then
-	if [[ ! -z "$1" ]]; then
-		echo "WARNING: Program was not passed a file. Using input $1."
-		input=$1
-	else
-		echo "WARNING: Program was not passed a file. Using current directory."
-		input='.'
-	fi
+	echo "WARNING: Program was not passed an input. Using current directory."
+	input='.'
 fi
 
 if [[ -z $video_bitrate ]]; then
