@@ -9,7 +9,8 @@ if [[ $DIR == '.' ]]; then
 fi
 echo "Running $DIR/$PROG"
 
-## Functions
+## Functions ##
+
 function usage {
 	cat <<- EOF 
 		Reduce the filesize of a video file to make it stream well. It also
@@ -28,7 +29,8 @@ function usage {
 	exit $1
 }
 
-## Parse Input
+## Parameters ##
+
 while getopts ":i:v:a:rfh" opt; do
 	case $opt in
 		i) input="$OPTARG"
@@ -69,10 +71,13 @@ if [[ -z $recurse ]]; then
 	search_command=ls
 fi
 
-## Other Variables
-filename_flag='compressed.'
+## Other Variables ##
 
-## Main Loop
+filename_flag='compressed'
+date_YYYYMMDD="`date "+%Y%m%d"`"
+
+## Main ##
+
 $search_command $input | while read file; do
 	echo -e "\n$file"
 
@@ -88,7 +93,7 @@ $search_command $input | while read file; do
 
 	# Build the new filename to signify it is different thn the original.
 	extension=${file##*.}
-	newfile=${file//$extension/$filename_flag$extension}
+	newfile=${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}
 
 	# More exception checks based on the new file.
 	if [[ -e $newfile ]]; then
