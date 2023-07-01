@@ -12,8 +12,9 @@ echo "Running $DIR/$PROG"
 ## Functions ##
 
 function usage {
+	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-r] [-f] [-h]"
 	cat <<- EOF 
-		Reduce the filesize of a video file to make it stream well. It also
+		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
 		  Currently only set up for libopenh264 and mp4 files.
 		
