@@ -51,6 +51,9 @@ while getopts ":i:v:a:rfh" opt; do
 			;;
 		h) usage 0
 			;;
+		*) echo "ERROR: Option '$OPTARG' not recognized." >&2
+			usage 1
+			;;
 	esac
 done
 
