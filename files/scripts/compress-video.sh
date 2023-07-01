@@ -25,6 +25,9 @@ function usage {
 		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
+		  -m : Measure the time it takes to compress each video and do the loop.
+		  -v : Add any extra verbosity.
+		  -x : Set the shell's x flag to display every action which is taken.
 		  -h : Display this help messaging.
 	EOF
 	exit $1
@@ -32,23 +35,23 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:rfh" opt; do
+while getopts ":i:v:a:rfmvxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
-			echo "input='$input'"
 			;;
 		v) video_bitrate="$OPTARG"
-			echo "video_bitrate='$video_bitrate'"
 			;;
 		a) audio_bitrate="$OPTARG"
-			echo "audio_bitrate='$audio_bitrate'"
 			;;
-		r) recurse="Y"
-			search_command=find
-			echo "recurse='$recurse', search_command='$search_command'"
+		r) search_command="find"
 			;;
 		f) force="Y"
-			echo "force='$force'"
+			;;
+		m) time_command="time"
+			;;
+		v) verbose="Y"
+			;;
+		x) set_x="Y"
 			;;
 		h) usage 0
 			;;
@@ -57,6 +60,10 @@ while getopts ":i:v:a:rfh" opt; do
 			;;
 	esac
 done
+
+if [[ $set_x == "Y" ]]; then
+	set -x
+fi
 
 if [[ -z "$input" ]]; then
 	echo "WARNING: Program was not passed an input. Using current directory."
@@ -71,8 +78,12 @@ if [[ -z $audio_bitrate ]]; then
 	audio_bitrate='128k'
 fi
 
-if [[ -z $recurse ]]; then
+if [[ -z $search_command ]]; then
 	search_command=ls
+fi
+
+if [[ -z $time_command ]]; then
+	time_command=""
 fi
 
 ## Other Variables ##
@@ -82,7 +93,21 @@ date_YYYYMMDD="`date "+%Y%m%d"`"
 
 ## Main ##
 
-$search_command $input | while read file; do
+if [[ $verbose == "Y" ]]; then
+	cat <<- EOF
+		VERBOSE: Full list of variables.
+		  input='$input'
+		  video_bitrate='$video_bitrate'
+		  audio_bitrate='$audio_bitrate'
+		  search_command='$search_command'
+		  force='$force'
+		  time_command='$time_command'
+		  verbose='$verbose'
+		  set_x='$set_x'
+	EOF
+fi
+
+$time_command $search_command $input | while read file; do
 	echo -e "\n$file"
 
 	# Exception checks for the existing file.
@@ -112,7 +137,7 @@ $search_command $input | while read file; do
 
 	# Convert the file.
 	echo "Converting to $newfile."
-	ffmpeg -nostdin -hide_banner -loglevel quiet \
+	$time_command ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
 			-vcodec libopenh264 -movflags +faststart $newfile
 done
