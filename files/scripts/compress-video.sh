@@ -12,7 +12,7 @@ echo "Running $DIR/$PROG"
 ## Functions ##
 
 function usage {
-	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-r] [-f] [-m] [-v] [-x] [-h]"
+	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-r] [-f] [-m] [-V] [-x] [-h]"
 	cat <<- EOF 
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
@@ -26,7 +26,7 @@ function usage {
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
 		  -m : Measure the time it takes to compress each video and do the loop.
-		  -v : Add verbosity, such as printing all the variable values.
+		  -V : Add verbosity, such as printing all the variable values.
 		  -x : Set the shell's x flag to display every action which is taken.
 		  -h : Display this help messaging.
 	EOF
@@ -35,7 +35,7 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:rfmvxh" opt; do
+while getopts ":i:v:a:rfmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
@@ -49,7 +49,7 @@ while getopts ":i:v:a:rfmvxh" opt; do
 			;;
 		m) time_command="time"
 			;;
-		v) verbose="Y"
+		V) verbose="Y"
 			;;
 		x) set_x="Y"
 			;;
