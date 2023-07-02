@@ -12,7 +12,7 @@ echo "Running $DIR/$PROG"
 ## Functions ##
 
 function usage {
-	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-r] [-f] [-m] [-V] [-x] [-h]"
+	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec] [-r] [-f] [-m] [-V] [-x] [-h]"
 	cat <<- EOF 
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
@@ -23,6 +23,7 @@ function usage {
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
 		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
+		  -c vcodec : The video codec you'd like to use, such as libopenh264.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
 		  -m : Measure the time it takes to compress each video and do the loop.
@@ -35,7 +36,7 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:rfmVxh" opt; do
+while getopts ":i:v:a:c:rfmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
@@ -43,11 +44,13 @@ while getopts ":i:v:a:rfmVxh" opt; do
 			;;
 		a) audio_bitrate="$OPTARG"
 			;;
+		c) codec="-vcodec $OPTARG"
+			;;
 		r) search_command="find"
 			;;
 		f) force="Y"
 			;;
-		m) time_command="time"
+		m) time_command="time -p"
 			;;
 		V) verbose="Y"
 			;;
@@ -67,19 +70,23 @@ fi
 
 if [[ -z "$input" ]]; then
 	echo "WARNING: Program was not passed an input. Using current directory."
-	input='.'
+	input="."
 fi
 
 if [[ -z $video_bitrate ]]; then
-	video_bitrate='2000k'
+	video_bitrate="2000k"
 fi
 
 if [[ -z $audio_bitrate ]]; then
-	audio_bitrate='128k'
+	audio_bitrate="128k"
+fi
+
+if [[ -z $codec ]]; then
+	codec=""
 fi
 
 if [[ -z $search_command ]]; then
-	search_command=ls
+	search_command="ls"
 fi
 
 if [[ -z $time_command ]]; then
@@ -99,16 +106,25 @@ if [[ $verbose == "Y" ]]; then
 		  input='$input'
 		  video_bitrate='$video_bitrate'
 		  audio_bitrate='$audio_bitrate'
+		  codec='$codec'
 		  search_command='$search_command'
 		  force='$force'
 		  time_command='$time_command'
 		  verbose='$verbose'
 		  set_x='$set_x'
+		  filename_flag='$filename_flag'
+		  date_YYYYMMDD='$date_YYYYMMDD'
+		  SECONDS='$SECONDS'
 	EOF
 fi
 
-$time_command $search_command $input | while read file; do
+SECONDS=0
+$search_command $input | while read file; do
 	echo -e "\n$file"
+
+	if [[ -n $time_command ]]; then
+		date
+	fi
 
 	# Exception checks for the existing file.
 	if [[ $file != *'.mp4' ]]; then
@@ -137,9 +153,20 @@ $time_command $search_command $input | while read file; do
 
 	# Convert the file.
 	echo "Converting to $newfile."
-	$time_command ffmpeg -nostdin -hide_banner -loglevel quiet \
+	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
-			-vcodec libopenh264 -movflags +faststart $newfile
+			$vcodec -movflags +faststart $newfile"
 done
+
+echo "\nDone!"
+
+# Display elapsed time
+if [[ -n $time_command ]]; then
+	typeset -i hours minutes seconds
+	hours=$(( SECONDS / 3600 ))
+	minutes=$(( (SECONDS % 3600) / 60 ))
+	seconds=$(( SECONDS % 60 ))
+	echo "Loop Performance: ${hours}h ${minutes}m ${seconds}s"
+fi
 
 exit 0
