@@ -182,7 +182,12 @@
   when: ansible_system == "Linux"
   loop:
     - /org/gnome/shell/favorite-apps
-    - /org/cinnamon/favorite-apps
+    - /org/cinnamon/favorite-apps 
+  # As of 2023-07-01 this only sets the Menu Favorites on Cinnamon, not the 
+  #  Panel Pins. Cannot find any details online of where the pinned application
+  #  data lives. Cloned and searched the linuxmint/cinnamon project too and
+  #  couldn't find which function handles it. Leaving the loop for it but it's
+  #  not what was hoped for and is sort of a TBD/TODO.
   
 - name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
   dconf: 
