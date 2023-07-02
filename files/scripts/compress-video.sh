@@ -119,7 +119,7 @@ if [[ $verbose == "Y" ]]; then
 fi
 
 SECONDS=0
-$search_command $input | while read file; do
+$search_command $input | sort | while read file; do
 	echo -e "\n$file"
 
 	if [[ -n $time_command ]]; then
