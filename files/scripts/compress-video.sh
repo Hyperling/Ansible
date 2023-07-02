@@ -16,7 +16,7 @@ function usage {
 	cat <<- EOF 
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
-		  Currently only set up for libopenh264 and mp4 files.
+		  Currently only set up for mp4 files.
 		
 		Parameters:
 		  -i input : The input file or folder with which to search for video files. 
