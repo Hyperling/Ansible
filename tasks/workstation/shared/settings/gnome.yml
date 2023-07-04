@@ -164,9 +164,9 @@
     
   ignore_errors: yes
 
-- name: Workstation | Account Management | GNOME | Favorites (Linux)
+- name: Workstation | Account Management | GNOME + Cinnamon | Favorites (Linux)
   dconf: 
-    key: /org/gnome/shell/favorite-apps
+    key: "{{ item }}"
     value: "[ 'org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop'
             , 'org.gnome.Nautilus.desktop'
             , 'io.gitlab.librewolf-community.desktop', '{{ browser }}'
@@ -180,6 +180,14 @@
     state: present
   become_user: "{{ user }}"
   when: ansible_system == "Linux"
+  loop:
+    - /org/gnome/shell/favorite-apps
+    - /org/cinnamon/favorite-apps 
+  # As of 2023-07-01 this only sets the Menu Favorites on Cinnamon, not the 
+  #  Panel Pins. Cannot find any details online of where the pinned application
+  #  data lives. Cloned and searched the linuxmint/cinnamon project too and
+  #  couldn't find which function handles it. Leaving the loop for it but it's
+  #  not what was hoped for and is sort of a TBD/TODO.
   
 - name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
   dconf: 
