@@ -305,7 +305,7 @@
         echo "Following log." &&
         docker logs -f $container
       }
-    alias_docker_restart: alias docker-reload='docker compose down && docker compose up -d'
+    alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
