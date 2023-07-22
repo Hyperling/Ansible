@@ -294,7 +294,7 @@
           echo "ERROR: Container name or ID is required." >&2
           return;
         fi
-        if [[ -s $2 ]]; then
+        if [[ -n $2 ]]; then
           echo "ERROR: A second parameter is not expected, aborting." >&2
           return;
         fi
