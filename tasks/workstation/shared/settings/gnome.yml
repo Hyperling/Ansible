@@ -158,7 +158,7 @@
   - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
     dconf: 
       key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
-      value: "32"
+      value: "28"
       state: present
     become_user: "{{ user }}"
     
