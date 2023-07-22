@@ -17,7 +17,7 @@
     create: no
     state: present
   when: ansible_distribution == "Archlinux"
-  
+
 #- name: General | Account Management | Users | Use ZSH (Arch+Manjaro)
 #  set_fact:
 #    user_shell: "{{ zsh_exec.stdout }}"
@@ -62,7 +62,7 @@
   user:
     name: "{{ user }}"
     comment: "{{ user_desc }}"
-    groups: 
+    groups:
       - sudo
       - video
       - render
@@ -82,7 +82,7 @@
 ## Folders ##
 
 - name: General | Account Management | Users | Folders | Root | Create bin, Downloads, TRASH
-  file: 
+  file:
     path: "{{ item }}"
     state: directory
     mode: '0755'
@@ -93,7 +93,7 @@
   when: user_root.home != ""
 
 - name: General | Account Management | Users | Folders | Hyperling | Create bin, LBRY, TRASH
-  file: 
+  file:
     path: "{{ item }}"
     state: directory
     mode: '0755'
@@ -143,7 +143,7 @@
       function update() {
         PROG=$FUNCNAME
         usage="Usage: $PROG [-y]
-        $PROG is used to run all the system's package manager commands 
+        $PROG is used to run all the system's package manager commands
           in one swoop. Flow stops if any command returns a failure code.
           The hope is to run something as easy as 'pacman -Syyu'.
         -y : Assume yes to any prompts."
@@ -171,7 +171,7 @@
     sync: alias sync='date && echo "Syncing!" && sync && date'
     editor: export EDITOR='vi'
     init_aliases: |
-      alias init-video='mkdir -v raw; mkdir -v exports; cp ~/Templates/*video* ./' 
+      alias init-video='mkdir -v raw; mkdir -v exports; cp ~/Templates/*video* ./'
       alias init-vid=init-video
       alias init-program='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
       alias init-prog=init-program
@@ -205,7 +205,7 @@
             * ) echo "
             ERROR: Option '$1' with value '$2' not recognized.
               $PROG [-c|-clean|--clean|-y] [-n|-net|--network]
-            " 
+            "
             return 1
           esac
           shift
@@ -218,9 +218,9 @@
           echo "/root"
           echo "/home"
         }
-        dirs_to_check | while read dir; do 
+        dirs_to_check | while read dir; do
           echo "Checking $dir..."
-          sudo find $dir -name TRASH | while read trash; do 
+          sudo find $dir -name TRASH | while read trash; do
             if [[ "$trash" != "" && `sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
               sudo ls -lh $trash
@@ -229,15 +229,15 @@
                 sudo sh -c "rm -rfv $trash/*"
               fi
             fi
-          done 
+          done
         done
         if [[ "$network" == "Y" ]]; then
           function network_to_check {
-            find /mnt -maxdepth 1 -mindepth 1 
+            find /mnt -maxdepth 1 -mindepth 1
           }
-          network_to_check | while read dir; do 
+          network_to_check | while read dir; do
             echo "Checking $dir..."
-            sudo find $dir -name TRASH | while read trash; do 
+            sudo find $dir -name TRASH | while read trash; do
               if [[ "$trash" != "" && `sudo ls $trash` ]]; then
                 echo "Found $trash with contents:"
                 sudo ls -lh $trash
@@ -246,7 +246,7 @@
                   sudo sh -c "rm -rfv $trash/*"
                 fi
               fi
-            done 
+            done
           done
         fi
         echo "Checking but not cleaning /var/mail..."
@@ -279,7 +279,9 @@
         echo "ERROR: Something went wrong while removing Flatpak apps!"
       }
     alias_vim: alias vi=vim
-    alias_here: alias here='ls -lh `pwd`/*'
+    alias_here: alias here='ls -alh `pwd`/*'
+    alias_docker_reload: alias docker-reload='docker compose stop && docker compose build && docker compose up -d'
+    alias_docker_update: alias docker-update='docker compose stop && docker compose pull && docker compose build && docker compose up -d'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -307,6 +309,8 @@
       {{ function_flatpak_purge }}
       {{ alias_vim }}
       {{ alias_here }}
+      {{ alias_docker_reload }}
+      {{ alias_docker_update }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
