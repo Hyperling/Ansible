@@ -313,6 +313,7 @@
           docker logs -f $container
       }
     alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
+    alias_code_check: alias code-check='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git push; git pull; done'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
