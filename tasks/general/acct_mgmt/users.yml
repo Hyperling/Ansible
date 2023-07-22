@@ -287,8 +287,10 @@
     alias_docker_reload: alias docker-reload='docker compose down && docker compose build && docker compose up -d'
     alias_docker_update: alias docker-update='docker compose down && docker compose pull && docker compose build && docker compose up -d'
     function_docker_upgrade: |
-      # Wrapper for a full-scale upgrade of a container.
       function docker-upgrade() {
+        # Wrapper for a full-scale upgrade and log view of a container.
+        # Paramaters:
+        #   1) Container ID or Container Name, as seen in 'docker ps' command.
         container=$1
         if [[ -z $container ]]; then
           echo "ERROR: Container name or ID is required." >&2
@@ -298,12 +300,17 @@
           echo "ERROR: A second parameter is not expected, aborting." >&2
           return;
         fi
-        docker compose down &&
-        docker compose pull &&
-        docker compose build &&
-        docker compose up -d &&
-        echo "Following log." &&
-        docker logs -f $container
+        echo "*** Going Down ***" &&
+          docker compose down &&
+        echo "*** Upgrading Images ***" &&
+          docker compose pull &&
+        echo "*** Building Containers ***" &&
+          docker compose build &&
+        echo "*** Starting Daemons ***" &&
+          docker compose up -d &&
+        echo "*** Following Log ***" &&
+          echo "Press ^C to escape." &&
+          docker logs -f $container
       }
     alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
 
