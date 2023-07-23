@@ -353,6 +353,7 @@
       {{ alias_docker_update }}
       {{ function_docker_upgrade }}
       {{ alias_docker_restart }}
+      {{ alias_code_check }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
