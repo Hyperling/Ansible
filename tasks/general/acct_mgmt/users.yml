@@ -300,6 +300,14 @@
           echo "ERROR: A second parameter is not expected, aborting." >&2
           return;
         fi
+        # Ensure the container exists. Should be found even if stopped.
+        exists=`docker ps | grep -c $container`
+        if [[ $exists != "1" ]]; then
+          echo "ERROR: Container $container was not found." >&2
+          echo "Please choose from the available list:"
+          docker ps
+          return;
+        fi
         echo "*** Going Down ***" &&
           docker compose down &&
         echo "*** Upgrading Images ***" &&
