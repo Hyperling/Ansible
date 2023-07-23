@@ -287,25 +287,41 @@
     alias_docker_reload: alias docker-reload='docker compose down && docker compose build && docker compose up -d'
     alias_docker_update: alias docker-update='docker compose down && docker compose pull && docker compose build && docker compose up -d'
     function_docker_upgrade: |
-      # Wrapper for a full-scale upgrade of a container.
       function docker-upgrade() {
+        # Wrapper for a full-scale upgrade and log view of a container.
+        # Paramaters:
+        #   1) Container ID or Container Name, as seen in 'docker ps' command.
         container=$1
         if [[ -z $container ]]; then
           echo "ERROR: Container name or ID is required." >&2
           return;
         fi
-        if [[ -s $2 ]]; then
+        if [[ -n $2 ]]; then
           echo "ERROR: A second parameter is not expected, aborting." >&2
           return;
         fi
-        docker compose down &&
-        docker compose pull &&
-        docker compose build &&
-        docker compose up -d &&
-        echo "Following log." &&
-        docker logs -f $container
+        # Ensure the container exists. Should be found even if stopped.
+        exists=`docker ps | grep -c $container`
+        if [[ $exists != "1" ]]; then
+          echo "ERROR: Container '$container' was not found." >&2
+          echo "Please choose from the available list:"
+          docker ps
+          return;
+        fi
+        echo "*** Going Down ***" &&
+          docker compose down &&
+        echo "*** Upgrading Images ***" &&
+          docker compose pull &&
+        echo "*** Building Containers ***" &&
+          docker compose build &&
+        echo "*** Starting Daemons ***" &&
+          docker compose up -d &&
+        echo "*** Following Log ***" &&
+          echo "Press ^C to escape." &&
+          docker logs -f $container
       }
-    alias_docker_restart: alias docker-reload='docker compose down && docker compose up -d'
+    alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
+    alias_code_check: alias code-check='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git push; git pull; done'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -337,6 +353,7 @@
       {{ alias_docker_update }}
       {{ function_docker_upgrade }}
       {{ alias_docker_restart }}
+      {{ alias_code_check }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
