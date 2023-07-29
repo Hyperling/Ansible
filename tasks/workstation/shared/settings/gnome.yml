@@ -30,7 +30,7 @@
 # Make sure Gnome-Tweaks is installed
 - name: Workstation | Account Management | GNOME | Install Dependencies
   package:
-    name: 
+    name:
       - "{{ gnome_tweaks }}"
       - "{{ dconf_editor }}"
       - "{{ psutil }}"
@@ -48,11 +48,11 @@
     become_user: "{{ user }}"
     register: dash_to_dock_exists
 
-  # Install # 
+  # Install #
   # https://micheleg.github.io/dash-to-dock/download.html
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Clone Repo
-    git: 
+    git:
       repo: https://github.com/micheleg/dash-to-dock.git
       dest: "~/TRASH/dash-to-dock/"
       clone: yes
@@ -63,7 +63,7 @@
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Install | Dependencies
     package:
-      name: 
+      name:
         - "{{ make }}"
         - "{{ msgfmt }}"
         - "{{ sassc }}"
@@ -76,7 +76,7 @@
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Read Enabled Extension Array
-    dconf: 
+    dconf:
       key: /org/gnome/shell/enabled-extensions
       state: read
     become_user: "{{ user }}"
@@ -91,7 +91,7 @@
   # https://ansible-docs.readthedocs.io/zh/stable-2.0/rst/playbooks_filters.html#filters-for-formatting-data
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 1
-    set_fact: 
+    set_fact:
       gnome_enabled_extensions: "{{ gnome_enabled_extensions.value | replace('@as ', '') }}"
       dash_to_dock_ext_comma: ""
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
@@ -102,12 +102,12 @@
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 2
-    set_fact: 
+    set_fact:
       dash_to_dock_ext_comma: ", "
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed and gnome_enabled_extensions not in ("[]", [], "None")
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Variables 3
-    set_fact: 
+    set_fact:
       dash_to_dock_ext_name: "{{ dash_to_dock_ext_comma }}'dash-to-dock@micxgx.gmail.com']"
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
@@ -132,7 +132,7 @@
     when: ansible_distribution not in ("Ubuntu") and dash_to_dock_exists.failed
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Enable
-    dconf: 
+    dconf:
       key: /org/gnome/shell/enabled-extensions
       value: "{{ gnome_enabled_extensions | replace(']', dash_to_dock_ext_name) }}"
       state: present
@@ -142,34 +142,34 @@
   # Settings #
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Position
-    dconf: 
+    dconf:
       key: /org/gnome/shell/extensions/dash-to-dock/dock-position
       value: "'LEFT'"
       state: present
     become_user: "{{ user }}"
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Dock Fixed
-    dconf: 
+    dconf:
       key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
       value: "true"
       state: present
     become_user: "{{ user }}"
 
   - name: Workstation | Account Management | GNOME | Dash To Dock | Icon Size
-    dconf: 
+    dconf:
       key: /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size
       value: "28"
       state: present
     become_user: "{{ user }}"
-    
+
   ignore_errors: yes
 
 - name: Workstation | Account Management | GNOME + Cinnamon | Favorites (Linux)
-  dconf: 
+  dconf:
     key: "{{ item }}"
     value: "[ 'org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop'
             , 'org.gnome.Nautilus.desktop'
-            , 'io.gitlab.librewolf-community.desktop', '{{ browser }}'
+            , 'io.gitlab.librewolf-community.desktop'
             , 'org.gnome.Evolution.desktop', 'chat.delta.desktop.desktop'
             , 'com.vscodium.codium.desktop', 'org.shotcut.Shotcut.desktop'
             , 'io.lbry.lbry-app.desktop'
@@ -182,18 +182,18 @@
   when: ansible_system == "Linux"
   loop:
     - /org/gnome/shell/favorite-apps
-    - /org/cinnamon/favorite-apps 
-  # As of 2023-07-01 this only sets the Menu Favorites on Cinnamon, not the 
+    - /org/cinnamon/favorite-apps
+  # As of 2023-07-01 this only sets the Menu Favorites on Cinnamon, not the
   #  Panel Pins. Cannot find any details online of where the pinned application
   #  data lives. Cloned and searched the linuxmint/cinnamon project too and
   #  couldn't find which function handles it. Leaving the loop for it but it's
   #  not what was hoped for and is sort of a TBD/TODO.
-  
+
 - name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
-  dconf: 
+  dconf:
     key: /org/gnome/shell/favorite-apps
-    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 
-             'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop', 
+    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop',
+             'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop',
              'code-oss.desktop', 'org.telegram.desktop.desktop']"
     state: present
   become_user: "{{ user }}"
@@ -204,42 +204,42 @@
 # (Battery Percentage, Clock Weekday+Seconds, Calendar Week Numbers)
 
 - name: Workstation | Account Management | GNOME | Interface - Show Date
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/interface/clock-show-date
     value: "true"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - 24h Format
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/interface/clock-format
     value: "'24h'"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Seconds
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/interface/clock-show-seconds
     value: "true"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Weekday
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/interface/clock-show-weekday
     value: "true"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - 24h Format
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/interface/show-battery-percentage
     value: "true"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Interface - Show Week Date
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/calendar/show-weekdate
     value: "true"
     state: present
@@ -258,8 +258,8 @@
 
 # Window Titlebars (Titlebar Buttons Minimize)
 - name: Workstation | Account Management | GNOME | Window Buttons
-  dconf: 
-    key: /org/gnome/desktop/wm/preferences/button-layout 
+  dconf:
+    key: /org/gnome/desktop/wm/preferences/button-layout
     value: "'appmenu:minimize,close'"
     state: present
   become_user: "{{ user }}"
@@ -267,14 +267,14 @@
 
 # Security
 - name: Workstation | Account Management | GNOME | Privacy - Camera
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/privacy/disable-camera
     value: "true"
     state: present
   become_user: "{{ user }}"
 
 - name: Workstation | Account Management | GNOME | Privacy - Microphone
-  dconf: 
+  dconf:
     key: /org/gnome/desktop/privacy/disable-microphone
     value: "true"
     state: present
