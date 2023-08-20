@@ -4,7 +4,7 @@
 
 DIR=`dirname $0`
 PROG=`basename $0`
-if [[ $DIR == '.' ]]; then
+if [[ "$DIR" == '.' ]]; then
 	DIR=`pwd`
 fi
 echo "Running $DIR/$PROG"
@@ -13,13 +13,13 @@ echo "Running $DIR/$PROG"
 
 function usage {
 	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec] [-r] [-f] [-m] [-V] [-x] [-h]"
-	cat <<- EOF 
+	cat <<- EOF
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
 		  Currently only set up for mp4 files.
-		
+
 		Parameters:
-		  -i input : The input file or folder with which to search for video files. 
+		  -i input : The input file or folder with which to search for video files.
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
 		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
@@ -64,7 +64,7 @@ while getopts ":i:v:a:c:rfmVxh" opt; do
 	esac
 done
 
-if [[ $set_x == "Y" ]]; then
+if [[ "$set_x" == "Y" ]]; then
 	set -x
 fi
 
@@ -73,23 +73,23 @@ if [[ -z "$input" ]]; then
 	input="."
 fi
 
-if [[ -z $video_bitrate ]]; then
+if [[ -z "$video_bitrate" ]]; then
 	video_bitrate="2000k"
 fi
 
-if [[ -z $audio_bitrate ]]; then
+if [[ -z "$audio_bitrate" ]]; then
 	audio_bitrate="128k"
 fi
 
-if [[ -z $codec ]]; then
+if [[ -z "$codec" ]]; then
 	codec=""
 fi
 
-if [[ -z $search_command ]]; then
+if [[ -z "$search_command" ]]; then
 	search_command="ls"
 fi
 
-if [[ -z $time_command ]]; then
+if [[ -z "$time_command" ]]; then
 	time_command=""
 fi
 
@@ -100,7 +100,7 @@ date_YYYYMMDD="`date "+%Y%m%d"`"
 
 ## Main ##
 
-if [[ $verbose == "Y" ]]; then
+if [[ "$verbose" == "Y" ]]; then
 	cat <<- EOF
 		VERBOSE: Full list of variables.
 		  input='$input'
@@ -122,29 +122,32 @@ SECONDS=0
 $search_command $input | sort | while read file; do
 	echo -e "\n$file"
 
-	if [[ -n $time_command ]]; then
+	if [[ -n "$time_command" ]]; then
 		date
 	fi
 
 	# Exception checks for the existing file.
-	if [[ $file != *'.mp4' ]]; then
+	if [[ "$file" != *'.mp4' ]]; then
 		echo "SKIP: Not an MP4."
 		continue
 	fi
-	if [[ $file == *"$filename_flag"* ]]; then
+	if [[ "$file" == *"$filename_flag"* ]]; then
 		echo "SKIP: Input is already compressed."
 		continue
 	fi
 
-	# Build the new filename to signify it is different thn the original.
-	extension=${file##*.}
-	newfile=${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}
+	# Build the new filename to signify it is different than the original.
+	extension="${file##*.}"
+	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}"
+
+	# Convert spaces to underscores.
+	newfile="${newfile// /_}"
 
 	# More exception checks based on the new file.
-	if [[ -e $newfile ]]; then
-		if [[ $force == "Y" ]]; then
+	if [[ -e "$newfile" ]]; then
+		if [[ "$force" == "Y" ]]; then
 			echo "FORCE: Removing $newfile."
-			rm -vf $newfile
+			rm -vf "$newfile"
 		else
 			echo "SKIP: Already has a compressed version ($newfile)."
 			continue
@@ -154,14 +157,14 @@ $search_command $input | sort | while read file; do
 	# Convert the file.
 	echo "Converting to $newfile."
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i $file -b:v $video_bitrate -b:a $audio_bitrate \
+			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
 			$vcodec -movflags +faststart $newfile"
 done
 
 echo "\nDone!"
 
 # Display elapsed time
-if [[ -n $time_command ]]; then
+if [[ -n "$time_command" ]]; then
 	typeset -i hours minutes seconds
 	hours=$(( SECONDS / 3600 ))
 	minutes=$(( (SECONDS % 3600) / 60 ))
