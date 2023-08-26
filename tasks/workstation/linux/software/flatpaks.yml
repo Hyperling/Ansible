@@ -40,6 +40,7 @@
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
       - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
       - { app: "org.signal.Signal", name: "signal", extra: "" }
+      - { app: "org.mozilla.firefox", name: "firefox-flatpak", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
@@ -53,7 +54,6 @@
       - { app: "com.play0ad.zeroad", name: "zeroad", extra: "" }
       - { app: "net.supertuxkart.SuperTuxKart", name: "tuxkart", extra: "" }
     flatpaks_remove:
-      - { app: "org.mozilla.firefox", name: "firefox", extra: "" }
       - { app: "com.visualstudio.code", name: "vscode", extra: "" } # Why does this throw an error? It's the correct ID.
       - { app: "com.visualstudio.code-oss", name: "code-oss", extra: "" }
       - { app: "org.midori_browser.Midori", name: "midori", extra: "" }
@@ -92,7 +92,7 @@
   become_user: "{{ user }}"
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Generic | Executable Permissions
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: file
     mode: '0755'
@@ -124,7 +124,7 @@
   when: coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Executable Permissions
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: file
     mode: '0755'
@@ -141,7 +141,7 @@
   when: not coding == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Coding | Remove Executables
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: absent
   loop: "{{ flatpaks_coding }}"
@@ -174,7 +174,7 @@
   when: editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Executable Permissions
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: file
     mode: '0755'
@@ -191,7 +191,7 @@
   when: not editing == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Audio/Video Editors | Remove Executables
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: absent
   loop: "{{ flatpaks_editing }}"
@@ -224,7 +224,7 @@
   when: gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Executable Permissions
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: file
     mode: '0755'
@@ -241,7 +241,7 @@
   when: not gaming == true
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Gaming | Remove Executables
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: absent
   loop: "{{ flatpaks_gaming }}"
@@ -259,7 +259,7 @@
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Flatpak | Uninstalls | Remove Executables
-  file: 
+  file:
     path: "{{ flatpak_exec_dir }}/{{ item.name }}"
     state: absent
   loop: "{{ flatpaks_remove }}"
@@ -271,8 +271,8 @@
 # Software not yet available or working properly in Flatpak form.
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Install From Repo
-  package: 
-    name: 
+  package:
+    name:
       - "{{ firefox_esr }}"
       - vlc
       - "{{ appimagelauncher }}"
@@ -281,7 +281,7 @@
     state: present
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Firefox Normal
-  package: 
+  package:
     name:
     - "{{ firefox }}"
     state: absent
@@ -290,7 +290,7 @@
 # Lutris #
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris PPA (Ubuntu)
-  apt_repository: 
+  apt_repository:
     repo: ppa:lutris-team/lutris
     update_cache: yes
     state: present
@@ -298,23 +298,23 @@
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Add Lutris (besides ARM)
-  package: 
-    name: 
+  package:
+    name:
       - lutris
     state: present
   when: ansible_architecture != "aarch64" and gaming == true
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris (besides ARM)
-  package: 
-    name: 
+  package:
+    name:
       - lutris
     state: absent
   when: ansible_architecture != "aarch64" and gaming is not defined
   ignore_errors: yes
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Lutris PPA (Ubuntu)
-  apt_repository: 
+  apt_repository:
     repo: ppa:lutris-team/lutris
     update_cache: yes
     state: absent
@@ -324,7 +324,7 @@
 # Remove Repo Software #
 
 - name: Workstation | Linux | Flatpak Distro | Package Manager | Remove Applications
-  package: 
+  package:
     name:
     - "{{ thunderbird }}"
     - steam
