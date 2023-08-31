@@ -161,7 +161,7 @@ $search_command $input | sort | while read file; do
 			$vcodec -movflags +faststart $newfile"
 done
 
-echo "\nDone!"
+echo -e "\nDone!"
 
 # Display elapsed time
 if [[ -n "$time_command" ]]; then
