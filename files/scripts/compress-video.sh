@@ -159,6 +159,18 @@ $search_command $input | sort | while read file; do
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
 			$vcodec -movflags +faststart $newfile"
+
+	# Check the filesize compared to the original and note if it is larger.
+	echo "Checking file sizes:"
+	ls -sh $file $newfile | sort -hr
+	smaller_file=`ls -sh $file $newfile | sort -h | awk '{print $2}' | head -n 1`
+	if [[ $smaller_file == $file ]]; then # Purposefully not using "" here.
+		echo -n "Conversion had the opposite effect, original was likely lesser "
+		echo "quality. Adding a suffix to the file to signify that it grew."
+		mv -v $newfile $newfile.DoNotUse-LargerThanOriginal
+	else
+		echo "Conversion succeeded, file has been compressed."
+	fi
 done
 
 echo -e "\nDone!"
