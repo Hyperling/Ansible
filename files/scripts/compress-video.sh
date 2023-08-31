@@ -2,12 +2,17 @@
 # 2023-06-13 Hyperling
 # Compress a video to good-enough quality for high quality streaming.
 
+## Setup ##
+
 DIR=`dirname $0`
 PROG=`basename $0`
 if [[ "$DIR" == '.' ]]; then
 	DIR=`pwd`
 fi
 echo "Running $DIR/$PROG"
+
+filename_flag='compressed'
+date_YYYYMMDD="`date "+%Y%m%d"`"
 
 ## Functions ##
 
@@ -92,11 +97,6 @@ fi
 if [[ -z "$time_command" ]]; then
 	time_command=""
 fi
-
-## Other Variables ##
-
-filename_flag='compressed'
-date_YYYYMMDD="`date "+%Y%m%d"`"
 
 ## Main ##
 
