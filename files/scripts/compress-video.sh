@@ -177,6 +177,7 @@ echo -e "\nDone!"
 
 # Display elapsed time
 if [[ -n "$time_command" ]]; then
+	date
 	typeset -i hours minutes seconds
 	hours=$(( SECONDS / 3600 ))
 	minutes=$(( (SECONDS % 3600) / 60 ))
