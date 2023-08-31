@@ -77,7 +77,7 @@ $search $location | while read image; do
 	typeset -l extension
 	extension="${image##*.}"
 	if [[ "$extension" != *".jpg" && "$extension" != *".png" ]]; then
-		echo "ERROR: Sorry, currently only JPG and PNG are supported."
+		echo "  ERROR: Sorry, currently only JPG and PNG are supported."
 		usage 2
 	fi
 
@@ -85,12 +85,13 @@ $search $location | while read image; do
 
 	newimage=${image//.$extension/}-$tag.$extension
 	if [[ ("$image" == *"$tag"* && -z "$force") || -e "$newimage" ]]; then
-		echo "SKIP: Image has already been shrunk previously, moving on."
+		echo "  SKIP: Image has already been shrunk previously, moving on."
 		continue
 	fi
 
 	# This modifies the image to be $size at its longest end, not be a square.
-	convert $image -resize ${size}x${size} $newimage
+	convert $image -resize ${size}x${size} $newimage &&
+		echo "  SUCCESS"
 done
 
 exit 0
