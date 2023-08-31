@@ -8,5 +8,6 @@ mkdir -p shrink
 
 ls *.jpg | while read image; do
 	echo $image
+	# This modifies the image to be 2000 at its longest end, not be a square.
 	convert $image -resize 2000x2000 shrink/$image-shrunk.jpg
 done
