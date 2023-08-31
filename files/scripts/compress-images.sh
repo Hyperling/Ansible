@@ -59,7 +59,7 @@ done
 
 ## Validations ##
 
-if [[ -n "$in_size" && $size != $in_size ]]; then # No "" on purpose.
+if [[ -n "$in_size" && "$size" != "$in_size" ]]; then
 	echo "ERROR: Size value '$in_size' included non-integer characters." >&2
 	usage 1
 fi
@@ -117,7 +117,7 @@ $search $location | sort | while read image; do
 		echo "  $line"
 	done
 	smaller_file=`ls -sh $image $new_image | sort -h | awk '{print $2}' | head -n 1`
-	if [[ $smaller_file == $image ]]; then # Purposefully not using "" here.
+	if [[ "$smaller_file" == "$image" ]]; then
 		echo -n "  WARNING: Conversion caused growth, original was likely lesser "
 		echo "quality. Adding a suffix to the file to signify that it may be bad."
 		echo -n "  "

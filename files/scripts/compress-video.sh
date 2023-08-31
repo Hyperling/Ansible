@@ -164,7 +164,7 @@ $search_command $input | sort | while read file; do
 	echo "Checking file sizes:"
 	ls -sh $file $newfile | sort -hr
 	smaller_file=`ls -sh $file $newfile | sort -h | awk '{print $2}' | head -n 1`
-	if [[ $smaller_file == $file ]]; then # Purposefully not using "" here.
+	if [[ "$smaller_file" == "$file" ]]; then
 		echo -n "Conversion had the opposite effect, original was likely lesser "
 		echo "quality. Adding a suffix to the file to signify that it grew."
 		mv -v $newfile $newfile.DoNotUse-LargerThanOriginal
