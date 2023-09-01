@@ -2,12 +2,17 @@
 # 2023-06-13 Hyperling
 # Compress a video to good-enough quality for high quality streaming.
 
+## Setup ##
+
 DIR=`dirname $0`
 PROG=`basename $0`
 if [[ "$DIR" == '.' ]]; then
 	DIR=`pwd`
 fi
 echo "Running $DIR/$PROG"
+
+filename_flag='compressed'
+date_YYYYMMDD="`date "+%Y%m%d"`"
 
 ## Functions ##
 
@@ -93,11 +98,6 @@ if [[ -z "$time_command" ]]; then
 	time_command=""
 fi
 
-## Other Variables ##
-
-filename_flag='compressed'
-date_YYYYMMDD="`date "+%Y%m%d"`"
-
 ## Main ##
 
 if [[ "$verbose" == "Y" ]]; then
@@ -159,12 +159,25 @@ $search_command $input | sort | while read file; do
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
 			$vcodec -movflags +faststart $newfile"
+
+	# Check the filesize compared to the original and note if it is larger.
+	echo "Checking file sizes:"
+	ls -sh $file $newfile | sort -hr
+	smaller_file=`ls -sh $file $newfile | sort -h | awk '{print $2}' | head -n 1`
+	if [[ "$smaller_file" == "$file" ]]; then
+		echo -n "Conversion had the opposite effect, original was likely lesser "
+		echo "quality. Adding a suffix to the file to signify that it grew."
+		mv -v $newfile $newfile.DoNotUse-LargerThanOriginal
+	else
+		echo "Conversion succeeded, file has been compressed."
+	fi
 done
 
-echo "\nDone!"
+echo -e "\nDone!"
 
 # Display elapsed time
 if [[ -n "$time_command" ]]; then
+	date
 	typeset -i hours minutes seconds
 	hours=$(( SECONDS / 3600 ))
 	minutes=$(( (SECONDS % 3600) / 60 ))
