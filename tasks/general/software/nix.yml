@@ -12,5 +12,26 @@
 #  package names, and maybe packages.yml in general?? That stuff can be a mess.
 ###
 
+- name: Nix Variables
+  set_fact:
+    nix_exe: ~/.deleteme.nix.sh
+
 - name: Install Nix
-  shell: "curl -L https://nixos.org/nix/install > deleteme.nix.sh"
+  shell: "{{ item }}"
+  loop:
+    - "curl -L https://nixos.org/nix/install > {{ nix_exe }}"
+    - "chmod 755 {{ nix_exe }}"
+    - "{{ nix_exe }} --daemon --yes"
+    - "rm -v {{ nix_exe }}"
+  become_user: "{{ user }}"
+
+- name: Install Nix Software
+  shell: "{{ item }}"
+  loop:
+    - "nix-env -iA nixpkgs.lbry" # Installs, but doesnt launch?
+#$ lbry
+#Gtk-Message: 16:22:43.390: Failed to load module "canberra-gtk-module"
+#Gtk-Message: 16:22:43.391: Failed to load module "canberra-gtk-module"
+#[35:0100/000000.410595:ERROR:angle_platform_impl.cc(44)] Display.cpp:940 (initialize): ANGLE Display::initialize error 12289: glXQueryExtensionsString returned NULL
+#[35:0100/000000.482531:ERROR:gl_surface_egl.cc(808)] EGL Driver message (Critical) eglInitialize: glXQueryExtensionsString returned NULL
+#[35:0100/000000.482570:ERROR:gl_surface_egl.cc(1430)] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type

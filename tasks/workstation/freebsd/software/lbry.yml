@@ -1,6 +1,0 @@
----
-# Install LBRY desktop client.
-# https://github.com/lbryio/lbry-desktop#install
-
-- name: Install LBRY (Nix)
-  shell: "nix-env -iA nixpkgs.lbry"
