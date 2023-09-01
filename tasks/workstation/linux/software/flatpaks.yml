@@ -36,7 +36,6 @@
   set_fact:
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office", extra: "" }
-      - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" }
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
       - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
       - { app: "org.signal.Signal", name: "signal", extra: "" }
@@ -67,6 +66,7 @@
       - { app: "org.telegram.desktop", name: "telegram", extra: "" }
       - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
       # End 2022-11-20 #
+      - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" } # No longer supported, noticed 2023-09-01.
 
 # Generic #
 
