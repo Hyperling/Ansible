@@ -5,7 +5,7 @@
 - name: Main | Default Setup
   hosts: localhost
   connection: local
-  become: true  
+  become: true
 
   tasks:
     - include_tasks: facts/general/gather.yml
@@ -16,12 +16,14 @@
     - include_tasks: facts/general/service.yml
     - include_tasks: facts/general/user.yml
 
+    - include_tasks: tasks/general/software/nix.yml
     - include_tasks: tasks/general/software/packages.yml
     - include_tasks: tasks/general/software/services.yml
     - include_tasks: tasks/general/software/sendmail.yml
       when: ansible_system == "FreeBSD"
 
-    - include_tasks: facts/general/gather.yml 
+
+    - include_tasks: facts/general/gather.yml
 
     - include_tasks: tasks/general/acct_mgmt/groups.yml
     - include_tasks: tasks/general/acct_mgmt/users.yml
@@ -33,7 +35,7 @@
     - include_tasks: tasks/general/scripts/install.yml
 
     - include_tasks: tasks/general/cron/ansible.yml
-    
+
     # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
     - include_tasks: tasks/workstation/freebsd/cron/ansible.yml
       when: ansible_system == "FreeBSD"
@@ -97,7 +99,7 @@
 
       when: workstation == true
 
-  
+
 # No longer mining, this is now considered deprecated.
 #    ####### Miners #######
 #

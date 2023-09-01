@@ -1,0 +1,16 @@
+---
+# Install the Nix package manager
+# https://nixos.org/download/
+
+## TBD ##
+# This may be able to replace Flatpak if it works well, is easy to use, takes up
+#  less space, is faster, etc etc. It also is supposed to have the benefit of
+#  working with FreeBSD and MacOS which is something that the current array of
+#  Ansible/package/Flatpak combo is lacking. Honestly might make FreeBSD as a
+#  desktop a possibility again since it was software availability that continues
+#  to be the reason to leave it. Could also get rid of all the distro-specific
+#  package names, and maybe packages.yml in general?? That stuff can be a mess.
+###
+
+- name: Install Nix
+  shell: "curl -L https://nixos.org/nix/install > deleteme.nix.sh"
