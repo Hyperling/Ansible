@@ -322,6 +322,7 @@
       }
     alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
     alias_code_check: alias code-check='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git push; git pull; done'
+    alias_code_reset: alias code-reset='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git switch main; git pull; git branch -D dev; git checkout dev; done'
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -354,6 +355,7 @@
       {{ function_docker_upgrade }}
       {{ alias_docker_restart }}
       {{ alias_code_check }}
+      {{ alias_code_reset }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
