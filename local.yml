@@ -16,7 +16,7 @@
     - include_tasks: facts/general/service.yml
     - include_tasks: facts/general/user.yml
 
-    - include_tasks: tasks/general/software/nix.yml
+    #- include_tasks: tasks/general/software/nix.yml
     - include_tasks: tasks/general/software/packages.yml
     - include_tasks: tasks/general/software/services.yml
     - include_tasks: tasks/general/software/sendmail.yml
