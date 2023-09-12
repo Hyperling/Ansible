@@ -119,7 +119,7 @@
     alias_rm: alias rm='echo "Use mv ~/TRASH/ instead!"'
     alias_clean_dir: alias clean-dir='mv * ~/TRASH/'
     alias_clean_trash: alias clean-trash='sh -c "rm -rfv ~/TRASH/*"'
-    export_path_additions: export PATH="~/bin:$PATH"
+    export_path_additions: export PATH="~/bin:"{{ global_bin }}":$PATH"
     function_wttr: |
       function weather() {
         # 20210301 - Someone showed me an awesome weather API! Had to implement it!
