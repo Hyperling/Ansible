@@ -3,8 +3,9 @@
 
 ## Global Variables ##
 
-PROG=`basename $0`
-LOCAL=`dirname $0`/local.yml
+DIR="$(dirname -- "${BASH_SOURCE[0]}")"
+PROG="$(basename -- "${BASH_SOURCE[0]}")"
+LOCAL=$DIR/local.yml
 URL="https://github.com/Hyperling/ansible"
 BRANCH="main"
 
@@ -33,22 +34,10 @@ function usage {
 
 while getopts ":lb:h" arg; do
 	case $arg in
-		l)
-			echo "Running $LOCAL as the playbook."
-			local="Y"
-			;;
-		b)
-			echo -n "Using branch "
-			branch="$OPTARG"
-			echo "$branch instead of $BRANCH."
-			;;
-		h)
-			usage
-			;;
-		*)
-			echo "ERROR: A parameter was not recognized. Please check your command and try again."
-			usage 1
-			;;
+		l) local="Y" && echo "Running $LOCAL as the playbook." ;;
+		b) branch="$OPTARG" && echo "Using branch $branch instead of $BRANCH." ;;
+		h) usage ;;
+		*) echo "ERROR: Parameter $OPTARG was not recognized." && usage 1 ;;
 	esac
 done
 
@@ -94,6 +83,10 @@ if [[ `which ansible > /dev/null; echo $?` != 0 ]]; then
 		sudo sh -c 'echo "localhost ansible_connection=local" > /etc/ansible/hosts'
 	elif [[ $os == *openSUSE* ]]; then
 		sudo zypper install -y ansible git
+		sudo mkdir -p /etc/ansible
+		sudo sh -c 'echo "localhost ansible_connection=local" > /etc/ansible/hosts'
+	elif [[ $os == *NixOS* ]]; then
+		$DIR/files/scripts/nixos.sh -b $branch
 		sudo mkdir -p /etc/ansible
 		sudo sh -c 'echo "localhost ansible_connection=local" > /etc/ansible/hosts'
 	else
