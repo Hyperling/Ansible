@@ -9,6 +9,7 @@
       - "{{ dconf_editor }}"
       - "{{ psutil }}"
     state: present
+  when: ansible_distribution not in ("NixOS")
 
 
 ## Dash to Dock Extension ##
