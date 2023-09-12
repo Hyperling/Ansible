@@ -8,6 +8,10 @@
   become: true
 
   tasks:
+
+    ####### Gather #######
+    # Load facts for all systems.
+
     - include_tasks: facts/general/gather.yml
     - include_tasks: tasks/general/acct_mgmt/provision_config.yml
 
@@ -16,37 +20,59 @@
     - include_tasks: facts/general/service.yml
     - include_tasks: facts/general/user.yml
 
-    #- include_tasks: tasks/general/software/nix.yml
-    - include_tasks: tasks/general/software/packages.yml
-    - include_tasks: tasks/general/software/services.yml
-    - include_tasks: tasks/general/software/sendmail.yml
-      when: ansible_system == "FreeBSD"
+
+    ####### NixOS #######
+    # Install the .nix files and do a little data setup.
+
+    - name: Main | NixOS Setup
+      block:
+
+      - include_tasks: tasks/general/software/nixos.yml
+
+      - name: NixOS | Complete
+        meta: end_play
+
+      when: ansible_distribution == "NixOS"
 
 
-    - include_tasks: facts/general/gather.yml
+    ####### General #######
+    # Basic setup for all enabled systems.
 
-    - include_tasks: tasks/general/acct_mgmt/groups.yml
-    - include_tasks: tasks/general/acct_mgmt/users.yml
-    - include_tasks: tasks/general/acct_mgmt/sudo.yml
-    - include_tasks: tasks/general/acct_mgmt/doas.yml
+    - name: Main | General Setup
+      block:
 
-    - include_tasks: tasks/general/scripts/root.yml
-    - include_tasks: tasks/general/scripts/user.yml
-    - include_tasks: tasks/general/scripts/install.yml
+      - include_tasks: tasks/general/software/packages.yml
+      - include_tasks: tasks/general/software/services.yml
+      - include_tasks: tasks/general/software/sendmail.yml
+        when: ansible_system == "FreeBSD"
 
-    - include_tasks: tasks/general/cron/ansible.yml
+      # Gather again in case missing programs have now been installed.
+      - include_tasks: facts/general/gather.yml
 
-    # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
-    - include_tasks: tasks/workstation/freebsd/cron/ansible.yml
-      when: ansible_system == "FreeBSD"
+      - include_tasks: tasks/general/acct_mgmt/groups.yml
+      - include_tasks: tasks/general/acct_mgmt/users.yml
+      - include_tasks: tasks/general/acct_mgmt/sudo.yml
+      - include_tasks: tasks/general/acct_mgmt/doas.yml
 
-    - include_tasks: tasks/general/software/metasploit.yml
-      when: pentesting == true
+      - include_tasks: tasks/general/scripts/root.yml
+      - include_tasks: tasks/general/scripts/user.yml
+      - include_tasks: tasks/general/scripts/install.yml
+
+      - include_tasks: tasks/general/cron/ansible.yml
+
+      # TODO Need to refactor. Maybe tasks/general/cron/freebsd.yml
+      - include_tasks: tasks/workstation/freebsd/cron/ansible.yml
+        when: ansible_system == "FreeBSD"
+
+      - include_tasks: tasks/general/software/metasploit.yml
+        when: pentesting == true
+
+      when: workstation == true
 
 
     ####### Workstations #######
-
     # Additional setup for systems with GUI.
+
     - name: Main | Workstation Setup
       block:
 
@@ -143,6 +169,7 @@
 
     ####### Servers #######
     # Easy to deploy server configurations.
+
     - name: Main | Server Setup
       block:
 

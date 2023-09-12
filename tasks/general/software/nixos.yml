@@ -1,0 +1,11 @@
+---
+# Install the Nix configuration at github.com/Hyperling/NixOS.
+#
+
+- name: General | Software | NixOS | Install Config Project
+  shell: "{{ item }}"
+  loop:
+    - sh -c "rm -rfv nixos-config"
+    - git clone https://github.com/Hyperling/NixOS --branch {{ branch }} nixos-config
+    - chmod 755 nixos-config/activate.sh
+    - nixos-config/activate.sh
