@@ -29,6 +29,25 @@
 
       - include_tasks: tasks/general/software/nixos.yml
 
+      # TBD if we are going to use this many, then just have IF statements
+      #  and use blocks within the General area for NixOS vs not-NixOS.
+      - include_tasks: tasks/general/acct_mgmt/groups.yml
+      - include_tasks: tasks/general/acct_mgmt/users.yml
+      - include_tasks: tasks/general/acct_mgmt/sudo.yml
+      - include_tasks: tasks/general/acct_mgmt/doas.yml
+
+      - include_tasks: tasks/general/scripts/root.yml
+      - include_tasks: tasks/general/scripts/user.yml
+      - include_tasks: tasks/general/scripts/install.yml
+
+      - include_tasks: tasks/general/cron/ansible.yml
+
+      # psutil does not work in NixOS. Cannot figure out how to fix it. Maybe
+      #   time to start looking into home-manager but still not wanting to
+      #   maintain two different GNOME setups. HMMMM!
+      - include_tasks: tasks/workstation/shared/settings/gnome.yml
+        when: workstation == true
+
       - name: NixOS | Complete
         meta: end_play
 
@@ -67,7 +86,7 @@
       - include_tasks: tasks/general/software/metasploit.yml
         when: pentesting == true
 
-      when: workstation == true
+      when: provision == true
 
 
     ####### Workstations #######
