@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Script to initialize a system into Ansible collection.
 
 ## Global Variables ##
@@ -19,12 +19,12 @@ function usage {
 	      $URL
 
 	    Parameters:
-	      -l : Run the local playbook associated with this $PROG. 
+	      -l : Run the local playbook associated with this $PROG.
 	             This is helpful for development or just saving bandwidth.
 	             It also provides prettier colors than the plaintext from ansible-pull. ;)
 	      -b branch_name: Download and run a specific branch. Default is $BRANCH.
 	      -h : Display this help text
-	
+
 	EOF
 	exit $1
 }
