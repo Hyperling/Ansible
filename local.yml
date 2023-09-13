@@ -45,8 +45,8 @@
       # psutil does not work in NixOS. Cannot figure out how to fix it. Maybe
       #   time to start looking into home-manager but still not wanting to
       #   maintain two different GNOME setups. HMMMM!
-      - include_tasks: tasks/workstation/shared/settings/gnome.yml
-        when: workstation == true
+      #- include_tasks: tasks/workstation/shared/settings/gnome.yml
+      #  when: workstation == true
 
       - name: NixOS | Complete
         meta: end_play
