@@ -378,6 +378,21 @@
           git checkout dev
         done
       '
+    alias_code_reseed: |
+      alias code-reseed='
+        unseed_dir="~/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
+        mkdir -pv "$unseed_dir"
+        mv -v ~/Code/*{ansible,docker,nix,break,habit}* \
+          "$unseed_dir"/ 2>/dev/null
+        git clone git@github.com:Hyperling/Ansible \
+          --branch dev ~/Code/ansible-dev
+        git clone git@github.com:Hyperling/Docker \
+          --branch dev ~/Code/docker-dev
+        git clone git@github.com:Hyperling/NixOS \
+          --branch dev ~/Code/nixos-dev
+        git clone git@github.com:Hyperling/BreakTheHabit \
+          --branch dev ~/Code/breakthehabit-dev
+      '
     function_clean_filenames: |
       function clean-filenames() {
         # Must provide the directory you'd like to clean all the filenames in.
@@ -440,6 +455,7 @@
       {{ alias_docker_restart }}
       {{ alias_code_check }}
       {{ alias_code_reset }}
+      {{ alias_code_reseed }}
       {{ function_clean_filenames }}
       {{ function_clean_filenames_tree }}
 
