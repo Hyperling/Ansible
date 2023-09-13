@@ -14,3 +14,13 @@
     owner: root
     group: "{{ root_group }}"
     mode: '0755'
+
+- name: General | Scripts | Install | Remove Old Scripts
+  shell: |
+    if [[ -e {{ global_bin }}/{{ item }} ]]; then
+      rm -v {{ global_bin }}/{{ item }}
+    fi
+  loop:
+    - compress-video.sh
+    - compress-images.sh
+  ignore_errors: true
