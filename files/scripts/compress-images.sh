@@ -73,7 +73,6 @@ if [[ -z "$recurse" && -d "$location" && "$location" != *'/*' ]]; then
 	if [[ "$location" != *'/' ]]; then
 		location="${location}/"
 	fi
-	location="${location}*"
 fi
 
 $search "$location" | sort | while read image; do
