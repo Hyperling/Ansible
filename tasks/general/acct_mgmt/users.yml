@@ -378,16 +378,35 @@
           git checkout dev
         done
       '
-    alias_clean_filenames: |
-      alias clean-filenames='
-        ls | while read file; do
+    function_clean_filenames: |
+      function clean-filenames() {
+        # Must provide the directory you'd like to clean all the filenames in.
+        # Otherwise defaults to the current directory and all of its files.
+        dir="$1"
+        if [[ -z $dir ]]; then
+          echo -e "Using current directory."
+          dir="."
+        fi
+        ls "$dir" | while read file; do
           clean="${file//IMG/}"
           clean="${clean//_/}"
           clean="${clean//-/}"
           clean="${clean// /}"
-          mv -v "$file" "$clean"
+          if [[ "$file" != "$clean" && ! -d "$file" ]]; then
+            mv -v "$dir"/"$file" "$dir"/"$clean"
+          fi
         done
-      '
+      }
+    function_clean_filenames_tree: |
+      function clean-filenames-tree() {
+        find ./ | while read folder; do
+          if [[ -d "$folder" ]]; then
+            echo -e "\n*** Checking '$folder' ***"
+            clean-filenames "$folder"
+          fi
+        done
+        echo -e "\nDone!\n"
+      }
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -421,7 +440,8 @@
       {{ alias_docker_restart }}
       {{ alias_code_check }}
       {{ alias_code_reset }}
-      {{ alias_clean_filenames }}
+      {{ function_clean_filenames }}
+      {{ function_clean_filenames_tree }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
