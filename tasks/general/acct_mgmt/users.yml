@@ -1,5 +1,5 @@
 ---
-# Create users for all machines.
+# Create and configure default users for all machines.
 
 ## Variables ##
 
@@ -58,7 +58,7 @@
 
 ## Superuser ##
 
-- name: General | Account Management | Users | Hyperling
+- name: General | Account Management | Users | User
   user:
     name: "{{ user }}"
     comment: "{{ user_desc }}"
@@ -72,7 +72,7 @@
     generate_ssh_key: yes
   register: user_user
 
-- name: General | Account Management | Users | Hyperling | Test Logging In
+- name: General | Account Management | Users | User | Test Logging In
   shell: "echo SUCCESS"
   args:
     executable: "{{ user_shell }}"
@@ -81,7 +81,7 @@
 
 ## Folders ##
 
-- name: General | Account Management | Users | Folders | Root | Create bin, Downloads, TRASH
+- name: General | Account Management | Users | Root | Create Folders
   file:
     path: "{{ item }}"
     state: directory
@@ -92,7 +92,7 @@
     - "{{ user_root.home }}/TRASH"
   when: user_root.home != ""
 
-- name: General | Account Management | Users | Folders | Hyperling | Create bin, LBRY, TRASH
+- name: General | Account Management | Users | User | Create Folders
   file:
     path: "{{ item }}"
     state: directory
@@ -106,7 +106,7 @@
   become_user: "{{ user }}"
   when: user_user.home != ""
 
-- name: General | Account Management | Users | Folders | Home Directories 700
+- name: General | Account Management | Users | Home Permissions
   shell: "chmod 700 {{ user_user.home }}/../*"
 
 
@@ -138,7 +138,14 @@
         curl "https://wttr.in/${1//\ /+}"
       }
     export_PS1: export PS1='[\u@\h \w]\$ '
-    alias_remount: alias remount='sudo umount /mnt/*; sudo umount /mnt/*/*; sudo mount -a; echo -e "\nRemount completed!"; mount | grep /mnt'
+    alias_remount: |
+      alias remount='
+        sudo umount /mnt/*
+        sudo umount /mnt/*/*
+        sudo mount -a
+        echo -e "\nRemount completed!"
+        mount | grep /mnt
+      '
     function_update: |
       function update() {
         PROG=$FUNCNAME
@@ -171,9 +178,18 @@
     alias_sync: alias sync='date && echo "Syncing!" && sync && date'
     export_editor: export EDITOR='vi'
     init_aliases: |
-      alias init-video='mkdir -v raw; mkdir -v exports; cp ~/Templates/*video* ./'
+      alias init-video='
+        mkdir -v raw
+        mkdir -v exports
+        cp ~/Templates/*video* ./
+      '
       alias init-vid=init-video
-      alias init-program='echo -e "#!/bin/bash\n# `date +%Y-%m-%d` by Hyperling\n# REASON\n\nexit 0\n"'
+      alias init-program='
+        echo "#!/usr/bin/env bash"
+        echo "# `date +%Y-%m-%d` Hyperling"
+        echo ""
+        echo "exit 0"
+      '
       alias init-prog=init-program
     bye_aliases: |
       alias bye="{{ shutdown_command }}"
@@ -186,7 +202,15 @@
       alias show-config-wrk="cat {{ wrk_file }}"
       alias show-config-mnr="cat {{ mnr_file }}"
       alias show-config-srv="cat {{ srv_file }}"
-      alias show-config-all="show-config-gen && echo '' && show-config-wrk && echo '' && show-config-mnr && echo '' && show-config-srv"
+      alias show-config-all="
+        show-config-gen &&
+        echo '' &&
+        show-config-wrk &&
+        echo '' &&
+        show-config-mnr &&
+        echo '' &&
+        show-config-srv
+      "
       alias show-config="show-config-all"
     edit_config_aliases: |
       alias edit-config-gen="sudo $EDITOR {{ gen_file }}"
@@ -278,14 +302,26 @@
       function flatpak-purge() {
         flatpak remove --all --delete-data &&
         flatpak repair &&
-        echo "Finished purging all Flatpak apps. Executable may still need uninstalled." &&
+        echo -n "Finished purging all Flatpak apps. " &&
+        echo "Executable may still need uninstalled." &&
         return
         echo "ERROR: Something went wrong while removing Flatpak apps!" >&2
       }
     alias_vim: alias vi=vim
     alias_here: alias here='ls -alh `pwd`/*'
-    alias_docker_reload: alias docker-reload='docker compose down && docker compose build && docker compose up -d'
-    alias_docker_update: alias docker-update='docker compose down && docker compose pull && docker compose build && docker compose up -d'
+    alias_docker_reload: |
+      alias docker-reload='
+        docker compose down &&
+        docker compose build &&
+        docker compose up -d
+      '
+    alias_docker_update: |
+      alias docker-update='
+        docker compose down &&
+        docker compose pull &&
+        docker compose build &&
+        docker compose up -d
+      '
     function_docker_upgrade: |
       function docker-upgrade() {
         # Wrapper for a full-scale upgrade and log view of a container.
@@ -320,9 +356,28 @@
           echo "Press ^C to escape." &&
           docker logs -f $container
       }
-    alias_docker_restart: alias docker-restart='docker compose down && docker compose up -d'
-    alias_code_check: alias code-check='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git push; git pull; done'
-    alias_code_reset: alias code-reset='ls -d ~/Code/* | while read project; do echo "*** `basename $project` ***"; cd $project; git switch main; git pull; git branch -D dev; git checkout dev; done'
+    alias_docker_restart: |
+      alias docker-restart='docker compose down && docker compose up -d'
+    alias_code_check: |
+      alias code-check='
+        ls -d ~/Code/* | while read project; do
+          echo "*** `basename $project` ***"
+          cd $project
+          git push
+          git pull
+        done
+      '
+    alias_code_reset: |
+      alias code-reset='
+        ls -d ~/Code/* | while read project
+          do echo "*** `basename $project` ***"
+          cd $project
+          git switch main
+          git pull
+          git branch -D dev
+          git checkout dev
+        done
+      '
     alias_clean_filenames: |
       alias clean-filenames='
         ls | while read file; do
@@ -373,7 +428,8 @@
     path: "{{ item }}/.bashrc"
     block: |
       {{ rc_common }}
-      [[ $(whoami) != "root" ]] && echo "`date` - Ansible .bashrc preferences loaded successfully!"
+      [[ $(whoami) != "root" ]] &&
+        echo "`date` - Ansible .bashrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
@@ -389,7 +445,8 @@
     path: "{{ item }}/.zshrc"
     block: |
       {{ rc_common }}
-      [[ $(whoami) != "root" ]] && echo "`date` - Ansible .zshrc preferences loaded successfully!"
+      [[ $(whoami) != "root" ]] &&
+        echo "`date` - Ansible .zshrc preferences loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
