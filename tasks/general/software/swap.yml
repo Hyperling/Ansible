@@ -1,0 +1,40 @@
+---
+# Setup swap file on systems without any swap available.
+# Must have the swap amount preferred set up in general.ini.
+
+- name: General | Software | Swap
+  block:
+
+  - name: General | Software | Swap | Check SWAPON
+    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+
+  - name: General | Software | Swap | Check FSTAB
+    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+
+  - name: General | Software | Swap | Check For Swapfiles
+    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+
+  - name: General | Software | Swap | Install Block
+    block:
+
+    - name: General | Software | Swap | Create Swapfile
+      shell: "{{ item }}"
+      loop:
+        - dd if=/dev/zero of=/swapfile bs={{ swap_block }} \
+            count={{ swap_count }} status=progress
+        - chmod 600 /swapfile
+        - mkswap /swapfile
+        - swapon /swapfile
+      when: 1 == 0 # Disable temporarily.
+
+    - name: General | Software | Swap | Add to FSTAB
+      shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+      when: ansible_distrivution != "NixOS"
+
+    - name: General | Software | Swap | Add to NixOS Config
+      shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+      when: ansible_distrivution == "NixOS"
+
+    when: 1 == 0
+
+  when: swap_block != false
