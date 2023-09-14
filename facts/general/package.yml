@@ -160,7 +160,19 @@
 - name: General | Facts | Package | Update Commands | NixOS
   set_fact:
     update_package_manager: |
-      echo "*** NixOS ***" &&
+      sudo echo "*** NixOS ***"
+      # Clean up!
+      # https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
+      nix-collect-garbage -d
+      sudo nix-collect-garbage -d
+      du -hs ~/.cache/*nix* 2>/dev/null &&
+          rm -rf ~/.cache/*nix*
+      sudo du -hs /root/.cache/*nix* 2>/dev/null &&
+          sudo rm -rf /root/.cache/*nix*
+      nix-channel --update
+      sudo nix-channel --update
+      sudo nix-store --optimize
+      # Rebuild using the existing *.nix files.
       sudo nixos-rebuild switch
   when: ansible_distribution == "NixOS"
 
