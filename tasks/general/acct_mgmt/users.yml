@@ -380,7 +380,7 @@
       '
     alias_code_reseed: |
       alias code-reseed='
-        unseed_dir="~/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
+        unseed_dir="$HOME/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
         mkdir -pv "$unseed_dir"
         mv -v ~/Code/*{ansible,docker,nix,break,habit}* \
           "$unseed_dir"/ 2>/dev/null
