@@ -1,18 +1,15 @@
 ---
 # Setup swap file on systems without any swap available.
 # Must have the swap amount preferred set up in general.ini.
+# This does not handle if the user changes the file name or location later on.
 
 - name: General | Software | Swap
   block:
 
-  - name: General | Software | Swap | Check SWAPON
-    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
-
-  - name: General | Software | Swap | Check FSTAB
-    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
-
-  - name: General | Software | Swap | Check For Swapfiles
-    shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
+  - name: General | Software | Swap | Check For Swapfile
+    stat:
+      path: "{{ swap_file }}"
+    register: swap_check
 
   - name: General | Software | Swap | Install Block
     block:
@@ -26,18 +23,18 @@
         - mkswap {{ swapfile }}
         - swapon {{ swapfile }}
 
-    # Check for /swapfile line in /etc/fstab and add it if it's missing.
-    - name: General | Software | Swap | Add to FSTAB
-      lineinfile:
-        path: /etc/fstab
-        regexp: '^[\#]?{{ swapfile }}'
-        line: '{{ swapfile }}'
-        state: present
-        backup: yes
-      when: ansible_distribution != "NixOS"
+    # Only do the swapfile generation if it does not already exist.
+    when: not swap_check.stat.exists
 
-    # NixOS's swap setup is handled in nixos.yml when ansible.nix is created.
+  # NixOS's swap setup is handled in nixos.yml when ansible.nix is created.
+  - name: General | Software | Swap | Add to FSTAB
+    lineinfile:
+      path: /etc/fstab
+      regexp: '^[\#]?{{ swapfile }}'
+      line: '{{ swapfile }} none swap sw 0 0'
+      state: present
+      backup: yes
+    when: ansible_distribution != "NixOS"
 
-    when: 1 == 0 # TBD: Check if the swapfile does not already exist.
-
+  # Only run through this file if the ini has been changed from false.
   when: swap_block != false
