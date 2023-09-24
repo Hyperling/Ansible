@@ -20,21 +20,24 @@
     - name: General | Software | Swap | Create Swapfile
       shell: "{{ item }}"
       loop:
-        - dd if=/dev/zero of=/swapfile bs={{ swap_block }} \
+        - dd if=/dev/zero of={{ swapfile }} bs={{ swap_block }}
             count={{ swap_count }} status=progress
-        - chmod 600 /swapfile
-        - mkswap /swapfile
-        - swapon /swapfile
-      when: 1 == 0 # Disable temporarily.
+        - chmod 600 {{ swapfile }}
+        - mkswap {{ swapfile }}
+        - swapon {{ swapfile }}
 
+    # Check for /swapfile line in /etc/fstab and add it if it's missing.
     - name: General | Software | Swap | Add to FSTAB
-      shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
-      when: ansible_distrivution != "NixOS"
+      lineinfile:
+        path: /etc/fstab
+        regexp: '^[\#]?{{ swapfile }}'
+        line: '{{ swapfile }}'
+        state: present
+        backup: yes
+      when: ansible_distribution != "NixOS"
 
-    - name: General | Software | Swap | Add to NixOS Config
-      shell: "echo 'TBD: {{ swap_block }} {{ swap_count }}'"
-      when: ansible_distrivution == "NixOS"
+    # NixOS's swap setup is handled in nixos.yml when ansible.nix is created.
 
-    when: 1 == 0
+    when: 1 == 0 # TBD: Check if the swapfile does not already exist.
 
   when: swap_block != false

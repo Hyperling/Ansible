@@ -56,7 +56,7 @@
       ;              Slows down the rate of services such as telegraf and cron.
       ;                Default: false
       ;
-      ; swap_block : Set to the block size that dd should use for /swapfile.
+      ; swap_block : Set to the block size if dd should create a swapfile.
       ;              Preferably keep this under 2G for integrity sakes, the
       ;              value is multiplied by count if you need a larger file.
       ;                Example: 500M, 512MB, 1G
@@ -65,6 +65,10 @@
       ; swap_count : Set to the number of blocks to multiply the file size by.
       ;                Example: 8
       ;                Default: 1
+      ;
+      ;  swap_file : Set to the name and location of where the file should be.
+      ;                Example: /usr/local/swap
+      ;                Default: /swapfile
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
@@ -83,6 +87,7 @@
     battery:    "{{ lookup('ini', 'battery    file={{gen_file}} default=false') }}"
     swap_block: "{{ lookup('ini', 'swap_block file={{gen_file}} default=false') }}"
     swap_count: "{{ lookup('ini', 'swap_count file={{gen_file}} default=1') }}"
+    swap_file:  "{{ lookup('ini', 'swap_file  file={{gen_file}} default=/swapfile') }}"
 
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact:
@@ -97,6 +102,7 @@
     - { 'battery': "{{ battery }}" }
     - { 'swap_block': "{{ swap_block }}" }
     - { 'swap_count': "{{ swap_count }}" }
+    - { 'swap_file': "{{ swap_file }}" }
 
 
 ## Workstation ##

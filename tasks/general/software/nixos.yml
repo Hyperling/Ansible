@@ -7,8 +7,31 @@
     nixos_working_dir: ~/nixos-config-deleteme
     nixos_working_exe: activate.sh
 
+- name: General | Software | NixOS | Facts [Swap]
+  set_fact:
+    nixos_swap: "swapDevices = [ {{ swap_file }} ];"
+  when: swap_block != false
+
 - name: General | Software | NixOS | Update Config Project
   shell: "files/scripts/nixos.sh -b {{ branch }}"
+
+- name: General | Software | NixOS | Create Ansible Nix Config
+  blockinfile:
+    path: /etc/nixos/ansible.nix
+    block: |
+      # This file was created by https://github.com/Hyperling/Ansible
+      # Please do not alter it by hand. Use the proper ini files instead.
+      { config, pkgs, nix, ... }:
+
+      {
+        # tasks/general/software/swap.yml
+        # Use general.ini to set up the swap commands for ths field to be used.
+        {{ nixos_swap }}
+      }
+    state: present
+    backup: yes
+    create: yes
+
 
 #  Maybe do home manager here? Or should it be under Workstation? Or maybe
 #   this is the spot where I start creating workstation.nix, server.nix, etc.
