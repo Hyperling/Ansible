@@ -9,7 +9,7 @@
 
 - name: General | Software | NixOS | Facts [Swap]
   set_fact:
-    nixos_swap: "swapDevices = [ {{ swap_file }} ];"
+    nixos_swap: "swapDevices = [ { device = \"{{ swap_file }}\";} ];"
   when: swap_block != false
 
 - name: General | Software | NixOS | Update Config Project
