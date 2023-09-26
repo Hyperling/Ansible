@@ -47,6 +47,7 @@ fi
 
 cleanup
 
+# Install the Hyperling NixOS configurations.
 git clone https://github.com/Hyperling/NixOS --branch $branch $nixos_working_dir
 chmod 755 $nixos_working_dir/$nixos_working_exe
 $nixos_working_dir/$nixos_working_exe
