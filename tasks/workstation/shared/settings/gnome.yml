@@ -22,6 +22,12 @@
                       , 'com.discordapp.Discord.desktop'
                       , 'com.valvesoftware.Steam.desktop'
                       ]"
+    dconf_terminal: gnome-terminal
+
+- name: Workstation | Account Management | GNOME | Facts (NixOS)
+  set_fact:
+    dconf_terminal: kgx
+  when: ansible_distribution in ("NixOS")
 
 # Make sure Gnome-Tweaks is installed
 - name: Workstation | Account Management | GNOME | Install Dependencies
@@ -162,7 +168,7 @@
   ignore_errors: yes
 # End block for Dash To Dock.
 
-
+## TBD Remove this after testing the RC version is successful on Ubuntu.
 - name: Workstation | Account Management | GNOME | More Settings
   block:
 
@@ -239,14 +245,12 @@
       state: present
     become_user: "{{ user }}"
 
-   ## TBD These are done for NixOS in the section below. ##
+  ## TBD These are done for NixOS in the section below. ##
   # Never Prompt for Removal Media
 
   # Dark theme?
   #Pop-dark on Pop
   #Adwaita-dark on everything else
-
-
 
   # Window Titlebars (Titlebar Buttons Minimize)
   - name: Workstation | Account Management | GNOME | Window Buttons
@@ -297,6 +301,7 @@
       ## Generic ##
 
       dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'" && inc_dconf &&
 
       dconf write /org/gnome/desktop/interface/clock-show-date true && inc_dconf &&
       dconf write /org/gnome/desktop/interface/clock-format "'24h'" && inc_dconf &&
@@ -306,7 +311,7 @@
 
       dconf write /org/gnome/desktop/interface/show-battery-percentage true && inc_dconf &&
 
-      dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'" && inc_dconf &&
+      dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'" && inc_dconf &&
 
       dconf write /org/gnome/desktop/wm/preferences/num-workspaces 1 && inc_dconf &&
       dconf write /org/gnome/mutter/dynamic-workspaces false && inc_dconf &&
@@ -314,11 +319,34 @@
       dconf write /org/gnome/mutter/edge-tiling true && inc_dconf &&
       dconf write /org/gnome/desktop/interface/enable-hot-corners false && inc_dconf &&
 
+      dconf write /org/gnome/mutter/center-new-windows true && inc_dconf &&
+
       dconf write /org/gnome/desktop/notifications/show-banners false && inc_dconf &&
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution-alarm-notify/enable-sound-alerts false && inc_dconf &&
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution-alarm-notify/enable false && inc_dconf &&
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable-sound-alerts false && inc_dconf &&
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable false && inc_dconf &&
+
+      ## Keyboard Shortcuts ##
+
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding \
+        "'<Control><Alt>t'" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command \
+        "'{{ dconf_terminal }}'" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name \
+        "'Open Terminal'" && inc_dconf &&
+
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding \
+        "'<Super>t'" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command \
+        "'{{ dconf_terminal }}'" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name \
+        "'Open Terminal 2'" && inc_dconf &&
+
+      dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "
+        [ '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'
+        , '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/'
+        ]" && inc_dconf &&
 
       ## Privacy ##
 
