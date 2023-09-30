@@ -1,6 +1,28 @@
 ---
 # GNOME settings, extensions, and setup.
 
+- name: Workstation | Account Management | GNOME | Facts
+  set_fact:
+    gnome_favorites: "[ 'org.gnome.Terminal.desktop', 'org.gnome.Console.desktop'
+                      , 'gnome-system-monitor.desktop'
+                      , 'org.gnome.Nautilus.desktop'
+                      , 'io.gitlab.librewolf-community.desktop', 'librewolf.desktop'
+                      , 'org.mozilla.firefox.desktop', 'firefox.desktop'
+                      , 'org.gnome.Evolution.desktop'
+                      , 'chat.delta.desktop.desktop', 'deltachat.desktop'
+                      , 'org.gnome.Geary.desktop'
+                      , 'org.mozilla.Thunderbird.desktop'
+                      , 'com.vscodium.codium.desktop', 'codium.desktop', 'code-oss.desktop'
+                      , 'org.godotengine.Godot.desktop'
+                      , 'org.shotcut.Shotcut.desktop'
+                      , 'io.lbry.lbry-app.desktop', 'lbry.desktop'
+                      , 'org.signal.Signal.desktop', 'signal-desktop.desktop'
+                      , 'im.riot.Riot.desktop'
+                      , 'org.telegram.desktop.desktop'
+                      , 'com.discordapp.Discord.desktop'
+                      , 'com.valvesoftware.Steam.desktop'
+                      ]"
+
 # Make sure Gnome-Tweaks is installed
 - name: Workstation | Account Management | GNOME | Install Dependencies
   package:
@@ -10,7 +32,6 @@
       - "{{ psutil }}"
     state: present
   when: ansible_distribution not in ("NixOS")
-
 
 ## Dash to Dock Extension ##
 # Note: Validate DtD by checking /org/gnome/shell/enabled-extensions for dash-to-dock@micxgx.gmail.com
@@ -142,64 +163,35 @@
 # End block for Dash To Dock.
 
 
-## TBD: These do not work for NixOS (yet), but work in a normal CLI.
-## THey do seem to work if placed in .bashrc though, which is temppting!
-## Have confirmed that Ansible acts as if it is doing in it a bash -c or
-## sudo -u subcommand, as those do not make committed changes either.
-- name: Workstation | Account Management | GNOME | Dash To Dock | NixOS
-  shell: "dconf write {{ item }}"
-  loop:
-    - /org/gnome/shell/extensions/dash-to-dock/dock-position "'LEFT'"
-    - /org/gnome/shell/extensions/dash-to-dock/dock-fixed true
-    - /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size 24
-  become_user: "{{ user }}"
-  when: ansible_distribution in ("NixOS")
-
-
 - name: Workstation | Account Management | GNOME | More Settings
   block:
 
-  # The first Firefox is from Flatpak, and firefox_firefox.desktop is snap/apt.
+  # Only do multiple entries per line if they are for the same program.
   - name: Workstation | Account Management | GNOME + Cinnamon | Favorites (Linux)
     dconf:
       key: "{{ item }}"
-      value: "[ 'org.gnome.Terminal.desktop',
-              , 'gnome-system-monitor.desktop'
-              , 'org.gnome.Nautilus.desktop'
-              , 'io.gitlab.librewolf-community.desktop'
-              , 'org.mozilla.firefox.desktop'
-              , 'org.gnome.Evolution.desktop',
-              , 'chat.delta.desktop.desktop'
-              , 'com.vscodium.codium.desktop',
-              , 'org.shotcut.Shotcut.desktop'
-              , 'io.lbry.lbry-app.desktop'
-              , 'org.signal.Signal.desktop',
-              , 'im.riot.Riot.desktop'
-              , 'org.telegram.desktop.desktop',
-              , 'com.discordapp.Discord.desktop'
-              , 'com.valvesoftware.Steam.desktop'
-              ]"
+      value: "{{ gnome_favorites }}"
       state: present
     become_user: "{{ user }}"
-    when: ansible_system == "Linux"
+    #when: ansible_system == "Linux"
     loop:
       - /org/gnome/shell/favorite-apps
-      - /org/cinnamon/favorite-apps
+    #  - /org/cinnamon/favorite-apps
     # As of 2023-07-01 this only sets the Menu Favorites on Cinnamon, not the
     #  Panel Pins. Cannot find any details online of where the pinned application
     #  data lives. Cloned and searched the linuxmint/cinnamon project too and
     #  couldn't find which function handles it. Leaving the loop for it but it's
     #  not what was hoped for and is sort of a TBD/TODO.
 
-  - name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
-    dconf:
-      key: /org/gnome/shell/favorite-apps
-      value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop',
-              'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop',
-              'code-oss.desktop', 'org.telegram.desktop.desktop']"
-      state: present
-    become_user: "{{ user }}"
-    when: ansible_system == "FreeBSD"
+  #- name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
+  #  dconf:
+  #    key: /org/gnome/shell/favorite-apps
+  #    value: "['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop',
+  #            'firefox.desktop', 'org.gnome.Evolution.desktop', 'org.mozilla.Thunderbird.desktop',
+  #            'code-oss.desktop', 'org.telegram.desktop.desktop']"
+  #    state: present
+  #  become_user: "{{ user }}"
+  #  when: ansible_system == "FreeBSD"
 
 
   ## Top Bar Settings ##
@@ -300,3 +292,31 @@
   # org.gnome.shell.keybindings
 
   when: ansible_distribution not in ("NixOS")
+
+## NixOS support, in an odd but working fashion for now. :)
+- name: Workstation | Account Management | GNOME | Dash To Dock | NixOS
+  blockinfile:
+    path: "{{ user_user.home }}/.bashrc"
+    block: |
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-position "'LEFT'"
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-fixed true
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size 24
+
+      dconf write /org/gnome/shell/favorite-apps "{{ gnome_favorites }}"
+
+      dconf write /org/gnome/desktop/interface/clock-show-date true
+      dconf write /org/gnome/desktop/interface/clock-format "'24h'"
+      dconf write /org/gnome/desktop/interface/clock-show-seconds true
+      dconf write /org/gnome/desktop/interface/clock-show-weekday true
+      dconf write /org/gnome/desktop/interface/show-battery-percentage true
+      dconf write /org/gnome/desktop/calendar/show-weekdate true
+      dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'"
+      dconf write /org/gnome/desktop/privacy/disable-camera true
+      dconf write /org/gnome/desktop/privacy/disable-microphone true
+
+    marker: '# {mark} MANAGED BY ANSIBLE | NixOS GNOME Settings'
+    state: present
+    create: yes
+    backup: yes
+  become_user: "{{ user }}"
+  when: ansible_distribution in ("NixOS")
