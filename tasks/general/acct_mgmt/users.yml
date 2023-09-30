@@ -517,3 +517,13 @@
     - "{{ user_user.home }}"
   ignore_errors: yes
   when: user_root.home != "" and user_user.home != ""
+
+- name: General | Account Management | Users | Files | Ownership
+  file:
+    path: "{{ user_user.home }}/{{ item }}"
+    owner: "{{ user }}"
+    mode: '0755'
+  loop:
+    - .bashrc
+    - .zshrc
+    - .vimrc
