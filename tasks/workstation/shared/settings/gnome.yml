@@ -327,6 +327,12 @@
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable-sound-alerts false && inc_dconf &&
       dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable false && inc_dconf &&
 
+      dconf write /org/gnome/settings-daemon/plugins/color/night-light-enabled true
+      dconf write /org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic false
+      dconf write /org/gnome/settings-daemon/plugins/color/night-light-temperature "uint32 3170"
+      dconf write /org/gnome/settings-daemon/plugins/color/night-light-schedule-from 2.0
+      dconf write /org/gnome/settings-daemon/plugins/color/night-light-schedule-to 1.99
+
       ## Keyboard Shortcuts ##
 
       dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding \
