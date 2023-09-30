@@ -239,10 +239,8 @@
       state: present
     become_user: "{{ user }}"
 
-
+   ## TBD These are done for NixOS in the section below. ##
   # Never Prompt for Removal Media
-
-
 
   # Dark theme?
   #Pop-dark on Pop
@@ -274,23 +272,6 @@
       state: present
     become_user: "{{ user }}"
 
-
-
-  # Schemas to try after looking at gsettings list-schemas | sort
-  # org.gnome.ControlCenter -- not very interesting
-  # org.gnome.desktop.default-applications -- nothing?? Where do we set Brave and Evolution?
-  # org.gnome.desktop.interface -- Good stuff in here.
-  # org.gnome.desktop.peripherals -- Nothing :(
-  # org.gnome.desktop.privacy -- Good stuff here too!! Cool!
-  # org.gnome.desktop.session
-  # org.gnome.desktop.wm.keybindings
-  # org.gnome.desktop.wm.preferences
-  # org.gnome.power-manager
-  # org.gnome.SessionManager
-  # org.gnome.shell
-  # org.gnome.shell.extensions.pop-shell
-  # org.gnome.shell.keybindings
-
   when: ansible_distribution not in ("NixOS")
 
 ## NixOS support, in an odd but working fashion for now. :)
@@ -298,22 +279,79 @@
   blockinfile:
     path: "{{ user_user.home }}/{{ item }}"
     block: |
-      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-position "'LEFT'"
-      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-fixed true
-      dconf write /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size 24
+      ## Temporary Variables + Functions ##
 
-      dconf write /org/gnome/shell/favorite-apps "{{ gnome_favorites }}"
+      dconf_count=1
+      function inc_dconf() {
+        dconf_count=$(( dconf_count + 1 ))
+      }
 
-      dconf write /org/gnome/desktop/interface/clock-show-date true
-      dconf write /org/gnome/desktop/interface/clock-format "'24h'"
-      dconf write /org/gnome/desktop/interface/clock-show-seconds true
-      dconf write /org/gnome/desktop/interface/clock-show-weekday true
-      dconf write /org/gnome/desktop/interface/show-battery-percentage true
-      dconf write /org/gnome/desktop/calendar/show-weekdate true
-      dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'"
-      dconf write /org/gnome/desktop/privacy/disable-camera true
-      dconf write /org/gnome/desktop/privacy/disable-microphone true
+      ## Dash to Dock ##
 
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-position "'LEFT'" && inc_dconf &&
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dock-fixed true && inc_dconf &&
+      dconf write /org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size 24 && inc_dconf &&
+
+      dconf write /org/gnome/shell/favorite-apps "{{ gnome_favorites }}" && inc_dconf &&
+
+      ## Generic ##
+
+      dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" && inc_dconf &&
+
+      dconf write /org/gnome/desktop/interface/clock-show-date true && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/clock-format "'24h'" && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/clock-show-seconds true && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/clock-show-weekday true && inc_dconf &&
+      dconf write /org/gnome/desktop/calendar/show-weekdate true && inc_dconf &&
+
+      dconf write /org/gnome/desktop/interface/show-battery-percentage true && inc_dconf &&
+
+      dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,close'" && inc_dconf &&
+
+      dconf write /org/gnome/desktop/wm/preferences/num-workspaces 1 && inc_dconf &&
+      dconf write /org/gnome/mutter/dynamic-workspaces false && inc_dconf &&
+
+      dconf write /org/gnome/mutter/edge-tiling true && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/enable-hot-corners false && inc_dconf &&
+
+      dconf write /org/gnome/desktop/notifications/show-banners false && inc_dconf &&
+      dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution-alarm-notify/enable-sound-alerts false && inc_dconf &&
+      dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution-alarm-notify/enable false && inc_dconf &&
+      dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable-sound-alerts false && inc_dconf &&
+      dconf write /org/gnome/desktop/notifications/application/org-gnome-evolution/enable false && inc_dconf &&
+
+      ## Privacy ##
+
+      dconf write /org/gnome/desktop/privacy/disable-camera true && inc_dconf &&
+      dconf write /org/gnome/desktop/privacy/disable-microphone true && inc_dconf &&
+
+      dconf write /org/gnome/desktop/privacy/recent-files-max-age 7 && inc_dconf &&
+      dconf write /org/gnome/desktop/privacy/remember-recent-files false && inc_dconf &&
+
+      dconf write /org/gnome/desktop/privacy/old-files-age "uint32 14" && inc_dconf &&
+      dconf write /org/gnome/desktop/privacy/remove-old-trash-files true && inc_dconf &&
+      dconf write /org/gnome/desktop/privacy/remove-old-temp-files true && inc_dconf &&
+
+      dconf write /org/gnome/desktop/notifications/show-in-lock-screen false && inc_dconf &&
+      dconf write /org/gnome/desktop/screensaver/lock-enabled true && inc_dconf &&
+      dconf write /org/gnome/desktop/screensaver/lock-delay "uint32 0" && inc_dconf &&
+      dconf write /org/gnome/desktop/session/idle-delay "uint32 900" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'" && inc_dconf &&
+
+      dconf write /org/gnome/desktop/media-handling/autorun-never true && inc_dconf &&
+
+      ## Success ##
+
+      sleep 0 ||
+
+      ## Error Catch ##
+
+      echo "ERROR: DConf setting# $dconf_count failed!"
+
+      ## Cleanup ##
+
+      unset -f inc_dconf
+      unset dconf_count
     marker: '# {mark} MANAGED BY ANSIBLE | NixOS GNOME Settings'
     state: present
     create: yes
