@@ -3,7 +3,9 @@
 
 - name: Workstation | Account Management | GNOME | Facts
   set_fact:
-    gnome_favorites: "[ 'org.gnome.Terminal.desktop', 'org.gnome.Console.desktop'
+    # Only do multiple entries per line if they are for the same exact program.
+    gnome_favorites: "[ 'org.gnome.Terminal.desktop'
+                      , 'org.gnome.Console.desktop'
                       , 'gnome-system-monitor.desktop'
                       , 'org.gnome.Nautilus.desktop'
                       , 'io.gitlab.librewolf-community.desktop', 'librewolf.desktop'
@@ -172,7 +174,6 @@
 - name: Workstation | Account Management | GNOME | More Settings
   block:
 
-  # Only do multiple entries per line if they are for the same program.
   - name: Workstation | Account Management | GNOME + Cinnamon | Favorites (Linux)
     dconf:
       key: "{{ item }}"
@@ -189,6 +190,7 @@
     #  couldn't find which function handles it. Leaving the loop for it but it's
     #  not what was hoped for and is sort of a TBD/TODO.
 
+  ## This is now handled by the task above, it's OK to have values not found.
   #- name: Workstation | Account Management | GNOME | Favorites (FreeBSD)
   #  dconf:
   #    key: /org/gnome/shell/favorite-apps
