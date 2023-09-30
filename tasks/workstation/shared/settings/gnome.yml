@@ -142,7 +142,10 @@
 # End block for Dash To Dock.
 
 
-## TBD: These do not work for NixOS (yet)
+## TBD: These do not work for NixOS (yet), but work in a normal CLI.
+## THey do seem to work if placed in .bashrc though, which is temppting!
+## Have confirmed that Ansible acts as if it is doing in it a bash -c or
+## sudo -u subcommand, as those do not make committed changes either.
 - name: Workstation | Account Management | GNOME | Dash To Dock | NixOS
   shell: "dconf write {{ item }}"
   loop:
