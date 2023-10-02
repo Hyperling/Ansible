@@ -363,8 +363,8 @@
         ls -d ~/Code/* | while read project; do
           echo "*** `basename $project` ***"
           cd $project
-          git push
           git pull
+          git push
         done
       '
     alias_code_reset: |
