@@ -173,24 +173,24 @@
       sudo nix-collect-garbage --delete-older-than '{{ nix_days }}d'
 
       ls ~/.cache/*nix* /root/.cache/*nix* 2>/dev/null 1>&2 &&
-          echo -e "\n\n * Delete any cache.\n"
+          echo -e "\n * Delete any cache.\n"
       du -hs ~/.cache/*nix* 2>/dev/null &&
           echo "User:" &&
-          rm -rf ~/.cache/*nix*
+          rm -rfv ~/.cache/*nix*
       sudo du -hs /root/.cache/*nix* 2>/dev/null &&
           echo "Root:" &&
-          sudo rm -rf /root/.cache/*nix*
+          sudo rm -rfv /root/.cache/*nix*
 
-      echo -e "\n\n * Update channels with the latest expressions.\n"
+      echo -e "\n * Update channels with the latest expressions.\n"
       echo "User:"
       nix-channel --update
       echo "Root:"
       sudo nix-channel --update
 
-      echo -e "\n\n * Rebuild using the existing *.nix files.\n"
+      echo -e "\n * Rebuild using the existing *.nix files.\n"
       sudo nixos-rebuild switch
 
-      echo -e "\n\n * Hard link duplicates, saves 25-35% of store size.\n"
+      echo -e "\n * Hard link duplicates, saves 25-35% of store size.\n"
       sudo nix-store --optimize
   when: ansible_distribution == "NixOS"
 
