@@ -25,11 +25,19 @@
                       , 'com.valvesoftware.Steam.desktop'
                       ]"
     dconf_terminal: gnome-terminal
+    dconf_theme: Adwaita-dark
+    dconf_icons: Adwaita
 
 - name: Workstation | Account Management | GNOME | Facts (NixOS)
   set_fact:
     dconf_terminal: kgx
   when: ansible_distribution in ("NixOS")
+
+- name: Workstation | Account Management | GNOME | Facts (Ubuntu)
+  set_fact:
+    dconf_theme: Yaru-purple-dark
+    dconf_icons: Yaru-purple-dark
+  when: ansible_distribution in ("Ubuntu")
 
 # Make sure Gnome-Tweaks is installed
 - name: Workstation | Account Management | GNOME | Install Dependencies
@@ -303,7 +311,8 @@
       ## Generic ##
 
       dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" && inc_dconf &&
-      dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'" && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/gtk-theme "'{{ dconf_theme }}'" && inc_dconf &&
+      dconf write /org/gnome/desktop/interface/icon-theme "'{{ dconf_icons }}'" && inc_dconf &&
 
       dconf write /org/gnome/desktop/interface/clock-show-date true && inc_dconf &&
       dconf write /org/gnome/desktop/interface/clock-format "'24h'" && inc_dconf &&
@@ -396,4 +405,4 @@
   loop:
     - .bashrc
     - .zshrc
-  when: ansible_distribution in ("NixOS")
+  #when: ansible_distribution in ("NixOS")
