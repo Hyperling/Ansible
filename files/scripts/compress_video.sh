@@ -166,6 +166,11 @@ $search_command "$input" | sort | while read file; do
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
 			$vcodec -movflags +faststart '$newfile'"
+	status="$?"
+	if [[ "$status" != 0 ]]; then
+		echo "SKIP: ffmpeg returned a status of '$status'."
+		continue
+	fi
 
 	# Check the filesize compared to the original and note if it is larger.
 	echo "Checking file sizes:"
@@ -176,8 +181,13 @@ $search_command "$input" | sort | while read file; do
 		echo "quality. Adding a suffix to the file to signify that it grew."
 		mv -v "$newfile" "$newfile.$large_extension"
 		continue
-	else
+	fi
+
+	if [[ -e "$newfile" ]]; then
 		echo "Conversion succeeded, file has been compressed."
+	else
+		echo "ERROR: Converted file '$newfile' could not be found. Aborting."
+		break
 	fi
 
 	if [[ -n "$delete" ]]; then
