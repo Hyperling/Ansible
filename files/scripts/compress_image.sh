@@ -7,7 +7,7 @@
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 PROG="$(basename -- "${BASH_SOURCE[0]}")"
-echo "Running $DIR/$PROG"
+echo "Running '$DIR/$PROG'."
 
 # Integers
 typeset -i size status
@@ -128,6 +128,9 @@ $search "$location" | sort | while read image; do
 	if [[ -n $clean ]]; then
 		new_image="$new_image_clean"
 	fi
+
+	# Create a new directory if the directory names were altered.
+	mkdir -pv `dirname $new_image`
 
 	# This modifies the image to be $size at its longest end, not be a square.
 	$convert_exe "$image" -resize ${size}x${size} "$new_image"
