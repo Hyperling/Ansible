@@ -135,6 +135,11 @@ $search "$location" | sort | while read image; do
 
 	# This modifies the image to be $size at its longest end, not be a square.
 	$convert_exe "$image" -resize ${size}x${size} "$new_image"
+	status="$?"
+	if [[ "$status" != 0 ]]; then
+		echo "  SKIP: '$convert_exe' returned a status of '$status'."
+		continue
+	fi
 
 	# Check file sizes and if the new one is larger then flag it as large.
 	echo "  Checking file sizes:"
@@ -153,7 +158,12 @@ $search "$location" | sort | while read image; do
 		continue
 	fi
 
-	echo "  SUCCESS: Conversion succeeded, file has been compressed."
+	if [[ -e "$new_image" ]]; then
+		echo "  SUCCESS: Conversion succeeded, file has been compressed."
+	else
+		echo "  ERROR: New image '$new_image' could not be found. Aborting."
+		break;
+	fi
 
 	if [[ -n "$delete" ]]; then
 		echo -n "  DELETE: "
