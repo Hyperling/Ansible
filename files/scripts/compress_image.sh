@@ -131,7 +131,7 @@ $search "$location" | sort | while read image; do
 
 	### TBD Instead of this, only alter the file names, and set a dirname var?
 	# Create a new directory if the directory names were altered.
-	mkdir -pv `dirname "$new_image"`
+	mkdir -pv "`dirname "$new_image"`"
 
 	# This modifies the image to be $size at its longest end, not be a square.
 	$convert_exe "$image" -resize ${size}x${size} "$new_image"
