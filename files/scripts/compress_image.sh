@@ -129,6 +129,7 @@ $search "$location" | sort | while read image; do
 		new_image="$new_image_clean"
 	fi
 
+	### TBD Instead of this, only alter the file names, and set a dirname var?
 	# Create a new directory if the directory names were altered.
 	mkdir -pv `dirname $new_image`
 
