@@ -148,7 +148,7 @@ $search_command "$input" | sort | while read file; do
 	###newfile="${newfile// /_}"
 	###
 	#### Ensure any directories that had spaces get recreated without them.
-	###mkdir -pv `dirname $newfile`
+	###mkdir -pv "`dirname "$newfile"`"
 
 	# More exception checks based on the new file.
 	if [[ -e "$newfile" ]]; then
