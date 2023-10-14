@@ -51,6 +51,12 @@
       - include_tasks: tasks/workstation/shared/settings/gnome.yml
         when: workstation == true
 
+      # Try including these. Really need to get NixOS working with the rest!
+      #- include_tasks: tasks/general/software/telegraf.yml # "Could not find a module for unknown.""
+      - include_tasks: tasks/general/tests/services.yml
+      - include_tasks: tasks/general/tests/lynis.yml
+      - include_tasks: tasks/general/tests/nmap.yml
+
       - name: NixOS | Complete
         meta: end_play
 
@@ -233,5 +239,6 @@
 
     - include_tasks: tasks/general/software/telegraf.yml
 
+    - include_tasks: tasks/general/tests/services.yml
     - include_tasks: tasks/general/tests/lynis.yml
     - include_tasks: tasks/general/tests/nmap.yml
