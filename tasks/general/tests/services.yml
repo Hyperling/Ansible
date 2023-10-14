@@ -1,0 +1,27 @@
+---
+# List all the services under the Reports folder.
+
+- name: General | Tests | Services | Set Facts
+  set_fact:
+    services_report_file: "{{ user_user.home }}/Reports/services.txt"
+    services_enabled_file: "{{ user_user.home }}/Reports/services-enabled.txt"
+    services_command: "systemctl list-unit-files"
+
+- name: General | Tests | Services | Create Main Report
+  shell: "{{ item }}"
+  loop:
+    - "date > {{ services_report_file }}"
+    - "echo -e '\n-= {{ services_command }} =-\n' >> {{ services_report_file }}"
+    - "{{ services_command }} >> {{ services_report_file }}"
+
+- name: General | Tests | Services | Create Enabled Report
+  shell: "{{ item }}"
+  loop:
+    - "date > {{ services_enabled_file }}"
+    - "echo -e '\n-= Enabled + Sorted =-\n' >> {{ services_enabled_file }}"
+    - "grep 'enabled' {{ services_report_file }} | sort >> {{ services_enabled_file }}"
+
+- name: General | Tests | Services | Make Viewable
+  file:
+    path: "{{ services_report_file }}"
+    mode: '0644'
