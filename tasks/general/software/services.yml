@@ -84,3 +84,15 @@
   shell: journalctl --vacuum-size=100M
   when: ansible_system == "Linux"
   ignore_errors: yes
+
+
+## Bluetooth ##
+# Do people seriously depend on Bluetooth? Plug your devices in, silly!
+
+- name: General | Software | Services | Bluetooth | Disable
+  service:
+    name: "{{ bluetooth }}"
+    pattern: "{{ bluetooth_pattern }}"
+    state: stopped
+    enabled: no
+  ignore_errors: yes
