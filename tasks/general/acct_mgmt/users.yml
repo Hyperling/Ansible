@@ -465,7 +465,7 @@
     block: |
       {{ rc_common }}
       [[ $(whoami) != "root" ]] &&
-        echo "`date` - Ansible .bashrc preferences loaded successfully!"
+        echo "`date` - Ansible .bashrc loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
@@ -482,7 +482,7 @@
     block: |
       {{ rc_common }}
       [[ $(whoami) != "root" ]] &&
-        echo "`date` - Ansible .zshrc preferences loaded successfully!"
+        echo "`date` - Ansible .zshrc loaded successfully!"
     marker: '# {mark} MANAGED BY ANSIBLE | Aliases'
     state: present
     create: yes
