@@ -45,6 +45,7 @@
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
       - { app: "io.dbeaver.DBeaverCommunity", name: "dbeaver", extra: "" }
+      - { app: "org.godotengine.Godot", name: "godot", extra: "" }
     flatpaks_editing:
       - { app: "org.shotcut.Shotcut", name: "shotcut", extra: "" }
       - { app: "com.obsproject.Studio", name: "obs", extra: "" }
