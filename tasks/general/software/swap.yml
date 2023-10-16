@@ -17,11 +17,11 @@
     - name: General | Software | Swap | Create Swapfile
       shell: "{{ item }}"
       loop:
-        - dd if=/dev/zero of={{ swapfile }} bs={{ swap_block }}
+        - dd if=/dev/zero of={{ swap_file }} bs={{ swap_block }}
             count={{ swap_count }} status=progress
-        - chmod 600 {{ swapfile }}
-        - mkswap {{ swapfile }}
-        - swapon {{ swapfile }}
+        - chmod 600 {{ swap_file }}
+        - mkswap {{ swap_file }}
+        - swapon {{ swap_file }}
 
     # Only do the swapfile generation if it does not already exist.
     when: not swap_check.stat.exists
@@ -30,8 +30,8 @@
   - name: General | Software | Swap | Add to FSTAB
     lineinfile:
       path: /etc/fstab
-      regexp: '^[\#]?{{ swapfile }}'
-      line: '{{ swapfile }} none swap sw 0 0'
+      regexp: '^[\#]?{{ swap_file }}'
+      line: '{{ swap_file }} none swap sw 0 0'
       state: present
       backup: yes
     when: ansible_distribution != "NixOS"
