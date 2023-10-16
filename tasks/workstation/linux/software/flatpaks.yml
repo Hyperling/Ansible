@@ -41,6 +41,7 @@
       - { app: "org.signal.Signal", name: "signal", extra: "" }
       - { app: "org.mozilla.firefox", name: "firefox-flatpak", extra: "" }
       - { app: "com.transmissionbt.Transmission", name: "transmission", extra: "" }
+      - { app: "org.gnome.Geary", name: "geary", extra: "" }
     flatpaks_coding:
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
@@ -50,6 +51,7 @@
       - { app: "org.shotcut.Shotcut", name: "shotcut", extra: "" }
       - { app: "com.obsproject.Studio", name: "obs", extra: "" }
       - { app: "org.gimp.GIMP", name: "gimp", extra: "" }
+      - { app: "org.openshot.OpenShot", name: "openshot", extra: "" }
     flatpaks_gaming:
       - { app: "com.valvesoftware.Steam", name: "steam", extra: "" }
       - { app: "com.play0ad.zeroad", name: "zeroad", extra: "" }
