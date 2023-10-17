@@ -65,6 +65,7 @@
 - name: General | Facts | Package | Update Commands | Helpers
   set_fact:
     update_accept_var: '$accept'
+    nix_days: 14
 
 - name: General | Facts | Package | Update Commands | Helpers | pacman
   set_fact:
@@ -76,7 +77,7 @@
     update_package_manager: |
       echo "*** Apt ***" &&
       sudo apt update &&
-      sudo apt autoremove {{ update_accept_var }} && 
+      sudo apt autoremove {{ update_accept_var }} &&
       sudo apt clean {{ update_accept_var }} &&
       sudo dpkg --configure -a &&
       sudo apt --fix-broken --fix-missing install &&
@@ -96,7 +97,7 @@
 - name: General | Facts | Package | Update Commands | pkg
   set_fact:
     update_package_manager: |
-      echo "*** FreeBSD-Update ***" 
+      echo "*** FreeBSD-Update ***"
       clean=""
       [[ "{{ update_accept_var }}" == "-y" ]] || echo "Are you sure you'd like to clean /var/db/freebsd-update? [y/N] "
       [[ "{{ update_accept_var }}" == "-y" ]] || read -N 1 clean
@@ -112,7 +113,7 @@
       sudo pkg update &&
       sudo pkg clean {{ update_accept_var }} &&
       sudo pkg autoremove {{ update_accept_var }} &&
-      sudo pkg upgrade {{ update_accept_var }} && 
+      sudo pkg upgrade {{ update_accept_var }} &&
   when: ansible_pkg_mgr in ("pkg", "pkgng")
 
 - name: General | Facts | Package | Update Commands | parrot-upgrade
@@ -152,10 +153,46 @@
       sudo zypper patch {{ update_accept_var }} &&
       sudo zypper update {{ update_accept_var }} &&
       sudo zypper dist-upgrade {{ update_accept_var }} &&
-      # This is a neat feature, but is installing things like GIMP from the 
+      # This is a neat feature, but is installing things like GIMP from the
       #  repos when it is already installed through Flatpak, so not needed.
       #sudo zypper install-new-recommends &&
   when: ansible_pkg_mgr in ("zypper")
+
+- name: General | Facts | Package | Update Commands | NixOS
+  set_fact:
+    update_package_manager: |
+      sudo echo "*** NixOS ***"
+      # Clean up!
+      # https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
+
+      echo -en "\n * Delete any existing garbage and snapshots older than "
+      echo -e "{{ nix_days }} days.\n"
+      echo "User:"
+      nix-collect-garbage --delete-older-than '{{ nix_days }}d'
+      echo "Root:"
+      sudo nix-collect-garbage --delete-older-than '{{ nix_days }}d'
+
+      ls ~/.cache/*nix* /root/.cache/*nix* 2>/dev/null 1>&2 &&
+          echo -e "\n * Delete any cache.\n"
+      du -hs ~/.cache/*nix* 2>/dev/null &&
+          echo "User:" &&
+          rm -rfv ~/.cache/*nix*
+      sudo du -hs /root/.cache/*nix* 2>/dev/null &&
+          echo "Root:" &&
+          sudo rm -rfv /root/.cache/*nix*
+
+      echo -e "\n * Update channels with the latest expressions.\n"
+      echo "User:"
+      nix-channel --update
+      echo "Root:"
+      sudo nix-channel --update
+
+      echo -e "\n * Rebuild using the existing *.nix files.\n"
+      sudo nixos-rebuild switch
+
+      echo -e "\n * Hard link duplicates, saves 25-35% of store size.\n"
+      sudo nix-store --optimize
+  when: ansible_distribution == "NixOS"
 
 
 - name: General | Facts | Package | Update Commands | flatpak | check
@@ -166,14 +203,14 @@
 - name: General | Facts | Package | Update Commands | flatpak | exists
   set_fact:
     update_flatpak: |
-      echo "*** Flatpak ***" 
-      [[ {{ battery }} != 'True' ]] && sudo flatpak repair 
+      echo "*** Flatpak ***"
+      [[ {{ battery }} != 'True' ]] && sudo flatpak repair
       sudo flatpak uninstall --unused {{ update_accept_var }} &&
       sudo flatpak update {{ update_accept_var }} &&
   when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
-  
+
 - name: General | Facts | Package | Update Commands | flatpak | not exists
   set_fact:
     update_flatpak: |
-      echo "*** Flatpak Not Installed ***" && 
+      echo "*** Flatpak Not Installed ***" &&
   when: update_flatpak is not defined

@@ -14,6 +14,8 @@
     crond_pattern: cron
     acpi: acpid
     acpi_pattern: acpid
+    bluetooth: bluetooth
+    bluetooth_pattern: bluetooth
 
 - name: General | Facts | Service | Arch Linux
   set_fact:

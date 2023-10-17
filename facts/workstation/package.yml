@@ -99,3 +99,9 @@
     font_awesome: fontawesome-fonts
     nfs: utils-libnfs
   when: ansible_os_family == "Suse"
+
+
+- name: Workstation | Facts | Package | NixOS
+  set_fact:
+    flatpak_distro: false
+  when: ansible_distribution == "NixOS"

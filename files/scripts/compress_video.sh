@@ -4,20 +4,20 @@
 
 ## Setup ##
 
-DIR=`dirname $0`
-PROG=`basename $0`
-if [[ "$DIR" == '.' ]]; then
-	DIR=`pwd`
-fi
-echo "Running $DIR/$PROG"
+DIR="$(dirname -- "${BASH_SOURCE[0]}")"
+PROG="$(basename -- "${BASH_SOURCE[0]}")"
+echo "Running '$DIR/$PROG'."
 
 filename_flag='compressed'
 date_YYYYMMDD="`date "+%Y%m%d"`"
+large_extension='DoNotUse-LargerThanOriginal'
+large_created=".$PROG.large_created.true"
 
 ## Functions ##
 
 function usage {
-	echo "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec] [-r] [-f] [-m] [-V] [-x] [-h]"
+	echo -n "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec]"
+	echo " [-r] [-f] [-d] [-m] [-V] [-x] [-h]"
 	cat <<- EOF
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
@@ -31,6 +31,7 @@ function usage {
 		  -c vcodec : The video codec you'd like to use, such as libopenh264.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
+		  -d : Delete the original video if the compressed version is smaller.
 		  -m : Measure the time it takes to compress each video and do the loop.
 		  -V : Add verbosity, such as printing all the variable values.
 		  -x : Set the shell's x flag to display every action which is taken.
@@ -41,7 +42,7 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:c:rfmVxh" opt; do
+while getopts ":i:v:a:c:rfdmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
@@ -54,6 +55,8 @@ while getopts ":i:v:a:c:rfmVxh" opt; do
 		r) search_command="find"
 			;;
 		f) force="Y"
+			;;
+		d) delete="Y"
 			;;
 		m) time_command="time -p"
 			;;
@@ -109,6 +112,7 @@ if [[ "$verbose" == "Y" ]]; then
 		  codec='$codec'
 		  search_command='$search_command'
 		  force='$force'
+		  delete='$delete'
 		  time_command='$time_command'
 		  verbose='$verbose'
 		  set_x='$set_x'
@@ -119,7 +123,7 @@ if [[ "$verbose" == "Y" ]]; then
 fi
 
 SECONDS=0
-$search_command $input | sort | while read file; do
+$search_command "$input" | sort | while read file; do
 	echo -e "\n$file"
 
 	if [[ -n "$time_command" ]]; then
@@ -140,13 +144,16 @@ $search_command $input | sort | while read file; do
 	extension="${file##*.}"
 	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}"
 
-	# Convert spaces to underscores.
-	newfile="${newfile// /_}"
+	#### Convert spaces to underscores.
+	###newfile="${newfile// /_}"
+	###
+	#### Ensure any directories that had spaces get recreated without them.
+	###mkdir -pv "`dirname "$newfile"`"
 
 	# More exception checks based on the new file.
 	if [[ -e "$newfile" ]]; then
 		if [[ "$force" == "Y" ]]; then
-			echo "FORCE: Removing $newfile."
+			echo "FORCE: Removing '$newfile'."
 			rm -vf "$newfile"
 		else
 			echo "SKIP: Already has a compressed version ($newfile)."
@@ -155,23 +162,65 @@ $search_command $input | sort | while read file; do
 	fi
 
 	# Convert the file.
-	echo "Converting to $newfile."
+	echo "Converting to '$newfile'."
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
-			$vcodec -movflags +faststart $newfile"
+			$vcodec -movflags +faststart '$newfile'"
+	status="$?"
+	if [[ "$status" != 0 ]]; then
+		echo "SKIP: ffmpeg returned a status of '$status'."
+		continue
+	fi
 
 	# Check the filesize compared to the original and note if it is larger.
 	echo "Checking file sizes:"
-	ls -sh $file $newfile | sort -hr
-	smaller_file=`ls -sh $file $newfile | sort -h | awk '{print $2}' | head -n 1`
+	ls -sh "$file" "$newfile" | sort -hr
+	smaller_file=`ls -sh "$file" "$newfile" | sort -h | awk '{print $2}' | head -n 1`
 	if [[ "$smaller_file" == "$file" ]]; then
 		echo -n "Conversion had the opposite effect, original was likely lesser "
 		echo "quality. Adding a suffix to the file to signify that it grew."
-		mv -v $newfile $newfile.DoNotUse-LargerThanOriginal
-	else
+		mv -v "$newfile" "$newfile.$large_extension"
+		continue
+	fi
+
+	if [[ -e "$newfile" ]]; then
 		echo "Conversion succeeded, file has been compressed."
+	else
+		echo "ERROR: Converted file '$newfile' could not be found. Aborting."
+		break
+	fi
+
+	if [[ -n "$delete" ]]; then
+		echo -n "Original has been deleted: "
+		if [[ -d ~/TRASH ]]; then
+			mv -v "$file" ~/TRASH/
+		else
+			rm -v "$file"
+		fi
 	fi
 done
+
+# If large files do end up being created, allow the user to bulk delete them.
+if [[ -e "$large_created" ]]; then
+	echo -e "\n*********************************************************"
+	echo -e "WARNING: The files below are larger than their originals!\n"
+	find "$input" -name "*"$large_extension
+	echo -e "*********************************************************"
+
+	echo -en "\nWould you like to delete them? (Y/n): "
+	typeset -u confirm_delete
+	read confirm_delete
+
+	if [[ -z "$confirm_delete" || "$confirm_delete" == "Y"* ]]; then
+		echo ""
+		find "$input" -name "*"$large_extension -exec rm -v {} \;
+	else
+		echo -e "\nKeeping files. Please use this if you change your mind:"
+		echo "  find \"$input\" -name \"*\"$large_extension -exec rm -v {} \;"
+	fi
+
+	rm "$large_created"
+fi
 
 echo -e "\nDone!"
 

@@ -16,7 +16,7 @@
     create: yes
 
 - name: General | Scripts | Root | scm.sh Permissions
-  file: 
+  file:
     path: "{{ user_root.home }}/bin/scm.sh"
     mode: '0755'
 
@@ -26,7 +26,7 @@
     path: "{{ user_root.home }}/bin/scm-dev.sh"
     block: |
       # 20210713 - Make life easier for development!
-      
+
       ## Variables ##
 
       # Use a specific branch if it was asked for.
@@ -34,7 +34,6 @@
       if [[ $1 != "" ]]; then
         branch="$1"
       fi
-
 
       ## Main ##
 
@@ -47,6 +46,6 @@
     create: yes
 
 - name: General | Scripts | Root | scm-dev.sh Permissions
-  file: 
+  file:
     path: "{{ user_root.home }}/bin/scm-dev.sh"
     mode: '0755'

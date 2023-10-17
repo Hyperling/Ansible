@@ -14,7 +14,7 @@
     srv_file: "{{ prov_dir }}/server.ini"
 
 - name: General | Account Management | Provisioning Configuration | Create Directory
-  file: 
+  file:
     path: "{{ prov_dir }}"
     state: directory
     mode: '0755'
@@ -29,24 +29,46 @@
       ;;;;;;; Available options - all require lowercase values ;;;;;;
       ;
       ;     enable : Provide true for the provision to occur.
+      ;                Default: false
       ;
       ;       user : Provide the name of the user account.
       ;                Example: tom, jerry, kim, sarah
+      ;                Default: ling
       ;
       ;  user_desc : Provide the description of the user account.
       ;                Example: Thomas, Jerry, Kimberly, Sarah
+      ;                Default: Hyperling
       ;
       ;     branch : Provide the Github branch that the machine should poll.
       ;                Example: main, dev
+      ;                Default: main
       ;
-      ; pentesting : Set to true to install tools such as metasploit (nmap is already provided for reporting)
+      ; pentesting : Set to true to install tools such as metasploit.
+      ;              nmap is already provided for reporting
+      ;                Default: false
       ;
       ;   no_telem : Set to true to avoid setting up telemetry services.
-      ;                Disables GitHub updates to this project.
-      ;                Disables all telegraf pings.
+      ;              Disables GitHub updates to this project.
+      ;              Disables all telegraf pings.
+      ;                Default: false
       ;
       ;    battery : Set to true to attempt to save battery life.
-      ;                Slows down the rate of services such as telegraf and cron.
+      ;              Slows down the rate of services such as telegraf and cron.
+      ;                Default: false
+      ;
+      ; swap_block : Set to the block size if dd should create a swapfile.
+      ;              Preferably keep this under 2G for integrity sakes, the
+      ;              value is multiplied by count if you need a larger file.
+      ;                Example: 500M, 512MB, 1G
+      ;                Default: false
+      ;
+      ; swap_count : Set to the number of blocks to multiply the file size by.
+      ;                Example: 8
+      ;                Default: 1
+      ;
+      ;  swap_file : Set to the name and location of where the file should be.
+      ;                Example: /usr/local/swap
+      ;                Default: /swapfile
       ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
@@ -63,9 +85,12 @@
     pentesting: "{{ lookup('ini', 'pentesting file={{gen_file}} default=false') }}"
     no_telem:   "{{ lookup('ini', 'no_telem   file={{gen_file}} default=false') }}"
     battery:    "{{ lookup('ini', 'battery    file={{gen_file}} default=false') }}"
+    swap_block: "{{ lookup('ini', 'swap_block file={{gen_file}} default=false') }}"
+    swap_count: "{{ lookup('ini', 'swap_count file={{gen_file}} default=1') }}"
+    swap_file:  "{{ lookup('ini', 'swap_file  file={{gen_file}} default=/swapfile') }}"
 
 - name: General | Account Management | Provisioning Configuration | General | List
-  set_fact: 
+  set_fact:
     provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - { 'provision': "{{ provision }}" }
@@ -75,6 +100,9 @@
     - { 'pentesting': "{{ pentesting }}" }
     - { 'no_telem': "{{ no_telem }}" }
     - { 'battery': "{{ battery }}" }
+    - { 'swap_block': "{{ swap_block }}" }
+    - { 'swap_count': "{{ swap_count }}" }
+    - { 'swap_file': "{{ swap_file }}" }
 
 
 ## Workstation ##
@@ -123,7 +151,7 @@
     mobile:      "{{ lookup('ini', 'mobile  file={{wrk_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Workstation | List
-  set_fact: 
+  set_fact:
     provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - { 'workstation': "{{ workstation }}" }
@@ -150,7 +178,7 @@
 #      ;
 #      ;          nanominer : Set to true for installation of nanominer
 #      ;
-#      ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on 
+#      ;      nanominer_cpu : Set to coin code that you'd like the CPU to work on
 #      ;                        Valid values: xmr
 #      ;
 #      ; nanominer_cpu_pool : Set to pool organization to use for CPU mining
@@ -199,7 +227,7 @@
 #    xmr_stak_cpu:       "{{ lookup('ini', 'xmr_stak_cpu       file={{mnr_file}} default=false') }}"
 #
 #- name: General | Account Management | Provisioning Configuration | Miner | List
-#  set_fact: 
+#  set_fact:
 #    provision_variables: "{{ provision_variables | combine(item) }}"
 #  loop:
 #    - { 'miner': "{{ miner }}" }
@@ -253,7 +281,7 @@
       ;              Regardless of whether you choose http or https, the Certbot config will be skipped since the maintainer uses a reverse proxy.
       ;                Example: https://gitlab
       ;
-      ;        git : Set to true for this server to be configured as an HTTP git server. 
+      ;        git : Set to true for this server to be configured as an HTTP git server.
       ;
       ;   git_name : Name(s) of project(s) that the Git server should host.
       ;                Example: ansible#ansible-dev
@@ -293,7 +321,7 @@
     git_sep:    "{{ lookup('ini', 'git_sep    file={{srv_file}} default=false') }}"
 
 - name: General | Account Management | Provisioning Configuration | Server | List
-  set_fact: 
+  set_fact:
     provision_variables: "{{ provision_variables | combine(item) }}"
   loop:
     - { 'server': "{{ server }}" }
@@ -323,5 +351,5 @@
 ## Display values ##
 
 - name: General | Account Management | Provisioning Configuration | Print
-  debug: 
+  debug:
     var: provision_variables

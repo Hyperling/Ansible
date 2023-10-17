@@ -3,7 +3,7 @@
 
 ## CUPS ##
 
-- name: General | Software | Services | Disable CUPS Daemon
+- name: General | Software | Services | Enable CUPS Daemon
   service:
     name: "{{ cups }}"
     pattern: "{{ cups_pattern }}"
@@ -11,7 +11,7 @@
     enabled: yes
   ignore_errors: yes
 
-- name: General | Software | Services | Disable CUPS-Browse Daemon
+- name: General | Software | Services | Enable CUPS-Browse Daemon
   service:
     name: "{{ cups_browse }}"
     pattern: "{{ cups_browse_pattern }}"

@@ -4,7 +4,7 @@
 - name: General | Tests | nmap | Set Facts
   set_fact:
     nmap_file: "{{ user_user.home }}/Reports/{{ nmap_report }}"
-    nmap_separator: "\n*******************************\n\n"
+    nmap_separator: "\n*******************************\n"
 
 - name: General | Tests | nmap | Set Facts 2
   set_fact:
@@ -12,15 +12,15 @@
 
 - name: General | Tests | nmap | Create Report
   shell: "{{ item }}"
-  loop: 
+  loop:
     - "date > {{ nmap_temp_file }}"
     - "printf '{{ nmap_separator }}' >> {{ nmap_temp_file }}"
-    - "echo '-=Open Ports=-' >> {{ nmap_temp_file }}"
+    - "echo '\n-=Open Ports=-\n' >> {{ nmap_temp_file }}"
     - "printf 'Number of open ports: ' >> {{ nmap_temp_file }}"
     - "nmap --open localhost | grep -c open >> {{ nmap_temp_file }}; echo success"
     - "nmap --open localhost | grep open >> {{ nmap_temp_file }}; echo success"
     - "printf '{{ nmap_separator }}' >> {{ nmap_temp_file }}"
-    - "echo '-=Aggressive Vulnerability Check=-' >> {{ nmap_temp_file }}"
+    - "echo '\n-=Aggressive Vulnerability Check=-\n' >> {{ nmap_temp_file }}"
     - "nmap -A localhost >> {{ nmap_temp_file }}; echo success"
     - "mv {{ nmap_temp_file }} {{ nmap_file }}"
 

@@ -36,26 +36,29 @@
   set_fact:
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office", extra: "" }
-      - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" }
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
       - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
       - { app: "org.signal.Signal", name: "signal", extra: "" }
       - { app: "org.mozilla.firefox", name: "firefox-flatpak", extra: "" }
-    flatpaks_coding:
+      - { app: "com.transmissionbt.Transmission", name: "transmission", extra: "" }
+      - { app: "org.gnome.Geary", name: "geary", extra: "" }
+    flatpaks_coding: 
       - { app: "com.vscodium.codium", name: "codium", extra: "" }
       - { app: "com.google.AndroidStudio", name: "android-studio", extra: "" }
       - { app: "io.dbeaver.DBeaverCommunity", name: "dbeaver", extra: "" }
+      - { app: "org.godotengine.Godot", name: "godot", extra: "" }
+      - { app: "com.visualstudio.code-oss", name: "code", extra: "" }
     flatpaks_editing:
       - { app: "org.shotcut.Shotcut", name: "shotcut", extra: "" }
       - { app: "com.obsproject.Studio", name: "obs", extra: "" }
       - { app: "org.gimp.GIMP", name: "gimp", extra: "" }
+      - { app: "org.openshot.OpenShot", name: "openshot", extra: "" }
     flatpaks_gaming:
       - { app: "com.valvesoftware.Steam", name: "steam", extra: "" }
       - { app: "com.play0ad.zeroad", name: "zeroad", extra: "" }
       - { app: "net.supertuxkart.SuperTuxKart", name: "tuxkart", extra: "" }
     flatpaks_remove:
       - { app: "com.visualstudio.code", name: "vscode", extra: "" } # Why does this throw an error? It's the correct ID.
-      - { app: "com.visualstudio.code-oss", name: "code-oss", extra: "" }
       - { app: "org.midori_browser.Midori", name: "midori", extra: "" }
       - { app: "com.github.Eloston.UngoogledChromium", name: "unchrome", extra: "" }
       - { app: "org.gnome.Evolution", name: "evolution", extra: "" } # Doesn't pick up GNOME theme since contained.
@@ -67,6 +70,7 @@
       - { app: "org.telegram.desktop", name: "telegram", extra: "" }
       - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
       # End 2022-11-20 #
+      - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" } # No longer supported, noticed 2023-09-01.
 
 # Generic #
 
