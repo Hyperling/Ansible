@@ -72,6 +72,8 @@
     update_accept_var: '--noconfirm'
   when: ansible_pkg_mgr == "pacman"
 
+# TBD: Make all the 'update_package_manager' variables into one variable with
+# if statements so that a shared home between multiple OS's works correctly.
 - name: General | Facts | Package | Update Commands | apt
   set_fact:
     update_package_manager: |
