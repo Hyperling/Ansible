@@ -21,7 +21,13 @@
   set_fact:
     crond: cronie
     crond_pattern: cronie
-  when: ansible_distribution == "Archlinux"
+  when: ansible_distribution in ("Archlinux")
+
+- name: General | Facts | Service | Fedora
+  set_fact:
+    crond: crond
+    crond_pattern: crond
+  when: ansible_distribution in ("Fedora")
 
 - name: General | Facts | Service | Ubuntu Linux
   set_fact:
