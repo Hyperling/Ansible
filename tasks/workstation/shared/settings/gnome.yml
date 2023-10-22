@@ -250,6 +250,7 @@
       dconf write /org/gnome/desktop/screensaver/lock-delay "uint32 0" && inc_dconf &&
       dconf write /org/gnome/desktop/session/idle-delay "uint32 900" && inc_dconf &&
       dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'" && inc_dconf &&
+      dconf write /org/gnome/settings-daemon/plugins/power/power-button-action "'nothing'" && inc_dconf &&
 
       dconf write /org/gnome/desktop/media-handling/autorun-never true && inc_dconf &&
 
