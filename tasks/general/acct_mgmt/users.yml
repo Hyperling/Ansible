@@ -66,6 +66,7 @@
       - sudo
       - video
       - render
+      - wheel
     append: yes
     shell: "{{ user_shell }}"
     create_home: yes
