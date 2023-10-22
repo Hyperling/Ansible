@@ -3,7 +3,7 @@
 
 - name: General | Tests | nmap | Set Facts
   set_fact:
-    nmap_file: "{{ user_user.home }}/Reports/{{ nmap_report }}"
+    nmap_file: "{{ user_user.home }}/Reports/{{ ansible_hostname }}.{{ nmap_report }}"
     nmap_separator: "\n*******************************\n"
 
 - name: General | Tests | nmap | Set Facts 2
