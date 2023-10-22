@@ -54,7 +54,7 @@
 
 - name: General | Facts | Package | zypper
   set_fact:
-    locate: mlocate
+    locate: plocate
     opensshd: openssh
     microcode_amd: ucode-amd
     microcode_intel: ucode-intel
