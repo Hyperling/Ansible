@@ -121,11 +121,11 @@
       - include_tasks: tasks/workstation/shared/software/dwm.yml
 
       # Software Tasks #
-      - include_tasks: tasks/workstation/linux/software/flatpaks.yml
-        when: ansible_system == "Linux" and flatpak_distro
-
       - include_tasks: tasks/workstation/linux/software/packages.yml
         when: ansible_system == "Linux"
+
+      - include_tasks: tasks/workstation/linux/software/flatpaks.yml
+        when: ansible_system == "Linux" and flatpak_distro
 
       - include_tasks: tasks/workstation/linux/software/brave.yml
         when: ansible_pkg_mgr in ("apt", "dnf", "zypper") and not mobile

@@ -89,6 +89,7 @@
     firefox_esr: firefox
     font_awesome: python3-XStatic-Font-Awesome
     nfs: nfs-utils
+    ffmpeg: ffmpeg-free
   when: ansible_distribution == "Fedora"
 
 

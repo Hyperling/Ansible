@@ -1,9 +1,92 @@
 ---
 # Packages specific to workstations.
 
-- name: Workstation | Software | Packages | Install Software (Editing)
-  package: 
+## Repo Management ##
+
+# Needed for dnf packages such as vlc.
+# https://docs.fedoraproject.org/en-US/quick-docs/rpmfusion-setup/
+- name: Workstation | Linux | Software | Packages | Fedora Fusion Repos
+  shell: "{{ item }}"
+  loop:
+    - "dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+    - "dnf config-manager --enable rpmfusion-free"
+    - "dnf config-manager --enable rpmfusion-free-updates"
+    - "dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+    - "dnf config-manager --enable rpmfusion-nonfree"
+    - "dnf config-manager --enable rpmfusion-nonfree-updates"
+  when: ansible_distribution == "Fedora"
+
+
+## Packages ##
+
+- name: Workstation | Linux | Software | Packages | Install Software (Editing)
+  package:
     name:
     - "{{ ffmpeg }}"
     state: present
   when: editing == true
+
+
+## Other Stuff
+
+# Software not yet available or working properly in Flatpak form.
+
+- name: Workstation | Linux | Software | Packages | Install From Repo
+  package:
+    name:
+      - vlc
+      - "{{ appimagelauncher }}"
+      - "{{ evolution }}"
+      - "{{ evolution }}*"
+    state: present
+
+# Lutris #
+
+- name: Workstation | Linux | Software | Packages | Add Lutris PPA (Ubuntu)
+  apt_repository:
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: present
+  when: ansible_distribution == "Ubuntu" and gaming == true
+  ignore_errors: yes
+
+- name: Workstation | Linux | Software | Packages | Add Lutris (besides ARM)
+  package:
+    name:
+      - lutris
+    state: present
+  when: ansible_architecture != "aarch64" and gaming == true
+  ignore_errors: yes
+
+- name: Workstation | Linux | Software | Packages | Remove Lutris (besides ARM)
+  package:
+    name:
+      - lutris
+    state: absent
+  when: ansible_architecture != "aarch64" and gaming is not defined
+  ignore_errors: yes
+
+- name: Workstation | Linux | Software | Packages | Remove Lutris PPA (Ubuntu)
+  apt_repository:
+    repo: ppa:lutris-team/lutris
+    update_cache: yes
+    state: absent
+  when: ansible_distribution == "Ubuntu" and gaming is not defined
+  ignore_errors: yes
+
+# Remove Repo Software #
+
+- name: Workstation | Linux | Software | Packages | Remove Applications
+  package:
+    name:
+    - "{{ firefox }}"
+    - "{{ firefox_esr }}"
+    - "{{ thunderbird }}"
+    - steam
+    - vscode
+    - code
+    - libreoffice
+    - "*libreoffice*"
+    - '*libreoffice*'
+    - gimp
+    state: absent
