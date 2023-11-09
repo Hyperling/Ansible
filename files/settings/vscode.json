@@ -1,0 +1,14 @@
+// Needs saved as:
+//  ~/.var/app/com.visualstudio.code-oss/config/Code - OSS/{{ user_desc }}/settings.json
+//  // ~/.var/app/com.vscodium.codium/config/VSCodium/{{ user_desc }}/settings.json
+{
+	"workbench.startupEditor": "none",
+	"editor.rulers": [
+		 80, 120, 200
+	],
+	"files.trimTrailingWhitespace": true,
+	"editor.tabSize": 3,
+	"editor.insertSpaces": false,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true
+}
