@@ -1,6 +1,6 @@
 // Needs saved as:
 //  ~/.var/app/com.visualstudio.code-oss/config/Code - OSS/{{ user_desc }}/settings.json
-//  // ~/.var/app/com.vscodium.codium/config/VSCodium/{{ user_desc }}/settings.json
+//  ~/.var/app/com.vscodium.codium/config/VSCodium/{{ user_desc }}/settings.json
 {
 	"workbench.startupEditor": "none",
 	"editor.rulers": [
