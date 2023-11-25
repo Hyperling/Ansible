@@ -28,7 +28,7 @@ function usage() {
 	# Parameters:
 	#   1) The exit status to use.
 	status=$1
-	echo "Usage: $PROG [-s SIZE] [-l LOCATION] [-r] [-f] [-d] [-c] [-h] [-x]" >&2
+	echo "Usage: $PROG [-s SIZE] [-l LOCATION] [-A | [-r] [-f] [-d] [-c]] [-h] [-x]" >&2
 	cat <<- EOF
 		  Compress JPG or PNG image(s). Can handle folders and work recursively.
 
@@ -39,6 +39,7 @@ function usage() {
 		  -f : Force the image to be shrunk even if a file already exists for it.
 		  -d : Delete the original image if the compressed image is smaller.
 		  -c : Clean the filename of underscores, dashes, 'IMG', etc.
+		  -A : Resursively Force, Delete, and Clean.
 		  -h : Display this usage text.
 		  -x : Enable BASH debugging.
 	EOF
@@ -47,7 +48,7 @@ function usage() {
 
 ## Parameters ##
 
-while getopts ":s:l:rfdchx" opt; do
+while getopts ":s:l:rfdcAhx" opt; do
 	case $opt in
 		s) in_size="$OPTARG" && size="$in_size" ;;
 		l) location="$OPTARG" ;;
@@ -55,6 +56,7 @@ while getopts ":s:l:rfdchx" opt; do
 		f) force="Y" ;;
 		d) delete="Y" ;;
 		c) clean="Y" ;;
+		A) recurse="Y" && search="find" && force="Y" && delete="Y" && clean="Y" ;;
 		h) usage 0 ;;
 		x) set -x ;;
 		*) echo "ERROR: Option $OPTARG not recognized." >&2 && usage 1 ;;
