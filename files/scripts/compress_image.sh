@@ -149,7 +149,7 @@ $search "$location" | sort | while read image; do
 		echo "  $line"
 	done
 	smaller_file=`
-		ls -sh "$image" "$new_image" | sort -h | awk '{print $2}' | head -n 1
+		ls -sh "$image" "$new_image" | sort -h | cut -f 2- -d ' ' | head -n 1
 	`
 	if [[ "$smaller_file" == "$image" ]]; then
 		echo -n "  WARNING: Conversion caused growth, original was likely lesser "
