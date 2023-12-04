@@ -30,7 +30,8 @@ function usage() {
 	# Parameters:
 	#   1) The exit status to use.
 	status=$1
-	echo "Usage: $PROG [-q QUALITY] [-l LOCATION] [-A | [-r] [-f] [-d] [-c] [-z]] [-h] [-x]" >&2
+	echo -n "Usage: $PROG [-q QUALITY] [-l LOCATION] " >&2
+	echo "[-A | [-r] [-f] [-d] [-c] [-z]] [-h] [-x]" >&2
 	cat <<- EOF
 		  Compress audio to mp3. Can handle folders and work recursively.
 
@@ -90,8 +91,9 @@ if [[ -z "$recurse" && -d "$location" && "$location" != *'/*' ]]; then
 	fi
 fi
 
+settings="-ab $quality"
 if [[ $frequency == "Y" ]]; then
-	$freq="asetrate=44100*432/440,aresample=44100,atempo=440/432"
+	settings="$settings -af asetrate=44100*432/440,aresample=44100,atempo=440/432"
 fi
 
 $search "$location" | sort | while read media; do
@@ -144,8 +146,8 @@ $search "$location" | sort | while read media; do
 	mkdir -pv "`dirname "$new_media"`"
 
 	# This modifies the media to be $size at its longest end, not be a square.
-	$convert_exe -nostdin -hide_banner -loglevel quiet -i "$media" \
-		-ab $quality -af "$freq" "$new_media"
+	$convert_exe -nostdin -hide_banner -loglevel quiet \
+		-i "$media" $settings "$new_media"
 
 	status="$?"
 	if [[ "$status" != 0 ]]; then
