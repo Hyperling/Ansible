@@ -1,0 +1,23 @@
+---
+# Install VPN client(s).
+# https://mullvad.net/en/help/install-mullvad-app-linux
+
+- name: Workstation | Software | VPN | Add Mullvad Repo [apt]
+  shell: "{{ item }}"
+  loop:
+    - sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+    - echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+    - apt update
+  when: ansible_pkg_mgr == "apt"
+
+- name: Workstation | Software | VPN | Add Mullvad Repo [dnf]
+  shell: "{{ item }}"
+  loop:
+    - sudo dnf config-manager --add-repo https://repository.mullvad.net/rpm/stable/mullvad.repo
+  when: ansible_pkg_mgr == "dnf"
+
+- name: Workstation | Software | VPN | Install
+  package:
+    name:
+      - mullvad-vpn
+    state: present

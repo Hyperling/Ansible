@@ -130,6 +130,9 @@
       - include_tasks: tasks/workstation/linux/software/brave.yml
         when: ansible_pkg_mgr in ("apt", "dnf", "zypper") and not mobile
 
+      - include_tasks: tasks/workstation/linux/software/vpn.yml
+        when: ansible_system == "Linux"
+
       - include_tasks: tasks/workstation/freebsd/software/packages.yml
         when: ansible_system == "FreeBSD"
 
