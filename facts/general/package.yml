@@ -211,12 +211,13 @@
       esac &&
 # End of update_package_manager
 
-- name: General | Facts | Package | Update Command | flatpak | check
+# Flatpaks
+- name: General | Facts | Package | Update Command | Flatpak | Check
   shell: which flatpak
   register: flatpak_exec
   ignore_errors: yes
 
-- name: General | Facts | Package | Update Command | flatpak | exists
+- name: General | Facts | Package | Update Command | Flatpak | Exists
   set_fact:
     update_flatpak: |
       echo "*** Flatpak ***"
@@ -224,10 +225,36 @@
       sudo flatpak uninstall --unused {{ update_accept_var }} &&
       sudo flatpak update {{ update_accept_var }} ||
       return 1
-  when: flatpak_exec is defined and flatpak_exec.failed is defined and not flatpak_exec.failed
+  when: flatpak_exec is defined
+    and flatpak_exec.failed is defined
+    and not flatpak_exec.failed
 
-- name: General | Facts | Package | Update Command | flatpak | not exists
+- name: General | Facts | Package | Update Command | Flatpak | Missing
   set_fact:
     update_flatpak: |
       echo "*** Flatpak Not Installed ***" &&
   when: update_flatpak is not defined
+
+# Firmware
+- name: General | Facts | Package | Update Command | Firmware | Check
+  shell: which fwupdmgr
+  register: fwupdmgr_exec
+  ignore_errors: yes
+
+- name: General | Facts | Package | Update Command | Firmware | Exists
+  set_fact:
+    update_firmware: |
+      echo "*** Firmware ***"
+      sudo fwupdmgr refresh --force &&
+      sudo fwupdmgr get-updates {{ update_accept_var }} &&
+      sudo fwupdmgr update --no-reboot-check {{ update_accept_var }} ||
+      return 1
+  when: fwupdmgr_exec is defined
+    and fwupdmgr_exec.failed is defined
+    and not fwupdmgr_exec.failed
+
+- name: General | Facts | Package | Update Command | Firmware | Missing
+  set_fact:
+    update_firmware: |
+      echo "*** Flatpak Not Installed ***" &&
+  when: update_firmware is not defined

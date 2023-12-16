@@ -171,6 +171,7 @@
 
         {{ update_package_manager }}
         {{ update_flatpak }}
+        {{ update_firmware }}
         return 0
 
         echo "ERROR: $PROG experienced a problem and has aborted." >&2
