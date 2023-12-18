@@ -37,7 +37,6 @@
     flatpaks_generic:
       - { app: "org.libreoffice.LibreOffice", name: "office", extra: "" }
       - { app: "io.gitlab.librewolf-community", name: "librewolf", extra: "" }
-      - { app: "chat.delta.desktop", name: "deltachat", extra: "" }
       - { app: "org.signal.Signal", name: "signal", extra: "" }
       - { app: "org.mozilla.firefox", name: "firefox-flatpak", extra: "" }
       - { app: "com.transmissionbt.Transmission", name: "transmission", extra: "" }
@@ -71,6 +70,7 @@
       - { app: "com.jetbrains.PyCharm-Community", name: "pycharm", extra: "" }
       # End 2022-11-20 #
       - { app: "io.lbry.lbry-app", name: "lbry", extra: "dbus-launch" } # No longer supported, noticed 2023-09-01.
+      - { app: "chat.delta.desktop", name: "deltachat", extra: "" } # No longer used, removed 2023-12-18.
 
 # Generic #
 
