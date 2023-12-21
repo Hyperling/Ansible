@@ -171,11 +171,34 @@
 
         {{ update_package_manager }}
         {{ update_flatpak }}
-        {{ update_firmware }}
+        echo "*** Completed Successfully ***"
         return 0
+      }
+    function_update_firmware: |
+      function update-firmware() {
+        PROG=$FUNCNAME
+        usage="Usage: $PROG [-y]
+        $PROG is used to run the firmware updater in one swoop. Flow stops if
+          any command returns a failure code. The hope is to run something as
+          easy as 'pacman -Syyu' but for non-Arch systems.
+        -y : Assume yes to any prompts."
 
-        echo "ERROR: $PROG experienced a problem and has aborted." >&2
-        return 1
+        unset OPTIND
+        unset accept
+        while getopts ":hy" opt; do
+            case $opt in
+              h) echo -e "$usage"
+                return 0 ;;
+              y) accept="-y" ;;
+              *) echo "ERROR: -$OPTARG is not a recognized option." >&2
+                echo -e "$usage"
+                return 1 ;;
+            esac
+        done
+
+        {{ update_firmware }}
+        echo "*** Completed Successfully ***"
+        return 0
       }
     alias_sync: alias sync='date && echo "Syncing!" && sync && date'
     export_editor: export EDITOR='vi'
@@ -440,6 +463,7 @@
       {{ export_PS1 }}
       {{ alias_remount }}
       {{ function_update }}
+      {{ function_update_firmware }}
       {{ alias_sync }}
       {{ export_editor }}
       {{ init_aliases }}

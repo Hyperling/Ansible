@@ -251,8 +251,8 @@
       echo "*** Firmware ***"
       sudo fwupdmgr refresh --force &&
       sudo fwupdmgr get-updates {{ update_accept_var }} &&
-      sudo fwupdmgr update --no-reboot-check {{ update_accept_var }} #||
-      #return 1
+      sudo fwupdmgr update --no-reboot-check {{ update_accept_var }} ||
+      return 1
   when: fwupdmgr_exec is defined
     and fwupdmgr_exec.failed is defined
     and not fwupdmgr_exec.failed
@@ -260,5 +260,5 @@
 - name: General | Facts | Package | Update Command | Firmware | Missing
   set_fact:
     update_firmware: |
-      echo "*** Flatpak Not Installed ***" &&
+      echo "*** Firmware Updater (fwupdmgr) Not Installed ***" &&
   when: update_firmware is not defined
