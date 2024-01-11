@@ -449,6 +449,8 @@
         done
         echo -e "\nDone!\n"
       }
+    alias_clone: |
+      alias clone="rsyc -au --delete"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -486,6 +488,7 @@
       {{ alias_code_reseed }}
       {{ function_clean_filenames }}
       {{ function_clean_filenames_tree }}
+      {{ alias_clone }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
