@@ -450,7 +450,7 @@
         echo -e "\nDone!\n"
       }
     alias_clone: |
-      alias clone="rsync -au --delete"
+      alias clone="rsync -auvP --delete"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
