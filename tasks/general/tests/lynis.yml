@@ -3,7 +3,7 @@
 
 - name: General | Tests | Lynis | Set Facts
   set_fact:
-    lynis_file: "{{ user_user.home }}/Reports/{{ lynis_report }}"
+    lynis_file: "{{ user_user.home }}/Reports/{{ ansible_hostname }}.{{ lynis_report }}"
 
 - name: General | Tests | Lynis | Set Facts 2
   set_fact:

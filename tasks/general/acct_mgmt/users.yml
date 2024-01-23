@@ -66,6 +66,7 @@
       - sudo
       - video
       - render
+      - wheel
     append: yes
     shell: "{{ user_shell }}"
     create_home: yes
@@ -170,10 +171,34 @@
 
         {{ update_package_manager }}
         {{ update_flatpak }}
+        echo "*** Completed Successfully ***"
         return 0
+      }
+    function_update_firmware: |
+      function update-firmware() {
+        PROG=$FUNCNAME
+        usage="Usage: $PROG [-y]
+        $PROG is used to run the firmware updater in one swoop. Flow stops if
+          any command returns a failure code. The hope is to run something as
+          easy as 'pacman -Syyu' but for non-Arch systems.
+        -y : Assume yes to any prompts."
 
-        echo "ERROR: $PROG experienced a problem and has aborted." >&2
-        return 1
+        unset OPTIND
+        unset accept
+        while getopts ":hy" opt; do
+            case $opt in
+              h) echo -e "$usage"
+                return 0 ;;
+              y) accept="-y" ;;
+              *) echo "ERROR: -$OPTARG is not a recognized option." >&2
+                echo -e "$usage"
+                return 1 ;;
+            esac
+        done
+
+        {{ update_firmware }}
+        echo "*** Completed Successfully ***"
+        return 0
       }
     alias_sync: alias sync='date && echo "Syncing!" && sync && date'
     export_editor: export EDITOR='vi'
@@ -388,6 +413,8 @@
           --branch dev ~/Code/ansible-dev
         git clone git@github.com:Hyperling/Docker \
           --branch dev ~/Code/docker-dev
+        git clone git@github.com:Hyperling/Website \
+          --branch dev ~/Code/website-dev
         git clone git@github.com:Hyperling/NixOS \
           --branch dev ~/Code/nixos-dev
         git clone git@github.com:Hyperling/BreakTheHabit \
@@ -422,6 +449,8 @@
         done
         echo -e "\nDone!\n"
       }
+    alias_clone: |
+      alias clone="rsync -auPh --delete"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -436,6 +465,7 @@
       {{ export_PS1 }}
       {{ alias_remount }}
       {{ function_update }}
+      {{ function_update_firmware }}
       {{ alias_sync }}
       {{ export_editor }}
       {{ init_aliases }}
@@ -458,6 +488,7 @@
       {{ alias_code_reseed }}
       {{ function_clean_filenames }}
       {{ function_clean_filenames_tree }}
+      {{ alias_clone }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:

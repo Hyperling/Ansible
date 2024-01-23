@@ -1,0 +1,9 @@
+[Profile0]
+Name=haxor
+IsRelative=1
+Path=l33t.haxor
+Default=1
+
+[General]
+StartWithLastProfile=1
+Version=2
