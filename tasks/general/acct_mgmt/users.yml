@@ -451,6 +451,8 @@
       }
     alias_clone: |
       alias clone="rsync -auPh --delete"
+    export_hyperling:
+      export HYPERLING="2a07:e01:3:3b8::1"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -489,6 +491,7 @@
       {{ function_clean_filenames }}
       {{ function_clean_filenames_tree }}
       {{ alias_clone }}
+      {{ export_hyperling }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
