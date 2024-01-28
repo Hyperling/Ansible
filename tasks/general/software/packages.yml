@@ -19,7 +19,7 @@
   shell: exit 1
   when: ansible_distribution == "Parrot OS" and parrotos_zypper_removed is defined and not parrotos_zypper_removed.failed
 
-# More Parrot OS junk. They have a command called update in /usr/bin. Doesn't 
+# More Parrot OS junk. They have a command called update in /usr/bin. Doesn't
 # have sudo or anything in it. Hide it in preference for .bashrc update function.
 - name: General | Software | Packages | Fix Parrot OS 2 (update)
   shell: "mv `which update` `which update`.zz.`date +%Y%m%d`"
@@ -38,7 +38,7 @@
   when: ansible_system == "FreeBSD"
 
 - name: General | Software | Packages | Install Software
-  package: 
+  package:
     name:
     - bash
     - sudo
@@ -53,10 +53,11 @@
     - at
     - gcc
     - vim
+    - "{{ cron }}"
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
-  package: 
+  package:
     name:
     - "{{ microcode_amd }}"
     - "{{ microcode_intel }}"
@@ -75,12 +76,6 @@
   when: ansible_distribution == "Ubuntu"
   ignore_errors: yes
 
-- name: General | Software | Services | Install CROND (Looking at you, Fedora+Mobian+openSUSE)
-  package:
-    name: "{{ cron }}"
-    state: present
-  when: ansible_pkg_mgr in ("dnf", "zypper") or ansible_distribution == "Mobian"
-
 - name: General | Software | Services | Install killall (Looking at you, Debian)
   package:
     name: psmisc
@@ -89,7 +84,7 @@
 
 - name: General | Software | Services | Install "Bloat" (Looking at you, Arch Base)
   package:
-    name: 
+    name:
     - which
     - "{{ cron }}"
     state: present
@@ -97,9 +92,9 @@
 
 - name: General | Software | Services | Install Fix (Looking at you, openSUSE)
   package:
-    name: 
-      # openSUSE Tumbleweed comes without gnome-control-center being able to open 
-      #  properly. Hopefully just a one-time accident but I wanted bleeding edge so I 
+    name:
+      # openSUSE Tumbleweed comes without gnome-control-center being able to open
+      #  properly. Hopefully just a one-time accident but I wanted bleeding edge so I
       #  guess I got it! Luckily was easy to figure out based on CLI error on launch.
       - libvulkan1
       # Provides c99 used to compile ST for DWM.
@@ -108,7 +103,7 @@
   when: ansible_pkg_mgr in ("zypper")
 
 - name: General | Software | Packages | Update Software (Disabled)
-  package: 
+  package:
     name:
     - ansible
     - git
@@ -116,7 +111,7 @@
   when: 1 == 0
 
 - name: General | Software | Packages | Remove Software
-  package: 
+  package:
     name:
     - cowsay # Sorry ;)
     - chromium
@@ -134,7 +129,7 @@
   ignore_errors: yes
 
 - name: General | Software | Packages | Remove Snap (Besides Ubuntu)
-  package: 
+  package:
     name:
     - snapd
     state: absent
