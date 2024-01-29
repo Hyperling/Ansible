@@ -452,7 +452,9 @@
     alias_clone: |
       alias clone="rsync -auPh --delete"
     export_hyperling:
-      export HYPERLING="2a07:e01:3:3b8::1"
+      export HYPERLING6="2a07:e03:3:80::1"
+      export HYPERLING4="185.130.47.173"
+      export HYPERLING="$HYPERLING4"
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
