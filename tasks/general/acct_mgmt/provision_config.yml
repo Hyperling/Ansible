@@ -70,6 +70,10 @@
       ;                Example: /usr/local/swap
       ;                Default: /swapfile
       ;
+      ;  sshd_port : Determine the port which SSHD should listen on.
+      ;                Example: 12345
+      ;                Default: 22
+      ;
       [global]
     marker: '; {mark} MANAGED BY ANSIBLE | Generic Config'
     state: present
@@ -88,6 +92,7 @@
     swap_block: "{{ lookup('ini', 'swap_block file={{gen_file}} default=false') }}"
     swap_count: "{{ lookup('ini', 'swap_count file={{gen_file}} default=1') }}"
     swap_file:  "{{ lookup('ini', 'swap_file  file={{gen_file}} default=/swapfile') }}"
+    sshd_port:  "{{ lookup('ini', 'sshd_port   file={{gen_file}} default=22') }}"
 
 - name: General | Account Management | Provisioning Configuration | General | List
   set_fact:
@@ -103,6 +108,7 @@
     - { 'swap_block': "{{ swap_block }}" }
     - { 'swap_count': "{{ swap_count }}" }
     - { 'swap_file': "{{ swap_file }}" }
+    - { 'sshd_port': "{{ sshd_port }}" }
 
 
 ## Workstation ##

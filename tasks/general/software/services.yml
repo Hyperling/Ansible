@@ -50,7 +50,7 @@
     - { "key": '^[\#]?LogLevel',             "value": 'LogLevel verbose'}
     - { "key": '^[\#]?MaxAuthTries',         "value": 'MaxAuthTries 3'}
     - { "key": '^[\#]?MaxSessions',          "value": 'MaxSessions 2'}
-    #- { "key": '^[\#]?Port',                 "value": 'Port '}
+    - { "key": '^[\#]?Port',                 "value": 'Port {{ sshd_port }}'}
     - { "key": '^[\#]?TCPKeepAlive',         "value": 'TCPKeepAlive no'}
     - { "key": '^[\#]?X11Forwarding',        "value": 'X11Forwarding no'}
     - { "key": '^[\#]?AllowAgentForwarding', "value": 'AllowAgentForwarding no'}
