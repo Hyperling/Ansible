@@ -407,7 +407,7 @@
       alias code-reseed='
         unseed_dir="$HOME/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
         mkdir -pv "$unseed_dir"
-        mv -v ~/Code/*{ansible,docker,nix,break,habit}* \
+        mv -v ~/Code/*{ansible,docker,nix,break,habit,website,www}* \
           "$unseed_dir"/ 2>/dev/null
         git clone git@github.com:Hyperling/Ansible \
           --branch dev ~/Code/ansible-dev
