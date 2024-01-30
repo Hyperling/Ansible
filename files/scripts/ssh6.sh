@@ -69,17 +69,17 @@ if [[ -n $input ]]; then
 	if [[ $receive == "N" ]]; then
 		echo -n "Sending '$input' from localhost to '$user@$destination' "
 		echo " at '$output' using port '$port'."
-		scp -r -p$port "$user@[$destination]":"$input" "$output"
+		scp -r -P$port "$user@[$destination]":"$input" "$output"
 	elif [[ $receive == "Y" ]]; then
 		echo -n "Receiving '$input' from '$user@$destination' "
 		echo " to '$output' on localhost using port '$port'."
-		scp -r -p$port "$input" "$user@[$destination]":"$output"
+		scp -r -P$port "$input" "$user@[$destination]":"$output"
 	else
 		echo "ERROR: Receive variable is screwed up. $receive" >&2
 	fi
 else
 	echo "No input file provided, connecting to destination."
-	ssh -t $user@$destination
+	ssh -t -p$port $user@$destination
 fi
 date
 
