@@ -54,6 +54,7 @@
     - gcc
     - vim
     - "{{ cron }}"
+    - "{{ encfs }}"
     state: present
 
 - name: General | Software | Packages | Install Software (DEV)
