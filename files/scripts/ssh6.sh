@@ -52,13 +52,19 @@ done
 
 ## Validations ##
 
+if [[ -z $destination ]]; then
+	echo "ERROR: Destination was not provided. $destination" >&2
+	usage 2
+fi
+
 if [[ -z $input && -n $output ]]; then
 	echo "ERROR: Output '$output' was provided but not input. $input" >&2
-	usage 2
+	usage 3
 fi
 
 ## Main ##
 
+date
 if [[ -n $input ]]; then
 	if [[ $receive == "N" ]]; then
 		echo -n "Sending '$input' from localhost to '$user@$destination' "
@@ -75,6 +81,7 @@ else
 	echo "No input file provided, connecting to destination."
 	ssh -t $user@$destination
 fi
+date
 
 ## Finish ##
 
