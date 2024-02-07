@@ -58,7 +58,7 @@ while getopts ":i:v:a:c:rfdmVxh" opt; do
 			;;
 		d) delete="Y"
 			;;
-		m) time_command="time -p"
+		m) time_command="`which time`"
 			;;
 		V) verbose="Y"
 			;;
@@ -99,6 +99,8 @@ fi
 
 if [[ -z "$time_command" ]]; then
 	time_command=""
+else
+	time_command="$time_command -p"
 fi
 
 ## Main ##
