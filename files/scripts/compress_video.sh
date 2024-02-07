@@ -27,7 +27,7 @@ function usage {
 		  -i input : The input file or folder with which to search for video files.
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
-		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
+		  -a bitrate : The audio bitrate to convert to.
 		  -c vcodec : The video codec you'd like to use, such as libopenh264.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
@@ -46,9 +46,9 @@ while getopts ":i:v:a:c:rfdmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
-		v) video_bitrate="$OPTARG"
+		v) video_bitrate="-b:v $OPTARG"
 			;;
-		a) audio_bitrate="$OPTARG"
+		a) audio_bitrate="-b:a $OPTARG"
 			;;
 		c) codec="-vcodec $OPTARG"
 			;;
@@ -82,11 +82,11 @@ if [[ -z "$input" ]]; then
 fi
 
 if [[ -z "$video_bitrate" ]]; then
-	video_bitrate="2000k"
+	video_bitrate="-b:v 2000k"
 fi
 
 if [[ -z "$audio_bitrate" ]]; then
-	audio_bitrate="128k"
+	audio_bitrate=""
 fi
 
 if [[ -z "$codec" ]]; then
@@ -164,7 +164,7 @@ $search_command "$input" | sort | while read file; do
 	# Convert the file.
 	echo "Converting to '$newfile'."
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
+			-i '$file' $video_bitrate $audio_bitrate \
 			$vcodec -movflags +faststart '$newfile'"
 	status="$?"
 	if [[ "$status" != 0 ]]; then
