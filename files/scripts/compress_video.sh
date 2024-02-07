@@ -27,7 +27,7 @@ function usage {
 		  -i input : The input file or folder with which to search for video files.
 		             If nothing is provided, current directory (.) is assumed.
 		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
-		  -a bitrate : The audio bitrate to convert to.
+		  -a bitrate : The audio bitrate to convert to, defaults to 192k.
 		  -c vcodec : The video codec you'd like to use, such as libopenh264.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
@@ -86,7 +86,7 @@ if [[ -z "$video_bitrate" ]]; then
 fi
 
 if [[ -z "$audio_bitrate" ]]; then
-	audio_bitrate=""
+	audio_bitrate="-b:a 192k"
 fi
 
 if [[ -z "$codec" ]]; then
