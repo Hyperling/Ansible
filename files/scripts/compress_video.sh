@@ -2,6 +2,11 @@
 # 2023-06-13 Hyperling
 # Compress a video to good-enough quality for high quality streaming.
 
+## FFMpeg Notes ##
+# 2024-02-08
+#   -af parameter comes from Cahlen Lee's recommendation:
+#   https://odysee.com/@HyperVegan:2/20240205_DesertSilence-Campfire:3?lc=a2439b26d9fe89a950e0a47ec1d110d7156f596843039b4b76a4a2f327afcd2f
+
 ## Setup ##
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
@@ -166,8 +171,8 @@ $search_command "$input" | sort | while read file; do
 	# Convert the file.
 	echo "Converting to '$newfile'."
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i '$file' $video_bitrate $audio_bitrate \
-			$vcodec -movflags +faststart '$newfile'"
+			-i '$file' $video_bitrate $audio_bitrate $vcodec -movflags +faststart \
+			-af 'dynaudnorm=f=33:g=65:p=0.66:m=33.3' '$newfile'"
 	status="$?"
 	if [[ "$status" != 0 ]]; then
 		echo "SKIP: ffmpeg returned a status of '$status'."
