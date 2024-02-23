@@ -31,9 +31,13 @@ function usage {
 		Parameters:
 		  -i input : The input file or folder with which to search for video files.
 		             If nothing is provided, current directory (.) is assumed.
-		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
-		  -a bitrate : The audio bitrate to convert to, defaults to 192k.
+		  -v bitrate : The video bitrate to convert to.
+		               Defaults to '2000k'.
+		  -a bitrate : The audio bitrate to convert to.
+		               Defaults to '192k'.
 		  -c vcodec : The video codec you'd like to use, such as libopenh264.
+		  -s size : The video size such as 1080 or 720, or1280 for vertical 720p.
+		            Defaults to '720'.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
 		  -d : Delete the original video if the compressed version is smaller.
@@ -47,15 +51,17 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:c:rfdmVxh" opt; do
+while getopts ":i:v:a:c:s:rfdmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
-		v) video_bitrate="-b:v $OPTARG"
+		v) video_bitrate="$OPTARG"
 			;;
-		a) audio_bitrate="-b:a $OPTARG"
+		a) audio_bitrate="$OPTARG"
 			;;
-		c) codec="-vcodec $OPTARG"
+		c) codec="$OPTARG"
+			;;
+		s) size="$OPTARG"
 			;;
 		r) search_command="find"
 			;;
@@ -87,15 +93,19 @@ if [[ -z "$input" ]]; then
 fi
 
 if [[ -z "$video_bitrate" ]]; then
-	video_bitrate="-b:v 2000k"
+	video_bitrate="2000k"
 fi
+video_bitrate="-b:v $video_bitrate"
 
 if [[ -z "$audio_bitrate" ]]; then
-	audio_bitrate="-b:a 192k"
+	audio_bitrate="192k"
 fi
+audio_bitrate="-b:a $audio_bitrate"
 
 if [[ -z "$codec" ]]; then
 	codec=""
+else
+	codec="-vcodec $codec"
 fi
 
 if [[ -z "$search_command" ]]; then
@@ -107,6 +117,11 @@ if [[ -z "$time_command" ]]; then
 else
 	time_command="$time_command -p"
 fi
+
+if [[ -z $size ]]; then
+	size="720"
+fi
+size="-filter:v scale=-1:$size"
 
 ## Main ##
 
@@ -171,8 +186,10 @@ $search_command "$input" | sort | while read file; do
 	# Convert the file.
 	echo "Converting to '$newfile'."
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i '$file' $video_bitrate $audio_bitrate $vcodec -movflags +faststart \
-			-af 'dynaudnorm=f=33:g=65:p=0.66:m=33.3' '$newfile'"
+			-i '$file' $size $video_bitrate $audio_bitrate \
+			-af 'dynaudnorm=f=33:g=65:p=0.66:m=33.3' \
+			$vcodec -movflags +faststart \
+			'$newfile'"
 	status="$?"
 	if [[ "$status" != 0 ]]; then
 		echo "SKIP: ffmpeg returned a status of '$status'."
