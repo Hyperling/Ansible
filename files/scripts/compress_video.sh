@@ -22,7 +22,7 @@ large_created=".$PROG.large_created.true"
 
 function usage {
 	echo -n "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec]"
-	echo " [-r] [-f] [-d] [-m] [-V] [-x] [-h]"
+	echo " [-s size] [-r] [-f] [-d] [-A] [-m] [-V] [-x] [-h]"
 	cat <<- EOF
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
@@ -41,6 +41,7 @@ function usage {
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
 		  -d : Delete the original video if the compressed version is smaller.
+		  -A : Recursively Force and Delete.
 		  -m : Measure the time it takes to compress each video and do the loop.
 		  -V : Add verbosity, such as printing all the variable values.
 		  -x : Set the shell's x flag to display every action which is taken.
@@ -51,7 +52,7 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:c:s:rfdmVxh" opt; do
+while getopts ":i:v:a:c:s:rfdAmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
@@ -68,6 +69,8 @@ while getopts ":i:v:a:c:s:rfdmVxh" opt; do
 		f) force="Y"
 			;;
 		d) delete="Y"
+			;;
+		A) search_command="find" && force="Y" && delete="Y"
 			;;
 		m) time_command="`which time`"
 			;;
