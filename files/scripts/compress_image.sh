@@ -106,13 +106,22 @@ $search "$location" | sort | while read image; do
 		continue
 	fi
 
+
 	new_image="${image//.$extension/}.$tag-$date_YYYYMMDD.$extension"
 
+	## Clean Filename ##
+	# Prevent directory from having its name cleaned too.
+	image_dirname="`dirname $new_image`"
+	image_basename="`basename $new_image`"
+
 	# Clean the filename of extra junk so that they can be chronological order.
-	new_image_clean="${new_image//IMG/}"
+	new_image_clean="${image_basename//IMG/}"
 	new_image_clean="${new_image_clean//_/}"
 	new_image_clean="${new_image_clean//-/}"
 	new_image_clean="${new_image_clean// /}"
+
+	# Add directory back to the full path.
+	new_image_clean="$image_dirname/$new_image_clean"
 
 	# Delete the existing shrunk image if we are forcing a new compression.
 	if [[ -n "$force" && (-e "$new_image" || -e $new_image_clean) ]]; then
@@ -131,9 +140,9 @@ $search "$location" | sort | while read image; do
 		new_image="$new_image_clean"
 	fi
 
-	### TBD Instead of this, only alter the file names, and set a dirname var?
-	# Create a new directory if the directory names were altered.
-	mkdir -pv "`dirname "$new_image"`"
+	###### TBD Instead of this, only alter the file names, and set a dirname var?
+	#### Create a new directory if the directory names were altered.
+	###mkdir -pv "`dirname "$new_image"`"
 
 	# This modifies the image to be $size at its longest end, not be a square.
 	$convert_exe "$image" -resize ${size}x${size} "$new_image"
