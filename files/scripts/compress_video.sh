@@ -194,6 +194,7 @@ $search_command "$input" | sort | while read file; do
 
 	# Convert the file.
 	echo "Converting to '$newfile'."
+	echo "*** `date` ***"
 	set -x
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' $size $video_bitrate $audio_bitrate \
@@ -202,6 +203,7 @@ $search_command "$input" | sort | while read file; do
 			'$newfile'"
 	status="$?"
 	set +x
+	echo "*** `date` ***"
 	if [[ "$status" != 0 ]]; then
 		echo "SKIP: ffmpeg returned a status of '$status'."
 		continue
