@@ -91,7 +91,7 @@ if [[ "$set_x" == "Y" ]]; then
 fi
 
 if [[ -z "$input" ]]; then
-	echo "WARNING: Program was not passed an input. Using current directory."
+	echo "WARNING: Program was not passed an input. Using current directory." >&2
 	input="."
 fi
 
@@ -155,8 +155,12 @@ $search_command "$input" | sort | while read file; do
 		date
 	fi
 
+	typeset -l extension_lower
+	extension="${file##*.}"
+	extension_lower="$extension"
+
 	# Exception checks for the existing file.
-	if [[ "$file" != *'.mp4' ]]; then
+	if [[ "$extension_lower" != "mp4" ]]; then
 		echo "SKIP: Not an MP4."
 		continue
 	fi
@@ -166,20 +170,22 @@ $search_command "$input" | sort | while read file; do
 	fi
 
 	# Build the new filename to signify it is different than the original.
-	extension="${file##*.}"
-	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}"
+	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension_lower}"
 
-	#### Convert spaces to underscores.
-	###newfile="${newfile// /_}"
-	###
-	#### Ensure any directories that had spaces get recreated without them.
-	###mkdir -pv "`dirname "$newfile"`"
+	if [[ $newfile == $file ]]; then
+		echo "ERROR: The new calculated filename matches the old, skipping." >&2
+		continue
+	fi
 
 	# More exception checks based on the new file.
 	if [[ -e "$newfile" ]]; then
 		if [[ "$force" == "Y" ]]; then
 			echo "FORCE: Removing '$newfile'."
-			rm -vf "$newfile"
+			if [[ -d ~/TRASH ]]; then
+				mv -v "$newfile" ~/TRASH/
+			else
+				rm -v "$newfile"
+			fi
 		else
 			echo "SKIP: Already has a compressed version ($newfile)."
 			continue
@@ -188,12 +194,14 @@ $search_command "$input" | sort | while read file; do
 
 	# Convert the file.
 	echo "Converting to '$newfile'."
+	set -x
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
 			-i '$file' $size $video_bitrate $audio_bitrate \
 			-af 'dynaudnorm=f=33:g=65:p=0.66:m=33.3' \
 			$vcodec -movflags +faststart \
 			'$newfile'"
 	status="$?"
+	set +x
 	if [[ "$status" != 0 ]]; then
 		echo "SKIP: ffmpeg returned a status of '$status'."
 		continue
@@ -213,7 +221,7 @@ $search_command "$input" | sort | while read file; do
 	if [[ -e "$newfile" ]]; then
 		echo "Conversion succeeded, file has been compressed."
 	else
-		echo "ERROR: Converted file '$newfile' could not be found. Aborting."
+		echo "ERROR: Converted file '$newfile' could not be found. Aborting." >&2
 		break
 	fi
 
