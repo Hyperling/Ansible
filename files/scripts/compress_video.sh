@@ -98,7 +98,7 @@ fi
 if [[ -z "$video_bitrate" ]]; then
 	video_bitrate="2000k"
 fi
-video_bitrate="-b:v $video_bitrate"
+video_bitrate="-maxrate $video_bitrate"
 
 if [[ -z "$audio_bitrate" ]]; then
 	audio_bitrate="192k"
