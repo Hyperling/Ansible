@@ -455,6 +455,11 @@
       export HYPERLING6="2a07:e03:3:80::1"
       export HYPERLING4="185.130.47.173"
       export HYPERLING="$HYPERLING4"
+    source_docker_env:
+      DOCKER_SOURCE="/opt/Docker/source.env"
+      if [[ -e $DOCKER_SOURCE && $LOGNAME == "root" ]]; then
+        source $DOCKER_SOURCE
+      fi
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -494,6 +499,7 @@
       {{ function_clean_filenames_tree }}
       {{ alias_clone }}
       {{ export_hyperling }}
+      {{ source_docker_env }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:
