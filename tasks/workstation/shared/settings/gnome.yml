@@ -13,6 +13,7 @@
                       , 'io.gitlab.librewolf-community.desktop', 'librewolf.desktop'
                       , 'org.mozilla.firefox.desktop', 'firefox.desktop'
                       , 'com.visualstudio.code-oss.desktop', 'code-oss.desktop'
+                      , 'com.google.AndroidStudio.desktop'
                       , 'org.godotengine.Godot.desktop'
                       , 'org.shotcut.Shotcut.desktop'
                       , 'io.lbry.lbry-app.desktop', 'lbry.desktop'
