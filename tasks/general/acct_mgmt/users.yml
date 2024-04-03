@@ -397,6 +397,7 @@
         ls -d ~/Code/* | while read project
           do echo "*** `basename $project` ***"
           cd $project
+          git stash
           git switch main
           git pull
           git branch -D dev
@@ -407,7 +408,7 @@
       alias code-reseed='
         unseed_dir="$HOME/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
         mkdir -pv "$unseed_dir"
-        mv -v ~/Code/*{ansible,docker,nix,break,habit,website,www}* \
+        mv -v ~/Code/*{ansible,docker,nix,break,website,www,tictactoe,-dev}* \
           "$unseed_dir"/ 2>/dev/null
         git clone git@github.com:Hyperling/Ansible \
           --branch dev ~/Code/ansible-dev
@@ -415,10 +416,10 @@
           --branch dev ~/Code/docker-dev
         git clone git@github.com:Hyperling/Website \
           --branch dev ~/Code/website-dev
-        git clone git@github.com:Hyperling/NixOS \
-          --branch dev ~/Code/nixos-dev
         git clone git@github.com:Hyperling/BreakTheHabit \
           --branch dev ~/Code/breakthehabit-dev
+        git clone git@github.com:Hyperling/TicTacToeAndroid \
+          --branch dev ~/Code/tictactoe-dev
       '
     function_clean_filenames: |
       function clean-filenames() {
