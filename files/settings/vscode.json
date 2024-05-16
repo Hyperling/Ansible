@@ -1,7 +1,8 @@
-// Needs saved as:
-//  ~/.var/app/com.visualstudio.code-oss/config/Code - OSS/{{ user_desc }}/settings.json
-//  ~/.var/app/com.vscodium.codium/config/VSCodium/{{ user_desc }}/settings.json
 {
+	"BEGIN_COMMENTS": "",
+	"save_loc1": "~/.var/app/com.visualstudio.code-oss/config/Code - OSS/{{ user_desc }}/settings.json",
+	"save_loc2": "~/.var/app/com.vscodium.codium/config/VSCodium/{{ user_desc }}/settings.json",
+	"END_COMMENTS": "",
 	"workbench.startupEditor": "none",
 	"editor.rulers": [
 		 80, 120, 200

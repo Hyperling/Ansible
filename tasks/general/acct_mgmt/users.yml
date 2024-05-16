@@ -397,6 +397,7 @@
         ls -d ~/Code/* | while read project
           do echo "*** `basename $project` ***"
           cd $project
+          git stash
           git switch main
           git pull
           git branch -D dev
@@ -407,7 +408,7 @@
       alias code-reseed='
         unseed_dir="$HOME/TRASH/`date +%Y-%m-%d`_UnseededCodeProjects"
         mkdir -pv "$unseed_dir"
-        mv -v ~/Code/*{ansible,docker,nix,break,habit}* \
+        mv -v ~/Code/*{ansible,docker,nix,break,website,www,tictactoe,-dev}* \
           "$unseed_dir"/ 2>/dev/null
         git clone git@github.com:Hyperling/Ansible \
           --branch dev ~/Code/ansible-dev
@@ -415,10 +416,10 @@
           --branch dev ~/Code/docker-dev
         git clone git@github.com:Hyperling/Website \
           --branch dev ~/Code/website-dev
-        git clone git@github.com:Hyperling/NixOS \
-          --branch dev ~/Code/nixos-dev
         git clone git@github.com:Hyperling/BreakTheHabit \
           --branch dev ~/Code/breakthehabit-dev
+        git clone git@github.com:Hyperling/TicTacToeAndroid \
+          --branch dev ~/Code/tictactoe-dev
       '
     function_clean_filenames: |
       function clean-filenames() {
@@ -451,10 +452,15 @@
       }
     alias_clone: |
       alias clone="rsync -auPh --delete"
-    export_hyperling:
+    export_hyperling: |
       export HYPERLING6="2a07:e03:3:80::1"
       export HYPERLING4="185.130.47.173"
       export HYPERLING="$HYPERLING4"
+    source_docker_env: |
+      DOCKER_SOURCE="/opt/Docker/source.env"
+      if [[ -e $DOCKER_SOURCE && $LOGNAME == "root" ]]; then
+        source $DOCKER_SOURCE
+      fi
 
 - name: General | Account Management | Users | Files | Common Variable
   set_fact:
@@ -494,6 +500,7 @@
       {{ function_clean_filenames_tree }}
       {{ alias_clone }}
       {{ export_hyperling }}
+      {{ source_docker_env }}
 
 - name: General | Account Management | Users | Files | .bashrc
   blockinfile:

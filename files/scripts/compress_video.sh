@@ -2,6 +2,11 @@
 # 2023-06-13 Hyperling
 # Compress a video to good-enough quality for high quality streaming.
 
+## FFMpeg Notes ##
+# 2024-02-08
+#   -af parameter comes from Cahlen Lee's recommendation:
+#   https://odysee.com/@HyperVegan:2/20240205_DesertSilence-Campfire:3?lc=a2439b26d9fe89a950e0a47ec1d110d7156f596843039b4b76a4a2f327afcd2f
+
 ## Setup ##
 
 DIR="$(dirname -- "${BASH_SOURCE[0]}")"
@@ -17,7 +22,7 @@ large_created=".$PROG.large_created.true"
 
 function usage {
 	echo -n "Usage: $PROG [-i file/folder] [-v bitrate] [-a bitrate] [-c vcodec]"
-	echo " [-r] [-f] [-d] [-m] [-V] [-x] [-h]"
+	echo " [-s size] [-r] [-f] [-d] [-A] [-m] [-V] [-x] [-h]"
 	cat <<- EOF
 		  Reduce the filesize of a video file to make it stream well. It also
 		  helps with the file size for placing the file into a backup system.
@@ -26,12 +31,17 @@ function usage {
 		Parameters:
 		  -i input : The input file or folder with which to search for video files.
 		             If nothing is provided, current directory (.) is assumed.
-		  -v bitrate : The video bitrate to convert to, defaults to 2000k.
-		  -a bitrate : The audio bitrate to convert to, defaults to 128k.
+		  -v bitrate : The video bitrate to convert to.
+		               Defaults to '2000k'.
+		  -a bitrate : The audio bitrate to convert to.
+		               Defaults to '192k'.
 		  -c vcodec : The video codec you'd like to use, such as libopenh264.
+		  -s size : The video size such as 1080 or 720, or1280 for vertical 720p.
+		            Defaults to '720'.
 		  -r : Recurse the entire directory structure, compressing all video files.
 		  -f : Force recompressing any files by deleting it if it already exists.
 		  -d : Delete the original video if the compressed version is smaller.
+		  -A : Recursively Force and Delete.
 		  -m : Measure the time it takes to compress each video and do the loop.
 		  -V : Add verbosity, such as printing all the variable values.
 		  -x : Set the shell's x flag to display every action which is taken.
@@ -42,7 +52,7 @@ function usage {
 
 ## Parameters ##
 
-while getopts ":i:v:a:c:rfdmVxh" opt; do
+while getopts ":i:v:a:c:s:rfdAmVxh" opt; do
 	case $opt in
 		i) input="$OPTARG"
 			;;
@@ -50,7 +60,9 @@ while getopts ":i:v:a:c:rfdmVxh" opt; do
 			;;
 		a) audio_bitrate="$OPTARG"
 			;;
-		c) codec="-vcodec $OPTARG"
+		c) codec="$OPTARG"
+			;;
+		s) size="$OPTARG"
 			;;
 		r) search_command="find"
 			;;
@@ -58,7 +70,9 @@ while getopts ":i:v:a:c:rfdmVxh" opt; do
 			;;
 		d) delete="Y"
 			;;
-		m) time_command="time -p"
+		A) search_command="find" && force="Y" && delete="Y"
+			;;
+		m) time_command="`which time`"
 			;;
 		V) verbose="Y"
 			;;
@@ -77,20 +91,24 @@ if [[ "$set_x" == "Y" ]]; then
 fi
 
 if [[ -z "$input" ]]; then
-	echo "WARNING: Program was not passed an input. Using current directory."
+	echo "WARNING: Program was not passed an input. Using current directory." >&2
 	input="."
 fi
 
 if [[ -z "$video_bitrate" ]]; then
 	video_bitrate="2000k"
 fi
+video_bitrate="-maxrate $video_bitrate"
 
 if [[ -z "$audio_bitrate" ]]; then
-	audio_bitrate="128k"
+	audio_bitrate="192k"
 fi
+audio_bitrate="-b:a $audio_bitrate"
 
 if [[ -z "$codec" ]]; then
 	codec=""
+else
+	codec="-vcodec $codec"
 fi
 
 if [[ -z "$search_command" ]]; then
@@ -99,7 +117,14 @@ fi
 
 if [[ -z "$time_command" ]]; then
 	time_command=""
+else
+	time_command="$time_command -p"
 fi
+
+if [[ -z $size ]]; then
+	size="720"
+fi
+size="-filter:v scale=-1:$size"
 
 ## Main ##
 
@@ -130,8 +155,12 @@ $search_command "$input" | sort | while read file; do
 		date
 	fi
 
+	typeset -l extension_lower
+	extension="${file##*.}"
+	extension_lower="$extension"
+
 	# Exception checks for the existing file.
-	if [[ "$file" != *'.mp4' ]]; then
+	if [[ "$extension_lower" != "mp4" ]]; then
 		echo "SKIP: Not an MP4."
 		continue
 	fi
@@ -141,20 +170,22 @@ $search_command "$input" | sort | while read file; do
 	fi
 
 	# Build the new filename to signify it is different than the original.
-	extension="${file##*.}"
-	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension}"
+	newfile="${file//$extension/$filename_flag-$date_YYYYMMDD.$extension_lower}"
 
-	#### Convert spaces to underscores.
-	###newfile="${newfile// /_}"
-	###
-	#### Ensure any directories that had spaces get recreated without them.
-	###mkdir -pv "`dirname "$newfile"`"
+	if [[ $newfile == $file ]]; then
+		echo "ERROR: The new calculated filename matches the old, skipping." >&2
+		continue
+	fi
 
 	# More exception checks based on the new file.
 	if [[ -e "$newfile" ]]; then
 		if [[ "$force" == "Y" ]]; then
 			echo "FORCE: Removing '$newfile'."
-			rm -vf "$newfile"
+			if [[ -d ~/TRASH ]]; then
+				mv -v "$newfile" ~/TRASH/
+			else
+				rm -v "$newfile"
+			fi
 		else
 			echo "SKIP: Already has a compressed version ($newfile)."
 			continue
@@ -163,10 +194,16 @@ $search_command "$input" | sort | while read file; do
 
 	# Convert the file.
 	echo "Converting to '$newfile'."
+	echo "*** `date` ***"
+	set -x
 	$time_command bash -c "ffmpeg -nostdin -hide_banner -loglevel quiet \
-			-i '$file' -b:v $video_bitrate -b:a $audio_bitrate \
-			$vcodec -movflags +faststart '$newfile'"
+			-i '$file' $size $video_bitrate $audio_bitrate \
+			-af 'dynaudnorm=f=33:g=65:p=0.66:m=33.3' \
+			$vcodec -movflags +faststart \
+			'$newfile'"
 	status="$?"
+	set +x
+	echo "*** `date` ***"
 	if [[ "$status" != 0 ]]; then
 		echo "SKIP: ffmpeg returned a status of '$status'."
 		continue
@@ -186,7 +223,7 @@ $search_command "$input" | sort | while read file; do
 	if [[ -e "$newfile" ]]; then
 		echo "Conversion succeeded, file has been compressed."
 	else
-		echo "ERROR: Converted file '$newfile' could not be found. Aborting."
+		echo "ERROR: Converted file '$newfile' could not be found. Aborting." >&2
 		break
 	fi
 

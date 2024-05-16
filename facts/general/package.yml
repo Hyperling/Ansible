@@ -20,6 +20,7 @@
     microcode_amd: amd64-microcode
     microcode_intel: intel-microcode
     cron: cron
+    encfs: encfs
   when: ansible_pkg_mgr == "apt"
 
 - name: General | Facts | Package | pacman
@@ -29,6 +30,7 @@
     microcode_amd: linux-firmware
     microcode_intel: intel-ucode
     cron: cronie
+    encfs: encfs
   when: ansible_pkg_mgr == "pacman"
 
 - name: General | Facts | Package | FreeBSD
@@ -40,6 +42,7 @@
     tar: htop # tar already provided in FreeBSD
     microcode_amd: htop # TODO
     microcode_intel: htop # TODO
+    encfs: fusefs-encfs
   when: ansible_system == "FreeBSD"
 
 - name: General | Facts | Package | dnf
@@ -50,6 +53,7 @@
     microcode_amd: microcode_ctl
     microcode_intel: microcode_ctl
     cron: cronie
+    encfs: fuse-encfs
   when: ansible_pkg_mgr == "dnf"
 
 - name: General | Facts | Package | zypper
@@ -59,6 +63,7 @@
     microcode_amd: ucode-amd
     microcode_intel: ucode-intel
     cron: cronie
+    encfs: encfs
   when: ansible_pkg_mgr == "zypper"
 
 
