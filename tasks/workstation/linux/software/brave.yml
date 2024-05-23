@@ -60,6 +60,7 @@
       - brave-browser
       - brave-keyring
     state: absent
+  ignore_errors: yes
 
 - name: Workstation | Software | Brave | Remove Repo [apt]
   shell: "{{ item }}"
@@ -67,6 +68,7 @@
     - rm /etc/apt/sources.list.d/brave-browser-*.list
     - apt update
   when: ansible_pkg_mgr == "apt"
+  ignore_errors: yes
 
 - name: Workstation | Software | Brave | Remove Repo [dnf]
   shell: "{{ item }}"
@@ -74,6 +76,7 @@
     - rm /etc/yum.repos.d/brave-browser-*.repo
     - rpm -e gpg-pubkey-c2d4e821-5e7252b8
   when: ansible_pkg_mgr == "dnf"
+  ignore_errors: yes
 
 - name: Workstation | Software | Brave | Remove Repo [zypper]
   shell: "{{ item }}"
