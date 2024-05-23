@@ -52,6 +52,8 @@
       - { app: "com.obsproject.Studio", name: "obs", extra: "" }
       - { app: "org.gimp.GIMP", name: "gimp", extra: "" }
       - { app: "org.openshot.OpenShot", name: "openshot", extra: "" }
+      - { app: "org.tenacityaudio.Tenacity", name: "tenacity", extra: "" }
+      - { app: "org.tenacityaudio.Tenacity", name: "audacity", extra: "" } # Alias
     flatpaks_gaming:
       - { app: "com.valvesoftware.Steam", name: "steam", extra: "" }
       - { app: "com.play0ad.zeroad", name: "zeroad", extra: "" }
