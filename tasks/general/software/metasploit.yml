@@ -9,7 +9,7 @@
 - name: General | Software | Metasploit | Install
   shell: "{{ item }}"
   loop:
-    - "[[ -e {{ metasploit_installer }} ]] && rm -fv {{ metasploit_installer }}"
+    - "mv -fv /usr/share/keyrings/metasploit-framework.gpg /usr/share/keyrings/metasploit-framework.gpg.old"
     - "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > {{ metasploit_installer }}"
     - "chmod 755 {{ metasploit_installer }}"
     - "mkdir -p {{ global_bin }}"
