@@ -8,7 +8,7 @@
     # Only do multiple entries per line if they are for the same exact program.
     gnome_favorites: "[ 'org.gnome.Terminal.desktop'
                       , 'org.gnome.Console.desktop'
-                      , 'gnome-system-monitor.desktop'
+                      , 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop'
                       , 'org.gnome.Nautilus.desktop'
                       , 'io.gitlab.librewolf-community.desktop', 'librewolf.desktop'
                       , 'org.mozilla.firefox.desktop', 'firefox.desktop'
