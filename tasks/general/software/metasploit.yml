@@ -2,16 +2,17 @@
 # Install Metasploit Framework
 
 - name: General | Software | Metasploit | Facts
-  set_fact: 
+  set_fact:
     metasploit_installer: msfinstall
   when: ansible_system in ("Linux", "Darwin")
 
 - name: General | Software | Metasploit | Install
   shell: "{{ item }}"
   loop:
+    - "[[ -e {{ metasploit_installer }} ]] && rm -fv {{ metasploit_installer }}"
     - "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > {{ metasploit_installer }}"
     - "chmod 755 {{ metasploit_installer }}"
     - "mkdir -p {{ global_bin }}"
-    - "mv ./msfinstall {{ global_bin }}/{{ metasploit_installer }}"
+    - "mv -fv ./msfinstall {{ global_bin }}/{{ metasploit_installer }}"
     - "{{ global_bin }}/{{ metasploit_installer }}"
   when: ansible_system in ("Linux", "Darwin")
