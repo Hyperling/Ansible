@@ -154,15 +154,17 @@
         $PROG is used to run all the system's package manager commands
           in one swoop. Flow stops if any command returns a failure code.
           The hope is to run something as easy as 'pacman -Syyu'.
-        -y : Assume yes to any prompts."
+        -y : Assume yes to any prompts.
+        -g : Shutdown after updating."
 
         unset OPTIND
         unset accept
-        while getopts ":hy" opt; do
+        while getopts ":hyg" opt; do
             case $opt in
               h) echo -e "$usage"
                 return 0 ;;
               y) accept="-y" ;;
+              g) goodbye="Y" ;;
               *) echo "ERROR: -$OPTARG is not a recognized option." >&2
                 echo -e "$usage"
                 return 1 ;;
@@ -170,8 +172,19 @@
         done
 
         {{ update_package_manager }}
-        {{ update_flatpak }}
+
+        if [[ $goodbye == "Y" && {{ battery }} == "true" ]]; then
+          echo -e "\n*** Skipping Flatpak ***\n\n"
+        else
+          {{ update_flatpak }}
+        fi
+
         echo "*** Completed Successfully ***"
+
+        if [[ $goodbye == "Y" ]]; then
+          bye
+        fi
+
         return 0
       }
     function_update_firmware: |
@@ -218,7 +231,7 @@
       alias init-prog=init-program
     bye_aliases: |
       alias bye="{{ shutdown_command }}"
-      alias goodbye="update -y && bye"
+      alias goodbye="update -yg"
     metasploit_aliases: |
       alias metasploit="msfconsole"
       alias hax="metasploit"
