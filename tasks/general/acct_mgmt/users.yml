@@ -173,7 +173,7 @@
 
         {{ update_package_manager }}
 
-        if [[ $goodbye == "Y" && "{{ battery }}"" == "True" ]]; then
+        if [[ "$goodbye" == "Y" && "{{ battery }}" == "True" ]]; then
           echo -e "\n*** Skipping Flatpak ***\n\n"
         else
           {{ update_flatpak }}
