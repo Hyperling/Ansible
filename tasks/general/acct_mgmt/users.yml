@@ -306,7 +306,7 @@
               fi
             fi
           done
-          sudo find $dir -name .local/share/Trash | while read trash; do
+          sudo find $dir -maxdepth 4 -name "*"Trash"*" | while read trash; do
             if [[ "$trash" != "" && `sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
               sudo du -ha $trash | sort -h
