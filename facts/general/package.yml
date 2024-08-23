@@ -217,7 +217,7 @@
             echo "  distribution='${distribution}', pkg_mgr='${pkg_mgr}'" >&2
           fi
         ;;
-      esac &&
+      esac
 # End of update_package_manager
 
 # Flatpaks
