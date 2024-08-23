@@ -155,27 +155,33 @@
           in one swoop. Flow stops if any command returns a failure code.
           The hope is to run something as easy as 'pacman -Syyu'.
         -y : Assume yes to any prompts.
-        -g : Shutdown after updating."
+        -g : Shutdown after updating.
+        -s : System updates only, no Flatpaks.
+        -f : Flatpaks only, no system updates."
 
         unset OPTIND
         unset accept
-        while getopts ":hyg" opt; do
+        while getopts ":hygsf" opt; do
             case $opt in
               h) echo -e "$usage"
                 return 0 ;;
               y) accept="-y" ;;
               g) goodbye="Y" ;;
+              s) skip_flat="Y" ;;
+              f) skip_sys="Y" ;;
               *) echo "ERROR: -$OPTARG is not a recognized option." >&2
                 echo -e "$usage"
                 return 1 ;;
             esac
         done
 
-        {{ update_package_manager }}
+        if [[ "$skip_sys" != "Y" ]]; then
+          {{ update_package_manager }}
+        fi
 
         if [[ "$goodbye" == "Y" && "{{ battery }}" == "True" ]]; then
           echo -e "\n*** Skipping Flatpak ***\n\n"
-        else
+        elif [[ "$skip_flat" != "Y" ]]; then
           {{ update_flatpak }}
         fi
 
