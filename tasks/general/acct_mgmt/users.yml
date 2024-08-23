@@ -333,6 +333,16 @@
                 fi
               fi
             done
+            sudo find $dir -name .Trash"*" | while read trash; do
+              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+                echo "Found $trash with contents:"
+                sudo du -ha $trash | sort -h
+                if [[ "$clean" == "Y" ]]; then
+                  echo "Cleaning trash..."
+                  sudo sh -c "rm -rfv $trash/*"
+                fi
+              fi
+            done
           done
         fi
         echo "Checking but not cleaning /var/mail..."
