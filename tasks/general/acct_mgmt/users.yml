@@ -296,27 +296,32 @@
           echo "/media 0"
         }
         dirs_to_check | while read dir depth; do
-          if [[ "$depth" != 0 ]; then
+          if [[ "$depth" != 0 ]]; then
             maxdepth="-maxdepth $depth"
           fi
+          sudo="sudo"
+          if [[ "$dir" == "/media" ]]; then
+            sudo=""
+            dir="$dir/$LOGNAME"
+          fi
           echo "Checking $dir..."
-          sudo find $dir -name TRASH | while read trash; do
-            if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+          $sudo find $dir -name TRASH | while read trash; do
+            if [[ "$trash" != "" && `$sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
-              sudo du -ha $trash | sort -h
+              $sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
-                sudo sh -c "rm -rfv $trash/*"
+                $sudo sh -c "rm -rfv $trash/*"
               fi
             fi
           done
-          sudo find $dir $maxdepth -name "*"Trash"*" | while read trash; do
-            if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+          $sudo find $dir $maxdepth -name "*"Trash"*" | while read trash; do
+            if [[ "$trash" != "" && `$sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
-              sudo du -ha $trash | sort -h
+              $sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
-                sudo sh -c "rm -rfv $trash/*"
+                $sudo sh -c "rm -rfv $trash/*"
               fi
             fi
           done
