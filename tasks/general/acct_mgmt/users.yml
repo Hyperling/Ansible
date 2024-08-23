@@ -167,21 +167,25 @@
                 return 0 ;;
               y) accept="-y" ;;
               g) goodbye="Y" ;;
-              s) skip_flat="Y" ;;
-              f) skip_sys="Y" ;;
+              s) only_sys="Y" ;;
+              f) only_flat="Y" ;;
               *) echo "ERROR: -$OPTARG is not a recognized option." >&2
                 echo -e "$usage"
                 return 1 ;;
             esac
         done
 
-        if [[ "$skip_sys" != "Y" ]]; then
+        if [[ "$only_flat" == "Y" ]]; then
+          echo -e "\n*** Only Flatpaks - Skipping System Updates ***\n\n"
+        else
           {{ update_package_manager }}
         fi
 
         if [[ "$goodbye" == "Y" && "{{ battery }}" == "True" ]]; then
-          echo -e "\n*** Skipping Flatpak ***\n\n"
-        elif [[ "$skip_flat" != "Y" ]]; then
+          echo -e "\n*** Only System Updates - Skipping Flatpak ***\n\n"
+        elif [[ "$only_sys" == "Y" ]]; then
+          echo -e "\n*** Manually Skipping Flatpak ***\n\n"
+        else
           {{ update_flatpak }}
         fi
 
