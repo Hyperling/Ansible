@@ -289,7 +289,7 @@
           sudo find $dir -name TRASH | while read trash; do
             if [[ "$trash" != "" && `sudo ls $trash` ]]; then
               echo "Found $trash with contents:"
-              sudo ls -lh $trash
+              sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
                 sudo sh -c "rm -rfv $trash/*"
@@ -306,7 +306,7 @@
             sudo find $dir -name TRASH | while read trash; do
               if [[ "$trash" != "" && `sudo ls $trash` ]]; then
                 echo "Found $trash with contents:"
-                sudo ls -lh $trash
+                sudo du -ha $trash | sort -h
                 if [[ "$clean" == "Y" ]]; then
                   echo "Cleaning trash..."
                   sudo sh -c "rm -rfv $trash/*"
