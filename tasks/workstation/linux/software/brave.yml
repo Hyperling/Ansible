@@ -1,48 +1,87 @@
 ---
 # Everything needed to install Brave
 
-- name: Workstation | Software | Brave | Pre-Reqs [apt]
+# 2024-05-23, No longer incude this software, has not been used since switching
+# to Firefox months/years back for avoiding DRM and other junk Google stuff.
+###
+###- name: Workstation | Software | Brave | Pre-Reqs [apt]
+###  package:
+###    name:
+###      - apt-transport-https
+###    state: present
+###  when: ansible_pkg_mgr == "apt"
+###
+###- name: Workstation | Software | Brave | Pre-Reqs [dnf]
+###  package:
+###    name:
+###      - dnf-plugins-core
+###    state: present
+###  when: ansible_pkg_mgr == "dnf"
+###
+#### https://brave.com/linux/#debian-ubuntu-mint
+###- name: Workstation | Software | Brave | Add Repo [apt]
+###  shell: "{{ item }}"
+###  loop:
+###    - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+###    - echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+###    - apt update
+###  when: ansible_pkg_mgr == "apt"
+###
+#### https://brave.com/linux/#fedora-centos-streamrhel
+###- name: Workstation | Software | Brave | Add Repo [dnf]
+###  shell: "{{ item }}"
+###  loop:
+###    - dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+###    - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+###  when: ansible_pkg_mgr == "dnf"
+###
+#### https://brave.com/linux/#opensuse
+###- name: Workstation | Software | Brave | Add Repo [zypper]
+###  shell: "{{ item }}"
+###  loop:
+###    - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+###    - zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+###  when: ansible_pkg_mgr == "zypper"
+###  ignore_errors: yes
+###
+###- name: Workstation | Software | Brave | Install
+###  package:
+###    name:
+###      - brave-browser
+###    state: present
+###
+
+# Remove Brave Browser and Repos
+# https://support.brave.com/hc/en-us/articles/4404876135565-How-do-I-uninstall-Brave
+
+- name: Workstation | Software | Brave | Remove
   package:
-    name: 
-      - apt-transport-https
-    state: present
-  when: ansible_pkg_mgr == "apt"
-
-- name: Workstation | Software | Brave | Pre-Reqs [dnf]
-  package:
-    name: 
-      - dnf-plugins-core
-    state: present
-  when: ansible_pkg_mgr == "dnf"
-
-# https://brave.com/linux/#debian-ubuntu-mint
-- name: Workstation | Software | Brave | Add Repo [apt]
-  shell: "{{ item }}"
-  loop:
-    - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-    - echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
-    - apt update
-  when: ansible_pkg_mgr == "apt"
-
-# https://brave.com/linux/#fedora-centos-streamrhel
-- name: Workstation | Software | Brave | Add Repo [dnf]
-  shell: "{{ item }}"
-  loop:
-    - dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-    - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-  when: ansible_pkg_mgr == "dnf"
-
-# https://brave.com/linux/#opensuse
-- name: Workstation | Software | Brave | Add Repo [zypper]
-  shell: "{{ item }}"
-  loop:
-    - rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-    - zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-  when: ansible_pkg_mgr == "zypper"
+    name:
+      - brave-browser
+      - brave-keyring
+    state: absent
   ignore_errors: yes
 
-- name: Workstation | Software | Brave | Install
-  package:
-    name: 
-      - brave-browser
-    state: present
+- name: Workstation | Software | Brave | Remove Repo [apt]
+  shell: "{{ item }}"
+  loop:
+    - rm /etc/apt/sources.list.d/brave-browser-*.list
+    - apt update
+  when: ansible_pkg_mgr == "apt"
+  ignore_errors: yes
+
+- name: Workstation | Software | Brave | Remove Repo [dnf]
+  shell: "{{ item }}"
+  loop:
+    - rm /etc/yum.repos.d/brave-browser-*.repo
+    - rpm -e gpg-pubkey-c2d4e821-5e7252b8
+  when: ansible_pkg_mgr == "dnf"
+  ignore_errors: yes
+
+- name: Workstation | Software | Brave | Remove Repo [zypper]
+  shell: "{{ item }}"
+  loop:
+    - zypper removerepo brave-browser
+    - rpm -e gpg-pubkey-c2d4e821-5e7252b8
+  when: ansible_pkg_mgr == "zypper"
+  ignore_errors: yes

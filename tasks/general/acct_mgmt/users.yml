@@ -154,24 +154,47 @@
         $PROG is used to run all the system's package manager commands
           in one swoop. Flow stops if any command returns a failure code.
           The hope is to run something as easy as 'pacman -Syyu'.
-        -y : Assume yes to any prompts."
+        -y : Assume yes to any prompts.
+        -g : Shutdown after updating.
+        -s : System updates only, no Flatpaks.
+        -f : Flatpaks only, no system updates."
 
         unset OPTIND
         unset accept
-        while getopts ":hy" opt; do
+        while getopts ":hygsf" opt; do
             case $opt in
               h) echo -e "$usage"
                 return 0 ;;
               y) accept="-y" ;;
+              g) goodbye="Y" ;;
+              s) only_sys="Y" ;;
+              f) only_flat="Y" ;;
               *) echo "ERROR: -$OPTARG is not a recognized option." >&2
                 echo -e "$usage"
                 return 1 ;;
             esac
         done
 
-        {{ update_package_manager }}
-        {{ update_flatpak }}
+        if [[ "$only_flat" == "Y" ]]; then
+          echo -e "\n*** Only Flatpaks - Skipping System Updates ***\n\n"
+        else
+          {{ update_package_manager }}
+        fi
+
+        if [[ "$goodbye" == "Y" && "{{ battery }}" == "True" ]]; then
+          echo -e "\n*** Only System Updates - Skipping Flatpak ***\n\n"
+        elif [[ "$only_sys" == "Y" ]]; then
+          echo -e "\n*** Manually Skipping Flatpak ***\n\n"
+        else
+          {{ update_flatpak }}
+        fi
+
         echo "*** Completed Successfully ***"
+
+        if [[ $goodbye == "Y" ]]; then
+          bye
+        fi
+
         return 0
       }
     function_update_firmware: |
@@ -218,7 +241,7 @@
       alias init-prog=init-program
     bye_aliases: |
       alias bye="{{ shutdown_command }}"
-      alias goodbye="update -y && bye"
+      alias goodbye="update -yg"
     metasploit_aliases: |
       alias metasploit="msfconsole"
       alias hax="metasploit"
@@ -256,7 +279,7 @@
             * )
               echo "
                 ERROR: Option '$1' with value '$2' not recognized.
-                $PROG [-c|-clean|--clean|-y] [-n|-net|--network]
+                $PROG [-c|-y|--clean] [-n|-net|--network]
               " >&2
               return 1
               ;;
@@ -268,18 +291,37 @@
         echo "Grabbing sudo permissions..."
         sudo echo "Success! Starting search..."
         function dirs_to_check {
-          echo "/root"
-          echo "/home"
+          echo "/root 0"
+          echo "/home 4"
+          echo "/media 0"
         }
-        dirs_to_check | while read dir; do
+        dirs_to_check | while read dir depth; do
+          if [[ "$depth" != 0 ]]; then
+            maxdepth="-maxdepth $depth"
+          fi
+          sudo="sudo"
+          if [[ "$dir" == "/media" ]]; then
+            sudo=""
+            dir="$dir/$LOGNAME"
+          fi
           echo "Checking $dir..."
-          sudo find $dir -name TRASH | while read trash; do
-            if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+          $sudo find $dir -name TRASH | while read trash; do
+            if [[ "$trash" != "" && `$sudo ls -a $trash` ]]; then
               echo "Found $trash with contents:"
-              sudo ls -lh $trash
+              $sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
-                sudo sh -c "rm -rfv $trash/*"
+                $sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
+              fi
+            fi
+          done
+          $sudo find $dir $maxdepth -name "*"Trash"*" | while read trash; do
+            if [[ "$trash" != "" && `$sudo ls -a $trash` ]]; then
+              echo "Found $trash with contents:"
+              $sudo du -ha $trash | sort -h
+              if [[ "$clean" == "Y" ]]; then
+                echo "Cleaning trash..."
+                $sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
               fi
             fi
           done
@@ -291,12 +333,22 @@
           network_to_check | while read dir; do
             echo "Checking $dir..."
             sudo find $dir -name TRASH | while read trash; do
-              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+              if [[ "$trash" != "" && `sudo ls -a $trash` ]]; then
                 echo "Found $trash with contents:"
-                sudo ls -lh $trash
+                sudo du -ha $trash | sort -h
                 if [[ "$clean" == "Y" ]]; then
                   echo "Cleaning trash..."
-                  sudo sh -c "rm -rfv $trash/*"
+                  sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
+                fi
+              fi
+            done
+            sudo find $dir -name .Trash"*" | while read trash; do
+              if [[ "$trash" != "" && `sudo ls -a $trash` ]]; then
+                echo "Found $trash with contents:"
+                sudo du -ha $trash | sort -h
+                if [[ "$clean" == "Y" ]]; then
+                  echo "Cleaning trash..."
+                  sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
                 fi
               fi
             done
