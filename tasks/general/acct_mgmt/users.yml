@@ -279,7 +279,7 @@
             * )
               echo "
                 ERROR: Option '$1' with value '$2' not recognized.
-                $PROG [-c|-clean|--clean|-y] [-n|-net|--network]
+                $PROG [-c|-y|--clean] [-n|-net|--network]
               " >&2
               return 1
               ;;
@@ -306,22 +306,22 @@
           fi
           echo "Checking $dir..."
           $sudo find $dir -name TRASH | while read trash; do
-            if [[ "$trash" != "" && `$sudo ls $trash` ]]; then
+            if [[ "$trash" != "" && `$sudo ls -a $trash` ]]; then
               echo "Found $trash with contents:"
               $sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
-                $sudo sh -c "rm -rfv $trash/*"
+                $sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
               fi
             fi
           done
           $sudo find $dir $maxdepth -name "*"Trash"*" | while read trash; do
-            if [[ "$trash" != "" && `$sudo ls $trash` ]]; then
+            if [[ "$trash" != "" && `$sudo ls -a $trash` ]]; then
               echo "Found $trash with contents:"
               $sudo du -ha $trash | sort -h
               if [[ "$clean" == "Y" ]]; then
                 echo "Cleaning trash..."
-                $sudo sh -c "rm -rfv $trash/*"
+                $sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
               fi
             fi
           done
@@ -333,22 +333,22 @@
           network_to_check | while read dir; do
             echo "Checking $dir..."
             sudo find $dir -name TRASH | while read trash; do
-              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+              if [[ "$trash" != "" && `sudo ls -a $trash` ]]; then
                 echo "Found $trash with contents:"
                 sudo du -ha $trash | sort -h
                 if [[ "$clean" == "Y" ]]; then
                   echo "Cleaning trash..."
-                  sudo sh -c "rm -rfv $trash/*"
+                  sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
                 fi
               fi
             done
             sudo find $dir -name .Trash"*" | while read trash; do
-              if [[ "$trash" != "" && `sudo ls $trash` ]]; then
+              if [[ "$trash" != "" && `sudo ls -a $trash` ]]; then
                 echo "Found $trash with contents:"
                 sudo du -ha $trash | sort -h
                 if [[ "$clean" == "Y" ]]; then
                   echo "Cleaning trash..."
-                  sudo sh -c "rm -rfv $trash/*"
+                  sudo sh -c "cd $trash; rm -rfv ..?* .[!.]* *"
                 fi
               fi
             done
