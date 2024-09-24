@@ -118,8 +118,6 @@
     alias_cp: alias cp='cp -v'
     alias_mv: alias mv='mv -v'
     alias_rm: alias rm='echo "Use mv ~/TRASH/ instead!"'
-    alias_clean_dir: alias clean-dir='mv * ~/TRASH/'
-    alias_clean_trash: alias clean-trash='sh -c "rm -rfv ~/TRASH/*"'
     export_path_additions: export PATH="~/bin:"{{ global_bin }}":$PATH"
     function_wttr: |
       function weather() {
@@ -362,11 +360,23 @@
         return 0
       }
       alias check_trash="check-trash"
+    alias_clean_trash: alias clean-trash='check-trash --clean'
+    alias_trash_check: alias trash-check='check-trash'
+    alias_trash_clean: alias trash-clean='trash-check --clean'
+    alias_clean_dir: |
+      function clean-dir() {
+        clean_dir="`date '+%Y%m%d_%H%M%S'`_CLEANED"
+        trash_dir="$HOME/TRASH/$clean_dir"
+        curr_dir="`pwd`"
+        mkdir -pv "$trash_dir"
+        echo "$curr_dir is being cleaned at `date`." | tee "$trash_dir"/INFO.txt
+        mv -v ..?* .[!.]* * "$trash_dir"/ | tee -a "$trash_dir"/INFO.txt
+      }
     function_clean: |
       function clean() {
-        sudo df -h
-        check-trash --clean
-        sudo df -h
+        sudo du -hs
+        clean-dir
+        sudo du -hs
       }
     function_flatpak_usage: |
       function flatpak-usage() {
