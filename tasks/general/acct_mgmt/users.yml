@@ -161,6 +161,9 @@
 
         unset OPTIND
         unset accept
+        unset goodbye
+        unset only_sys
+        unset only_flat
         while getopts ":hygsf" opt; do
             case $opt in
               h) echo -e "$usage"
