@@ -241,7 +241,7 @@
 - name: General | Facts | Package | Update Command | Flatpak | Missing
   set_fact:
     update_flatpak: |
-      echo "*** Flatpak Not Installed ***" &&
+      echo "*** Flatpak Not Installed ***"
   when: update_flatpak is not defined
 
 # Firmware
